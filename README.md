@@ -1,19 +1,20 @@
 This is the README
 # DBV Docker Container
-Opal's databases are separared in 3 differents repos. The purpose of this project is to run a Docker container that install and manage all the DBS in one place.
+Opal's databases are separated in 3 different repos. The purpose of this project is to run a Docker container that installs and manages all the DBs in one place.
+
 ## Prerequisites
 - You need to have access to the 3 following repositories:
     1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
     2. QuestionnaireDB: https://gitlab.com/opalmedapps/dbv_questionnairedb
     3. registerdb: https://gitlab.com/opalmedapps/dbv_registerdb
 
-- Install docker on your local machine. It is stongly suggested to install Docker-desktop as well.
+- Install docker on your local machine. It is strongly suggested to install Docker-desktop as well.
     - https://www.docker.com/products/docker-desktop
 
-- Generate an SSH key to login to Gitlab.
+- Generate an SSH key to login to GitLab (if you haven't yet).
     - https://docs.gitlab.com/ee/ssh/index.html#generate-an-ssh-key-pair
 
-- Have git install on your local machine
+- Have git installed on your local machine
 
 ## Installation
 ### Step 1
@@ -23,13 +24,13 @@ git clone TBA
 ```
 ### Step 2
 **Build the PHP Docker images.**
-We need to build an images of the PHP setup to be able to clone the 3 dvs repos and pass our SSH public key to the Docker container. The steps of this process can be found in the `Dockerfile` at the root of the repository. to build the image from the Dockerfile run the following command at the root of the repository:
+We need to build an image of the PHP setup to be able to clone the 3 dbv repos and pass our SSH public key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile run the following command at the root of the repository (due to missing support in `docker-compose` this step is separated currently):
 ```
-docker build --no-cache --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opaldatabases:latest .
+docker build --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
 You can also pass argumnents to target specifics branches of the DBVs repository using the `--build-arg` parameter as follow.
 ```
-docker build --build-arg OPALDBV_BRANCH=staging --no-cache --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opaldatabases:latest .
+docker build --build-arg OPALDBV_BRANCH=staging --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
 There are 3 possible arguments, all default to `development`
 1. OPALDBV_BRANCH="development"
@@ -39,7 +40,7 @@ There are 3 possible arguments, all default to `development`
 
 ### Step 3
 **Scaffold the project using docker compose**
-The docker compose command use the directive writen in the `docker.compose.yml` file to initiate the required container for a project. In our case, it create a database using the MariaDb image, a PHP environement using the image built on step 2 of this guide, then finally install `adminer`, a GUI to visualise the databases. Database informations (username, password, etc) and port are also set in the `docker.compose.yml` file.
+The docker compose command uses the directive written in the `docker.compose.yml` file to initiate the required container for a project. In our case, it creates a database using the MariaDB image, a PHP environment using the image built in step 2 of this guide, then finally install `adminer`, a GUI to visualise the databases. Database information (username, password, etc) and port are also set in the `docker.compose.yml` file.
 
 To scaffold our projet simply run the command:
 ```

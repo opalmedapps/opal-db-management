@@ -15,14 +15,14 @@ services:
   
   php-apache-environment:
     container_name: dbv-apps
-    image: opaldatabases:latest
+    image: opalmedapps/dbv:latest
     depends_on:
       - db
     ports:
       - 8000:80
   
   adminer:
-    container_name: admiter
+    container_name: adminer
     image: adminer:4.8.1-standalone
     depends_on:
       - db
