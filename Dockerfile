@@ -7,7 +7,8 @@ RUN apt-get update \
     && apt-get install -y git openssh-client \
     && a2enmod headers \
     && a2enmod rewrite \
-    && docker-php-ext-install pdo pdo_mysql
+    && docker-php-ext-install pdo pdo_mysql \
+    && rm -rf /var/lib/apt/lists/*
 
 # Initialize default branch name variable that can assign when building the images.
 ARG OPALDBV_BRANCH="development"
@@ -22,9 +23,10 @@ RUN --mount=type=ssh,id=ssh_key git clone --branch $OPALDBV_BRANCH git@gitlab.co
 RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb
 RUN --mount=type=ssh,id=ssh_key git clone  --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb
 
-# Copy configuratoin file 
+# Copy configuration file 
 COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
 COPY ./config/registrationdb-config.php ./dbv/dbv_registerdb/config.php
 COPY ./config/questionairesdb-config.php ./dbv/dbv_questionnairedb/config.php
 
 RUN chown -R www-data:www-data .
+USER www-data
