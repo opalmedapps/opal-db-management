@@ -19,9 +19,10 @@ ARG QUESTIONNAIREDBV_BRANCH="development"
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
 
 # Clone the 3 dbv's repos needed using the branch name variable (default or passed as arguments)
+ARG CACHEBUST=1
 RUN --mount=type=ssh,id=ssh_key git clone --branch $OPALDBV_BRANCH git@gitlab.com:opalmedapps/dbv_opaldb.git ./dbv/dbv_opaldb
 RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb
-RUN --mount=type=ssh,id=ssh_key git clone  --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb
+RUN --mount=type=ssh,id=ssh_key git clone --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb
 
 # Copy configuration file 
 COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
