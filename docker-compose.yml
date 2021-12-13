@@ -2,19 +2,35 @@ version: '3'
 
 services:
   db:
+    container_name: opal-dbs
     image: mariadb:10.6.4-focal
     ports:
-      - 3306:3306
+      - ${MARIADB_PORT}:3306
     volumes:
-      - $PWD/db:/docker-entrypoint-initdb.d
+      - $PWD/db-scripts:/docker-entrypoint-initdb.d
+      - $PWD/config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
     environment:
-      - MARIADB_ROOT_PASSWORD=super-duper-secret-password
-      - MARIADB_USER=opal
-      - MARIADB_PASSWORD=super-duper-more-secretive-password
-
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+  
+  dbv:
+    container_name: dbv-apps
+    image: opalmedapps/dbv:latest
+    depends_on:
+      - db
+    ports:
+      - ${PHP_PORT}:80
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_PORT=${MARIADB_PORT}
+  
   adminer:
+    container_name: adminer
     image: adminer:4.8.1-standalone
     depends_on:
       - db
     ports:
-      - 8090:8080
+      - ${ADMINER_PORT}:8080
