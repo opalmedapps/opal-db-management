@@ -29,11 +29,13 @@ Create a `.env` file at the root of the project and copy the content of `.env-sa
 **Build the PHP Docker images.**
 We need to build an image of the PHP setup to be able to clone the 3 dbv repos and pass our SSH public key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile run the following command at the root of the repository (due to missing support in `docker-compose` this step is separated currently):
 ```
-docker build --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
+docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
+Note: The `CACHEBUST` build argument is required in order for the Docker builder to not use the cached `git clone` commands and ensure that the latest version from the cloned DBV repositories are retrieved.
+
 You can also pass argumnents to target specifics branches of the DBVs repository using the `--build-arg` parameter as follow.
 ```
-docker build --build-arg OPALDBV_BRANCH=staging --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
+docker build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
 There are 3 possible arguments, all default to `development`
 1. OPALDBV_BRANCH="development"
