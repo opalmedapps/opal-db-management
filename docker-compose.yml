@@ -7,8 +7,8 @@ services:
     ports:
       - ${MARIADB_PORT}:3306
     volumes:
-      - $PWD/db-scripts:/docker-entrypoint-initdb.d
-      - $PWD/config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
+      - ./db-scripts:/docker-entrypoint-initdb.d
+      - ./config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_USER=${MARIADB_USER}
