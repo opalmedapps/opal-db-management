@@ -31,7 +31,12 @@ We need to build an image of the PHP setup to be able to clone the 3 dbv repos a
 ```
 docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
-Note: The `CACHEBUST` build argument is required in order for the Docker builder to not use the cached `git clone` commands and ensure that the latest version from the cloned DBV repositories are retrieved.
+> Note: The `CACHEBUST` build argument is required in order for the Docker builder to not use the cached `git clone` commands and ensure that the latest version from the cloned DBV repositories are retrieved.
+
+> The `$(date +%s)` argument might not work on Windows systems. You can either;
+> 1- Run this command in the Windows Subsystem for Linux (WSL2).
+> 2- Remove `$(date +%s)` and manually write a unique value.
+> 3- Use the --no-cache argumes, which will bypass all the Docker cache system.
 
 You can also pass argumnents to target specifics branches of the DBVs repository using the `--build-arg` parameter as follow.
 ```
