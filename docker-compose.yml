@@ -13,7 +13,8 @@ services:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_USER=${MARIADB_USER}
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-  
+      - MARIADB_GUEST_USER=${MARIADB_GUEST_USER}
+      - MARIADB_GUEST_PASSWORD=${MARIADB_GUEST_PASSWORD}
   dbv:
     container_name: dbv-apps
     image: opalmedapps/dbv:latest
