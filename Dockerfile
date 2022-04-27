@@ -29,5 +29,8 @@ COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
 COPY ./config/registrationdb-config.php ./dbv/dbv_registerdb/config.php
 COPY ./config/questionairesdb-config.php ./dbv/dbv_questionnairedb/config.php
 
+# Copy the index landing page
+COPY ./index.php ./index.php
+
 RUN chown -R www-data:www-data .
 USER www-data
