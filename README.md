@@ -75,9 +75,9 @@ If you open docker-desktop, you should see that you have a app called `opal-data
 
 With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
 
-1. http://localhost:8000/dbv/dbv_opaldb/
-2. http://localhost:8000/dbv/dbv_registerdb
-3. http://localhost:8000/dbv/dbv_questionnairedb/
+1. http://localhost:8091/dbv/dbv_opaldb/
+2. http://localhost:8091/dbv/dbv_registerdb
+3. http://localhost:8091/dbv/dbv_questionnairedb/
 
 ### Step 6: Test your installation
 
