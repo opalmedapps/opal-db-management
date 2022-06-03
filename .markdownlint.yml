@@ -1,0 +1,7 @@
+line-length: false
+
+ul-indent:
+  indent: 4
+
+# Allow bare URLs
+MD034: false
