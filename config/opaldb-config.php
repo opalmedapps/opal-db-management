@@ -4,7 +4,7 @@
  * Your database authentication information goes here
  * @see http://dbv.vizuina.com/documentation/
  */
-define('DB_HOST', 'host.docker.internal');
+define('DB_HOST', 'db');
 define('DB_PORT', getenv('MARIADB_PORT'));
 define('DB_USERNAME', getenv('MARIADB_USER'));
 define('DB_PASSWORD', getenv('MARIADB_PASSWORD'));
