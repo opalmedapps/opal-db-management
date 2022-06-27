@@ -5,7 +5,7 @@
  * @see http://dbv.vizuina.com/documentation/
  */
 define('DB_HOST', 'db');
-define('DB_PORT', getenv('MARIADB_PORT'));
+define('DB_PORT', 3306);
 define('DB_USERNAME', getenv('MARIADB_USER'));
 define('DB_PASSWORD', getenv('MARIADB_PASSWORD'));
 define('DB_NAME', 'QuestionnaireDB');
