@@ -1,0 +1,12 @@
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
+
+variables:
+  TEST_DISABLED: "true"
+  DAST_DISABLED: "true"
+  POSTGRES_ENABLED: "false"
+
+before_script:
+  - uname -a
+  - docker info
+  - echo $SSH_PRIVATE_KEY
