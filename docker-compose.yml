@@ -23,6 +23,12 @@ services:
       - db
     ports:
       - ${PHP_PORT}:80
+    volumes:
+      # maintain current revision of DBVs across DBV updates
+      - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
+      - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
+      - ./revisions/registerdb:/var/www/html/dbv/dbv_registerdb/data/meta
+      - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
       - MARIADB_USER=${MARIADB_USER}
