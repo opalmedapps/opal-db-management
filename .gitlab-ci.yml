@@ -10,3 +10,4 @@ before_script:
   - uname -a
   - docker info
   - echo $SSH_PRIVATE_KEY
+  - cat $SSH_PRIVATE_KEY
