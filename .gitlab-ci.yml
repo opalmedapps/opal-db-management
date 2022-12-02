@@ -5,7 +5,6 @@ variables:
   TEST_DISABLED: "true"
   DAST_DISABLED: "true"
   POSTGRES_ENABLED: "false"
-  # DOCKER_TLS_CERTDIR: "/certs"
   
 
 before_script:
@@ -16,13 +15,15 @@ before_script:
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-  - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_ed25519
-  - chmod 0600 ~/.ssh/id_ed25519
+  # - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_ed25519
+  - eval $(ssh-agent -s)
+  - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' | ssh-add -
+  # - chmod 0600 ~/.ssh/id_ed25519
   - apk add --no-cache git
   - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=~/.ssh/id_ed25519"
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=id_ed25519"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
-  - ls -la
+  - ls -la ~/.ssh/
 
 # services:
 #   - docker:20.10.16-dind
