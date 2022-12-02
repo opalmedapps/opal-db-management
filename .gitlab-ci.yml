@@ -9,11 +9,14 @@ variables:
   
 
 before_script:
-  - uname -a
-  - docker info
-  - echo $SSH_PRIVATE_KEY
-  - echo $(date +%s)
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY"
+  ## Create the SSH directory and give it the right permissions
+  ##
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+  - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_ed25519
+  - chmod 0600 ~/.ssh/id_ed25519
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/root/.ssh/id_ed25519"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
 
 services:
