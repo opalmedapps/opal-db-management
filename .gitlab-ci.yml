@@ -17,7 +17,11 @@ before_script:
 
 clone:
   stage: build
-  image: alpine/git
+  image: 
+    name: alpine/git
+    entrypoint:
+      - [""]
+  
   script:
     - git --version
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_ed25519
