@@ -5,6 +5,7 @@ variables:
   TEST_DISABLED: "true"
   DAST_DISABLED: "true"
   POSTGRES_ENABLED: "false"
+  DOCKER_TLS_CERTDIR: "/certs"
   
 
 before_script:
@@ -15,6 +16,8 @@ before_script:
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
 
+services:
+  - docker:20.10.16-dind
 # clone:
 #   stage: build
 #   image: 
