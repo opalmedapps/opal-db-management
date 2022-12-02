@@ -50,4 +50,4 @@ clone:
     - chmod 0700 ~/.ssh/id_ed25519
     - ls -la ~/.ssh
     # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
-    - docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
+    - DOCKER_BUILDKIT=1 docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
