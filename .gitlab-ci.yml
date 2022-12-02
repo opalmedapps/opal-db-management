@@ -20,7 +20,7 @@ before_script:
   - chmod 0600 ~/.ssh/id_ed25519
   - apk add --no-cache git
   - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/root/.ssh/foo"
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=~/.ssh/id_ed25519"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   - ls -la
 
