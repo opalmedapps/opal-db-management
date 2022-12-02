@@ -18,7 +18,7 @@ before_script:
   - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
   - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_ed25519
   - chmod 0600 ~/.ssh/id_ed25519
-  - apt update && apt install -y git
+  - apk add --no-cache git
   - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/root/.ssh/foo"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
