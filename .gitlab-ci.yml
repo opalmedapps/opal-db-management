@@ -5,16 +5,12 @@ variables:
   TEST_DISABLED: "true"
   DAST_DISABLED: "true"
   POSTGRES_ENABLED: "false"
-  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--build-arg CACHEBUST=$(date +%s)"
   
 
-test:
-  stage: build
-  image: docker:docker-dind
 before_script:
   - uname -a
   - docker info
   - echo $SSH_PRIVATE_KEY
   - echo $(date +%s)
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s)"
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
