@@ -23,9 +23,13 @@ before_script:
   # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
   # - export
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
+  - image_tagged="$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
+  - image_latest="$CI_APPLICATION_REPOSITORY:latest"
   # - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   # - ls -la ~/.ssh/
-  - docker buildx build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK .
+  - echo $image_tagged
+  - echo $image_latest
+  - docker buildx build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK --tag $image_tagged --tag $image_latest .
 
 # services:
 #   - docker:20.10.16-dind
