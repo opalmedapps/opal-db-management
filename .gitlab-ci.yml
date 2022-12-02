@@ -34,7 +34,7 @@ before_script:
 #     - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
 clone:
   stage: build
-  image: image
+  image: docker
   before_script:
     - docker version
   script:
