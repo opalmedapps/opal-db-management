@@ -25,6 +25,7 @@ before_script:
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   - ls -la ~/.ssh/
+  - docker buildx build --ssh ssh_key=$SSH_AUTH_SOCK .
 
 # services:
 #   - docker:20.10.16-dind
