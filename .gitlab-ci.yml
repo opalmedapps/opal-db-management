@@ -60,7 +60,7 @@ ritest:
   stage: deploy
   tags:
     - ri-dev
-  image: alpine
+  # image: alpine
   script:
     # - apt add --no-cache curl
     - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
