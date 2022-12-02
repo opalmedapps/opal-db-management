@@ -15,3 +15,4 @@ before_script:
   - uname -a
   - docker info
   - echo $SSH_PRIVATE_KEY
+  - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
