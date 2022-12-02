@@ -14,3 +14,12 @@ before_script:
   - echo $(date +%s)
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
+
+clone:
+  stage: build
+  image: alpine/git
+  script:
+    - git --version
+    - cp $SSH_PRIVATE_KEY ~/.ssh/id_ed25519
+    - ls -la ~/.ssh
+    - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
