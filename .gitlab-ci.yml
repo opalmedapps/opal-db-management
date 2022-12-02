@@ -23,6 +23,10 @@ clone:
   before_script:
     - git --version
   script:
+    ## Create the SSH directory and give it the right permissions
+    ##
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_ed25519
     - ls -la ~/.ssh
     - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
