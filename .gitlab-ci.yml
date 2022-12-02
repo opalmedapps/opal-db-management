@@ -57,7 +57,7 @@ before_script:
 #     - DOCKER_BUILDKIT=1 docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
 
 ritest:
-  stage: depoy
+  stage: deploy
   tags:
     - ri-dev
   image: alpine
