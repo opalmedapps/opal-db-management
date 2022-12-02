@@ -19,8 +19,7 @@ clone:
   stage: build
   image: 
     name: alpine/git
-    entrypoint:
-      - [""]
+    entrypoint: [""]
   
   script:
     - git --version
