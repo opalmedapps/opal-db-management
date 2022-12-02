@@ -3,6 +3,8 @@
   "extends": [
     "config:base",
     ":separateMultipleMajorReleases",
+    // Allow to receive patch updates for PHP and MariaDB while waiting with upgrading to the next minor version
+    ":separatePatchReleases",
   ],
   "assignees": ["mschoettle", "david.gagne"],
   "labels": ["dependencies"],
