@@ -24,14 +24,14 @@ before_script:
   # - apk add --no-cache git
   # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
   # - export
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$$SSH_AUTH_SOCK"
   - image_tagged="$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
   - image_latest="$CI_APPLICATION_REPOSITORY:latest"
   # - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   # - ls -la ~/.ssh/
   - echo $image_tagged
   - echo $image_latest
-  - docker buildx build $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS --tag $image_tagged --tag $image_latest .
+  - docker buildx build --ssh ssh_key=$SSH_AUTH_SOCK --tag $image_tagged --tag $image_latest .
 
 # services:
 #   - docker:20.10.16-dind
