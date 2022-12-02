@@ -15,13 +15,28 @@ before_script:
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
 
+# clone:
+#   stage: build
+#   image: 
+#     name: alpine/git
+#     entrypoint: [""]
+#   before_script:
+#     - git --version
+#   script:
+#     ## Create the SSH directory and give it the right permissions
+#     ##
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+#     - cp $SSH_PRIVATE_KEY ~/.ssh/id_ed25519
+#     - chmod 0700 ~/.ssh/id_ed25519
+#     - ls -la ~/.ssh
+#     - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
 clone:
   stage: build
-  image: 
-    name: alpine/git
-    entrypoint: [""]
+  image: image
   before_script:
-    - git --version
+    - docker version
   script:
     ## Create the SSH directory and give it the right permissions
     ##
@@ -31,4 +46,5 @@ clone:
     - cp $SSH_PRIVATE_KEY ~/.ssh/id_ed25519
     - chmod 0700 ~/.ssh/id_ed25519
     - ls -la ~/.ssh
-    - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
+    # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
+    - docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
