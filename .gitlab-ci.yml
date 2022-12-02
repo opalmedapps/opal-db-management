@@ -9,6 +9,8 @@ variables:
   
 
 before_script:
+  - uname -a
+  - docker buildx build --help
   ## Create the SSH directory and give it the right permissions
   ##
   - mkdir -p ~/.ssh
