@@ -78,6 +78,9 @@ ritest:
     - whoami
     - apt update && apt install -y openssh-client
     # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
     - ssh lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
 
 include:
