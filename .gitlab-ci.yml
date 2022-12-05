@@ -79,5 +79,6 @@ ritest:
     - uname -a
   script:
     - whoami
-    - apt update && apt install -y curl
-    - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
+    # - apt update && apt install -y 
+    # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
+    - ssh lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
