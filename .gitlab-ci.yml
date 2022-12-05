@@ -1,14 +1,8 @@
-variables:
-  TEST_DISABLED: "true"
-  DAST_DISABLED: "true"
-  POSTGRES_ENABLED: "false"
-  CI_APPLICATION_TAG: "$CI_COMMIT_SHA"
-  CI_APPLICATION_REPOSITORY: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/$CI_JOB_NAME"
-
+# dummy stages to follow the template guidelines
 stages:
   - build
   - test
-  - deploy  # dummy stage to follow the template guidelines
+  - deploy
   - review
   - dast
   - staging
@@ -20,6 +14,17 @@ stages:
   - incremental rollout 100%
   - performance
   - cleanup
+
+include: 
+  - template: Auto-DevOps.gitlab-ci.yml
+
+variables:
+  TEST_DISABLED: "true"
+  DAST_DISABLED: "true"
+  POSTGRES_ENABLED: "false"
+  CI_APPLICATION_TAG: "$CI_COMMIT_SHA"
+  CI_APPLICATION_REPOSITORY: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/$CI_JOB_NAME"
+
 
 before_script:
   ## Create the SSH directory and give it the right permissions
@@ -82,6 +87,3 @@ ritest:
     - chmod 700 ~/.ssh
     - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
     - ssh lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
-
-include:
-  - template: Auto-DevOps.gitlab-ci.yml
