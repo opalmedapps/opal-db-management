@@ -15,8 +15,6 @@ stages:
   - performance
   - cleanup
 
-include: 
-  - template: Auto-DevOps.gitlab-ci.yml
 
 variables:
   TEST_DISABLED: "true"
@@ -86,4 +84,9 @@ ritest:
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
-    - ssh lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
+    - ssh opalsupt@lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
+
+include: 
+  - template: Auto-DevOps.gitlab-ci.yml
+  - template: Jobs/Build.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Build.gitlab-ci.yml
+  - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
