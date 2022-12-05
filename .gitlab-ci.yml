@@ -7,7 +7,11 @@ variables:
   POSTGRES_ENABLED: "false"
   CI_APPLICATION_TAG: "$CI_COMMIT_SHA"
   CI_APPLICATION_REPOSITORY: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/$CI_JOB_NAME"
-  
+
+stages:
+  - build
+  - test
+  - deploy
 
 before_script:
   ## Create the SSH directory and give it the right permissions
@@ -55,11 +59,11 @@ before_script:
 #     # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
 #     - DOCKER_BUILDKIT=1 docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
 
-# ritest:
-#   stage: deploy
-#   tags:
-#     - ri-dev
-#   # image: alpine
-#   script:
-#     # - apt add --no-cache curl
-#     - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
+ritest:
+  stage: deploy
+  tags:
+    - ri-dev
+  image: alpine
+  script:
+    - apt add --no-cache curl
+    - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
