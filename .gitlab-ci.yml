@@ -1,6 +1,3 @@
-include:
-  - template: Auto-DevOps.gitlab-ci.yml
-
 variables:
   TEST_DISABLED: "true"
   DAST_DISABLED: "true"
@@ -79,6 +76,9 @@ ritest:
     - uname -a
   script:
     - whoami
-    # - apt update && apt install -y 
+    - apt update && apt install -y openssh-client
     # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
     - ssh lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
+
+include:
+  - template: Auto-DevOps.gitlab-ci.yml
