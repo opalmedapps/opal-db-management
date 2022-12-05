@@ -13,6 +13,7 @@ stages:
   - test
   - deploy
   - review
+  - stop_review
 
 before_script:
   ## Create the SSH directory and give it the right permissions
