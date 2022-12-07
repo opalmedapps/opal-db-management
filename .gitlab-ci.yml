@@ -22,7 +22,7 @@ variables:
   POSTGRES_ENABLED: "false"
   CI_APPLICATION_TAG: "$CI_COMMIT_SHA"
   CI_APPLICATION_REPOSITORY: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/$CI_JOB_NAME"
-  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--ssh ssh_key=$SSH_PRIVATE_KEY2"
+  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY"
 
 
 # before_script:
@@ -94,5 +94,4 @@ variables:
 
 include: 
   - template: Auto-DevOps.gitlab-ci.yml
-  - template: Jobs/Build.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Build.gitlab-ci.yml
-  - template: Jobs/Code-Quality.gitlab-ci.yml  # https://gitlab.com/gitlab-org/gitlab/blob/master/lib/gitlab/ci/templates/Jobs/Code-Quality.gitlab-ci.yml
+  - local: '.gitlab/templates/Build.gitlab-ci.yml'
