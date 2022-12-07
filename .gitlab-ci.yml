@@ -25,8 +25,8 @@ variables:
 
 
 before_script:
-  - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' > ~/.ssh/deploy_key
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=~/.ssh/deploy_key"
+  - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' > ~/.deploy_key
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=~/.deploy_key"
   - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   # - eval echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   # - echo $($AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS)
