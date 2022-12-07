@@ -3,7 +3,7 @@
 variables:
   AUTO_BUILD_IMAGE_VERSION: 'v1.21.0'
 
-build:
+.build:
   stage: build
   image: '${CI_TEMPLATE_REGISTRY_HOST}/gitlab-org/cluster-integration/auto-build-image:${AUTO_BUILD_IMAGE_VERSION}'
   variables:
