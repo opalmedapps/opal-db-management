@@ -38,7 +38,7 @@ before_script:
 #   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$$SSH_AUTH_SOCK"
   - image_tagged="$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
   - image_latest="$CI_APPLICATION_REPOSITORY:latest"
-  - docker buildx build $args --tag $image_tagged --tag $image_latest .
+  - docker buildx build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY2 --tag $image_tagged --tag $image_latest .
 
 # services:
 #   - docker:20.10.16-dind
