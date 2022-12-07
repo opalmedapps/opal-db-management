@@ -25,8 +25,9 @@ variables:
   AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY2"
 
 
-# before_script:
-  # - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
+before_script:
+  - echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
+  - echo $SSH_PRIVATE_KEY2
   # - eval echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
   # - echo $($AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS)
   # - args="$(eval echo $foo)"
