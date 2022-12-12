@@ -3,8 +3,10 @@ import sys
 from sqlalchemy import create_engine, MetaData
 from sqlacodegen.codegen import CodeGenerator
 
-def generate_model(host, user, password, database, outfile = None):
+def generate_models(host, user, password, database, outfile = None):
     """Generate the initial database model structure based on existing db state.
+
+    To do this we use sqlacodegen: https://pypi.org/project/sqlacodegen/
     
     Args:
         host: Docker internal host OR 127.0.0.1 for other database hosts (eg XAMPP)
@@ -21,4 +23,4 @@ def generate_model(host, user, password, database, outfile = None):
     generator.render(outfile)
 
 if __name__ == '__main__':
-    generate_model('host.docker.internal:3307', 'root', 'root', 'OpalDB', 'models.py')
+    generate_models('host.docker.internal:3307', 'root', 'root', 'OpalDB', 'models.py')  # TODO: Read in database connection parameters from .env file

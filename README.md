@@ -116,4 +116,11 @@ SQLAlchemy uses an ORM similar to Django to maintain a consistent state between 
 
 ### TODO Forward and backward migrations
 
-### TODO Generating initial model structure from existing databases
+### Generating initial model structure from existing databases
+
+Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run once initially and can be ignored afterwards.
+
+SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema. 
+
+`cd alembic-<database-name>/`
+`python initial_model_populate.py`
