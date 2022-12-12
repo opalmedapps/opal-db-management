@@ -102,3 +102,18 @@ As mentioned in step 3, the docker compose command also runs an `adminer` contai
 The credentials for logging in can be found in the `.env` file.
 
 You should by now have fully up and running opal databases that can be easily started and stopped using the docker desktop GUI (or via the command-line, whichever you prefer).
+
+
+## Alembic Database Version Management
+
+Alembic is a database migrations tool written by the author of SQLAlchemy. It provides a system of object-oriented, ordered migration control for relational databases.
+
+https://pypi.org/project/alembic/
+
+SQLAlchemy uses an ORM similar to Django to maintain a consistent state between python objects and the sql tables they represent. 
+
+### TODO Alembic commands
+
+### TODO Forward and backward migrations
+
+### TODO Generating initial model structure from existing databases
