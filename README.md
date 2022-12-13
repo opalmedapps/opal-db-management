@@ -112,7 +112,25 @@ https://pypi.org/project/alembic/
 
 SQLAlchemy uses an ORM similar to Django to maintain a consistent state between python objects and the sql tables they represent. 
 
+### TODO SQLAlchemy Basics
+
+
 ### TODO Alembic commands
+https://alembic.sqlalchemy.org/en/latest/ops.html
+- alter database schema example
+
+The models file contains schema for every table in the database. It's organized alphabetically-ish but you'd be wise to just use Ctrl-F to find your model.
+
+    - add column with default value
+    - remove col
+    - bulk data insert
+
+- running alembic revisions
+`alembic revision --autogenerate -m "Create User model"`
+Note must be run from the directory corresponding to the database you want to make changes to
+
+Then, to apply your migration
+`alembic upgrade head`
 
 ### TODO Forward and backward migrations
 

@@ -1971,7 +1971,7 @@ class OaRoleModule(Base):
     oaRole = relationship('OaRole')
 
 
-class Alia(Base):
+class Alias(Base):
     __tablename__ = 'Alias'
 
     AliasSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -1996,7 +1996,7 @@ class Alia(Base):
     OAUser = relationship('OAUser')
 
 
-class AppointmentCheckin(Alia):
+class AppointmentCheckin(Alias):
     __tablename__ = 'AppointmentCheckin'
 
     AliasSerNum = Column(ForeignKey('Alias.AliasSerNum', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, index=True)
@@ -2262,9 +2262,9 @@ class AliasExpression(Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     SessionId = Column(String(255))
 
-    Alia = relationship('Alia')
+    Alias = relationship('Alias')
     OAUser = relationship('OAUser')
-    masterSourceAlia = relationship('MasterSourceAlia')
+    masterSourceAlias = relationship('MasterSourceAlias')
 
 
 class CronControlAlia(Base):
@@ -2278,7 +2278,7 @@ class CronControlAlia(Base):
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     sessionId = Column(String(255), comment='SessionId of the user who last updated this field.')
 
-    Alia = relationship('Alia')
+    Alias = relationship('Alias')
 
 
 class PatientStudy(Base):

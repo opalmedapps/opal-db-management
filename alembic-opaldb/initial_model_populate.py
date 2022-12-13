@@ -1,7 +1,9 @@
 import io
 import sys
+import os
 from sqlalchemy import create_engine, MetaData
 from sqlacodegen.codegen import CodeGenerator
+from dotenv import load_dotenv
 
 def generate_models(host, user, password, database, outfile = None):
     """Generate the initial database model structure based on existing db state.
@@ -23,4 +25,11 @@ def generate_models(host, user, password, database, outfile = None):
     generator.render(outfile)
 
 if __name__ == '__main__':
-    generate_models('host.docker.internal:3307', 'root', 'root', 'OpalDB', 'models.py')  # TODO: Read in database connection parameters from .env file
+    # Read environment variables
+    load_dotenv()
+    HOST = os.getenv('DOCKER_HOST')
+    USER = os.getenv('MARIADB_USER')
+    PASS = os.getenv('MARIADB_PASSWORD')
+
+    # Generate models for OpalDB
+    generate_models(HOST, USER, PASS, 'OpalDB', 'models.py')
