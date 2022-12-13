@@ -30,6 +30,6 @@ if __name__ == '__main__':
     HOST = os.getenv('DOCKER_HOST')
     USER = os.getenv('MARIADB_USER')
     PASS = os.getenv('MARIADB_PASSWORD')
-
+    DB = os.getenv('LEGACY_OPAL_DB_NAME')
     # Generate models for OpalDB
-    generate_models(HOST, USER, PASS, 'OpalDB', 'models.py')
+    generate_models(HOST, USER, PASS, DB, 'ddl_models.py')
