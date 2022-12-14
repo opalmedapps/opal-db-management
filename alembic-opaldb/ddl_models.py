@@ -9,17 +9,16 @@ DDL_Base = declarative_base()
 metadata = DDL_Base.metadata
 
 
-class Admin(DDL_Base):
-    __tablename__ = 'Admin'
-
-    AdminSerNum = Column('AdminSerNum', INTEGER(11), primary_key=True, nullable=False)
-    ResourceSerNum = Column('ResourceSerNum', INTEGER(11), primary_key=True, nullable=False)
-    FirstName = Column('FirstName', Text, nullable=False)
-    LastName = Column('LastName', Text, nullable=False)
-    Email = Column('Email', Text, nullable=False)
-    Phone = Column('Phone', BIGINT(20))
-    LastUpdated = Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-
+t_Admin = Table(
+    'Admin', metadata,
+    Column('AdminSerNum', INTEGER(11), nullable=False),
+    Column('ResourceSerNum', INTEGER(11), nullable=False, index=True),
+    Column('FirstName', Text, nullable=False),
+    Column('LastName', Text, nullable=False),
+    Column('Email', Text, nullable=False),
+    Column('Phone', BIGINT(20)),
+    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+)
 
 class AliasExpressionMH(DDL_Base):
     __tablename__ = 'AliasExpressionMH'
@@ -556,7 +555,7 @@ class PatientControl(Patient):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), primary_key=True, index=True)
     PatientUpdate = Column(INTEGER(11), nullable=False, index=True, server_default=text("1"))
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    PC_LastUpdated = Column("LastUpdated", TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     TransferFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"))
 
 
@@ -756,7 +755,7 @@ class DefinitionTable(DDL_Base):
     __tablename__ = 'definitionTable'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
+    Def_ID = Column("ID", BIGINT(20), primary_key=True)
     name = Column(String(255), nullable=False)
 
 
@@ -764,7 +763,7 @@ class Dictionary(DDL_Base):
     __tablename__ = 'dictionary'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
+    Dict_ID = Column("ID", BIGINT(20), primary_key=True)
     tableId = Column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
     languageId = Column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
     contentId = Column(BIGINT(20), nullable=False, index=True)
@@ -780,11 +779,11 @@ class Dictionary(DDL_Base):
     definitionTable = relationship('DefinitionTable')
 
 
-class Language(DDL_Base):
+class QuestionnaireDBLanguage(DDL_Base):
     __tablename__ = 'language'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
+    Lang_ID = Column("ID", BIGINT(20), primary_key=True)
     isoLang = Column(String(2), nullable=False)
     name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
@@ -1135,7 +1134,7 @@ class Language(DDL_Base):
     LanguageName_FR = Column(String(200), nullable=False)
 
 
-class MasterSourceAlia(DDL_Base):
+class MasterSourceAlias(DDL_Base):
     __tablename__ = 'masterSourceAlias'
     __table_args__ = (
         Index('f_externalId_code_source_type', 'externalId', 'code', 'source', 'type', unique=True),
@@ -1493,7 +1492,7 @@ class Purpose(DDL_Base):
     __tablename__ = 'purpose'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
+    Purp_ID = Column("ID", BIGINT(20), primary_key=True)
     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
@@ -1505,7 +1504,7 @@ class Respondent(DDL_Base):
     __tablename__ = 'respondent'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
+    Resp_ID = Column("ID", BIGINT(20), primary_key=True)
     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
@@ -1530,7 +1529,7 @@ class SecurityAnswer(DDL_Base):
     SecurityQuestion = relationship('SecurityQuestion')
 
 
-class StatusAlia(DDL_Base):
+class StatusAlias(DDL_Base):
     __tablename__ = 'StatusAlias'
 
     StatusAliasSerNum = Column(INTEGER(11), primary_key=True)
@@ -1735,11 +1734,11 @@ class QuestionnaireControl(DDL_Base):
     OAUser = relationship('OAUser')
 
 
-class Questionnaire(DDL_Base):
+class QuestionnaireDBQuestionnaire(DDL_Base):
     __tablename__ = 'questionnaire'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
+    Qst_ID = Column("ID", BIGINT(20), primary_key=True)
     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
     purposeId = Column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text("1"))
     respondentId = Column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text("1"))
@@ -2005,9 +2004,9 @@ class AppointmentCheckin(Alias):
     CheckinInstruction_EN = Column(Text, nullable=False)
     CheckinInstruction_FR = Column(Text, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SessionId = Column(String(255))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    AC_LastUpdatedBy = Column("LastUpdatedBy", ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    AC_SessionId = Column("SessionId", String(255))
+    AC_LastUpdated = Column("LastUpdated", TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     OAUser = relationship('OAUser')
 
@@ -2268,7 +2267,7 @@ class AliasExpression(DDL_Base):
     masterSourceAlias = relationship('MasterSourceAlias')
 
 
-class CronControlAlia(DDL_Base):
+class CronControlAlias(DDL_Base):
     __tablename__ = 'cronControlAlias'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
