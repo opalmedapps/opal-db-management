@@ -110,12 +110,12 @@ Alembic is a database migrations tool written by the author of SQLAlchemy. It pr
 
 https://pypi.org/project/alembic/
 
-SQLAlchemy uses an ORM similar to Django to maintain a consistent state between python objects and the sql tables they represent. 
-
-### TODO SQLAlchemy Basics
-
+SQLAlchemy uses an ORM similar to Django to maintain a consistent state between python objects and the sql tables they represent.
 
 ### TODO Alembic commands
+
+First assure your db-docker container is built and running so that Alembic can see and connect to it with the connection engine...
+
 https://alembic.sqlalchemy.org/en/latest/ops.html
 - alter database schema example
 
@@ -132,6 +132,12 @@ Note must be run from the directory corresponding to the database you want to ma
 Then, to apply your migration
 `alembic upgrade head`
 
+#### Version controlling triggers, events, functions, procedures
+
+Object-oriented version control of these constructs isn't really supported 'natively' in Alembic, but there are workarounds like the one outlined here: https://stackoverflow.com/questions/67247268/how-to-version-control-functions-and-triggers-with-alembic. It still requires writing everything out in SQL though.
+
+Note that when we first implemented Alembic, all of the existing views, triggers, events, functions, and procedures were imported with raq SQL in an initial DB setup migration.
+
 ### TODO Forward and backward migrations
 
 ### Generating initial model structure from existing databases
@@ -142,3 +148,7 @@ SQLAlchemy has a support library designed to quickly generate SQLAlchemy models,
 
 `cd alembic-<database-name>/`
 `python initial_model_populate.py`
+
+Known issues with sqlacodegen:
+- For some reason is forgets to add the 's' at the end of Alias related tables so it'll be `class Alia` instead of `class Alias`
+- In the situation when we have a foreign key or relationship between two tables, and those tables have identically named columns, we can get a warning because the same naming implies the mapping should combine the two columns and copy the data from one to the other. : https://docs.sqlalchemy.org/en/14/faq/ormconfiguration.html#i-m-getting-a-warning-or-error-about-implicitly-combining-column-x-under-attribute-y

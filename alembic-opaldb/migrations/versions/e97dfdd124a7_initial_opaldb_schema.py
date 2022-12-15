@@ -1,8 +1,8 @@
-"""Initial OpalDB Migration
+"""Initial OpalDB Schema
 
-Revision ID: 3f066422497c
+Revision ID: e97dfdd124a7
 Revises: 
-Create Date: 2022-12-14 11:45:59.109601
+Create Date: 2022-12-15 10:57:40.106030
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
-revision = '3f066422497c'
+revision = 'e97dfdd124a7'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -712,7 +712,7 @@ def upgrade() -> None:
     op.create_table('QuestionnaireControlMH',
     sa.Column('QuestionnaireControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('RevSerNum', mysql.INTEGER(display_width=11), nullable=False),
-    sa.Column('QuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=False),
+    sa.Column('alembic_QuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('QuestionnaireName_EN', sa.String(length=2056), nullable=False),
     sa.Column('QuestionnaireName_FR', sa.String(length=2056), nullable=False),
     sa.Column('Intro_EN', sa.Text(), nullable=False),
@@ -726,49 +726,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('QuestionnaireControlSerNum', 'RevSerNum')
     )
     op.create_index(op.f('ix_QuestionnaireControlMH_LastUpdatedBy'), 'QuestionnaireControlMH', ['LastUpdatedBy'], unique=False)
-    op.create_table('definitionTable',
-    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('name', sa.String(length=255), nullable=False),
-    sa.PrimaryKeyConstraint('ID'),
-    schema='alembic_QuestionnaireDB'
-    )
-    op.create_table('dictionary',
-    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('tableId', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('languageId', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('contentId', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('content', mysql.MEDIUMTEXT(), nullable=False),
-    sa.Column('deleted', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
-    sa.Column('deletedBy', sa.String(length=255), nullable=True),
-    sa.Column('creationDate', sa.DateTime(), nullable=False),
-    sa.Column('createdBy', sa.String(length=255), nullable=False),
-    sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
-    sa.Column('updatedBy', sa.String(length=255), nullable=False),
-    sa.ForeignKeyConstraint(['languageId'], ['QuestionnaireDB.language.ID'], ),
-    sa.ForeignKeyConstraint(['tableId'], ['QuestionnaireDB.definitionTable.ID'], ),
-    sa.PrimaryKeyConstraint('ID'),
-    schema='alembic_QuestionnaireDB'
-    )
-    op.create_index(op.f('ix_QuestionnaireDB_dictionary_contentId'), 'dictionary', ['contentId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_dictionary_deleted'), 'dictionary', ['deleted'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_dictionary_languageId'), 'dictionary', ['languageId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_dictionary_tableId'), 'dictionary', ['tableId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_table('language',
-    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('isoLang', sa.String(length=2), nullable=False),
-    sa.Column('name', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('deleted', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
-    sa.Column('deletedBy', sa.String(length=255), nullable=False),
-    sa.Column('creationDate', sa.DateTime(), nullable=False),
-    sa.Column('createdBy', sa.String(length=255), nullable=False),
-    sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
-    sa.Column('updatedBy', sa.String(length=255), nullable=False),
-    sa.ForeignKeyConstraint(['name'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.PrimaryKeyConstraint('ID'),
-    schema='alembic_QuestionnaireDB'
-    )
-    op.create_index(op.f('ix_QuestionnaireDB_language_deleted'), 'language', ['deleted'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_language_name'), 'language', ['name'], unique=False, schema='alembic_QuestionnaireDB')
     op.create_table('QuestionnaireMH',
     sa.Column('QuestionnaireSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('QuestionnaireRevSerNum', mysql.INTEGER(display_width=11), nullable=False),
@@ -776,15 +733,15 @@ def upgrade() -> None:
     sa.Column('QuestionnaireControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('PatientSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('PatientQuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=True),
+    sa.Column('Patientalembic_QuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=True),
     sa.Column('CompletedFlag', mysql.TINYINT(display_width=4), nullable=False),
     sa.Column('CompletionDate', sa.DateTime(), nullable=True),
     sa.Column('ModificationAction', sa.String(length=25), nullable=False),
     sa.PrimaryKeyConstraint('QuestionnaireSerNum', 'QuestionnaireRevSerNum')
     )
     op.create_index(op.f('ix_QuestionnaireMH_CronLogSerNum'), 'QuestionnaireMH', ['CronLogSerNum'], unique=False)
-    op.create_index(op.f('ix_QuestionnaireMH_PatientQuestionnaireDBSerNum'), 'QuestionnaireMH', ['PatientQuestionnaireDBSerNum'], unique=False)
     op.create_index(op.f('ix_QuestionnaireMH_PatientSerNum'), 'QuestionnaireMH', ['PatientSerNum'], unique=False)
+    op.create_index(op.f('ix_QuestionnaireMH_Patientalembic_QuestionnaireDBSerNum'), 'QuestionnaireMH', ['Patientalembic_QuestionnaireDBSerNum'], unique=False)
     op.create_index(op.f('ix_QuestionnaireMH_QuestionnaireControlSerNum'), 'QuestionnaireMH', ['QuestionnaireControlSerNum'], unique=False)
     op.create_table('Resource',
     sa.Column('ResourceSerNum', mysql.INTEGER(display_width=11), nullable=False),
@@ -997,6 +954,48 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('Id'),
     comment='Table to store level of access in opal application. There are two levels 1- Need to Know and 2-All. '
     )
+    op.create_table('definitionTable',
+    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('name', sa.String(length=255), nullable=False),
+    sa.PrimaryKeyConstraint('ID'),
+    schema='alembic_QuestionnaireDB'
+    )
+    op.create_table('dictionary',
+    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('tableId', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('languageId', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('contentId', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('content', mysql.MEDIUMTEXT(), nullable=False),
+    sa.Column('deleted', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
+    sa.Column('deletedBy', sa.String(length=255), nullable=True),
+    sa.Column('creationDate', sa.DateTime(), nullable=False),
+    sa.Column('createdBy', sa.String(length=255), nullable=False),
+    sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
+    sa.Column('updatedBy', sa.String(length=255), nullable=False),
+    sa.ForeignKeyConstraint(['tableId'], ['alembic_QuestionnaireDB.definitionTable.ID'], ),
+    sa.PrimaryKeyConstraint('ID'),
+    schema='alembic_QuestionnaireDB'
+    )
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_dictionary_contentId'), 'dictionary', ['contentId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_dictionary_deleted'), 'dictionary', ['deleted'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_dictionary_languageId'), 'dictionary', ['languageId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_dictionary_tableId'), 'dictionary', ['tableId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_table('language',
+    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('isoLang', sa.String(length=2), nullable=False),
+    sa.Column('name', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('deleted', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
+    sa.Column('deletedBy', sa.String(length=255), nullable=False),
+    sa.Column('creationDate', sa.DateTime(), nullable=False),
+    sa.Column('createdBy', sa.String(length=255), nullable=False),
+    sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
+    sa.Column('updatedBy', sa.String(length=255), nullable=False),
+    sa.ForeignKeyConstraint(['name'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.PrimaryKeyConstraint('ID'),
+    schema='alembic_QuestionnaireDB'
+    )
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_language_deleted'), 'language', ['deleted'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_language_name'), 'language', ['name'], unique=False, schema='alembic_QuestionnaireDB')
     op.create_table('alert',
     sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False, comment='Primary key, auto-increment'),
     sa.Column('contact', mysql.MEDIUMTEXT(), nullable=False, comment='list of contacts for the alert. JSON format field that contains phone number and email.'),
@@ -1443,28 +1442,6 @@ def upgrade() -> None:
     op.create_index(op.f('ix_Patient_Hospital_Identifier_Hospital_Identifier_Type_Code'), 'Patient_Hospital_Identifier', ['Hospital_Identifier_Type_Code'], unique=False)
     op.create_index(op.f('ix_Patient_Hospital_Identifier_MRN'), 'Patient_Hospital_Identifier', ['MRN'], unique=False)
     op.create_index(op.f('ix_Patient_Hospital_Identifier_PatientSerNum'), 'Patient_Hospital_Identifier', ['PatientSerNum'], unique=False)
-    op.create_table('purpose',
-    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('title', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('description', mysql.BIGINT(display_width=20), nullable=False),
-    sa.ForeignKeyConstraint(['description'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.ForeignKeyConstraint(['title'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.PrimaryKeyConstraint('ID'),
-    schema='alembic_QuestionnaireDB'
-    )
-    op.create_index(op.f('ix_QuestionnaireDB_purpose_description'), 'purpose', ['description'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_purpose_title'), 'purpose', ['title'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_table('respondent',
-    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('title', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('description', mysql.BIGINT(display_width=20), nullable=False),
-    sa.ForeignKeyConstraint(['description'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.ForeignKeyConstraint(['title'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.PrimaryKeyConstraint('ID'),
-    schema='alembic_QuestionnaireDB'
-    )
-    op.create_index(op.f('ix_QuestionnaireDB_respondent_description'), 'respondent', ['description'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_respondent_title'), 'respondent', ['title'], unique=False, schema='alembic_QuestionnaireDB')
     op.create_table('SecurityAnswer',
     sa.Column('SecurityAnswerSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('SecurityQuestionSerNum', mysql.INTEGER(display_width=11), nullable=False),
@@ -1490,6 +1467,28 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('StatusAliasSerNum')
     )
     op.create_index(op.f('ix_StatusAlias_SourceDatabaseSerNum'), 'StatusAlias', ['SourceDatabaseSerNum'], unique=False)
+    op.create_table('purpose',
+    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('title', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('description', mysql.BIGINT(display_width=20), nullable=False),
+    sa.ForeignKeyConstraint(['description'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.ForeignKeyConstraint(['title'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.PrimaryKeyConstraint('ID'),
+    schema='alembic_QuestionnaireDB'
+    )
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_purpose_description'), 'purpose', ['description'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_purpose_title'), 'purpose', ['title'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_table('respondent',
+    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('title', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('description', mysql.BIGINT(display_width=20), nullable=False),
+    sa.ForeignKeyConstraint(['description'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.ForeignKeyConstraint(['title'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.PrimaryKeyConstraint('ID'),
+    schema='alembic_QuestionnaireDB'
+    )
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_respondent_description'), 'respondent', ['description'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_respondent_title'), 'respondent', ['title'], unique=False, schema='alembic_QuestionnaireDB')
     op.create_table('module',
     sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False, comment='Primary Key'),
     sa.Column('operation', mysql.TINYINT(display_width=1), server_default=sa.text('7'), nullable=False, comment='List of available operations for the module (R/W/D)'),
@@ -1547,7 +1546,8 @@ def upgrade() -> None:
     sa.Column('EducationalMaterialControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('PatientSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), server_default=sa.text('0'), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.ForeignKeyConstraint(['CronLogSerNum'], ['CronLog.CronLogSerNum'], onupdate='CASCADE'),
     sa.ForeignKeyConstraint(['EducationalMaterialControlSerNum'], ['EducationalMaterialControl.EducationalMaterialControlSerNum'], onupdate='CASCADE'),
@@ -1658,7 +1658,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_PostControl_PublishFlag'), 'PostControl', ['PublishFlag'], unique=False)
     op.create_table('QuestionnaireControl',
     sa.Column('QuestionnaireControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
-    sa.Column('QuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=False),
+    sa.Column('alembic_QuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('QuestionnaireName_EN', sa.String(length=2056), nullable=False),
     sa.Column('QuestionnaireName_FR', sa.String(length=2056), nullable=False),
     sa.Column('Intro_EN', sa.Text(), nullable=False),
@@ -1675,49 +1675,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_QuestionnaireControl_LastUpdatedBy'), 'QuestionnaireControl', ['LastUpdatedBy'], unique=False)
     op.create_index(op.f('ix_QuestionnaireControl_PublishFlag'), 'QuestionnaireControl', ['PublishFlag'], unique=False)
     op.create_index(op.f('ix_QuestionnaireControl_QuestionnaireControlSerNum'), 'QuestionnaireControl', ['QuestionnaireControlSerNum'], unique=False)
-    op.create_index(op.f('ix_QuestionnaireControl_QuestionnaireDBSerNum'), 'QuestionnaireControl', ['QuestionnaireDBSerNum'], unique=False)
-    op.create_table('questionnaire',
-    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('OAUserId', mysql.BIGINT(display_width=20), server_default=sa.text('-1'), nullable=False),
-    sa.Column('purposeId', mysql.BIGINT(display_width=20), server_default=sa.text('1'), nullable=False),
-    sa.Column('respondentId', mysql.BIGINT(display_width=20), server_default=sa.text('1'), nullable=False),
-    sa.Column('title', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('nickname', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('category', mysql.INTEGER(display_width=11), server_default=sa.text('-1'), nullable=False),
-    sa.Column('description', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('instruction', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('final', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
-    sa.Column('version', mysql.INTEGER(display_width=11), server_default=sa.text('1'), nullable=False),
-    sa.Column('parentId', mysql.BIGINT(display_width=20), server_default=sa.text('-1'), nullable=False),
-    sa.Column('private', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
-    sa.Column('optionalFeedback', mysql.TINYINT(display_width=4), server_default=sa.text('1'), nullable=False),
-    sa.Column('visualization', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False, comment='0 = regular view of the answers, 1 = graph'),
-    sa.Column('logo', sa.String(length=512), nullable=False),
-    sa.Column('deleted', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
-    sa.Column('deletedBy', sa.String(length=255), nullable=False),
-    sa.Column('creationDate', sa.DateTime(), nullable=False),
-    sa.Column('createdBy', sa.String(length=255), nullable=False),
-    sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
-    sa.Column('updatedBy', sa.String(length=255), nullable=False),
-    sa.Column('legacyName', sa.String(length=255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.'),
-    sa.ForeignKeyConstraint(['description'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.ForeignKeyConstraint(['instruction'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.ForeignKeyConstraint(['nickname'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.ForeignKeyConstraint(['purposeId'], ['QuestionnaireDB.purpose.ID'], ),
-    sa.ForeignKeyConstraint(['respondentId'], ['QuestionnaireDB.respondent.ID'], ),
-    sa.ForeignKeyConstraint(['title'], ['QuestionnaireDB.dictionary.contentId'], ),
-    sa.PrimaryKeyConstraint('ID'),
-    schema='alembic_QuestionnaireDB'
-    )
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_OAUserId'), 'questionnaire', ['OAUserId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_deleted'), 'questionnaire', ['deleted'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_description'), 'questionnaire', ['description'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_instruction'), 'questionnaire', ['instruction'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_nickname'), 'questionnaire', ['nickname'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_parentId'), 'questionnaire', ['parentId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_purposeId'), 'questionnaire', ['purposeId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_respondentId'), 'questionnaire', ['respondentId'], unique=False, schema='alembic_QuestionnaireDB')
-    op.create_index(op.f('ix_QuestionnaireDB_questionnaire_title'), 'questionnaire', ['title'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_QuestionnaireControl_alembic_QuestionnaireDBSerNum'), 'QuestionnaireControl', ['alembic_QuestionnaireDBSerNum'], unique=False)
     op.create_table('TestControl',
     sa.Column('TestControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('Name_EN', sa.String(length=200), nullable=False),
@@ -1845,6 +1803,48 @@ def upgrade() -> None:
     op.create_index(op.f('ix_TestResultControl_EducationalMaterialControlSerNum'), 'TestResultControl', ['EducationalMaterialControlSerNum'], unique=False)
     op.create_index(op.f('ix_TestResultControl_LastUpdatedBy'), 'TestResultControl', ['LastUpdatedBy'], unique=False)
     op.create_index(op.f('ix_TestResultControl_SourceDatabaseSerNum'), 'TestResultControl', ['SourceDatabaseSerNum'], unique=False)
+    op.create_table('questionnaire',
+    sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('OAUserId', mysql.BIGINT(display_width=20), server_default=sa.text('-1'), nullable=False),
+    sa.Column('purposeId', mysql.BIGINT(display_width=20), server_default=sa.text('1'), nullable=False),
+    sa.Column('respondentId', mysql.BIGINT(display_width=20), server_default=sa.text('1'), nullable=False),
+    sa.Column('title', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('nickname', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('category', mysql.INTEGER(display_width=11), server_default=sa.text('-1'), nullable=False),
+    sa.Column('description', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('instruction', mysql.BIGINT(display_width=20), nullable=False),
+    sa.Column('final', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
+    sa.Column('version', mysql.INTEGER(display_width=11), server_default=sa.text('1'), nullable=False),
+    sa.Column('parentId', mysql.BIGINT(display_width=20), server_default=sa.text('-1'), nullable=False),
+    sa.Column('private', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
+    sa.Column('optionalFeedback', mysql.TINYINT(display_width=4), server_default=sa.text('1'), nullable=False),
+    sa.Column('visualization', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False, comment='0 = regular view of the answers, 1 = graph'),
+    sa.Column('logo', sa.String(length=512), nullable=False),
+    sa.Column('deleted', mysql.TINYINT(display_width=4), server_default=sa.text('0'), nullable=False),
+    sa.Column('deletedBy', sa.String(length=255), nullable=False),
+    sa.Column('creationDate', sa.DateTime(), nullable=False),
+    sa.Column('createdBy', sa.String(length=255), nullable=False),
+    sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
+    sa.Column('updatedBy', sa.String(length=255), nullable=False),
+    sa.Column('legacyName', sa.String(length=255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.'),
+    sa.ForeignKeyConstraint(['description'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.ForeignKeyConstraint(['instruction'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.ForeignKeyConstraint(['nickname'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.ForeignKeyConstraint(['purposeId'], ['alembic_QuestionnaireDB.purpose.ID'], ),
+    sa.ForeignKeyConstraint(['respondentId'], ['alembic_QuestionnaireDB.respondent.ID'], ),
+    sa.ForeignKeyConstraint(['title'], ['alembic_QuestionnaireDB.dictionary.contentId'], ),
+    sa.PrimaryKeyConstraint('ID'),
+    schema='alembic_QuestionnaireDB'
+    )
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_OAUserId'), 'questionnaire', ['OAUserId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_deleted'), 'questionnaire', ['deleted'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_description'), 'questionnaire', ['description'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_instruction'), 'questionnaire', ['instruction'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_nickname'), 'questionnaire', ['nickname'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_parentId'), 'questionnaire', ['parentId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_purposeId'), 'questionnaire', ['purposeId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_respondentId'), 'questionnaire', ['respondentId'], unique=False, schema='alembic_QuestionnaireDB')
+    op.create_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_title'), 'questionnaire', ['title'], unique=False, schema='alembic_QuestionnaireDB')
     op.create_table('cronControlPatient',
     sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False, comment='Primary key. Auto-increment.'),
     sa.Column('cronControlPatientSerNum', mysql.INTEGER(display_width=11), nullable=False, comment='Foreign key with PatientSerNum from patient control. Mandatory.'),
@@ -1944,7 +1944,8 @@ def upgrade() -> None:
     sa.Column('PatientSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('PostControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), server_default=sa.text('0'), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.ForeignKeyConstraint(['CronLogSerNum'], ['CronLog.CronLogSerNum'], onupdate='CASCADE'),
     sa.ForeignKeyConstraint(['PatientSerNum'], ['Patient.PatientSerNum'], onupdate='CASCADE'),
@@ -1999,7 +2000,8 @@ def upgrade() -> None:
     sa.Column('NotificationControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('RefTableRowSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=True),
-    sa.Column('ReadStatus', mysql.TINYINT(display_width=1), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.Column('RefTableRowTitle_EN', sa.String(length=500), nullable=False),
     sa.Column('RefTableRowTitle_FR', sa.String(length=500), nullable=False),
@@ -2028,7 +2030,8 @@ def upgrade() -> None:
     sa.Column('TestValue', sa.String(length=255), nullable=False),
     sa.Column('UnitDescription', sa.String(length=40), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), server_default=sa.text('0'), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.ForeignKeyConstraint(['PatientSerNum'], ['Patient.PatientSerNum'], onupdate='CASCADE'),
     sa.ForeignKeyConstraint(['TestExpressionSerNum'], ['TestExpression.TestExpressionSerNum'], onupdate='CASCADE'),
@@ -2061,7 +2064,7 @@ def upgrade() -> None:
     sa.Column('QuestionnaireControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('PatientSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('PatientQuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=True),
+    sa.Column('Patientalembic_QuestionnaireDBSerNum', mysql.INTEGER(display_width=11), nullable=True),
     sa.Column('CompletedFlag', mysql.TINYINT(display_width=4), nullable=False),
     sa.Column('CompletionDate', sa.DateTime(), nullable=True),
     sa.Column('SessionId', sa.Text(), nullable=False),
@@ -2072,8 +2075,8 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('QuestionnaireSerNum')
     )
     op.create_index(op.f('ix_Questionnaire_CronLogSerNum'), 'Questionnaire', ['CronLogSerNum'], unique=False)
-    op.create_index(op.f('ix_Questionnaire_PatientQuestionnaireDBSerNum'), 'Questionnaire', ['PatientQuestionnaireDBSerNum'], unique=False)
     op.create_index(op.f('ix_Questionnaire_PatientSerNum'), 'Questionnaire', ['PatientSerNum'], unique=False)
+    op.create_index(op.f('ix_Questionnaire_Patientalembic_QuestionnaireDBSerNum'), 'Questionnaire', ['Patientalembic_QuestionnaireDBSerNum'], unique=False)
     op.create_index(op.f('ix_Questionnaire_QuestionnaireControlSerNum'), 'Questionnaire', ['QuestionnaireControlSerNum'], unique=False)
     op.create_table('TestResultAdditionalLinks',
     sa.Column('TestResultAdditionalLinksSerNum', mysql.INTEGER(display_width=11), nullable=False),
@@ -2110,7 +2113,8 @@ def upgrade() -> None:
     sa.Column('PatientSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('PostControlSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), server_default=sa.text('0'), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.ForeignKeyConstraint(['CronLogSerNum'], ['CronLog.CronLogSerNum'], onupdate='CASCADE'),
     sa.ForeignKeyConstraint(['PatientSerNum'], ['Patient.PatientSerNum'], onupdate='CASCADE'),
@@ -2147,7 +2151,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_cronControlPost_TreatmentTeamMessage_publishFlag'), 'cronControlPost_TreatmentTeamMessage', ['publishFlag'], unique=False)
     op.create_table('study',
     sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False, comment='Primary key. Auto-increment.'),
-    sa.Column('consentQuestionnaireId', mysql.BIGINT(display_width=20), nullable=True, comment='QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.'),
+    sa.Column('consentQuestionnaireId', mysql.BIGINT(display_width=20), nullable=True, comment='alembic_QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.'),
     sa.Column('code', sa.String(length=64), nullable=True, comment='Study ID entered by the user. Mandatory.'),
     sa.Column('title_EN', sa.String(length=256), nullable=True, comment='English title of the study. Mandatory.'),
     sa.Column('title_FR', sa.String(length=256), nullable=True, comment='French title of the study. Mandatory.'),
@@ -2164,7 +2168,7 @@ def upgrade() -> None:
     sa.Column('createdBy', sa.String(length=255), nullable=True, comment='Username of the creator of the record.'),
     sa.Column('lastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=True, comment='Date and time of the last modification'),
     sa.Column('updatedBy', sa.String(length=255), nullable=True, comment='Username of the last user who modify the record'),
-    sa.ForeignKeyConstraint(['consentQuestionnaireId'], ['QuestionnaireDB.questionnaire.ID'], ),
+    sa.ForeignKeyConstraint(['consentQuestionnaireId'], ['alembic_QuestionnaireDB.questionnaire.ID'], ),
     sa.PrimaryKeyConstraint('ID'),
     sa.UniqueConstraint('ID')
     )
@@ -2235,7 +2239,7 @@ def upgrade() -> None:
     sa.Column('ID', mysql.BIGINT(display_width=20), nullable=False),
     sa.Column('studyId', mysql.BIGINT(display_width=20), nullable=False),
     sa.Column('questionnaireId', mysql.BIGINT(display_width=20), nullable=False),
-    sa.ForeignKeyConstraint(['questionnaireId'], ['QuestionnaireDB.questionnaire.ID'], ),
+    sa.ForeignKeyConstraint(['questionnaireId'], ['alembic_QuestionnaireDB.questionnaire.ID'], ),
     sa.ForeignKeyConstraint(['studyId'], ['study.ID'], ),
     sa.PrimaryKeyConstraint('ID')
     )
@@ -2260,9 +2264,11 @@ def upgrade() -> None:
     sa.Column('RoomLocation_EN', sa.String(length=100), nullable=False),
     sa.Column('RoomLocation_FR', sa.String(length=100), nullable=False),
     sa.Column('Checkin', mysql.TINYINT(display_width=4), nullable=False),
+    sa.Column('CheckinUsername', sa.String(length=225), server_default=sa.text("''"), nullable=False, comment='Firebase username of the user who checked in.'),
     sa.Column('ChangeRequest', mysql.TINYINT(display_width=4), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
-    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('SessionId', sa.Text(), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.ForeignKeyConstraint(['AliasExpressionSerNum'], ['AliasExpression.AliasExpressionSerNum'], onupdate='CASCADE'),
@@ -2301,9 +2307,10 @@ def upgrade() -> None:
     sa.Column('CreatedTimeStamp', sa.DateTime(), nullable=False),
     sa.Column('TransferStatus', sa.String(length=10), nullable=False),
     sa.Column('TransferLog', sa.String(length=1000), nullable=False),
-    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('SessionId', sa.Text(), nullable=False),
     sa.Column('DateAdded', sa.DateTime(), nullable=False),
+    sa.Column('ReadStatus', mysql.INTEGER(display_width=11), nullable=False, comment='Deprecated'),
+    sa.Column('ReadBy', mysql.LONGTEXT(), server_default=sa.text("'[]'"), nullable=False),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
     sa.ForeignKeyConstraint(['AliasExpressionSerNum'], ['AliasExpression.AliasExpressionSerNum'], onupdate='CASCADE'),
     sa.ForeignKeyConstraint(['CronLogSerNum'], ['CronLog.CronLogSerNum'], onupdate='CASCADE'),
@@ -2490,8 +2497,8 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_TestResultAdditionalLinks_TestResultControlSerNum'), table_name='TestResultAdditionalLinks')
     op.drop_table('TestResultAdditionalLinks')
     op.drop_index(op.f('ix_Questionnaire_QuestionnaireControlSerNum'), table_name='Questionnaire')
+    op.drop_index(op.f('ix_Questionnaire_Patientalembic_QuestionnaireDBSerNum'), table_name='Questionnaire')
     op.drop_index(op.f('ix_Questionnaire_PatientSerNum'), table_name='Questionnaire')
-    op.drop_index(op.f('ix_Questionnaire_PatientQuestionnaireDBSerNum'), table_name='Questionnaire')
     op.drop_index(op.f('ix_Questionnaire_CronLogSerNum'), table_name='Questionnaire')
     op.drop_table('Questionnaire')
     op.drop_index(op.f('ix_PatientsForPatients_PostControlSerNum'), table_name='PatientsForPatients')
@@ -2546,6 +2553,16 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_cronControlPatient_cronType'), table_name='cronControlPatient')
     op.drop_index(op.f('ix_cronControlPatient_cronControlPatientSerNum'), table_name='cronControlPatient')
     op.drop_table('cronControlPatient')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_title'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_respondentId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_purposeId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_parentId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_nickname'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_instruction'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_description'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_deleted'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_questionnaire_OAUserId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
+    op.drop_table('questionnaire', schema='alembic_QuestionnaireDB')
     op.drop_index(op.f('ix_TestResultControl_SourceDatabaseSerNum'), table_name='TestResultControl')
     op.drop_index(op.f('ix_TestResultControl_LastUpdatedBy'), table_name='TestResultControl')
     op.drop_index(op.f('ix_TestResultControl_EducationalMaterialControlSerNum'), table_name='TestResultControl')
@@ -2571,17 +2588,7 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_TestControl_LastUpdatedBy'), table_name='TestControl')
     op.drop_index(op.f('ix_TestControl_EducationalMaterialControlSerNum'), table_name='TestControl')
     op.drop_table('TestControl')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_title'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_respondentId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_purposeId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_parentId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_nickname'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_instruction'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_description'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_deleted'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_questionnaire_OAUserId'), table_name='questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_table('questionnaire', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireControl_QuestionnaireDBSerNum'), table_name='QuestionnaireControl')
+    op.drop_index(op.f('ix_QuestionnaireControl_alembic_QuestionnaireDBSerNum'), table_name='QuestionnaireControl')
     op.drop_index(op.f('ix_QuestionnaireControl_QuestionnaireControlSerNum'), table_name='QuestionnaireControl')
     op.drop_index(op.f('ix_QuestionnaireControl_PublishFlag'), table_name='QuestionnaireControl')
     op.drop_index(op.f('ix_QuestionnaireControl_LastUpdatedBy'), table_name='QuestionnaireControl')
@@ -2614,18 +2621,18 @@ def downgrade() -> None:
     op.drop_table('DiagnosisTranslation')
     op.drop_index(op.f('ix_module_categoryModuleId'), table_name='module')
     op.drop_table('module')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_respondent_title'), table_name='respondent', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_respondent_description'), table_name='respondent', schema='alembic_QuestionnaireDB')
+    op.drop_table('respondent', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_purpose_title'), table_name='purpose', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_purpose_description'), table_name='purpose', schema='alembic_QuestionnaireDB')
+    op.drop_table('purpose', schema='alembic_QuestionnaireDB')
     op.drop_index(op.f('ix_StatusAlias_SourceDatabaseSerNum'), table_name='StatusAlias')
     op.drop_table('StatusAlias')
     op.drop_index(op.f('ix_SecurityAnswer_SecurityQuestionSerNum'), table_name='SecurityAnswer')
     op.drop_index(op.f('ix_SecurityAnswer_PatientSerNum'), table_name='SecurityAnswer')
     op.drop_index('SecurityQuestionSerNum', table_name='SecurityAnswer')
     op.drop_table('SecurityAnswer')
-    op.drop_index(op.f('ix_QuestionnaireDB_respondent_title'), table_name='respondent', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_respondent_description'), table_name='respondent', schema='alembic_QuestionnaireDB')
-    op.drop_table('respondent', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_purpose_title'), table_name='purpose', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_purpose_description'), table_name='purpose', schema='alembic_QuestionnaireDB')
-    op.drop_table('purpose', schema='alembic_QuestionnaireDB')
     op.drop_index(op.f('ix_Patient_Hospital_Identifier_PatientSerNum'), table_name='Patient_Hospital_Identifier')
     op.drop_index(op.f('ix_Patient_Hospital_Identifier_MRN'), table_name='Patient_Hospital_Identifier')
     op.drop_index(op.f('ix_Patient_Hospital_Identifier_Hospital_Identifier_Type_Code'), table_name='Patient_Hospital_Identifier')
@@ -2708,6 +2715,15 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_alertMH_updatedBy'), table_name='alertMH')
     op.drop_table('alertMH')
     op.drop_table('alert')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_language_name'), table_name='language', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_language_deleted'), table_name='language', schema='alembic_QuestionnaireDB')
+    op.drop_table('language', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_dictionary_tableId'), table_name='dictionary', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_dictionary_languageId'), table_name='dictionary', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_dictionary_deleted'), table_name='dictionary', schema='alembic_QuestionnaireDB')
+    op.drop_index(op.f('ix_alembic_QuestionnaireDB_dictionary_contentId'), table_name='dictionary', schema='alembic_QuestionnaireDB')
+    op.drop_table('dictionary', schema='alembic_QuestionnaireDB')
+    op.drop_table('definitionTable', schema='alembic_QuestionnaireDB')
     op.drop_table('accesslevel')
     op.drop_index(op.f('ix_Venue_SourceUID'), table_name='Venue')
     op.drop_index(op.f('ix_Venue_SourceDatabaseSerNum'), table_name='Venue')
@@ -2756,19 +2772,10 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_Resource_ResourceAriaSer'), table_name='Resource')
     op.drop_table('Resource')
     op.drop_index(op.f('ix_QuestionnaireMH_QuestionnaireControlSerNum'), table_name='QuestionnaireMH')
+    op.drop_index(op.f('ix_QuestionnaireMH_Patientalembic_QuestionnaireDBSerNum'), table_name='QuestionnaireMH')
     op.drop_index(op.f('ix_QuestionnaireMH_PatientSerNum'), table_name='QuestionnaireMH')
-    op.drop_index(op.f('ix_QuestionnaireMH_PatientQuestionnaireDBSerNum'), table_name='QuestionnaireMH')
     op.drop_index(op.f('ix_QuestionnaireMH_CronLogSerNum'), table_name='QuestionnaireMH')
     op.drop_table('QuestionnaireMH')
-    op.drop_index(op.f('ix_QuestionnaireDB_language_name'), table_name='language', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_language_deleted'), table_name='language', schema='alembic_QuestionnaireDB')
-    op.drop_table('language', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_dictionary_tableId'), table_name='dictionary', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_dictionary_languageId'), table_name='dictionary', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_dictionary_deleted'), table_name='dictionary', schema='alembic_QuestionnaireDB')
-    op.drop_index(op.f('ix_QuestionnaireDB_dictionary_contentId'), table_name='dictionary', schema='alembic_QuestionnaireDB')
-    op.drop_table('dictionary', schema='alembic_QuestionnaireDB')
-    op.drop_table('definitionTable', schema='alembic_QuestionnaireDB')
     op.drop_index(op.f('ix_QuestionnaireControlMH_LastUpdatedBy'), table_name='QuestionnaireControlMH')
     op.drop_table('QuestionnaireControlMH')
     op.drop_index(op.f('ix_PushNotification_RefTableRowSerNum'), table_name='PushNotification')

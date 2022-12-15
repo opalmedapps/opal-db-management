@@ -1,5 +1,4 @@
 # coding: utf-8
-"""This file contains the model definitions for all regular tables in OpalDB."""
 from sqlalchemy import Column, Date, DateTime, Enum, Float, ForeignKey, Index, String, TIMESTAMP, Table, Text, Time, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
 from sqlalchemy.orm import relationship
@@ -19,6 +18,7 @@ t_Admin = Table(
     Column('Phone', BIGINT(20)),
     Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 )
+
 
 class AliasExpressionMH(DDL_Base):
     __tablename__ = 'AliasExpressionMH'
@@ -738,7 +738,7 @@ class QuestionnaireControlMH(DDL_Base):
 
     QuestionnaireControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False)
+    alembic_QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False)
     QuestionnaireName_EN = Column(String(2056), nullable=False)
     QuestionnaireName_FR = Column(String(2056), nullable=False)
     Intro_EN = Column(Text, nullable=False)
@@ -753,19 +753,19 @@ class QuestionnaireControlMH(DDL_Base):
 
 class DefinitionTable(DDL_Base):
     __tablename__ = 'definitionTable'
-    __table_args__ = {'schema': 'QuestionnaireDB'}
+    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
 
-    Def_ID = Column("ID", BIGINT(20), primary_key=True)
+    ID = Column(BIGINT(20), primary_key=True)
     name = Column(String(255), nullable=False)
 
 
 class Dictionary(DDL_Base):
     __tablename__ = 'dictionary'
-    __table_args__ = {'schema': 'QuestionnaireDB'}
+    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
 
-    Dict_ID = Column("ID", BIGINT(20), primary_key=True)
-    tableId = Column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
-    languageId = Column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
+    ID = Column(BIGINT(20), primary_key=True)
+    tableId = Column(ForeignKey('alembic_QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
+    languageId = Column(ForeignKey('alembic_QuestionnaireDB.language.ID'), nullable=False, index=True)
     contentId = Column(BIGINT(20), nullable=False, index=True)
     content = Column(MEDIUMTEXT, nullable=False)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
@@ -775,17 +775,17 @@ class Dictionary(DDL_Base):
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     updatedBy = Column(String(255), nullable=False)
 
-    language = relationship('QuestionnaireDB.language', primaryjoin='Dictionary.languageId == QuestionnaireDB.language.ID')
+    language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
     definitionTable = relationship('DefinitionTable')
 
 
 class QuestionnaireDBLanguage(DDL_Base):
     __tablename__ = 'language'
-    __table_args__ = {'schema': 'QuestionnaireDB'}
+    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
 
-    Lang_ID = Column("ID", BIGINT(20), primary_key=True)
+    ID = Column(BIGINT(20), primary_key=True)
     isoLang = Column(String(2), nullable=False)
-    name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    name = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
     deletedBy = Column(String(255), nullable=False)
     creationDate = Column(DateTime, nullable=False)
@@ -793,7 +793,7 @@ class QuestionnaireDBLanguage(DDL_Base):
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     updatedBy = Column(String(255), nullable=False)
 
-    dictionary = relationship('QuestionnaireDB.Dictionary', primaryjoin='QuestionnaireDB.language.name == Dictionary.contentId')
+    dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
 
 
 class QuestionnaireMH(DDL_Base):
@@ -805,7 +805,7 @@ class QuestionnaireMH(DDL_Base):
     QuestionnaireControlSerNum = Column(INTEGER(11), nullable=False, index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    PatientQuestionnaireDBSerNum = Column(INTEGER(11), index=True)
+    Patientalembic_QuestionnaireDBSerNum = Column(INTEGER(11), index=True)
     CompletedFlag = Column(TINYINT(4), nullable=False)
     CompletionDate = Column(DateTime)
     ModificationAction = Column(String(25), nullable=False)
@@ -1490,11 +1490,11 @@ class PatientHospitalIdentifier(DDL_Base):
 
 class Purpose(DDL_Base):
     __tablename__ = 'purpose'
-    __table_args__ = {'schema': 'QuestionnaireDB'}
+    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
 
-    Purp_ID = Column("ID", BIGINT(20), primary_key=True)
-    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    ID = Column(BIGINT(20), primary_key=True)
+    title = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
     dictionary = relationship('Dictionary', primaryjoin='Purpose.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
@@ -1502,11 +1502,11 @@ class Purpose(DDL_Base):
 
 class Respondent(DDL_Base):
     __tablename__ = 'respondent'
-    __table_args__ = {'schema': 'QuestionnaireDB'}
+    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
 
-    Resp_ID = Column("ID", BIGINT(20), primary_key=True)
-    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    ID = Column(BIGINT(20), primary_key=True)
+    title = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
     dictionary = relationship('Dictionary', primaryjoin='Respondent.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Respondent.title == Dictionary.contentId')
@@ -1603,7 +1603,8 @@ class EducationalMaterial(DDL_Base):
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text("0"))
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     CronLog = relationship('CronLog')
@@ -1719,7 +1720,7 @@ class QuestionnaireControl(DDL_Base):
     __tablename__ = 'QuestionnaireControl'
 
     QuestionnaireControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False, index=True)
+    alembic_QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False, index=True)
     QuestionnaireName_EN = Column(String(2056), nullable=False)
     QuestionnaireName_FR = Column(String(2056), nullable=False)
     Intro_EN = Column(Text, nullable=False)
@@ -1736,17 +1737,17 @@ class QuestionnaireControl(DDL_Base):
 
 class QuestionnaireDBQuestionnaire(DDL_Base):
     __tablename__ = 'questionnaire'
-    __table_args__ = {'schema': 'QuestionnaireDB'}
+    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
 
-    Qst_ID = Column("ID", BIGINT(20), primary_key=True)
+    ID = Column(BIGINT(20), primary_key=True)
     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
-    purposeId = Column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text("1"))
-    respondentId = Column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text("1"))
-    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    nickname = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    purposeId = Column(ForeignKey('alembic_QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text("1"))
+    respondentId = Column(ForeignKey('alembic_QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text("1"))
+    title = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    nickname = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     category = Column(INTEGER(11), nullable=False, server_default=text("-1"))
-    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    instruction = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    instruction = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     final = Column(TINYINT(4), nullable=False, server_default=text("0"))
     version = Column(INTEGER(11), nullable=False, server_default=text("1"))
     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
@@ -2019,7 +2020,8 @@ class Announcement(DDL_Base):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text("0"))
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     CronLog = relationship('CronLog')
@@ -2074,7 +2076,8 @@ class Notification(DDL_Base):
     NotificationControlSerNum = Column(ForeignKey('NotificationControl.NotificationControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     RefTableRowSerNum = Column(INTEGER(11), nullable=False, index=True)
     DateAdded = Column(DateTime)
-    ReadStatus = Column(TINYINT(1), nullable=False)
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     RefTableRowTitle_EN = Column(String(500), nullable=False)
     RefTableRowTitle_FR = Column(String(500), nullable=False)
@@ -2105,7 +2108,8 @@ class PatientTestResult(DDL_Base):
     TestValue = Column(String(255), nullable=False)
     UnitDescription = Column(String(40), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text("0"))
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     Patient = relationship('Patient')
@@ -2137,7 +2141,7 @@ class Questionnaire(DDL_Base):
     QuestionnaireControlSerNum = Column(ForeignKey('QuestionnaireControl.QuestionnaireControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    PatientQuestionnaireDBSerNum = Column(INTEGER(11), index=True)
+    Patientalembic_QuestionnaireDBSerNum = Column(INTEGER(11), index=True)
     CompletedFlag = Column(TINYINT(4), nullable=False)
     CompletionDate = Column(DateTime)
     SessionId = Column(Text, nullable=False)
@@ -2187,7 +2191,8 @@ class TxTeamMessage(DDL_Base):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text("0"))
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     CronLog = relationship('CronLog')
@@ -2225,7 +2230,7 @@ class Study(DDL_Base):
     __tablename__ = 'study'
 
     ID = Column(BIGINT(20), primary_key=True, unique=True, comment='Primary key. Auto-increment.')
-    consentQuestionnaireId = Column(ForeignKey('QuestionnaireDB.questionnaire.ID'), index=True, comment='QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.')
+    consentQuestionnaireId = Column(ForeignKey('alembic_QuestionnaireDB.questionnaire.ID'), index=True, comment='alembic_QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.')
     code = Column(String(64), comment='Study ID entered by the user. Mandatory.')
     title_EN = Column(String(256), comment='English title of the study. Mandatory.')
     title_FR = Column(String(256), comment='French title of the study. Mandatory.')
@@ -2300,7 +2305,7 @@ class QuestionnaireStudy(DDL_Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     studyId = Column(ForeignKey('study.ID'), nullable=False, index=True)
-    questionnaireId = Column(ForeignKey('QuestionnaireDB.questionnaire.ID'), nullable=False, index=True)
+    questionnaireId = Column(ForeignKey('alembic_QuestionnaireDB.questionnaire.ID'), nullable=False, index=True)
 
     questionnaire = relationship('Questionnaire')
     study = relationship('Study')
@@ -2327,9 +2332,11 @@ class Appointment(DDL_Base):
     RoomLocation_EN = Column(String(100), nullable=False)
     RoomLocation_FR = Column(String(100), nullable=False)
     Checkin = Column(TINYINT(4), nullable=False)
+    CheckinUsername = Column(String(225), nullable=False, server_default=text("''"), comment='Firebase username of the user who checked in.')
     ChangeRequest = Column(TINYINT(4), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False)
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     SessionId = Column(Text, nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
@@ -2360,9 +2367,10 @@ class Document(DDL_Base):
     CreatedTimeStamp = Column(DateTime, nullable=False)
     TransferStatus = Column(String(10), nullable=False)
     TransferLog = Column(String(1000), nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False)
     SessionId = Column(Text, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
+    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     AliasExpression = relationship('AliasExpression')
