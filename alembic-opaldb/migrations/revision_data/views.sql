@@ -6,7 +6,17 @@ CREATE OR REPLACE VIEW v_masterSourceTestResult AS
 SELECT TestExpressionSerNum AS ID, externalId, TestCode AS `code`, ExpressionName AS description, SourceDatabaseSerNum AS `source`,
 deleted, deletedBy, DateAdded AS creationDate, createdBy, LastUpdated AS lastUpdated, updatedBy FROM TestExpression;
 
-CREATE OR REPLACE VIEW v_login AS select `OAUser`.`OAUserSerNum` AS `id`,`OAUser`.`Username` AS `username`,`OAUser`.`Password` AS `password`,`OAUser`.`Language` AS `language`,`OAUser`.`oaRoleId` AS `role`,`OAUser`.`type` AS `type` from `OAUser` WHERE `deleted` = 0;
+CREATE OR REPLACE VIEW v_login AS 
+    select 
+        `OAUser`.`OAUserSerNum` AS `id`,
+        `OAUser`.`Username` AS `username`,
+        `OAUser`.`Password` AS `password`,
+        `OAUser`.`Language` AS `language`,
+        `OAUser`.`oaRoleId` AS `role`,
+        `OAUser`.`type` AS `type` 
+    from `OAUser` 
+    WHERE `deleted` = 0
+    ;
 
 
 /* dbv_opaldb/data/revisions/3/ */

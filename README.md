@@ -131,6 +131,9 @@ Note must be run from the directory corresponding to the database you want to ma
 
 Then, to apply your migration
 `alembic upgrade head`
+You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
+For example to migrate to version file 'e97dfdd124a7_initial_opaldb_schema.py'
+`alembic upgrade e97`
 
 #### Version controlling triggers, events, functions, procedures
 

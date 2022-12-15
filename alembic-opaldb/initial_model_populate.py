@@ -28,8 +28,9 @@ if __name__ == '__main__':
     # Read environment variables
     load_dotenv()
     HOST = os.getenv('DOCKER_HOST')
+    PORT = os.getenv('MARIADB_PORT')
     USER = os.getenv('MARIADB_USER')
     PASS = os.getenv('MARIADB_PASSWORD')
-    DB = "OpalDB"
+    DB = os.getenv('LEGACY_OPAL_DB_NAME')
     # Generate models for OpalDB
-    generate_models(HOST, USER, PASS, DB, 'models.py')
+    generate_models(HOST+':'+PORT, USER, PASS, DB, 'models.py')
