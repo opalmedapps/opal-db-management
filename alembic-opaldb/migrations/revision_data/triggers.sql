@@ -1,3 +1,5 @@
+/* dbv_opaldb/data/revisions/1/ */
+
 CREATE TRIGGER `alert_after_delete` AFTER DELETE ON `alert` FOR EACH ROW BEGIN
 	INSERT INTO `alertMH` (`alertId`, `contact`, `subject`, `body`, `trigger`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `action`, `active`, `deleted`, `deletedBy`) VALUES (OLD.ID, OLD.contact, OLD.subject, OLD.body, OLD.trigger, NOW(), OLD.createdBy, OLD.lastUpdated, OLD.updatedBy, 'DELETE', OLD.active, OLD.deleted, OLD.deletedBy);
 END;
@@ -426,6 +428,124 @@ if NEW.LastPublished <=> OLD.LastPublished THEN
 END IF;
 END;
 
+/* dbv_opaldb/data/revisions/2/ */
+
+DROP TRIGGER `alias_expression_delete_trigger`;
+DROP TRIGGER `alias_expression_insert_trigger`;
+DROP TRIGGER `alias_expression_update_trigger`;
 
 
+CREATE TRIGGER `alias_expression_delete_trigger` AFTER DELETE ON `AliasExpression` FOR EACH ROW BEGIN
+   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `masterSourceAliasId`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (OLD.AliasSerNum, OLD.masterSourceAliasId, OLD.ExpressionName, OLD.Description, OLD.LastTransferred, OLD.LastUpdatedBy, OLD.SessionId, 'DELETE', NOW());
+END;
 
+CREATE TRIGGER `alias_expression_insert_trigger` AFTER INSERT ON `AliasExpression` FOR EACH ROW BEGIN
+   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `masterSourceAliasId`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (NEW.AliasSerNum, NEW.masterSourceAliasId, NEW.ExpressionName, NEW.Description, NEW.LastTransferred, NEW.LastUpdatedBy, NEW.SessionId, 'INSERT', NOW());
+END;
+
+CREATE TRIGGER `alias_expression_update_trigger` AFTER UPDATE ON `AliasExpression` FOR EACH ROW BEGIN
+if NEW.LastTransferred <=> OLD.LastTransferred THEN
+   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `masterSourceAliasId`, `ExpressionName`, Description, `LastTransferred`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (NEW.AliasSerNum, NEW.masterSourceAliasId, NEW.ExpressionName, NEW.Description, NEW.LastTransferred, NEW.LastUpdatedBy, NEW.SessionId, 'UPDATE', NOW());
+END IF;
+END;
+
+CREATE TRIGGER `resourcePending_after_insert` AFTER INSERT ON `resourcePending` FOR EACH ROW BEGIN
+	INSERT INTO resourcePendingMH (resourcePendingId, action, sourceName, appointmentId, resources, `level`, creationDate, createdBy, lastUpdated, updatedBy)
+	VALUES
+	(NEW.ID, 'INSERT', NEW.sourceName, NEW.appointmentId, NEW.resources, NEW.`level`, NOW(), NEW.createdBy, NEW.lastUpdated, NEW.updatedBy);
+END;
+
+CREATE TRIGGER `resourcePending_after_update` AFTER UPDATE ON `resourcePending` FOR EACH ROW BEGIN
+	IF NEW.lastUpdated != OLD.lastUpdated THEN
+		INSERT INTO resourcePendingMH (resourcePendingId, action, sourceName, appointmentId, resources, `level`, creationDate, createdBy, lastUpdated, updatedBy)
+		VALUES
+		(NEW.ID, 'UPDATE', NEW.sourceName, NEW.appointmentId, NEW.resources, NEW.`level`, NOW(), NEW.createdBy, NEW.lastUpdated, NEW.updatedBy);
+	END IF;
+END;
+
+CREATE TRIGGER `resourcePending_after_delete` AFTER DELETE ON `resourcePending` FOR EACH ROW BEGIN
+	INSERT INTO resourcePendingMH (resourcePendingId, action, sourceName, appointmentId, resources, `level`, creationDate, createdBy, lastUpdated, updatedBy)
+	VALUES
+	(OLD.ID, 'DELETE', OLD.sourceName, OLD.appointmentId, OLD.resources, OLD.`level`, NOW(), OLD.createdBy, OLD.lastUpdated, OLD.updatedBy);
+END;
+
+DROP TRIGGER if exists legacy_questionnaire_insert_trigger;
+
+CREATE TRIGGER `legacy_questionnaire_insert_trigger` AFTER INSERT ON `Questionnaire` FOR EACH ROW BEGIN
+
+	-- prepared the variables
+	DECLARE wsRespondent varchar(50);
+	DECLARE wsQuestionnaireControlSerNum INT;
+	
+	INSERT INTO QuestionnaireMH (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, 
+			`DateAdded`, ModificationAction) 
+	VALUES (NEW.QuestionnaireSerNum, NEW.CronLogSerNum, NEW.QuestionnaireControlSerNum, NEW.PatientSerNum, NEW.PatientQuestionnaireDBSerNum, NEW.CompletedFlag, NEW.CompletionDate, 
+			NOW(), 'INSERT');
+
+	-- capture the questionnaire control serial number
+	SET wsQuestionnaireControlSerNum = NEW.QuestionnaireControlSerNum;
+	
+	-- get the type of respondent
+	SET wsRespondent = 
+		(SELECT d.content
+      FROM OpalDB.QuestionnaireControl QC, 
+      	QuestionnaireDB.questionnaire q, 
+      	QuestionnaireDB.dictionary d, 
+			QuestionnaireDB.respondent r
+      where QC.QuestionnaireDBSerNum = q.ID
+      	and QC.QuestionnaireControlSerNum = wsQuestionnaireControlSerNum
+         and q.respondentId = r.ID
+         and r.title = d.contentId
+         and d.languageId = 2
+	);
+
+	-- if the respondent is for Patient then insert a record into
+	-- the notification table so that it shows up in the Opal app
+	IF (wsRespondent = 'Patient') then 
+		BEGIN
+			INSERT INTO `Notification` (`CronLogSerNum`, `PatientSerNum`, `NotificationControlSerNum`, `RefTableRowSerNum`, `DateAdded`, `ReadStatus`, `RefTableRowTitle_EN`, `RefTableRowTitle_FR`) 
+			SELECT NEW.CronLogSerNum, NEW.PatientSerNum, ntc.NotificationControlSerNum, NEW.QuestionnaireSerNum, NOW(), 0,
+						getRefTableRowTitle(NEW.QuestionnaireControlSerNum, 'QUESTIONNAIRE', 'EN') EN, getRefTableRowTitle(NEW.QuestionnaireControlSerNum, 'QUESTIONNAIRE', 'FR') FR
+			FROM NotificationControl ntc
+			WHERE ntc.NotificationType = 'LegacyQuestionnaire';	
+		END;
+	END IF;
+
+END;
+
+DROP TRIGGER IF EXISTS `insert_test_result_notification_queue_trigger`;
+DROP TRIGGER IF EXISTS `update_test_result_notification_queue_trigger`;
+
+
+/* dbv_opaldb/data/revisions/3/ */
+
+/* dbv_opaldb/data/revisions/4/ */
+
+/* dbv_opaldb/data/revisions/5/ */
+
+/* dbv_opaldb/data/revisions/6/ */
+
+/* dbv_opaldb/data/revisions/7/ */
+
+/* dbv_opaldb/data/revisions/8/ */
+
+CREATE TRIGGER `patientStudy_after_insert` AFTER INSERT ON `patientStudy` FOR EACH ROW BEGIN
+    INSERT INTO `patientStudyMH` (`patientStudyId`, `action`, `patientId`, `studyId`, `consentStatus`, `readStatus`, `lastUpdated`) 
+    VALUES (NEW.ID, 'INSERT', NEW.patientId, NEW.studyId, NEW.consentStatus, NEW.readStatus, NOW());
+END;
+
+CREATE TRIGGER `patientStudy_after_update` AFTER UPDATE ON `patientStudy` FOR EACH ROW BEGIN
+    INSERT INTO `patientStudyMH` (`patientStudyId`, `action`, `patientId`, `studyId`, `consentStatus`, `readStatus`, `lastUpdated`)
+    VALUES (NEW.ID, 'UPDATE', NEW.patientId, NEW.studyId, NEW.consentStatus, NEW.readStatus, NOW());
+END;
+
+CREATE TRIGGER `patientStudy_after_delete` AFTER DELETE ON `patientStudy` FOR EACH ROW BEGIN
+    INSERT INTO `patientStudyMH`(`patientStudyId`, `action`, `patientId`, `studyId`, `consentStatus`, `readStatus`, `lastUpdated`)
+    VALUES (OLD.ID, 'DELETE', OLD.patientId, OLD.studyId, OLD.consentStatus, OLD.readStatus, NOW());
+END;
+
+/* dbv_opaldb/data/revisions/9/ */
+
+/* dbv_opaldb/data/revisions/10/ */
+
+/* dbv_opaldb/data/revisions/11/ */

@@ -1,3 +1,5 @@
+/* dbv_opaldb/data/revisions/1/ */
+
 CREATE PROCEDURE `proc_CleanPatientDeviceIdentifier`()
 BEGIN
 /****************************************************************************************************
@@ -270,3 +272,304 @@ Generate_Report : BEGIN
 	group by ReadStatus;
 
 END;
+
+/* dbv_opaldb/data/revisions/2/ */
+
+-- proc_CleanPatientDeviceIdentifier
+-- Date range missing
+Drop Procedure if exists `proc_CleanPatientDeviceIdentifier`;
+
+Create Procedure `proc_CleanPatientDeviceIdentifier`()
+BEGIN
+/****************************************************************************************************
+Purpose: This stored procedure is to remove records from the table PatientDeviceIdentifier with
+the following condition. 
+1. Any registration ID that is empty
+2. Any test accounts that are over a specified date
+
+Reason: 
+1. Remove useless records that is not in use. Especially caused by testing.
+2. People change cell phones
+3. Updating the app changles the device ID
+4. Some tester are actually real patient
+****************************************************************************************************/
+
+/****************************************************************************************************
+Remove old push notification that were sent to test accounts
+****************************************************************************************************/
+delete from PushNotification 
+where PatientDeviceIdentifierSerNum in 
+	(Select PatientDeviceIdentifierSerNum from PatientDeviceIdentifier
+	where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
+		and PatientSerNum in 
+		(select PatientSerNum from Patient
+		where PatientID in ('9999996', '3333', 'AAAA1', '1092300', '5324122', 'Opal6', 'Opal1',
+			'Opal2', 'Opal5', 'Opal4', 'Opal3', 'QA_0630', 'QA_ DAW_APP_HEAD',
+			'Opal4temp', '9999993', '9999997', 'OpalDemo1', '9999995', '9999992', '9999991'
+			)
+		)
+	)
+;
+
+/****************************************************************************************************
+Remove any records that are older than specified date
+****************************************************************************************************/
+delete from PatientDeviceIdentifier
+where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
+	and PatientSerNum in 
+	(select PatientSerNum from Patient
+	where PatientID in ('9999996', '3333', 'AAAA1', '1092300', '5324122', 'Opal6', 'Opal1',
+		'Opal2', 'Opal5', 'Opal4', 'Opal3', 'QA_0630', 'QA_ DAW_APP_HEAD',
+		'Opal4temp', '9999993', '9999997', 'OpalDemo1', '9999995', '9999992', '9999991'
+		)
+	)
+;
+
+END;
+
+CREATE PROCEDURE `my_memory`()
+    COMMENT 'Purpose of this procedure is to retrieve some basic MySQL stats'
+BEGIN
+
+-- # Yick Mo
+-- # 2017-12-11
+-- # 
+-- # Got the information from this website
+-- # URL: http://kedar.nitty-witty.com/blog/calculte-mysql-memory-usage-quick-stored-proc
+-- #
+-- # Retrieving from Global Variables and Global Session Variable (AKA Session Status)
+-- #
+
+DECLARE var VARCHAR(1000);
+DECLARE val VARCHAR(1000);
+DECLARE done INT;
+
+-- #Variables for storing calculations
+DECLARE GLOBAL_SUM DOUBLE;
+DECLARE PER_THREAD_SUM DOUBLE;
+DECLARE MAX_CONN DOUBLE;
+DECLARE HEAP_TABLE DOUBLE;
+DECLARE TEMP_TABLE DOUBLE;
+
+-- #Variables from current session
+DECLARE wsLOG_TIME BIGINT;
+DECLARE wsABORTED_CLIENTS DOUBLE;
+DECLARE wsABORTED_CONNECTS DOUBLE;
+DECLARE wsCONNECTIONS DOUBLE;
+DECLARE wsMAX_USED_CONNECTIONS DOUBLE;
+DECLARE wsSLOW_QUERIES DOUBLE;
+DECLARE wsTHREADS_CACHED DOUBLE;
+DECLARE wsTHREADS_CONNECTED DOUBLE;
+DECLARE wsTHREADS_CREATED DOUBLE;
+DECLARE wsTHREADS_RUNNING DOUBLE;
+
+-- #Cursor for Global Variables
+
+-- #### For < MySQL 5.1 
+-- #### DECLARE CUR_GBLVAR CURSOR FOR SHOW GLOBAL VARIABLES;
+
+-- #### For MySQL 5.1+
+DECLARE CUR_GBLVAR CURSOR FOR SELECT * FROM information_schema.GLOBAL_VARIABLES;
+-- #### Ref: http://bugs.mysql.com/bug.php?id=49758
+
+-- #### DECLARE CUR_SESVAR CURSOR FOR SHOW GLOBAL SESSION VARIABLES;
+DECLARE CUR_SESVAR CURSOR FOR SELECT * FROM information_schema.SESSION_STATUS;
+
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done=1;
+
+-- # Initialize all variables
+SET GLOBAL_SUM=0;
+SET PER_THREAD_SUM=0;
+SET MAX_CONN=0;
+SET HEAP_TABLE=0;
+SET TEMP_TABLE=0;
+
+SET wsLOG_TIME=0;
+SET wsABORTED_CLIENTS=0;
+SET wsABORTED_CONNECTS=0;
+SET wsCONNECTIONS=0;
+SET wsMAX_USED_CONNECTIONS=0;
+SET wsSLOW_QUERIES=0;
+SET wsTHREADS_CACHED=0;
+SET wsTHREADS_CONNECTED=0;
+SET wsTHREADS_CREATED=0;
+SET wsTHREADS_RUNNING=0;
+
+-- # Begin looping GLobal Variables
+OPEN CUR_GBLVAR;
+mylp:LOOP
+      FETCH CUR_GBLVAR INTO var,val;
+  IF done=1 THEN
+    LEAVE mylp;
+  END IF;
+    IF var in ('key_buffer_size','innodb_buffer_pool_size','innodb_additional_mem_pool_size','innodb_log_buffer_size','query_cache_size') THEN
+    -- #Summing Up Global Memory Usage
+      SET GLOBAL_SUM=GLOBAL_SUM+val;
+    ELSEIF var in ('read_buffer_size','read_rnd_buffer_size','sort_buffer_size','join_buffer_size','thread_stack','max_allowed_packet','net_buffer_length') THEN
+    -- #Summing Up Per Thread Memory Variables
+      SET PER_THREAD_SUM=PER_THREAD_SUM+val;
+    ELSEIF var in ('max_connections') THEN
+    -- #Maximum allowed connections
+      SET MAX_CONN=val;
+    ELSEIF var in ('max_heap_table_size') THEN
+    -- #Size of Max Heap tables created
+      SET HEAP_TABLE=val;
+    -- #Size of possible Temporary Table = Maximum of tmp_table_size / max_heap_table_size.
+    ELSEIF var in ('tmp_table_size','max_heap_table_size') THEN
+      SET TEMP_TABLE=if((TEMP_TABLE>val),TEMP_TABLE,val);
+    END IF;
+
+END LOOP;
+CLOSE CUR_GBLVAR;
+-- # End looping GLobal Variables
+
+-- # Reset the LOOP back to zero because one indicate it that the loop is completed
+set done = 0;
+-- # Begin looping GLobal Session Variables
+OPEN CUR_SESVAR;
+mylp:LOOP
+      FETCH CUR_SESVAR INTO var,val;
+  IF done=1 THEN
+    LEAVE mylp;
+  END IF;
+  	IF var in ('ABORTED_CLIENTS') then 
+		set wsABORTED_CLIENTS = val;
+	ELSEIF var in ('ABORTED_CONNECTS') then
+		set wsABORTED_CONNECTS = val;
+	ELSEIF var in ('CONNECTIONS') then
+		set wsCONNECTIONS = val;
+	ELSEIF var in ('MAX_USED_CONNECTIONS') then
+		set wsMAX_USED_CONNECTIONS = val;
+	ELSEIF var in ('SLOW_QUERIES') then
+		set wsSLOW_QUERIES = val;
+	ELSEIF var in ('THREADS_CACHED') then
+		set wsTHREADS_CACHED = val;
+	ELSEIF var in ('THREADS_CONNECTED') then
+		set wsTHREADS_CONNECTED = val;
+	ELSEIF var in ('THREADS_CREATED') then
+		set wsTHREADS_CREATED = val;
+	ELSEIF var in ('THREADS_RUNNING') then	
+		set wsTHREADS_CREATED = val;
+		
+	END IF;
+
+END LOOP;
+
+CLOSE CUR_SESVAR;
+-- # End looping GLobal Session Variables
+
+Set wsLOG_TIME = (select UNIX_TIMESTAMP());
+
+-- #Summerizing:
+select "Log Time" as "Parameter", from_unixtime(wsLOG_TIME) as "Value" union
+select "Global Buffers",CONCAT(GLOBAL_SUM/(1024*1024),' M') union
+select "Per Thread",CONCAT(PER_THREAD_SUM/(1024*1024),' M')  union
+select "Maximum Connections",MAX_CONN union
+select "Total Memory Usage",CONCAT((GLOBAL_SUM + (MAX_CONN * PER_THREAD_SUM))/(1024*1024),' M') union
+select "+ Per Heap Table",CONCAT(HEAP_TABLE / (1024*1024),' M') union
+select "+ Per Temp Table",CONCAT(TEMP_TABLE / (1024*1024),' M') union
+select "Aborted Clients", wsABORTED_CLIENTS union
+select "Aborted Connects", wsABORTED_CONNECTS union
+select "Connections", wsCONNECTIONS union
+select "Max Used Connection", wsMAX_USED_CONNECTIONS union
+select "Slow Queries", wsSLOW_QUERIES union
+select "Thread Cached", wsTHREADS_CACHED union
+select "Thread Connected", wsTHREADS_CONNECTED union
+select "Threads Created", wsTHREADS_CREATED union
+select "Threads Running", wsTHREADS_RUNNING union
+SELECT "Timestamp", wsLOG_TIME;
+
+END;
+
+
+/* dbv_opaldb/data/revisions/3/ */
+
+Drop Procedure if exists `proc_CleanPatientDeviceIdentifier`;
+
+Create Procedure `proc_CleanPatientDeviceIdentifier`()
+BEGIN
+/****************************************************************************************************
+Purpose: This stored procedure is to remove records from the table PatientDeviceIdentifier with
+the following condition. 
+1. Any registration ID that is empty
+2. Any test accounts that are over a specified date
+
+Reason: 
+1. Remove useless records that is not in use. Especially caused by testing.
+2. People change cell phones
+3. Updating the app changles the device ID
+4. Some tester are actually real patient
+****************************************************************************************************/
+
+/****************************************************************************************************
+Remove old push notification that were sent to test accounts
+****************************************************************************************************/
+delete from PushNotification 
+where PatientDeviceIdentifierSerNum in 
+	(Select PatientDeviceIdentifierSerNum from PatientDeviceIdentifier
+	where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
+		and PatientSerNum in 
+		(
+		select Distinct PatientSerNum From Patient_Hospital_Identifier PHI
+		where (MRN in ('9999991', '9999992', '9999993', '9999995', '9999996', '9999997',
+					'Opal1', 'Opal2', 'Opal3', 'Opal4', 'Opal5', 'Opal6',
+					'3333', 'AAAA1', '1092300', '5324122', 'QA_0630', 'QA_ DAW_APP_HEAD',
+					'Opal4temp', 'OpalDemo1'
+					)
+				and PHI.Hospital_Identifier_Type_Code = 'RVH')
+				or
+				(MRN in ('9999992', '9999998'
+					)
+				and PHI.Hospital_Identifier_Type_Code = 'MGH')
+				or
+				(MRN in ('1430016'
+					)
+				and PHI.Hospital_Identifier_Type_Code = 'MCH')
+		)
+	)
+;
+
+/****************************************************************************************************
+Remove any records that are older than specified date
+****************************************************************************************************/
+delete from PatientDeviceIdentifier
+where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
+	and PatientSerNum in 
+		(
+		select Distinct PatientSerNum From Patient_Hospital_Identifier PHI
+		where (MRN in ('9999991', '9999992', '9999993', '9999995', '9999996', '9999997',
+					'Opal1', 'Opal2', 'Opal3', 'Opal4', 'Opal5', 'Opal6',
+					'3333', 'AAAA1', '1092300', '5324122', 'QA_0630', 'QA_ DAW_APP_HEAD',
+					'Opal4temp', 'OpalDemo1'
+					)
+				and PHI.Hospital_Identifier_Type_Code = 'RVH')
+				or
+				(MRN in ('9999992', '9999998'
+					)
+				and PHI.Hospital_Identifier_Type_Code = 'MGH')
+				or
+				(MRN in ('1430016'
+					)
+				and PHI.Hospital_Identifier_Type_Code = 'MCH')
+		)
+;
+
+END;
+
+/* dbv_opaldb/data/revisions/4/ */
+
+/* dbv_opaldb/data/revisions/5/ */
+
+/* dbv_opaldb/data/revisions/6/ */
+
+/* dbv_opaldb/data/revisions/7/ */
+
+DROP PROCEDURE IF EXISTS `reg_BranchSearch`;
+
+/* dbv_opaldb/data/revisions/8/ */
+
+/* dbv_opaldb/data/revisions/9/ */
+
+/* dbv_opaldb/data/revisions/10/ */
+
+/* dbv_opaldb/data/revisions/11/ */
