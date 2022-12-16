@@ -38,5 +38,5 @@ CREATE TABLE IF NOT EXISTS `modulePublicationSetting` (
   KEY `fk_module_ID_modulePublicationSetting_moduleId_idx` (`moduleId`),
   KEY `fk_pubSetting_ID_modulePubSetting_pubSettingId_idx` (`publicationSettingId`),
   CONSTRAINT `fk_module_ID_moduleTriggerSetting_moduleId` FOREIGN KEY (`moduleId`) REFERENCES `module` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pubSetting_ID_modulePubSetting_pubSettingId` FOREIGN KEY (`publicationSettingId`) REFERENCES `publicationsetting` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_pubSetting_ID_modulePubSetting_pubSettingId` FOREIGN KEY (`publicationSettingId`) REFERENCES `publicationSetting` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Intersection table between module and publicationSetting to reproduce a N-N relationships between the tables';

@@ -103,37 +103,66 @@ The credentials for logging in can be found in the `.env` file.
 
 You should by now have fully up and running opal databases that can be easily started and stopped using the docker desktop GUI (or via the command-line, whichever you prefer).
 
-
-## Alembic Database Version Management
+## Alembic Database Revisions Management
 
 Alembic is a database migrations tool written by the author of SQLAlchemy. It provides a system of object-oriented, ordered migration control for relational databases.
 
-https://pypi.org/project/alembic/
+https://alembic.sqlalchemy.org/en/latest/
 
 SQLAlchemy uses an ORM similar to Django to maintain a consistent state between python objects and the sql tables they represent.
 
-### TODO Alembic commands
+https://docs.sqlalchemy.org/en/14/
 
-First assure your db-docker container is built and running so that Alembic can see and connect to it with the connection engine...
+A solid understanding of both is required to manage database revisions in this repository.
 
-https://alembic.sqlalchemy.org/en/latest/ops.html
-- alter database schema example
+### Alembic commands
+
+First assure your db-docker container is built and running so that Alembic can see and connect to it with the connection engine. When we make changes to the ORM (in models.py) and run alembic auto migrations, alembic will compare the state of the current database to it's "translation" in the ORM and produce a migration file to express the difference.
+
+#### Altering database schema example
 
 The models file contains schema for every table in the database. It's organized alphabetically-ish but you'd be wise to just use Ctrl-F to find your model.
 
-    - add column with default value
-    - remove col
-    - bulk data insert
+Note we have two options for creating revisions - we can generate a blank revision file with `alembic revision -m "Add column to Patient model"`, then use alembic syntax to express our change. This first option would skip the ORM defined in models.py. In the revision file, we can add the following lines to the `upgrade()` and `downgrade()` functions:
 
-- running alembic revisions
-`alembic revision --autogenerate -m "Create User model"`
-Note must be run from the directory corresponding to the database you want to make changes to
+`
+from alembic import op
+import sqlalchemy as sa
 
-Then, to apply your migration
-`alembic upgrade head`
+def upgrade():
+    op.add_column('patient', sa.Column('last_login_date', sa.DateTime))
+
+def downgrade():
+    op.drop_column('patient', 'last_login_date')
+`
+
+Option two is to express our changes in the ORM, then use alembic's autogenerate feature to automatically translate the difference between the previous revision and the current state of the models. In models.py we would edit the Patient model as follows:
+
+`
+class Patient(Base):
+    __tablename__ = 'Patient'
+
+    PatientSerNum = Column(INTEGER(11), primary_key=True, index=True)
+    PatientAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    PatientId = Column(String(50), nullable=False)
+    ...
+    ...
+    ...
+    
+    LastLoginDate = Column("last_login_date", DateTime)
+`
+
+Then call the autogenerate:
+
+`alembic revision --autogenerate -m "Add last login date column to Patient model"`
+
+ In general, we should be consistent about our choice of method because if we choose option 1 for several revisions, the models file will have fallen behind the up-to-date state of the database, and a future use of the autogenerate feature will cause alembic to try to un-do all of the manually-generated revisions.
+
+Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
+
+Finally, to apply your migration: `alembic upgrade head`
 You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
-For example to migrate to version file 'e97dfdd124a7_initial_opaldb_schema.py'
-`alembic upgrade e97`
+For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade a7b`
 
 #### Version controlling triggers, events, functions, procedures
 
@@ -141,13 +170,11 @@ Object-oriented version control of these constructs isn't really supported 'nati
 
 Note that when we first implemented Alembic, all of the existing views, triggers, events, functions, and procedures were imported with raq SQL in an initial DB setup migration.
 
-### TODO Forward and backward migrations
-
 ### Generating initial model structure from existing databases
 
 Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run once initially and can be ignored afterwards.
 
-SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema. 
+SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema.
 
 `cd alembic-<database-name>/`
 `python initial_model_populate.py`

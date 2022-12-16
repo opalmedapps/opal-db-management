@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `OpalDB`.`AliasExpressionMH_legacy` (
 	INDEX `LastUpdatedBy` (`LastUpdatedBy`) USING BTREE
 )
  COLLATE 'latin1_swedish_ci' ENGINE=MyISAM ROW_FORMAT=Dynamic AUTO_INCREMENT=1;
-INSERT IGNORE INTO `OpalDB`.`AliasExpressionMH_legacy` (`AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId`) SELECT `AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId` FROM `AliasExpressionMH`;
+INSERT INTO `OpalDB`.`AliasExpressionMH_legacy` (`AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId`) SELECT `AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId` FROM `AliasExpressionMH`;
 
 TRUNCATE `AliasExpressionMH`;
 

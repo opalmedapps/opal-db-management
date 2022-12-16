@@ -4,8 +4,8 @@ from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMA
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
-DDL_Base = declarative_base()
-metadata = DDL_Base.metadata
+Base = declarative_base()
+metadata = Base.metadata
 
 
 t_Admin = Table(
@@ -20,7 +20,7 @@ t_Admin = Table(
 )
 
 
-class AliasExpressionMH(DDL_Base):
+class AliasExpressionMH(Base):
     __tablename__ = 'AliasExpressionMH'
 
     AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("0"))
@@ -35,7 +35,7 @@ class AliasExpressionMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class AliasExpressionMHLegacy(DDL_Base):
+class AliasExpressionMHLegacy(Base):
     __tablename__ = 'AliasExpressionMH_legacy'
 
     AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("0"))
@@ -49,7 +49,7 @@ class AliasExpressionMHLegacy(DDL_Base):
     SessionId = Column(String(255))
 
 
-class AliasMH(DDL_Base):
+class AliasMH(Base):
     __tablename__ = 'AliasMH'
 
     AliasSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -71,14 +71,14 @@ class AliasMH(DDL_Base):
     DateAdded = Column(DateTime, nullable=False)
 
 
-class AllowableExtension(DDL_Base):
+class AllowableExtension(Base):
     __tablename__ = 'AllowableExtension'
 
     Type = Column(Enum('video', 'website', 'pdf', 'image'), primary_key=True, nullable=False)
     Name = Column(String(50), primary_key=True, nullable=False)
 
 
-class AnnouncementMH(DDL_Base):
+class AnnouncementMH(Base):
     __tablename__ = 'AnnouncementMH'
 
     AnnouncementSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -92,7 +92,7 @@ class AnnouncementMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class AppointmentMH(DDL_Base):
+class AppointmentMH(Base):
     __tablename__ = 'AppointmentMH'
 
     AppointmentSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -127,7 +127,7 @@ t_BuildType = Table(
 )
 
 
-class CheckinLog(DDL_Base):
+class CheckinLog(Base):
     __tablename__ = 'CheckinLog'
 
     CheckinLogSerNum = Column(INTEGER(11), primary_key=True)
@@ -140,7 +140,7 @@ class CheckinLog(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class Cron(DDL_Base):
+class Cron(Base):
     __tablename__ = 'Cron'
 
     CronSerNum = Column(INTEGER(11), primary_key=True)
@@ -151,7 +151,7 @@ class Cron(DDL_Base):
     LastCron = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class DiagnosisCodeMH(DDL_Base):
+class DiagnosisCodeMH(Base):
     __tablename__ = 'DiagnosisCodeMH'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -165,7 +165,7 @@ class DiagnosisCodeMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class DiagnosisCodeMHLegacy(DDL_Base):
+class DiagnosisCodeMHLegacy(Base):
     __tablename__ = 'DiagnosisCodeMH_legacy'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -179,7 +179,7 @@ class DiagnosisCodeMHLegacy(DDL_Base):
     SessionId = Column(String(255))
 
 
-class DiagnosisMH(DDL_Base):
+class DiagnosisMH(Base):
     __tablename__ = 'DiagnosisMH'
 
     DiagnosisSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -199,7 +199,7 @@ class DiagnosisMH(DDL_Base):
     updatedBy = Column(String(128), nullable=False, index=True)
 
 
-class DiagnosisTranslationMH(DDL_Base):
+class DiagnosisTranslationMH(Base):
     __tablename__ = 'DiagnosisTranslationMH'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -215,7 +215,7 @@ class DiagnosisTranslationMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class Doctor(DDL_Base):
+class Doctor(Base):
     __tablename__ = 'Doctor'
 
     DoctorSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -235,7 +235,7 @@ class Doctor(DDL_Base):
     BIO_FR = Column(Text)
 
 
-class DoctorMH(DDL_Base):
+class DoctorMH(Base):
     __tablename__ = 'DoctorMH'
 
     DoctorSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -257,7 +257,7 @@ class DoctorMH(DDL_Base):
     BIO_FR = Column(Text)
 
 
-class DocumentMH(DDL_Base):
+class DocumentMH(Base):
     __tablename__ = 'DocumentMH'
 
     DocumentSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -287,7 +287,7 @@ class DocumentMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class EducationalMaterialCategory(DDL_Base):
+class EducationalMaterialCategory(Base):
     __tablename__ = 'EducationalMaterialCategory'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -297,7 +297,7 @@ class EducationalMaterialCategory(DDL_Base):
     description_FR = Column(String(512), nullable=False, server_default=text("''"), comment='French description of an educational material category.')
 
 
-class EducationalMaterialMH(DDL_Base):
+class EducationalMaterialMH(Base):
     __tablename__ = 'EducationalMaterialMH'
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -311,7 +311,7 @@ class EducationalMaterialMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class EducationalMaterialPackageContent(DDL_Base):
+class EducationalMaterialPackageContent(Base):
     __tablename__ = 'EducationalMaterialPackageContent'
     __table_args__ = {'comment': 'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes.'}
 
@@ -325,7 +325,7 @@ class EducationalMaterialPackageContent(DDL_Base):
     LastUpdatedBy = Column(INTEGER(11))
 
 
-class EducationalMaterialRating(DDL_Base):
+class EducationalMaterialRating(Base):
     __tablename__ = 'EducationalMaterialRating'
 
     EducationalMaterialRatingSerNum = Column(INTEGER(11), primary_key=True)
@@ -336,7 +336,7 @@ class EducationalMaterialRating(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class EducationalMaterialTOC(DDL_Base):
+class EducationalMaterialTOC(Base):
     __tablename__ = 'EducationalMaterialTOC'
 
     EducationalMaterialTOCSerNum = Column(INTEGER(11), primary_key=True)
@@ -347,7 +347,7 @@ class EducationalMaterialTOC(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class EmailControlMH(DDL_Base):
+class EmailControlMH(Base):
     __tablename__ = 'EmailControlMH'
 
     EmailControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -363,7 +363,7 @@ class EmailControlMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class EmailLogMH(DDL_Base):
+class EmailLogMH(Base):
     __tablename__ = 'EmailLogMH'
 
     EmailLogSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -376,7 +376,7 @@ class EmailLogMH(DDL_Base):
     ModificationAction = Column(String(25), nullable=False)
 
 
-class EmailType(DDL_Base):
+class EmailType(Base):
     __tablename__ = 'EmailType'
 
     EmailTypeSerNum = Column(INTEGER(11), primary_key=True)
@@ -386,7 +386,7 @@ class EmailType(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class Filter(DDL_Base):
+class Filter(Base):
     __tablename__ = 'Filters'
 
     FilterSerNum = Column(INTEGER(11), primary_key=True)
@@ -426,7 +426,7 @@ t_FrequencyEvents = Table(
 )
 
 
-class HospitalMapMH(DDL_Base):
+class HospitalMapMH(Base):
     __tablename__ = 'HospitalMapMH'
 
     HospitalMapSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -446,7 +446,7 @@ class HospitalMapMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class HospitalIdentifierType(DDL_Base):
+class HospitalIdentifierType(Base):
     __tablename__ = 'Hospital_Identifier_Type'
 
     Hospital_Identifier_Type_Id = Column(INTEGER(11), primary_key=True)
@@ -456,7 +456,7 @@ class HospitalIdentifierType(DDL_Base):
     Description_FR = Column(String(250), nullable=False)
 
 
-class NotificationControlMH(DDL_Base):
+class NotificationControlMH(Base):
     __tablename__ = 'NotificationControlMH'
 
     NotificationControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -472,7 +472,7 @@ class NotificationControlMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class NotificationMH(DDL_Base):
+class NotificationMH(Base):
     __tablename__ = 'NotificationMH'
 
     NotificationSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -489,7 +489,7 @@ class NotificationMH(DDL_Base):
     RefTableRowTitle_FR = Column(String(500), nullable=False)
 
 
-class NotificationType(DDL_Base):
+class NotificationType(Base):
     __tablename__ = 'NotificationTypes'
 
     NotificationTypeSerNum = Column(INTEGER(11), primary_key=True)
@@ -499,7 +499,7 @@ class NotificationType(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class OAActivityLog(DDL_Base):
+class OAActivityLog(Base):
     __tablename__ = 'OAActivityLog'
 
     ActivitySerNum = Column(INTEGER(11), primary_key=True)
@@ -509,7 +509,7 @@ class OAActivityLog(DDL_Base):
     DateAdded = Column(DateTime, nullable=False)
 
 
-class OAUserRole(DDL_Base):
+class OAUserRole(Base):
     __tablename__ = 'OAUserRole'
 
     OAUserSerNum = Column(INTEGER(11), primary_key=True, nullable=False, index=True)
@@ -517,7 +517,7 @@ class OAUserRole(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class Patient(DDL_Base):
+class Patient(Base):
     __tablename__ = 'Patient'
 
     PatientSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -555,11 +555,11 @@ class PatientControl(Patient):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), primary_key=True, index=True)
     PatientUpdate = Column(INTEGER(11), nullable=False, index=True, server_default=text("1"))
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
-    PC_LastUpdated = Column("LastUpdated", TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
     TransferFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"))
 
 
-class PatientActivityLog(DDL_Base):
+class PatientActivityLog(Base):
     __tablename__ = 'PatientActivityLog'
 
     ActivitySerNum = Column(INTEGER(11), primary_key=True)
@@ -585,7 +585,7 @@ t_PatientDoctorHistory = Table(
 )
 
 
-class PatientMH(DDL_Base):
+class PatientMH(Base):
     __tablename__ = 'PatientMH'
 
     PatientSerNum = Column(INTEGER(11), primary_key=True, nullable=False, index=True)
@@ -615,7 +615,7 @@ class PatientMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PatientsForPatientsMH(DDL_Base):
+class PatientsForPatientsMH(Base):
     __tablename__ = 'PatientsForPatientsMH'
 
     PatientsForPatientsSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -629,7 +629,7 @@ class PatientsForPatientsMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PatientsForPatientsPersonnel(DDL_Base):
+class PatientsForPatientsPersonnel(Base):
     __tablename__ = 'PatientsForPatientsPersonnel'
 
     PatientsForPatientsPersonnelSerNum = Column(INTEGER(11), primary_key=True)
@@ -643,7 +643,7 @@ class PatientsForPatientsPersonnel(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PatientsForPatientsPersonnelMH(DDL_Base):
+class PatientsForPatientsPersonnelMH(Base):
     __tablename__ = 'PatientsForPatientsPersonnelMH'
 
     PatientsForPatientsPersonnelSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -659,7 +659,7 @@ class PatientsForPatientsPersonnelMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PhaseInTreatment(DDL_Base):
+class PhaseInTreatment(Base):
     __tablename__ = 'PhaseInTreatment'
 
     PhaseInTreatmentSerNum = Column(INTEGER(11), primary_key=True)
@@ -668,7 +668,7 @@ class PhaseInTreatment(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PlanWorkflow(DDL_Base):
+class PlanWorkflow(Base):
     __tablename__ = 'PlanWorkflow'
     __table_args__ = (
         Index('PlanSerNum', 'PlanSerNum', 'OrderNum', unique=True),
@@ -686,7 +686,7 @@ class PlanWorkflow(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PostControlMH(DDL_Base):
+class PostControlMH(Base):
     __tablename__ = 'PostControlMH'
 
     PostControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -706,7 +706,7 @@ class PostControlMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class Priority(DDL_Base):
+class Priority(Base):
     __tablename__ = 'Priority'
 
     PrioritySerNum = Column(INTEGER(11), primary_key=True)
@@ -719,7 +719,7 @@ class Priority(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PushNotification(DDL_Base):
+class PushNotification(Base):
     __tablename__ = 'PushNotification'
 
     PushNotificationSerNum = Column(INTEGER(11), primary_key=True)
@@ -733,12 +733,12 @@ class PushNotification(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class QuestionnaireControlMH(DDL_Base):
+class QuestionnaireControlMH(Base):
     __tablename__ = 'QuestionnaireControlMH'
 
     QuestionnaireControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    alembic_QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False)
+    QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False)
     QuestionnaireName_EN = Column(String(2056), nullable=False)
     QuestionnaireName_FR = Column(String(2056), nullable=False)
     Intro_EN = Column(Text, nullable=False)
@@ -751,52 +751,52 @@ class QuestionnaireControlMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class DefinitionTable(DDL_Base):
-    __tablename__ = 'definitionTable'
-    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
+# class DefinitionTable(Base):
+#     __tablename__ = 'definitionTable'
+#     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
-    name = Column(String(255), nullable=False)
-
-
-class Dictionary(DDL_Base):
-    __tablename__ = 'dictionary'
-    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
-
-    ID = Column(BIGINT(20), primary_key=True)
-    tableId = Column(ForeignKey('alembic_QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
-    languageId = Column(ForeignKey('alembic_QuestionnaireDB.language.ID'), nullable=False, index=True)
-    contentId = Column(BIGINT(20), nullable=False, index=True)
-    content = Column(MEDIUMTEXT, nullable=False)
-    deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
-    deletedBy = Column(String(255))
-    creationDate = Column(DateTime, nullable=False)
-    createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    updatedBy = Column(String(255), nullable=False)
-
-    language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
-    definitionTable = relationship('DefinitionTable')
+#     ID = Column(BIGINT(20), primary_key=True)
+#     name = Column(String(255), nullable=False)
 
 
-class QuestionnaireDBLanguage(DDL_Base):
-    __tablename__ = 'language'
-    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
+# class Dictionary(Base):
+#     __tablename__ = 'dictionary'
+#     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
-    isoLang = Column(String(2), nullable=False)
-    name = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
-    deletedBy = Column(String(255), nullable=False)
-    creationDate = Column(DateTime, nullable=False)
-    createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    updatedBy = Column(String(255), nullable=False)
+#     ID = Column(BIGINT(20), primary_key=True)
+#     tableId = Column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
+#     languageId = Column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
+#     contentId = Column(BIGINT(20), nullable=False, index=True)
+#     content = Column(MEDIUMTEXT, nullable=False)
+#     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
+#     deletedBy = Column(String(255))
+#     creationDate = Column(DateTime, nullable=False)
+#     createdBy = Column(String(255), nullable=False)
+#     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+#     updatedBy = Column(String(255), nullable=False)
 
-    dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
+#     language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
+#     definitionTable = relationship('DefinitionTable')
 
 
-class QuestionnaireMH(DDL_Base):
+# class Language(Base):
+#     __tablename__ = 'language'
+#     __table_args__ = {'schema': 'QuestionnaireDB'}
+
+#     ID = Column(BIGINT(20), primary_key=True)
+#     isoLang = Column(String(2), nullable=False)
+#     name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
+#     deletedBy = Column(String(255), nullable=False)
+#     creationDate = Column(DateTime, nullable=False)
+#     createdBy = Column(String(255), nullable=False)
+#     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+#     updatedBy = Column(String(255), nullable=False)
+
+#     dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
+
+
+class QuestionnaireMH(Base):
     __tablename__ = 'QuestionnaireMH'
 
     QuestionnaireSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -805,13 +805,13 @@ class QuestionnaireMH(DDL_Base):
     QuestionnaireControlSerNum = Column(INTEGER(11), nullable=False, index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    Patientalembic_QuestionnaireDBSerNum = Column(INTEGER(11), index=True)
+    PatientQuestionnaireDBSerNum = Column(INTEGER(11), index=True)
     CompletedFlag = Column(TINYINT(4), nullable=False)
     CompletionDate = Column(DateTime)
     ModificationAction = Column(String(25), nullable=False)
 
 
-class Resource(DDL_Base):
+class Resource(Base):
     __tablename__ = 'Resource'
 
     ResourceSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -823,7 +823,7 @@ class Resource(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class Role(DDL_Base):
+class Role(Base):
     __tablename__ = 'Role'
 
     RoleSerNum = Column(INTEGER(11), primary_key=True)
@@ -832,7 +832,7 @@ class Role(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class SecurityQuestion(DDL_Base):
+class SecurityQuestion(Base):
     __tablename__ = 'SecurityQuestion'
 
     SecurityQuestionSerNum = Column(INTEGER(11), primary_key=True)
@@ -843,7 +843,7 @@ class SecurityQuestion(DDL_Base):
     Active = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"), comment='0 = Disable / 1 = Enable')
 
 
-class SourceDatabase(DDL_Base):
+class SourceDatabase(Base):
     __tablename__ = 'SourceDatabase'
 
     SourceDatabaseSerNum = Column(INTEGER(11), primary_key=True)
@@ -851,7 +851,7 @@ class SourceDatabase(DDL_Base):
     Enabled = Column(TINYINT(4), nullable=False, server_default=text("0"))
 
 
-class Staff(DDL_Base):
+class Staff(Base):
     __tablename__ = 'Staff'
 
     StaffSerNum = Column(INTEGER(11), primary_key=True)
@@ -862,7 +862,7 @@ class Staff(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class TaskMH(DDL_Base):
+class TaskMH(Base):
     __tablename__ = 'TaskMH'
 
     TaskSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -884,7 +884,7 @@ class TaskMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class TestResultControlMH(DDL_Base):
+class TestResultControlMH(Base):
     __tablename__ = 'TestResultControlMH'
 
     TestResultControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -908,7 +908,7 @@ class TestResultControlMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class TestResultExpressionMH(DDL_Base):
+class TestResultExpressionMH(Base):
     __tablename__ = 'TestResultExpressionMH'
 
     TestResultControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -921,7 +921,7 @@ class TestResultExpressionMH(DDL_Base):
     SessionId = Column(String(255))
 
 
-class TestResultMH(DDL_Base):
+class TestResultMH(Base):
     __tablename__ = 'TestResultMH'
 
     TestResultSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -948,7 +948,7 @@ class TestResultMH(DDL_Base):
     ModificationAction = Column(String(25), nullable=False)
 
 
-class Translation(DDL_Base):
+class Translation(Base):
     __tablename__ = 'Translation'
 
     TranslationSerNum = Column(BIGINT(20), primary_key=True)
@@ -960,7 +960,7 @@ class Translation(DDL_Base):
     RefTableRecNo = Column(BIGINT(20), comment='Record Number of the reference table')
 
 
-class TxTeamMessageMH(DDL_Base):
+class TxTeamMessageMH(Base):
     __tablename__ = 'TxTeamMessageMH'
 
     TxTeamMessageSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -974,7 +974,7 @@ class TxTeamMessageMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class User(DDL_Base):
+class User(Base):
     __tablename__ = 'Users'
 
     UserSerNum = Column(INTEGER(11), primary_key=True)
@@ -986,7 +986,7 @@ class User(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class UsersMH(DDL_Base):
+class UsersMH(Base):
     __tablename__ = 'UsersMH'
 
     UserSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -1000,7 +1000,7 @@ class UsersMH(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class Venue(DDL_Base):
+class Venue(Base):
     __tablename__ = 'Venue'
 
     VenueSerNum = Column(INTEGER(11), primary_key=True)
@@ -1011,7 +1011,7 @@ class Venue(DDL_Base):
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class Accesslevel(DDL_Base):
+class Accesslevel(Base):
     __tablename__ = 'accesslevel'
     __table_args__ = {'comment': 'Table to store level of access in opal application. There are two levels 1- Need to Know and 2-All. '}
 
@@ -1020,7 +1020,7 @@ class Accesslevel(DDL_Base):
     AccessLevelName_FR = Column(String(200), nullable=False)
 
 
-class Alert(DDL_Base):
+class Alert(Base):
     __tablename__ = 'alert'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key, auto-increment')
@@ -1037,7 +1037,7 @@ class Alert(DDL_Base):
     updatedBy = Column(String(128), nullable=False, comment='Username of the person who updated the record')
 
 
-class AlertMH(DDL_Base):
+class AlertMH(Base):
     __tablename__ = 'alertMH'
 
     alertId = Column(BIGINT(20), primary_key=True, nullable=False, comment='Primary key from alert table')
@@ -1056,7 +1056,7 @@ class AlertMH(DDL_Base):
     updatedBy = Column(String(128), nullable=False, index=True, comment='Username of the person who updated the record')
 
 
-class Audit(DDL_Base):
+class Audit(Base):
     __tablename__ = 'audit'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1069,7 +1069,7 @@ class Audit(DDL_Base):
     createdBy = Column(String(128), nullable=False, comment='Username of the user who made the request')
 
 
-class AuditSystem(DDL_Base):
+class AuditSystem(Base):
     __tablename__ = 'auditSystem'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1082,7 +1082,7 @@ class AuditSystem(DDL_Base):
     createdBy = Column(String(128), nullable=False, comment='Username of the user who made the request')
 
 
-class CategoryModule(DDL_Base):
+class CategoryModule(Base):
     __tablename__ = 'categoryModule'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
@@ -1091,7 +1091,7 @@ class CategoryModule(DDL_Base):
     order = Column(INTEGER(3), nullable=False, server_default=text("999"), comment='Order in the navigation menu')
 
 
-class CronControlEducationalMaterial(DDL_Base):
+class CronControlEducationalMaterial(Base):
     __tablename__ = 'cronControlEducationalMaterial'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1102,7 +1102,7 @@ class CronControlEducationalMaterial(DDL_Base):
     sessionId = Column(String(255), comment='SessionId of the user who last updated this field.')
 
 
-class CronControlPatientEducationalMaterial(DDL_Base):
+class CronControlPatientEducationalMaterial(Base):
     __tablename__ = 'cronControlPatient_EducationalMaterial'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1112,7 +1112,7 @@ class CronControlPatientEducationalMaterial(DDL_Base):
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class CustomPushNotificationLog(DDL_Base):
+class CustomPushNotificationLog(Base):
     __tablename__ = 'customPushNotificationLog'
 
     customPushNotificationID = Column(BIGINT(20), primary_key=True)
@@ -1124,7 +1124,7 @@ class CustomPushNotificationLog(DDL_Base):
     DateAdded = Column(DateTime, nullable=False, index=True)
 
 
-class Language(DDL_Base):
+class Language(Base):
     __tablename__ = 'language'
     __table_args__ = {'comment': 'Table to store language list.'}
 
@@ -1134,7 +1134,7 @@ class Language(DDL_Base):
     LanguageName_FR = Column(String(200), nullable=False)
 
 
-class MasterSourceAlias(DDL_Base):
+class MasterSourceAlias(Base):
     __tablename__ = 'masterSourceAlias'
     __table_args__ = (
         Index('f_externalId_code_source_type', 'externalId', 'code', 'source', 'type', unique=True),
@@ -1155,7 +1155,7 @@ class MasterSourceAlias(DDL_Base):
     updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
 
 
-class MasterSourceDiagnosi(DDL_Base):
+class MasterSourceDiagnosi(Base):
     __tablename__ = 'masterSourceDiagnosis'
     __table_args__ = (
         Index('masterSourceDiagnosisKey', 'externalId', 'code', 'source', unique=True),
@@ -1175,7 +1175,7 @@ class MasterSourceDiagnosi(DDL_Base):
     updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
 
 
-class OaRole(DDL_Base):
+class OaRole(Base):
     __tablename__ = 'oaRole'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
@@ -1189,7 +1189,7 @@ class OaRole(DDL_Base):
     updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
 
 
-class PatientStudyMH(DDL_Base):
+class PatientStudyMH(Base):
     __tablename__ = 'patientStudyMH'
 
     patientStudyId = Column(BIGINT(20), primary_key=True, nullable=False)
@@ -1202,7 +1202,7 @@ class PatientStudyMH(DDL_Base):
     lastUpdated = Column(TIMESTAMP, nullable=False, index=True, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class PublicationSetting(DDL_Base):
+class PublicationSetting(Base):
     __tablename__ = 'publicationSetting'
     __table_args__ = {'comment': 'This table list all the different settings a publication can have.'}
 
@@ -1218,7 +1218,7 @@ class PublicationSetting(DDL_Base):
     custom = Column(MEDIUMTEXT, nullable=False, comment='This field contains JSON format data for custom settings (like for age and sex for example)')
 
 
-class ResourcePending(DDL_Base):
+class ResourcePending(Base):
     __tablename__ = 'resourcePending'
     __table_args__ = (
         Index('sourceAppointment', 'sourceName', 'appointmentId', unique=True),
@@ -1235,7 +1235,7 @@ class ResourcePending(DDL_Base):
     updatedBy = Column(String(255), nullable=False)
 
 
-class ResourcePendingError(DDL_Base):
+class ResourcePendingError(Base):
     __tablename__ = 'resourcePendingError'
 
     ID = Column(BIGINT(20), primary_key=True)
@@ -1250,7 +1250,7 @@ class ResourcePendingError(DDL_Base):
     updatedBy = Column(String(255), nullable=False)
 
 
-class ResourcePendingMH(DDL_Base):
+class ResourcePendingMH(Base):
     __tablename__ = 'resourcePendingMH'
 
     resourcePendingId = Column(BIGINT(20), primary_key=True, nullable=False)
@@ -1266,7 +1266,7 @@ class ResourcePendingMH(DDL_Base):
     updatedBy = Column(String(255), nullable=False, index=True)
 
 
-class Termsandagreement(DDL_Base):
+class Termsandagreement(Base):
     __tablename__ = 'termsandagreement'
     __table_args__ = {'comment': 'Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.'}
 
@@ -1281,7 +1281,7 @@ class Termsandagreement(DDL_Base):
     LastModifyDate = Column(TIMESTAMP, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
 
-class AppointmentPending(DDL_Base):
+class AppointmentPending(Base):
     __tablename__ = 'AppointmentPending'
     __table_args__ = (
         Index('UniqueAppointment', 'sourceName', 'AppointmentAriaSer', unique=True),
@@ -1317,7 +1317,7 @@ class AppointmentPending(DDL_Base):
     Patient = relationship('Patient')
 
 
-class AppointmentPendingMH(DDL_Base):
+class AppointmentPendingMH(Base):
     __tablename__ = 'AppointmentPendingMH'
     __table_args__ = (
         Index('UniqueAppointment', 'sourceName', 'AppointmentAriaSer'),
@@ -1355,7 +1355,7 @@ class AppointmentPendingMH(DDL_Base):
     Patient = relationship('Patient')
 
 
-class CronLog(DDL_Base):
+class CronLog(Base):
     __tablename__ = 'CronLog'
 
     CronLogSerNum = Column(INTEGER(11), primary_key=True)
@@ -1366,7 +1366,7 @@ class CronLog(DDL_Base):
     Cron = relationship('Cron')
 
 
-class Diagnosi(DDL_Base):
+class Diagnosi(Base):
     __tablename__ = 'Diagnosis'
 
     DiagnosisSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -1386,7 +1386,7 @@ class Diagnosi(DDL_Base):
     Patient = relationship('Patient')
 
 
-class EducationalMaterialControl(DDL_Base):
+class EducationalMaterialControl(Base):
     __tablename__ = 'EducationalMaterialControl'
 
     EducationalMaterialControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -1414,7 +1414,7 @@ class EducationalMaterialControl(DDL_Base):
     EducationalMaterialCategory = relationship('EducationalMaterialCategory')
 
 
-class Feedback(DDL_Base):
+class Feedback(Base):
     __tablename__ = 'Feedback'
 
     FeedbackSerNum = Column(INTEGER(11), primary_key=True)
@@ -1428,7 +1428,7 @@ class Feedback(DDL_Base):
     Patient = relationship('Patient')
 
 
-class OAUser(DDL_Base):
+class OAUser(Base):
     __tablename__ = 'OAUser'
 
     OAUserSerNum = Column(INTEGER(11), primary_key=True)
@@ -1444,7 +1444,7 @@ class OAUser(DDL_Base):
     oaRole = relationship('OaRole')
 
 
-class PatientActionLog(DDL_Base):
+class PatientActionLog(Base):
     __tablename__ = 'PatientActionLog'
     __table_args__ = {'comment': 'Log of the actions a user takes in the app (clicking, scrolling to bottom, etc.)'}
 
@@ -1458,7 +1458,7 @@ class PatientActionLog(DDL_Base):
     Patient = relationship('Patient')
 
 
-class PatientDoctor(DDL_Base):
+class PatientDoctor(Base):
     __tablename__ = 'PatientDoctor'
 
     PatientDoctorSerNum = Column(INTEGER(11), primary_key=True)
@@ -1472,7 +1472,7 @@ class PatientDoctor(DDL_Base):
     Patient = relationship('Patient')
 
 
-class PatientHospitalIdentifier(DDL_Base):
+class PatientHospitalIdentifier(Base):
     __tablename__ = 'Patient_Hospital_Identifier'
     __table_args__ = (
         Index('IX_PatientHospitalIdentifier', 'PatientSerNum', 'Hospital_Identifier_Type_Code', 'MRN', unique=True),
@@ -1487,32 +1487,35 @@ class PatientHospitalIdentifier(DDL_Base):
     Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
+# TODO: SQLAlchemy requires us to provide it with the models corresponding to the QuestionnaireDB tables referenced by some OpalDB foreign key constraints.
+#       Because this directory is for manging opaldb only, we will import the relevant QuestionnaireDB models during the creation of the alembic-questionnairedb structure.
+#       After doing so, we can run another autogenerate migration here to make sure everything works in sync properly.  
 
-class Purpose(DDL_Base):
-    __tablename__ = 'purpose'
-    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
+# class Purpose(Base):
+#     __tablename__ = 'purpose'
+#     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
-    title = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    description = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     ID = Column(BIGINT(20), primary_key=True)
+#     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
-    dictionary = relationship('Dictionary', primaryjoin='Purpose.description == Dictionary.contentId')
-    dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
-
-
-class Respondent(DDL_Base):
-    __tablename__ = 'respondent'
-    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
-
-    ID = Column(BIGINT(20), primary_key=True)
-    title = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    description = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-
-    dictionary = relationship('Dictionary', primaryjoin='Respondent.description == Dictionary.contentId')
-    dictionary1 = relationship('Dictionary', primaryjoin='Respondent.title == Dictionary.contentId')
+#     dictionary = relationship('Dictionary', primaryjoin='Purpose.description == Dictionary.contentId')
+#     dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
 
 
-class SecurityAnswer(DDL_Base):
+# class Respondent(Base):
+#     __tablename__ = 'respondent'
+#     __table_args__ = {'schema': 'QuestionnaireDB'}
+
+#     ID = Column(BIGINT(20), primary_key=True)
+#     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+
+#     dictionary = relationship('Dictionary', primaryjoin='Respondent.description == Dictionary.contentId')
+#     dictionary1 = relationship('Dictionary', primaryjoin='Respondent.title == Dictionary.contentId')
+
+
+class SecurityAnswer(Base):
     __tablename__ = 'SecurityAnswer'
     __table_args__ = (
         Index('SecurityQuestionSerNum', 'SecurityQuestionSerNum', 'PatientSerNum', unique=True),
@@ -1529,7 +1532,7 @@ class SecurityAnswer(DDL_Base):
     SecurityQuestion = relationship('SecurityQuestion')
 
 
-class StatusAlias(DDL_Base):
+class StatusAlias(Base):
     __tablename__ = 'StatusAlias'
 
     StatusAliasSerNum = Column(INTEGER(11), primary_key=True)
@@ -1542,7 +1545,7 @@ class StatusAlias(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class Module(DDL_Base):
+class Module(Base):
     __tablename__ = 'module'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary Key')
@@ -1575,7 +1578,7 @@ class Module(DDL_Base):
     categoryModule = relationship('CategoryModule')
 
 
-class DiagnosisTranslation(DDL_Base):
+class DiagnosisTranslation(Base):
     __tablename__ = 'DiagnosisTranslation'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True)
@@ -1595,7 +1598,7 @@ class DiagnosisTranslation(DDL_Base):
     OAUser = relationship('OAUser')
 
 
-class EducationalMaterial(DDL_Base):
+class EducationalMaterial(Base):
     __tablename__ = 'EducationalMaterial'
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True)
@@ -1612,7 +1615,7 @@ class EducationalMaterial(DDL_Base):
     Patient = relationship('Patient')
 
 
-class EmailControl(DDL_Base):
+class EmailControl(Base):
     __tablename__ = 'EmailControl'
 
     EmailControlSerNum = Column(INTEGER(11), primary_key=True)
@@ -1630,7 +1633,7 @@ class EmailControl(DDL_Base):
     OAUser = relationship('OAUser')
 
 
-class HospitalMap(DDL_Base):
+class HospitalMap(Base):
     __tablename__ = 'HospitalMap'
 
     HospitalMapSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -1651,7 +1654,7 @@ class HospitalMap(DDL_Base):
     OAUser = relationship('OAUser')
 
 
-class NotificationControl(DDL_Base):
+class NotificationControl(Base):
     __tablename__ = 'NotificationControl'
 
     NotificationControlSerNum = Column(INTEGER(11), primary_key=True)
@@ -1671,7 +1674,7 @@ class NotificationControl(DDL_Base):
     NotificationType1 = relationship('NotificationType')
 
 
-class PatientDeviceIdentifier(DDL_Base):
+class PatientDeviceIdentifier(Base):
     __tablename__ = 'PatientDeviceIdentifier'
     __table_args__ = (
         Index('patient_device', 'PatientSerNum', 'DeviceId', unique=True),
@@ -1694,7 +1697,7 @@ class PatientDeviceIdentifier(DDL_Base):
     SecurityAnswer = relationship('SecurityAnswer')
 
 
-class PostControl(DDL_Base):
+class PostControl(Base):
     __tablename__ = 'PostControl'
 
     PostControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -1716,11 +1719,11 @@ class PostControl(DDL_Base):
     OAUser = relationship('OAUser')
 
 
-class QuestionnaireControl(DDL_Base):
+class QuestionnaireControl(Base):
     __tablename__ = 'QuestionnaireControl'
 
     QuestionnaireControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    alembic_QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False, index=True)
+    QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False, index=True)
     QuestionnaireName_EN = Column(String(2056), nullable=False)
     QuestionnaireName_FR = Column(String(2056), nullable=False)
     Intro_EN = Column(Text, nullable=False)
@@ -1735,43 +1738,43 @@ class QuestionnaireControl(DDL_Base):
     OAUser = relationship('OAUser')
 
 
-class QuestionnaireDBQuestionnaire(DDL_Base):
-    __tablename__ = 'questionnaire'
-    __table_args__ = {'schema': 'alembic_QuestionnaireDB'}
+# class Questionnaire(Base):
+#     __tablename__ = 'questionnaire'
+#     __table_args__ = {'schema': 'QuestionnaireDB'}
 
-    ID = Column(BIGINT(20), primary_key=True)
-    OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
-    purposeId = Column(ForeignKey('alembic_QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text("1"))
-    respondentId = Column(ForeignKey('alembic_QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text("1"))
-    title = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    nickname = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    category = Column(INTEGER(11), nullable=False, server_default=text("-1"))
-    description = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    instruction = Column(ForeignKey('alembic_QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    final = Column(TINYINT(4), nullable=False, server_default=text("0"))
-    version = Column(INTEGER(11), nullable=False, server_default=text("1"))
-    parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
-    private = Column(TINYINT(4), nullable=False, server_default=text("0"))
-    optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text("1"))
-    visualization = Column(TINYINT(4), nullable=False, server_default=text("0"), comment='0 = regular view of the answers, 1 = graph')
-    logo = Column(String(512), nullable=False)
-    deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
-    deletedBy = Column(String(255), nullable=False)
-    creationDate = Column(DateTime, nullable=False)
-    createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    updatedBy = Column(String(255), nullable=False)
-    legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
+#     ID = Column(BIGINT(20), primary_key=True)
+#     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
+#     purposeId = Column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text("1"))
+#     respondentId = Column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text("1"))
+#     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     nickname = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     category = Column(INTEGER(11), nullable=False, server_default=text("-1"))
+#     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     instruction = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+#     final = Column(TINYINT(4), nullable=False, server_default=text("0"))
+#     version = Column(INTEGER(11), nullable=False, server_default=text("1"))
+#     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
+#     private = Column(TINYINT(4), nullable=False, server_default=text("0"))
+#     optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text("1"))
+#     visualization = Column(TINYINT(4), nullable=False, server_default=text("0"), comment='0 = regular view of the answers, 1 = graph')
+#     logo = Column(String(512), nullable=False)
+#     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
+#     deletedBy = Column(String(255), nullable=False)
+#     creationDate = Column(DateTime, nullable=False)
+#     createdBy = Column(String(255), nullable=False)
+#     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+#     updatedBy = Column(String(255), nullable=False)
+#     legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
 
-    dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
-    dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
-    dictionary2 = relationship('Dictionary', primaryjoin='Questionnaire.nickname == Dictionary.contentId')
-    purpose = relationship('Purpose')
-    respondent = relationship('Respondent')
-    dictionary3 = relationship('Dictionary', primaryjoin='Questionnaire.title == Dictionary.contentId')
+#     dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
+#     dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
+#     dictionary2 = relationship('Dictionary', primaryjoin='Questionnaire.nickname == Dictionary.contentId')
+#     purpose = relationship('Purpose')
+#     respondent = relationship('Respondent')
+#     dictionary3 = relationship('Dictionary', primaryjoin='Questionnaire.title == Dictionary.contentId')
 
 
-class TestControl(DDL_Base):
+class TestControl(Base):
     __tablename__ = 'TestControl'
 
     TestControlSerNum = Column(INTEGER(11), primary_key=True)
@@ -1797,7 +1800,7 @@ class TestControl(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class TestExpression(DDL_Base):
+class TestExpression(Base):
     __tablename__ = 'TestExpression'
     __table_args__ = (
         Index('TestCode', 'TestCode', 'SourceDatabaseSerNum', unique=True),
@@ -1823,7 +1826,7 @@ class TestExpression(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class TestGroupExpression(DDL_Base):
+class TestGroupExpression(Base):
     __tablename__ = 'TestGroupExpression'
     __table_args__ = (
         Index('TestCode', 'TestCode', 'SourceDatabaseSerNum', unique=True),
@@ -1843,7 +1846,7 @@ class TestGroupExpression(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class TestResult(DDL_Base):
+class TestResult(Base):
     __tablename__ = 'TestResult'
 
     TestResultSerNum = Column(INTEGER(11), primary_key=True)
@@ -1873,7 +1876,7 @@ class TestResult(DDL_Base):
     Patient = relationship('Patient')
 
 
-class TestResultControl(DDL_Base):
+class TestResultControl(Base):
     __tablename__ = 'TestResultControl'
 
     TestResultControlSerNum = Column(INTEGER(11), primary_key=True)
@@ -1899,7 +1902,7 @@ class TestResultControl(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class CronControlPatient(DDL_Base):
+class CronControlPatient(Base):
     __tablename__ = 'cronControlPatient'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1912,7 +1915,7 @@ class CronControlPatient(DDL_Base):
     PatientControl = relationship('PatientControl')
 
 
-class CronControlPatientAnnouncement(DDL_Base):
+class CronControlPatientAnnouncement(Base):
     __tablename__ = 'cronControlPatient_Announcement'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1924,7 +1927,7 @@ class CronControlPatientAnnouncement(DDL_Base):
     PatientControl = relationship('PatientControl')
 
 
-class CronControlPatientLegacyQuestionnaire(DDL_Base):
+class CronControlPatientLegacyQuestionnaire(Base):
     __tablename__ = 'cronControlPatient_LegacyQuestionnaire'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1936,7 +1939,7 @@ class CronControlPatientLegacyQuestionnaire(DDL_Base):
     PatientControl = relationship('PatientControl')
 
 
-class CronControlPatientTreatmentTeamMessage(DDL_Base):
+class CronControlPatientTreatmentTeamMessage(Base):
     __tablename__ = 'cronControlPatient_TreatmentTeamMessage'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -1948,7 +1951,7 @@ class CronControlPatientTreatmentTeamMessage(DDL_Base):
     PatientControl = relationship('PatientControl')
 
 
-class ModulePublicationSetting(DDL_Base):
+class ModulePublicationSetting(Base):
     __tablename__ = 'modulePublicationSetting'
     __table_args__ = {'comment': 'Intersection table between module and publicationSetting to reproduce a N-N relationships between the tables'}
 
@@ -1960,7 +1963,7 @@ class ModulePublicationSetting(DDL_Base):
     publicationSetting = relationship('PublicationSetting')
 
 
-class OaRoleModule(DDL_Base):
+class OaRoleModule(Base):
     __tablename__ = 'oaRoleModule'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
@@ -1972,7 +1975,7 @@ class OaRoleModule(DDL_Base):
     oaRole = relationship('OaRole')
 
 
-class Alias(DDL_Base):
+class Alias(Base):
     __tablename__ = 'Alias'
 
     AliasSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -2005,14 +2008,14 @@ class AppointmentCheckin(Alias):
     CheckinInstruction_EN = Column(Text, nullable=False)
     CheckinInstruction_FR = Column(Text, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    AC_LastUpdatedBy = Column("LastUpdatedBy", ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    AC_SessionId = Column("SessionId", String(255))
-    AC_LastUpdated = Column("LastUpdated", TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    SessionId = Column(String(255))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
 
     OAUser = relationship('OAUser')
 
 
-class Announcement(DDL_Base):
+class Announcement(Base):
     __tablename__ = 'Announcement'
 
     AnnouncementSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -2029,7 +2032,7 @@ class Announcement(DDL_Base):
     PostControl = relationship('PostControl')
 
 
-class DiagnosisCode(DDL_Base):
+class DiagnosisCode(Base):
     __tablename__ = 'DiagnosisCode'
     __table_args__ = (
         Index('SourceUID', 'SourceUID', 'Source', unique=True),
@@ -2051,7 +2054,7 @@ class DiagnosisCode(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class EmailLog(DDL_Base):
+class EmailLog(Base):
     __tablename__ = 'EmailLog'
 
     EmailLogSerNum = Column(INTEGER(11), primary_key=True)
@@ -2067,7 +2070,7 @@ class EmailLog(DDL_Base):
     Patient = relationship('Patient')
 
 
-class Notification(DDL_Base):
+class Notification(Base):
     __tablename__ = 'Notification'
 
     NotificationSerNum = Column(INTEGER(11), primary_key=True)
@@ -2087,7 +2090,7 @@ class Notification(DDL_Base):
     Patient = relationship('Patient')
 
 
-class PatientTestResult(DDL_Base):
+class PatientTestResult(Base):
     __tablename__ = 'PatientTestResult'
     __table_args__ = (
         Index('PatientTestCodeTestDate', 'PatientSerNum', 'TestExpressionSerNum', 'CollectedDateTime', unique=True),
@@ -2117,7 +2120,7 @@ class PatientTestResult(DDL_Base):
     TestGroupExpression = relationship('TestGroupExpression')
 
 
-class PatientsForPatient(DDL_Base):
+class PatientsForPatient(Base):
     __tablename__ = 'PatientsForPatients'
 
     PatientsForPatientsSerNum = Column(INTEGER(11), primary_key=True)
@@ -2133,7 +2136,7 @@ class PatientsForPatient(DDL_Base):
     PostControl = relationship('PostControl')
 
 
-class Questionnaire(DDL_Base):
+class Questionnaire(Base):
     __tablename__ = 'Questionnaire'
 
     QuestionnaireSerNum = Column(BIGINT(20), primary_key=True)
@@ -2141,7 +2144,7 @@ class Questionnaire(DDL_Base):
     QuestionnaireControlSerNum = Column(ForeignKey('QuestionnaireControl.QuestionnaireControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    Patientalembic_QuestionnaireDBSerNum = Column(INTEGER(11), index=True)
+    PatientQuestionnaireDBSerNum = Column(INTEGER(11), index=True)
     CompletedFlag = Column(TINYINT(4), nullable=False)
     CompletionDate = Column(DateTime)
     SessionId = Column(Text, nullable=False)
@@ -2152,7 +2155,7 @@ class Questionnaire(DDL_Base):
     QuestionnaireControl = relationship('QuestionnaireControl')
 
 
-class TestResultAdditionalLink(DDL_Base):
+class TestResultAdditionalLink(Base):
     __tablename__ = 'TestResultAdditionalLinks'
 
     TestResultAdditionalLinksSerNum = Column(INTEGER(11), primary_key=True)
@@ -2167,7 +2170,7 @@ class TestResultAdditionalLink(DDL_Base):
     TestResultControl = relationship('TestResultControl')
 
 
-class TestResultExpression(DDL_Base):
+class TestResultExpression(Base):
     __tablename__ = 'TestResultExpression'
 
     TestResultExpressionSerNum = Column(INTEGER(11), primary_key=True)
@@ -2183,7 +2186,7 @@ class TestResultExpression(DDL_Base):
     TestResultControl = relationship('TestResultControl')
 
 
-class TxTeamMessage(DDL_Base):
+class TxTeamMessage(Base):
     __tablename__ = 'TxTeamMessage'
 
     TxTeamMessageSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -2200,7 +2203,7 @@ class TxTeamMessage(DDL_Base):
     PostControl = relationship('PostControl')
 
 
-class CronControlPostAnnouncement(DDL_Base):
+class CronControlPostAnnouncement(Base):
     __tablename__ = 'cronControlPost_Announcement'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -2213,7 +2216,7 @@ class CronControlPostAnnouncement(DDL_Base):
     PostControl = relationship('PostControl')
 
 
-class CronControlPostTreatmentTeamMessage(DDL_Base):
+class CronControlPostTreatmentTeamMessage(Base):
     __tablename__ = 'cronControlPost_TreatmentTeamMessage'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -2226,11 +2229,11 @@ class CronControlPostTreatmentTeamMessage(DDL_Base):
     PostControl = relationship('PostControl')
 
 
-class Study(DDL_Base):
+class Study(Base):
     __tablename__ = 'study'
 
     ID = Column(BIGINT(20), primary_key=True, unique=True, comment='Primary key. Auto-increment.')
-    consentQuestionnaireId = Column(ForeignKey('alembic_QuestionnaireDB.questionnaire.ID'), index=True, comment='alembic_QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.')
+    consentQuestionnaireId = Column(ForeignKey('QuestionnaireDB.questionnaire.ID'), index=True, comment='QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.')
     code = Column(String(64), comment='Study ID entered by the user. Mandatory.')
     title_EN = Column(String(256), comment='English title of the study. Mandatory.')
     title_FR = Column(String(256), comment='French title of the study. Mandatory.')
@@ -2251,7 +2254,7 @@ class Study(DDL_Base):
     questionnaire = relationship('Questionnaire')
 
 
-class AliasExpression(DDL_Base):
+class AliasExpression(Base):
     __tablename__ = 'AliasExpression'
     __table_args__ = (
         Index('idx_ExpressionName_Description', 'ExpressionName', 'Description'),
@@ -2272,7 +2275,7 @@ class AliasExpression(DDL_Base):
     masterSourceAlias = relationship('MasterSourceAlias')
 
 
-class CronControlAlias(DDL_Base):
+class CronControlAlias(Base):
     __tablename__ = 'cronControlAlias'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
@@ -2286,7 +2289,7 @@ class CronControlAlias(DDL_Base):
     Alias = relationship('Alias')
 
 
-class PatientStudy(DDL_Base):
+class PatientStudy(Base):
     __tablename__ = 'patientStudy'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary Key. Auto-increment.')
@@ -2300,18 +2303,18 @@ class PatientStudy(DDL_Base):
     study = relationship('Study')
 
 
-class QuestionnaireStudy(DDL_Base):
+class QuestionnaireStudy(Base):
     __tablename__ = 'questionnaireStudy'
 
     ID = Column(BIGINT(20), primary_key=True)
     studyId = Column(ForeignKey('study.ID'), nullable=False, index=True)
-    questionnaireId = Column(ForeignKey('alembic_QuestionnaireDB.questionnaire.ID'), nullable=False, index=True)
+    questionnaireId = Column(ForeignKey('QuestionnaireDB.questionnaire.ID'), nullable=False, index=True)
 
     questionnaire = relationship('Questionnaire')
     study = relationship('Study')
 
 
-class Appointment(DDL_Base):
+class Appointment(Base):
     __tablename__ = 'Appointment'
 
     AppointmentSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -2345,7 +2348,7 @@ class Appointment(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class Document(DDL_Base):
+class Document(Base):
     __tablename__ = 'Document'
 
     DocumentSerNum = Column(INTEGER(11), primary_key=True)
@@ -2379,7 +2382,7 @@ class Document(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class Task(DDL_Base):
+class Task(Base):
     __tablename__ = 'Task'
 
     TaskSerNum = Column(INTEGER(11), primary_key=True)
@@ -2404,7 +2407,7 @@ class Task(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class PatientLocation(DDL_Base):
+class PatientLocation(Base):
     __tablename__ = 'PatientLocation'
 
     PatientLocationSerNum = Column(INTEGER(11), primary_key=True)
@@ -2422,7 +2425,7 @@ class PatientLocation(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class PatientLocationMH(DDL_Base):
+class PatientLocationMH(Base):
     __tablename__ = 'PatientLocationMH'
 
     PatientLocationMHSerNum = Column(INTEGER(11), primary_key=True)
@@ -2441,7 +2444,7 @@ class PatientLocationMH(DDL_Base):
     SourceDatabase = relationship('SourceDatabase')
 
 
-class ResourceAppointment(DDL_Base):
+class ResourceAppointment(Base):
     __tablename__ = 'ResourceAppointment'
 
     ResourceAppointmentSerNum = Column(INTEGER(11), primary_key=True)

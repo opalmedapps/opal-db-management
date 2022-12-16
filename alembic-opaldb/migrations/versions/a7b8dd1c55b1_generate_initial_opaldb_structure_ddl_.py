@@ -7,13 +7,8 @@ Revises:
 Create Date: 2022-12-16 10:36:32.095480
 
 """
-from alembic import op
-import sqlalchemy as sa
-from sqlalchemy.dialects import mysql
 from pathlib import Path
 import os
-# import mariadb
-# import mariadb.constants.CLIENT as CLIENT
 from dotenv import load_dotenv
 import sys
 
@@ -75,11 +70,9 @@ def upgrade() -> None:
 
     # Loop over the 10 revision folders, and their sub files, reading only '*.sql'
     for idx in range(1, 12):
-        print(f'Revision {idx} of 11')
         rev_folder = os.path.join(REVISIONS_DIR, str(idx))
         sql_content = ''
         for rev_file in os.listdir(rev_folder):
-            print(rev_file)
             if rev_file.endswith('.sql'):
                 rev_file_path = os.path.join(rev_folder, rev_file)
                 

@@ -16,9 +16,8 @@ if config.config_file_name is not None:
 
 # add your model's MetaData object here
 # for 'autogenerate' support
-from ddl_models import DDL_Base
-from dml_models import DML_Base
-target_metadata = [DDL_Base.metadata, DML_Base.metadata]
+from models import Base
+target_metadata = [Base.metadata]
 
 
 # other values from the config, defined by the needs of env.py,
