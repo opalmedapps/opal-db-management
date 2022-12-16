@@ -44,7 +44,7 @@ ALTER TABLE `DiagnosisCode`
 	ADD UNIQUE INDEX `SourceUID` (`SourceUID`, `Source`) USING BTREE;
 
 /* Create a backup of the DiagnosisCodeMH table as a legacy and empty the current table for future references */
-CREATE TABLE `OpalDB`.`DiagnosisCodeMH_legacy` (
+CREATE TABLE IF NOT EXISTS `OpalDB`.`DiagnosisCodeMH_legacy` (
 	`DiagnosisTranslationSerNum` INT(11) NOT NULL,
 	`SourceUID` INT(11) NOT NULL,
 	`RevSerNum` INT(11) NOT NULL AUTO_INCREMENT,
@@ -59,12 +59,12 @@ CREATE TABLE `OpalDB`.`DiagnosisCodeMH_legacy` (
 	INDEX `LastUpdatedBy` (`LastUpdatedBy`) USING BTREE
 )
  COLLATE 'latin1_swedish_ci' ENGINE=MyISAM ROW_FORMAT=Dynamic AUTO_INCREMENT=1;
-INSERT INTO `OpalDB`.`DiagnosisCodeMH_legacy` (`DiagnosisTranslationSerNum`, `SourceUID`, `RevSerNum`, `DiagnosisCode`, `Description`, `DateAdded`, `ModificationAction`, `LastUpdatedBy`, `SessionId`) SELECT `DiagnosisTranslationSerNum`, `SourceUID`, `RevSerNum`, `DiagnosisCode`, `Description`, `DateAdded`, `ModificationAction`, `LastUpdatedBy`, `SessionId` FROM `DiagnosisCodeMH`;
+INSERT IGNORE INTO `OpalDB`.`DiagnosisCodeMH_legacy` (`DiagnosisTranslationSerNum`, `SourceUID`, `RevSerNum`, `DiagnosisCode`, `Description`, `DateAdded`, `ModificationAction`, `LastUpdatedBy`, `SessionId`) SELECT `DiagnosisTranslationSerNum`, `SourceUID`, `RevSerNum`, `DiagnosisCode`, `Description`, `DateAdded`, `ModificationAction`, `LastUpdatedBy`, `SessionId` FROM `DiagnosisCodeMH`;
 
 TRUNCATE `DiagnosisCodeMH`;
 
 /* Backup AliasExpressionMH into a new table and empty it */
-CREATE TABLE `OpalDB`.`AliasExpressionMH_legacy` (
+CREATE TABLE IF NOT EXISTS `OpalDB`.`AliasExpressionMH_legacy` (
 	`AliasSerNum` INT(11) NOT NULL DEFAULT '0',
 	`ExpressionName` VARCHAR(250) NOT NULL COLLATE 'latin1_swedish_ci',
 	`Description` VARCHAR(250) NOT NULL COLLATE 'latin1_swedish_ci',
@@ -79,7 +79,7 @@ CREATE TABLE `OpalDB`.`AliasExpressionMH_legacy` (
 	INDEX `LastUpdatedBy` (`LastUpdatedBy`) USING BTREE
 )
  COLLATE 'latin1_swedish_ci' ENGINE=MyISAM ROW_FORMAT=Dynamic AUTO_INCREMENT=1;
-INSERT INTO `OpalDB`.`AliasExpressionMH_legacy` (`AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId`) SELECT `AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId` FROM `AliasExpressionMH`;
+INSERT IGNORE INTO `OpalDB`.`AliasExpressionMH_legacy` (`AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId`) SELECT `AliasSerNum`, `ExpressionName`, `Description`, `RevSerNum`, `LastTransferred`, `LastUpdatedBy`, `DateAdded`, `ModificationAction`, `SessionId` FROM `AliasExpressionMH`;
 
 TRUNCATE `AliasExpressionMH`;
 

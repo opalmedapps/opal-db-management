@@ -12,10 +12,13 @@ import sqlalchemy as sa
 from sqlalchemy.dialects import mysql
 from pathlib import Path
 import os
-import mariadb
-import mariadb.constants.CLIENT as CLIENT
+# import mariadb
+# import mariadb.constants.CLIENT as CLIENT
 from dotenv import load_dotenv
 import sys
+
+import pymysql
+from pymysql.constants import CLIENT
 
 # revision identifiers, used by Alembic.
 revision = 'a7b8dd1c55b1'
@@ -43,7 +46,7 @@ QSTDB = os.getenv('LEGACY_QUESTIONNAIRE_DB_NAME')
 def get_connection_cursor(autocommit: bool):
     """Get a mariadb connection context manager for SQL execution."""
     try:
-        conn = mariadb.connect(
+        conn = pymysql.connect(
             user=USER, 
             password=PASS, 
             host=HOST, 
@@ -53,13 +56,14 @@ def get_connection_cursor(autocommit: bool):
             autocommit=autocommit
         )
         return conn.cursor()
-    except mariadb.Error as e:
-        print(f'Error getting cursor or connection to mariaDB (Database {DB}) {e}')
+    except pymysql.Error as e:
+        print(f'Error getting cursor or connection to mariaDB (Database {OPALDB}) {e}')
         sys.exit(1)
 
 
 def upgrade() -> None:
     """Insert all data & SQL scripts for dev OpalDB."""
+
     with get_connection_cursor(autocommit=True) as cursor:
         cursor.execute(
         """
@@ -69,19 +73,21 @@ def upgrade() -> None:
         """
         )
 
-    for idx in range(0, 12):
+    # Loop over the 10 revision folders, and their sub files, reading only '*.sql'
+    for idx in range(1, 12):
+        print(f'Revision {idx} of 11')
         rev_folder = os.path.join(REVISIONS_DIR, str(idx))
+        sql_content = ''
         for rev_file in os.listdir(rev_folder):
+            print(rev_file)
             if rev_file.endswith('.sql'):
-                print(rev_file)
-    # with Path(data_path,encoding='utf8').open(encoding='utf8') as handle:
-    #     sql_content = handle.read()
-    #     with get_connection_cursor(autocommit=True) as cursor:
-    #         cursor.execute(sql_content)
-    #     handle.close()
-
-
-
+                rev_file_path = os.path.join(rev_folder, rev_file)
+                
+                with Path(rev_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as handle:
+                    sql_content += handle.read()    
+        with get_connection_cursor(autocommit=True) as cursor:
+            cursor.execute(sql_content)
+        handle.close()
 
     with get_connection_cursor(autocommit=True) as cursor:
        cursor.execute(
@@ -105,9 +111,11 @@ def downgrade() -> None:
     with get_connection_cursor(autocommit=True) as cursor:
         cursor.execute(
         f"""
-        DROP {OPALDB};
-        DROP {QSTDB};
+        DROP DATABASE {OPALDB};
 
+        CREATE DATABASE IF NOT EXISTS {OPALDB} /*!40100 DEFAULT CHARACTER SET latin1 */;
+        USE {OPALDB};
+        GRANT ALL PRIVILEGES ON {OPALDB}.* TO {USER}@`%`;
         
         """
         )

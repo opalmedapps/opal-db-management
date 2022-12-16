@@ -4,3 +4,4 @@ sqlalchemy==1.4.45  # https://pypi.org/project/SQLAlchemy/
 mariadb==1.1.5  # https://pypi.org/project/mariadb/
 python-dotenv==0.21.0  # https://pypi.org/project/python-dotenv/
 pathlib==1.0.1  # https://pypi.org/project/pathlib/
+pymysql==1.0.2  # https://pypi.org/project/PyMySQL/
