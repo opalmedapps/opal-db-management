@@ -1,6 +1,6 @@
 -- Update the module select statements
-UPDATE module 
-SET 
+UPDATE module
+SET
 	sqlPublicationList = "SELECT DISTINCT em.EducationalMaterialControlSerNum AS ID, 3 AS moduleId, m.name_EN AS module_EN, m.name_FR AS module_FR, em.name_EN, em.name_FR, em.EducationalMaterialType_EN AS type_EN, em.EducationalMaterialType_FR AS type_FR, em.publishFlag, '--' AS publishDate FROM %%EDUCATIONALMATERIAL%% em LEFT JOIN %%MODULE%% m ON m.ID = 3 WHERE em.ParentFlag = 1 AND (SELECT COUNT(*) FROM %%FILTERS%% f WHERE f.ControlTableSerNum = em.EducationalMaterialControlSerNum and f.ControlTable = '%%EDUCATIONALMATERIAL%%') > 0",
 	sqlDetails = 'SELECT DISTINCT em.EducationalMaterialControlSerNum AS ID, m.name_EN AS module_EN, m.name_FR AS module_FR, em.name_EN, em.name_FR, em.EducationalMaterialType_EN AS type_EN, em.EducationalMaterialType_FR AS type_FR, em.publishFlag FROM %%EDUCATIONALMATERIAL%% em LEFT JOIN %%MODULE%% m ON m.ID = 3 WHERE em.EducationalMaterialControlSerNum = :ID',
 	sqlPublicationUnique = "SELECT DISTINCT em.EducationalMaterialControlSerNum AS ID, em.name_EN, em.name_FR, em.EducationalMaterialType_EN AS type_EN FROM %%EDUCATIONALMATERIAL%% em WHERE em.ParentFlag = 1 AND (SELECT COUNT(*) FROM %%FILTERS%% f WHERE f.ControlTableSerNum = em.EducationalMaterialControlSerNum and f.ControlTable = '%%EDUCATIONALMATERIAL%%') <= 0 GROUP BY ID, name_EN, name_FR;"

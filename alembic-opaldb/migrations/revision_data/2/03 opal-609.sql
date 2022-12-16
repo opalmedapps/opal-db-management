@@ -24,7 +24,7 @@ ALTER TABLE `TestExpression`
 CREATE OR REPLACE VIEW v_masterSourceTestResult AS
 SELECT TestExpressionSerNum AS ID, externalId, TestCode AS `code`, ExpressionName AS description, SourceDatabaseSerNum AS `source`,
 deleted, deletedBy, DateAdded AS creationDate, createdBy, LastUpdated AS lastUpdated, updatedBy FROM TestExpression;
-	
+
 TRUNCATE masterSourceAlias;
 TRUNCATE masterSourceDiagnosis;
 
@@ -38,7 +38,7 @@ UPDATE Diagnosis SET DiagnosisCode = RTRIM(DiagnosisCode), Description_EN = RTRI
 UPDATE DiagnosisCode SET DiagnosisCode = RTRIM(DiagnosisCode), Description = RTRIM(Description), SourceUID = SourceUID * -1;
 ALTER TABLE `DiagnosisCode`
 	CHANGE COLUMN `SourceUID` `SourceUID` BIGINT(20) NOT NULL DEFAULT 0 AFTER `DiagnosisTranslationSerNum`;
-	
+
 ALTER TABLE `DiagnosisCode`
 	DROP INDEX `SourceUID`,
 	ADD UNIQUE INDEX `SourceUID` (`SourceUID`, `Source`) USING BTREE;

@@ -1,15 +1,18 @@
+"""Generate model structure file from viewing current database."""
 import io
-import sys
 import os
-from sqlalchemy import create_engine, MetaData
-from sqlacodegen.codegen import CodeGenerator
-from dotenv import load_dotenv
+import sys
 
-def generate_models(host, user, password, database, outfile = None):
+from dotenv import load_dotenv
+from sqlacodegen.codegen import CodeGenerator
+from sqlalchemy import MetaData, create_engine
+
+
+def generate_models(host, user, password, database, outfile=None):
     """Generate the initial database model structure based on existing db state.
 
     To do this we use sqlacodegen: https://pypi.org/project/sqlacodegen/
-    
+
     Args:
         host: Docker internal host OR 127.0.0.1 for other database hosts (eg XAMPP)
         user: DB username
@@ -24,6 +27,7 @@ def generate_models(host, user, password, database, outfile = None):
     generator = CodeGenerator(metadata)
     generator.render(outfile)
 
+
 if __name__ == '__main__':
     # Read environment variables
     load_dotenv()
@@ -33,4 +37,4 @@ if __name__ == '__main__':
     PASS = os.getenv('MARIADB_PASSWORD')
     DB = os.getenv('LEGACY_OPAL_DB_NAME')
     # Generate models for OpalDB
-    generate_models(HOST+':'+PORT, USER, PASS, DB, 'models.py')
+    generate_models(HOST + ':' + PORT, USER, PASS, DB, 'models.py')  # noqa: WPS336

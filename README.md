@@ -141,14 +141,12 @@ Option two is to express our changes in the ORM, then use alembic's autogenerate
 `
 class Patient(Base):
     __tablename__ = 'Patient'
-
     PatientSerNum = Column(INTEGER(11), primary_key=True, index=True)
     PatientAriaSer = Column(INTEGER(11), nullable=False, index=True)
     PatientId = Column(String(50), nullable=False)
     ...
     ...
     ...
-    
     LastLoginDate = Column("last_login_date", DateTime)
 `
 
@@ -180,5 +178,6 @@ SQLAlchemy has a support library designed to quickly generate SQLAlchemy models,
 `python initial_model_populate.py`
 
 Known issues with sqlacodegen:
+
 - For some reason is forgets to add the 's' at the end of Alias related tables so it'll be `class Alia` instead of `class Alias`
 - In the situation when we have a foreign key or relationship between two tables, and those tables have identically named columns, we can get a warning because the same naming implies the mapping should combine the two columns and copy the data from one to the other. : https://docs.sqlalchemy.org/en/14/faq/ormconfiguration.html#i-m-getting-a-warning-or-error-about-implicitly-combining-column-x-under-attribute-y

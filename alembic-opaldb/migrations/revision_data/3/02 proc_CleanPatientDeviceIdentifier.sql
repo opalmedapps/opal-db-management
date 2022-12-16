@@ -4,11 +4,11 @@ Create Procedure `proc_CleanPatientDeviceIdentifier`()
 BEGIN
 /****************************************************************************************************
 Purpose: This stored procedure is to remove records from the table PatientDeviceIdentifier with
-the following condition. 
+the following condition.
 1. Any registration ID that is empty
 2. Any test accounts that are over a specified date
 
-Reason: 
+Reason:
 1. Remove useless records that is not in use. Especially caused by testing.
 2. People change cell phones
 3. Updating the app changles the device ID
@@ -18,11 +18,11 @@ Reason:
 /****************************************************************************************************
 Remove old push notification that were sent to test accounts
 ****************************************************************************************************/
-delete from PushNotification 
-where PatientDeviceIdentifierSerNum in 
+delete from PushNotification
+where PatientDeviceIdentifierSerNum in
 	(Select PatientDeviceIdentifierSerNum from PatientDeviceIdentifier
 	where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
-		and PatientSerNum in 
+		and PatientSerNum in
 		(
 		select Distinct PatientSerNum From Patient_Hospital_Identifier PHI
 		where (MRN in ('9999991', '9999992', '9999993', '9999995', '9999996', '9999997',
@@ -48,7 +48,7 @@ Remove any records that are older than specified date
 ****************************************************************************************************/
 delete from PatientDeviceIdentifier
 where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
-	and PatientSerNum in 
+	and PatientSerNum in
 		(
 		select Distinct PatientSerNum From Patient_Hospital_Identifier PHI
 		where (MRN in ('9999991', '9999992', '9999993', '9999995', '9999996', '9999997',

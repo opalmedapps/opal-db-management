@@ -1,8 +1,11 @@
+#  type: ignore
 # coding: utf-8
-from sqlalchemy import Column, Date, DateTime, Enum, Float, ForeignKey, Index, String, TIMESTAMP, Table, Text, Time, text
-from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
-from sqlalchemy.orm import relationship
+from sqlalchemy import (TIMESTAMP, Column, Date, DateTime, Enum, Float,
+                        ForeignKey, Index, String, Table, Text, Time, text)
+from sqlalchemy.dialects.mysql import (BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT,
+                                       SMALLINT, TINYINT, VARCHAR)
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 metadata = Base.metadata
@@ -16,15 +19,15 @@ t_Admin = Table(
     Column('LastName', Text, nullable=False),
     Column('Email', Text, nullable=False),
     Column('Phone', BIGINT(20)),
-    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 )
 
 
 class AliasExpressionMH(Base):
     __tablename__ = 'AliasExpressionMH'
 
-    AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("0"))
-    masterSourceAliasId = Column(BIGINT(20), nullable=False, index=True, server_default=text("0"))
+    AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
+    masterSourceAliasId = Column(BIGINT(20), nullable=False, index=True, server_default=text('0'))
     ExpressionName = Column(String(250), primary_key=True, nullable=False)
     Description = Column(String(250), primary_key=True, nullable=False)
     RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -38,7 +41,7 @@ class AliasExpressionMH(Base):
 class AliasExpressionMHLegacy(Base):
     __tablename__ = 'AliasExpressionMH_legacy'
 
-    AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("0"))
+    AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     ExpressionName = Column(String(250), primary_key=True, nullable=False)
     Description = Column(String(250), primary_key=True, nullable=False)
     RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
@@ -62,7 +65,7 @@ class AliasMH(Base):
     AliasDescription_EN = Column(Text, nullable=False)
     EducationalMaterialControlSerNum = Column(INTEGER(11), index=True)
     HospitalMapSerNum = Column(INTEGER(11))
-    SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("1"))
+    SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     ColorTag = Column(String(25), nullable=False, server_default=text("'#777777'"))
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(INTEGER(11), index=True)
@@ -89,7 +92,7 @@ class AnnouncementMH(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class AppointmentMH(Base):
@@ -118,7 +121,7 @@ class AppointmentMH(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 t_BuildType = Table(
@@ -137,7 +140,7 @@ class CheckinLog(Base):
     Longitude = Column(Float(asdecimal=True), nullable=False)
     Accuracy = Column(Float(asdecimal=True), nullable=False, comment='Accuracy in meters')
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class Cron(Base):
@@ -148,7 +151,7 @@ class Cron(Base):
     RepeatUnits = Column(String(50), nullable=False)
     NextCronTime = Column(Time, nullable=False)
     RepeatInterval = Column(INTEGER(11), nullable=False)
-    LastCron = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastCron = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class DiagnosisCodeMH(Base):
@@ -195,7 +198,7 @@ class DiagnosisMH(Base):
     StageCriteria = Column(String(32))
     CreationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(128), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(128), nullable=False, index=True)
 
 
@@ -230,7 +233,7 @@ class Doctor(Base):
     Phone = Column(BIGINT(20))
     Address = Column(Text)
     ProfileImage = Column(String(255), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     BIO_EN = Column(Text)
     BIO_FR = Column(Text)
 
@@ -252,7 +255,7 @@ class DoctorMH(Base):
     Address = Column(Text)
     ProfileImage = Column(String(255), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     BIO_EN = Column(Text)
     BIO_FR = Column(Text)
 
@@ -284,7 +287,7 @@ class DocumentMH(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class EducationalMaterialCategory(Base):
@@ -308,7 +311,7 @@ class EducationalMaterialMH(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class EducationalMaterialPackageContent(Base):
@@ -321,7 +324,7 @@ class EducationalMaterialPackageContent(Base):
     ParentSerNum = Column(INTEGER(11), nullable=False, index=True, comment='EducationalMaterialControlSerNum of the parent package.')
     DateAdded = Column(DateTime, nullable=False)
     AddedBy = Column(INTEGER(11))
-    LastUpdated = Column(TIMESTAMP, nullable=False, index=True, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, index=True, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     LastUpdatedBy = Column(INTEGER(11))
 
 
@@ -333,7 +336,7 @@ class EducationalMaterialRating(Base):
     PatientSerNum = Column(INTEGER(11), nullable=False)
     RatingValue = Column(TINYINT(6), nullable=False)
     SessionId = Column(Text, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class EducationalMaterialTOC(Base):
@@ -344,7 +347,7 @@ class EducationalMaterialTOC(Base):
     OrderNum = Column(INTEGER(11), nullable=False)
     ParentSerNum = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class EmailControlMH(Base):
@@ -383,7 +386,7 @@ class EmailType(Base):
     EmailTypeId = Column(String(100), nullable=False)
     EmailTypeName = Column(String(200), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class Filter(Base):
@@ -421,7 +424,7 @@ t_FrequencyEvents = Table(
     Column('MetaValue', String(150), nullable=False),
     Column('CustomFlag', INTEGER(11), nullable=False),
     Column('DateAdded', DateTime, nullable=False),
-    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()")),
+    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')),
     Index('ControlTable', 'ControlTable', 'ControlTableSerNum', 'MetaKey', unique=True)
 )
 
@@ -484,7 +487,7 @@ class NotificationMH(Base):
     ReadStatus = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     RefTableRowTitle_EN = Column(String(500), nullable=False)
     RefTableRowTitle_FR = Column(String(500), nullable=False)
 
@@ -496,7 +499,7 @@ class NotificationType(Base):
     NotificationTypeId = Column(String(100), nullable=False)
     NotificationTypeName = Column(String(200), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class OAActivityLog(Base):
@@ -514,7 +517,7 @@ class OAUserRole(Base):
 
     OAUserSerNum = Column(INTEGER(11), primary_key=True, nullable=False, index=True)
     RoleSerNum = Column(INTEGER(11), primary_key=True, nullable=False, index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class Patient(Base):
@@ -532,19 +535,19 @@ class Patient(Base):
     DateOfBirth = Column(DateTime, nullable=False)
     Age = Column(INTEGER(11))
     TelNum = Column(BIGINT(11))
-    EnableSMS = Column(TINYINT(4), nullable=False, server_default=text("0"))
+    EnableSMS = Column(TINYINT(4), nullable=False, server_default=text('0'))
     Email = Column(String(50), nullable=False)
     Language = Column(Enum('EN', 'FR', 'SN'), nullable=False)
     SSN = Column(String(16), nullable=False)
     AccessLevel = Column(Enum('1', '2', '3'), nullable=False, server_default=text("'1'"))
     RegistrationDate = Column(DateTime, nullable=False, server_default=text("'2018-01-01 00:00:00'"))
     ConsentFormExpirationDate = Column(DateTime)
-    BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text("0"), comment='to block user on Firebase')
+    BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='to block user on Firebase')
     StatusReasonTxt = Column(Text, nullable=False)
     DeathDate = Column(DateTime)
     SessionId = Column(Text, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    TestUser = Column(TINYINT(4), nullable=False, server_default=text("0"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    TestUser = Column(TINYINT(4), nullable=False, server_default=text('0'))
     TermsAndAgreementSign = Column(TINYINT(4))
     TermsAndAgreementSignDateTime = Column(DateTime)
 
@@ -553,10 +556,10 @@ class PatientControl(Patient):
     __tablename__ = 'PatientControl'
 
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), primary_key=True, index=True)
-    PatientUpdate = Column(INTEGER(11), nullable=False, index=True, server_default=text("1"))
+    PatientUpdate = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    TransferFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"))
+    PC_LastUpdated = Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    TransferFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'))
 
 
 class PatientActivityLog(Base):
@@ -570,13 +573,13 @@ class PatientActivityLog(Base):
     DeviceId = Column(String(255), nullable=False, comment='This will have information about the previous and current values of fields')
     SessionId = Column(Text, nullable=False)
     DateTime = Column(DateTime, nullable=False, index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     AppVersion = Column(String(50), nullable=False, index=True)
 
 
 t_PatientDoctorHistory = Table(
     'PatientDoctorHistory', metadata,
-    Column('PatientDoctorSerNum', INTEGER(11), nullable=False, server_default=text("0")),
+    Column('PatientDoctorSerNum', INTEGER(11), nullable=False, server_default=text('0')),
     Column('PatientSerNum', INTEGER(11), nullable=False),
     Column('DoctorSerNum', INTEGER(11), nullable=False),
     Column('OncologistFlag', INTEGER(11), nullable=False),
@@ -608,11 +611,11 @@ class PatientMH(Base):
     AccessLevel = Column(Enum('1', '2', '3'), nullable=False)
     RegistrationDate = Column(DateTime, nullable=False)
     ConsentFormExpirationDate = Column(DateTime)
-    BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text("0"))
+    BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text('0'))
     StatusReasonTxt = Column(Text, nullable=False)
     DeathDate = Column(DateTime)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PatientsForPatientsMH(Base):
@@ -626,7 +629,7 @@ class PatientsForPatientsMH(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PatientsForPatientsPersonnel(Base):
@@ -640,7 +643,7 @@ class PatientsForPatientsPersonnel(Base):
     Bio_FR = Column(Text, nullable=False)
     Website = Column(String(100), nullable=False)
     ProfileImage = Column(String(255), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PatientsForPatientsPersonnelMH(Base):
@@ -656,7 +659,7 @@ class PatientsForPatientsPersonnelMH(Base):
     Website = Column(String(100), nullable=False)
     ProfileImage = Column(String(255), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PhaseInTreatment(Base):
@@ -665,7 +668,7 @@ class PhaseInTreatment(Base):
     PhaseInTreatmentSerNum = Column(INTEGER(11), primary_key=True)
     Name_EN = Column(String(200), nullable=False)
     Name_FR = Column(String(200), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PlanWorkflow(Base):
@@ -683,7 +686,7 @@ class PlanWorkflow(Base):
     PublishedName_FR = Column(String(255), nullable=False)
     PublishedDescription_EN = Column(String(255), nullable=False)
     PublishedDescription_FR = Column(String(255), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PostControlMH(Base):
@@ -692,13 +695,13 @@ class PostControlMH(Base):
     PostControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     PostType = Column(String(100), nullable=False)
-    PublishFlag = Column(INTEGER(11), nullable=False, server_default=text("0"))
+    PublishFlag = Column(INTEGER(11), nullable=False, server_default=text('0'))
     PostName_FR = Column(String(100), nullable=False)
     PostName_EN = Column(String(100), nullable=False)
     Body_FR = Column(Text, nullable=False)
     Body_EN = Column(Text, nullable=False)
     PublishDate = Column(DateTime)
-    Disabled = Column(TINYINT(1), nullable=False, server_default=text("0"))
+    Disabled = Column(TINYINT(1), nullable=False, server_default=text('0'))
     DateAdded = Column(DateTime, nullable=False)
     ModificationAction = Column(String(25), nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
@@ -716,7 +719,7 @@ class Priority(Base):
     PriorityDateTime = Column(DateTime, nullable=False)
     PriorityCode = Column(String(25), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PushNotification(Base):
@@ -730,7 +733,7 @@ class PushNotification(Base):
     DateAdded = Column(DateTime, nullable=False)
     SendStatus = Column(String(3), nullable=False)
     SendLog = Column(Text, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class QuestionnaireControlMH(Base):
@@ -820,7 +823,7 @@ class Resource(Base):
     ResourceCode = Column(String(128), nullable=False)
     ResourceName = Column(String(255), nullable=False)
     ResourceType = Column(String(1000), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class Role(Base):
@@ -829,7 +832,7 @@ class Role(Base):
     RoleSerNum = Column(INTEGER(11), primary_key=True)
     RoleName = Column(String(100), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class SecurityQuestion(Base):
@@ -839,8 +842,8 @@ class SecurityQuestion(Base):
     QuestionText_EN = Column(String(2056), nullable=False)
     QuestionText_FR = Column(String(2056), nullable=False)
     CreationDate = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    Active = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"), comment='0 = Disable / 1 = Enable')
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    Active = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'), comment='0 = Disable / 1 = Enable')
 
 
 class SourceDatabase(Base):
@@ -848,7 +851,7 @@ class SourceDatabase(Base):
 
     SourceDatabaseSerNum = Column(INTEGER(11), primary_key=True)
     SourceDatabaseName = Column(String(255), nullable=False)
-    Enabled = Column(TINYINT(4), nullable=False, server_default=text("0"))
+    Enabled = Column(TINYINT(4), nullable=False, server_default=text('0'))
 
 
 class Staff(Base):
@@ -859,7 +862,7 @@ class Staff(Base):
     StaffId = Column(String(11), nullable=False, index=True)
     FirstName = Column(String(30), nullable=False)
     LastName = Column(String(30), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class TaskMH(Base):
@@ -881,7 +884,7 @@ class TaskMH(Base):
     CompletionDate = Column(DateTime, nullable=False)
     ModificationAction = Column(String(25), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class TestResultControlMH(Base):
@@ -895,13 +898,13 @@ class TestResultControlMH(Base):
     Description_FR = Column(Text, nullable=False)
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
-    SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("1"))
+    SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     EducationalMaterialControlSerNum = Column(INTEGER(11), index=True)
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
     LastUpdatedBy = Column(INTEGER(11), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     ModificationAction = Column(String(25), nullable=False)
     URL_EN = Column(String(2000))
     URL_FR = Column(String(2000))
@@ -956,7 +959,7 @@ class Translation(Base):
     TranslationColumnName = Column(String(150), nullable=False, server_default=text("''"), comment='Name of the column')
     TranslationCurrent = Column(String(512), nullable=False, server_default=text("''"), comment='Current text')
     TranslationReplace = Column(String(512), nullable=False, server_default=text("''"), comment='Replace the current text')
-    Active = Column(TINYINT(4), nullable=False, index=True, server_default=text("1"), comment='1 = Active / 0 = Not Active')
+    Active = Column(TINYINT(4), nullable=False, index=True, server_default=text('1'), comment='1 = Active / 0 = Not Active')
     RefTableRecNo = Column(BIGINT(20), comment='Record Number of the reference table')
 
 
@@ -971,7 +974,7 @@ class TxTeamMessageMH(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class User(Base):
@@ -983,7 +986,7 @@ class User(Base):
     Username = Column(String(255), nullable=False, comment='This field is Firebase User UID')
     Password = Column(String(255), nullable=False)
     SessionId = Column(Text)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class UsersMH(Base):
@@ -997,7 +1000,7 @@ class UsersMH(Base):
     Username = Column(String(255), nullable=False)
     Password = Column(String(255), nullable=False)
     ModificationAction = Column(String(25), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class Venue(Base):
@@ -1008,7 +1011,7 @@ class Venue(Base):
     SourceUID = Column(INTEGER(11), nullable=False, index=True)
     VenueId = Column(String(100), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class Accesslevel(Base):
@@ -1028,12 +1031,12 @@ class Alert(Base):
     subject = Column(MEDIUMTEXT, nullable=False, comment='Subject of the alert. Should be plain text, no html.')
     body = Column(MEDIUMTEXT, nullable=False, comment='Body of the alert message. Plain text, no html.')
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
-    active = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
-    deleted = Column(TINYINT(1), nullable=False, server_default=text("0"), comment=' 0 = not deleted, 1 = deleted')
+    active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
+    deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
     deletedBy = Column(String(128), nullable=False, comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
     createdBy = Column(String(128), nullable=False, comment='Username of the person who created the record')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"), comment='Date and time of last update of the record')
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
     updatedBy = Column(String(128), nullable=False, comment='Username of the person who updated the record')
 
 
@@ -1047,12 +1050,12 @@ class AlertMH(Base):
     subject = Column(MEDIUMTEXT, nullable=False, comment='Subject of the alert. Should be plain text, no html.')
     body = Column(MEDIUMTEXT, nullable=False, comment='Body of the alert message. Plain text, no html.')
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
-    active = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
-    deleted = Column(TINYINT(1), nullable=False, server_default=text("0"), comment=' 0 = not deleted, 1 = deleted')
+    active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
+    deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
     deletedBy = Column(String(128), nullable=False, comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
     createdBy = Column(String(128), nullable=False, comment='Username of the person who created the record')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"), comment='Date and time of last update of the record')
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
     updatedBy = Column(String(128), nullable=False, index=True, comment='Username of the person who updated the record')
 
 
@@ -1088,7 +1091,7 @@ class CategoryModule(Base):
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
     name_EN = Column(String(128), nullable=False, comment='English name of the category')
     name_FR = Column(String(128), nullable=False, comment='French name of the category')
-    order = Column(INTEGER(3), nullable=False, server_default=text("999"), comment='Order in the navigation menu')
+    order = Column(INTEGER(3), nullable=False, server_default=text('999'), comment='Order in the navigation menu')
 
 
 class CronControlEducationalMaterial(Base):
@@ -1096,9 +1099,9 @@ class CronControlEducationalMaterial(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlEducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False, index=True, comment='Foreign key with EducMatControlSerNum from EMC. Mandatory.')
-    publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"), comment='Marker for data that has been published from opalAdmin.')
+    publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that has been published from opalAdmin.')
     lastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last publish date.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     sessionId = Column(String(255), comment='SessionId of the user who last updated this field.')
 
 
@@ -1107,9 +1110,9 @@ class CronControlPatientEducationalMaterial(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(INTEGER(11), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
-    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text("0"), comment='Marker for data that needs to be read on next cron.')
+    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class CustomPushNotificationLog(Base):
@@ -1145,13 +1148,13 @@ class MasterSourceAlias(Base):
     externalId = Column(String(512), nullable=False, server_default=text("'-1'"), comment='External ID from the other database')
     code = Column(String(128), nullable=False, comment='Code of the alias source')
     description = Column(String(128), nullable=False, comment='Expression of the alias source')
-    type = Column(INTEGER(3), nullable=False, server_default=text("-1"), comment='-1 = no type, 1 = Task, 2 = Appointment, 3 = Document')
-    source = Column(INTEGER(3), nullable=False, server_default=text("-1"), comment='-1 = no source type, 1 = Aria, 2 = Medivisit')
-    deleted = Column(INTEGER(1), nullable=False, server_default=text("0"), comment='has the data being deleted or not')
+    type = Column(INTEGER(3), nullable=False, server_default=text('-1'), comment='-1 = no type, 1 = Task, 2 = Appointment, 3 = Document')
+    source = Column(INTEGER(3), nullable=False, server_default=text('-1'), comment='-1 = no source type, 1 = Aria, 2 = Medivisit')
+    deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
     deletedBy = Column(String(255), nullable=False, comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
     createdBy = Column(String(255), nullable=False, comment='username of who created the record')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"), comment='Last time the record was updated')
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
     updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
 
 
@@ -1166,12 +1169,12 @@ class MasterSourceDiagnosi(Base):
     externalId = Column(String(512), nullable=False, server_default=text("'-1'"), comment='External ID from the other database')
     code = Column(String(256), nullable=False, comment='Diagnosis Code')
     description = Column(String(256), nullable=False, comment='Description of the diagnostic')
-    source = Column(INTEGER(3), nullable=False, server_default=text("-1"), comment='-1 = no source type, 1 = Aria')
-    deleted = Column(INTEGER(1), nullable=False, server_default=text("0"), comment='has the data being deleted or not')
+    source = Column(INTEGER(3), nullable=False, server_default=text('-1'), comment='-1 = no source type, 1 = Aria')
+    deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
     deletedBy = Column(String(255), nullable=False, comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
     createdBy = Column(String(255), nullable=False, comment='username of who created the record')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"), comment='Last time the record was updated')
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
     updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
 
 
@@ -1181,11 +1184,11 @@ class OaRole(Base):
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
     name_EN = Column(String(64), nullable=False, comment='English name of the role')
     name_FR = Column(String(64), nullable=False, comment='French name of the role')
-    deleted = Column(INTEGER(1), nullable=False, server_default=text("0"), comment='has the data being deleted or not')
+    deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
     deletedBy = Column(String(255), nullable=False, comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
     createdBy = Column(String(255), nullable=False, comment='username of who created the record')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"), comment='Last time the record was updated')
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
     updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
 
 
@@ -1199,7 +1202,7 @@ class PatientStudyMH(Base):
     studyId = Column(BIGINT(20), nullable=False, index=True)
     consentStatus = Column(INTEGER(11), nullable=False)
     readStatus = Column(INTEGER(11), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, index=True, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, index=True, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class PublicationSetting(Base):
@@ -1210,9 +1213,9 @@ class PublicationSetting(Base):
     name_EN = Column(String(512), nullable=False, comment='English name of the setting')
     name_FR = Column(String(512), nullable=False, comment='French name of the setting')
     internalName = Column(String(512), nullable=False, comment='Name of the field for the triggers when processing the data on the backend and frontend')
-    isTrigger = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the setting a trigger (1) or something else (0)')
-    isUnique = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the setting can have only one unique value (1) or not (0)')
-    selectAll = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Can the setting (mostly a trigger) has an "All" (1) value or not (0)')
+    isTrigger = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the setting a trigger (1) or something else (0)')
+    isUnique = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the setting can have only one unique value (1) or not (0)')
+    selectAll = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Can the setting (mostly a trigger) has an "All" (1) value or not (0)')
     opalDB = Column(MEDIUMTEXT, nullable=False, comment='SQL or table name from the OpalDB to get or insert the data. Note: if the ariaDB field is filled, it must be run before this one.')
     opalPK = Column(String(512), nullable=False, comment='Primary key used for the OpalDB field')
     custom = Column(MEDIUMTEXT, nullable=False, comment='This field contains JSON format data for custom settings (like for age and sex for example)')
@@ -1228,10 +1231,10 @@ class ResourcePending(Base):
     sourceName = Column(String(128), nullable=False)
     appointmentId = Column(BIGINT(20), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
-    level = Column(TINYINT(4), nullable=False, server_default=text("1"))
+    level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(255), nullable=False)
 
 
@@ -1242,11 +1245,11 @@ class ResourcePendingError(Base):
     sourceName = Column(String(128), nullable=False)
     appointmentId = Column(BIGINT(20), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
-    level = Column(TINYINT(4), nullable=False, server_default=text("1"))
+    level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     error = Column(MEDIUMTEXT, nullable=False)
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(255), nullable=False)
 
 
@@ -1259,10 +1262,10 @@ class ResourcePendingMH(Base):
     sourceName = Column(String(128), nullable=False)
     appointmentId = Column(BIGINT(20), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
-    level = Column(TINYINT(4), nullable=False, server_default=text("1"))
+    level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(255), nullable=False, index=True)
 
 
@@ -1278,7 +1281,7 @@ class Termsandagreement(Base):
     Version = Column(String(10000), nullable=False)
     Active = Column(TINYINT(4), nullable=False)
     CreateDate = Column(TIMESTAMP)
-    LastModifyDate = Column(TIMESTAMP, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastModifyDate = Column(TIMESTAMP, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
 class AppointmentPending(Base):
@@ -1301,7 +1304,7 @@ class AppointmentPending(Base):
     ScheduledEndTime = Column(DateTime, nullable=False)
     ActualStartDate = Column(DateTime, nullable=False)
     ActualEndDate = Column(DateTime, nullable=False)
-    Location = Column(INTEGER(10), nullable=False, server_default=text("10"))
+    Location = Column(INTEGER(10), nullable=False, server_default=text('10'))
     RoomLocation_EN = Column(String(100), nullable=False)
     RoomLocation_FR = Column(String(100), nullable=False)
     Checkin = Column(TINYINT(4), nullable=False)
@@ -1309,10 +1312,10 @@ class AppointmentPending(Base):
     DateAdded = Column(DateTime, nullable=False)
     DateModified = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
-    Level = Column(TINYINT(4), nullable=False, server_default=text("1"))
+    Level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     SessionId = Column(Text, nullable=False)
     updatedBy = Column(String(255), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
 
@@ -1339,7 +1342,7 @@ class AppointmentPendingMH(Base):
     ScheduledEndTime = Column(DateTime, nullable=False)
     ActualStartDate = Column(DateTime, nullable=False)
     ActualEndDate = Column(DateTime, nullable=False)
-    Location = Column(INTEGER(10), nullable=False, server_default=text("10"))
+    Location = Column(INTEGER(10), nullable=False, server_default=text('10'))
     RoomLocation_EN = Column(String(100), nullable=False)
     RoomLocation_FR = Column(String(100), nullable=False)
     Checkin = Column(TINYINT(4), nullable=False)
@@ -1350,7 +1353,7 @@ class AppointmentPendingMH(Base):
     ReadStatus = Column(INTEGER(11), nullable=False)
     SessionId = Column(Text, nullable=False)
     updatedBy = Column(String(255), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
 
@@ -1380,7 +1383,7 @@ class Diagnosi(Base):
     StageCriteria = Column(String(32))
     CreationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(128), nullable=False, server_default=text("'CronJob'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(128), nullable=False, server_default=text("'CronJob'"))
 
     Patient = relationship('Patient')
@@ -1392,8 +1395,8 @@ class EducationalMaterialControl(Base):
     EducationalMaterialControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
     EducationalMaterialType_EN = Column(String(100), nullable=False)
     EducationalMaterialType_FR = Column(String(100), nullable=False)
-    EducationalMaterialCategoryId = Column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text("1"), comment='Foreign key with ID in EducationalMaterialCategory table.')
-    PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text("0"))
+    EducationalMaterialCategoryId = Column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table.')
+    PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     Name_EN = Column(String(200), nullable=False)
     Name_FR = Column(VARCHAR(200), nullable=False)
     URL_EN = Column(String(2000))
@@ -1403,12 +1406,12 @@ class EducationalMaterialControl(Base):
     ShareURL_EN = Column(String(2000))
     ShareURL_FR = Column(String(2000))
     PhaseInTreatmentSerNum = Column(INTEGER(11), index=True)
-    ParentFlag = Column(INTEGER(11), nullable=False, server_default=text("1"))
+    ParentFlag = Column(INTEGER(11), nullable=False, server_default=text('1'))
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(INTEGER(11))
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    deleted = Column(TINYINT(1), nullable=False, server_default=text("0"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    deleted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     SessionId = Column(String(255))
 
     EducationalMaterialCategory = relationship('EducationalMaterialCategory')
@@ -1423,7 +1426,7 @@ class Feedback(Base):
     AppRating = Column(TINYINT(4), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     SessionId = Column(Text, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
 
@@ -1434,12 +1437,12 @@ class OAUser(Base):
     OAUserSerNum = Column(INTEGER(11), primary_key=True)
     Username = Column(String(1000), nullable=False)
     Password = Column(String(1000), nullable=False)
-    oaRoleId = Column(ForeignKey('oaRole.ID'), nullable=False, index=True, server_default=text("1"), comment='Role of the user')
-    type = Column(TINYINT(1), nullable=False, server_default=text("1"), comment="Type of user. 1 = 'human' user. 2 = 'system' user")
+    oaRoleId = Column(ForeignKey('oaRole.ID'), nullable=False, index=True, server_default=text('1'), comment='Role of the user')
+    type = Column(TINYINT(1), nullable=False, server_default=text('1'), comment="Type of user. 1 = 'human' user. 2 = 'system' user")
     Language = Column(Enum('EN', 'FR'), nullable=False, server_default=text("'EN'"))
-    deleted = Column(TINYINT(1), nullable=False, server_default=text("0"))
+    deleted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     oaRole = relationship('OaRole')
 
@@ -1453,7 +1456,7 @@ class PatientActionLog(Base):
     Action = Column(String(125), nullable=False, server_default=text("''"), comment='Action the user took.')
     RefTable = Column(String(125), nullable=False, index=True, server_default=text("''"), comment='Table containing the item that was acted upon.')
     RefTableSerNum = Column(INTEGER(11), nullable=False, comment='SerNum identifying the item in RefTable.')
-    ActionTime = Column(TIMESTAMP, nullable=False, index=True, server_default=text("current_timestamp()"), comment='Timestamp when the user took the action.')
+    ActionTime = Column(TIMESTAMP, nullable=False, index=True, server_default=text('current_timestamp()'), comment='Timestamp when the user took the action.')
 
     Patient = relationship('Patient')
 
@@ -1466,7 +1469,7 @@ class PatientDoctor(Base):
     DoctorSerNum = Column(ForeignKey('Doctor.DoctorSerNum', onupdate='CASCADE'), nullable=False, index=True)
     OncologistFlag = Column(INTEGER(11), nullable=False, index=True)
     PrimaryFlag = Column(INTEGER(11), nullable=False, index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Doctor = relationship('Doctor')
     Patient = relationship('Patient')
@@ -1482,14 +1485,14 @@ class PatientHospitalIdentifier(Base):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
     Hospital_Identifier_Type_Code = Column(ForeignKey('Hospital_Identifier_Type.Code'), nullable=False, index=True)
     MRN = Column(String(20), nullable=False, index=True)
-    Is_Active = Column(TINYINT(1), nullable=False, server_default=text("1"))
+    Is_Active = Column(TINYINT(1), nullable=False, server_default=text('1'))
 
     Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
 # TODO: SQLAlchemy requires us to provide it with the models corresponding to the QuestionnaireDB tables referenced by some OpalDB foreign key constraints.
 #       Because this directory is for manging opaldb only, we will import the relevant QuestionnaireDB models during the creation of the alembic-questionnairedb structure.
-#       After doing so, we can run another autogenerate migration here to make sure everything works in sync properly.  
+#       After doing so, we can run another autogenerate migration here to make sure everything works in sync properly.
 
 # class Purpose(Base):
 #     __tablename__ = 'purpose'
@@ -1526,7 +1529,7 @@ class SecurityAnswer(Base):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     AnswerText = Column(String(2056), nullable=False)
     CreationDate = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
     SecurityQuestion = relationship('SecurityQuestion')
@@ -1540,7 +1543,7 @@ class StatusAlias(Base):
     Name = Column(String(30), nullable=False)
     Expression = Column(String(45), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     SourceDatabase = relationship('SourceDatabase')
 
@@ -1549,7 +1552,7 @@ class Module(Base):
     __tablename__ = 'module'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary Key')
-    operation = Column(TINYINT(1), nullable=False, server_default=text("7"), comment='List of available operations for the module (R/W/D)')
+    operation = Column(TINYINT(1), nullable=False, server_default=text('7'), comment='List of available operations for the module (R/W/D)')
     name_EN = Column(String(512), nullable=False, comment='English name of the module')
     name_FR = Column(String(512), nullable=False, comment='French name of the module')
     description_EN = Column(String(512), nullable=False, comment='English description of the module')
@@ -1560,14 +1563,14 @@ class Module(Base):
     iconClass = Column(String(512), nullable=False, comment='Icon classes for html display')
     url = Column(String(255), nullable=False, comment='URL of the module. Used to generate the nav menus.')
     subModule = Column(LONGTEXT, comment='Contains all the submodule info in a JSON format')
-    subModuleMenu = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='If the module has submodules, can these being displayed in a navigation menu')
-    core = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='An essential module that can never being deactivated')
-    active = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the module active or not in opalAdmin')
+    subModuleMenu = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='If the module has submodules, can these being displayed in a navigation menu')
+    core = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='An essential module that can never being deactivated')
+    active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module active or not in opalAdmin')
     categoryModuleId = Column(ForeignKey('categoryModule.ID'), index=True, comment='Attach the module to a specific category')
-    publication = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the module is linked to the publication module')
-    customCode = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Is the module allows custom codes')
-    unique = Column(TINYINT(1), nullable=False, server_default=text("1"), comment='To determine if an entry of the specified module can be published multiple times or not')
-    order = Column(INTEGER(3), nullable=False, server_default=text("999"), comment='Order to display the list of modlues')
+    publication = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module is linked to the publication module')
+    customCode = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module allows custom codes')
+    unique = Column(TINYINT(1), nullable=False, server_default=text('1'), comment='To determine if an entry of the specified module can be published multiple times or not')
+    order = Column(INTEGER(3), nullable=False, server_default=text('999'), comment='Order to display the list of modlues')
     sqlPublicationList = Column(LONGTEXT, nullable=False, comment='SQL query to list the publications associated to the module')
     sqlDetails = Column(LONGTEXT, nullable=False, comment='SQL query to list the details of a publication')
     sqlPublicationChartLog = Column(LONGTEXT, nullable=False, comment='SQL query to list the chart log publications associated to the module')
@@ -1591,7 +1594,7 @@ class DiagnosisTranslation(Base):
     DiagnosisCode = Column(String(100), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     EducationalMaterialControl = relationship('EducationalMaterialControl')
@@ -1608,7 +1611,7 @@ class EducationalMaterial(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     EducationalMaterialControl = relationship('EducationalMaterialControl')
@@ -1626,7 +1629,7 @@ class EmailControl(Base):
     EmailTypeSerNum = Column(ForeignKey('EmailType.EmailTypeSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     EmailType = relationship('EmailType')
@@ -1648,7 +1651,7 @@ class HospitalMap(Base):
     MapDescription_FR = Column(String(255))
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     OAUser = relationship('OAUser')
@@ -1667,7 +1670,7 @@ class NotificationControl(Base):
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     LastPublished = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     OAUser = relationship('OAUser')
@@ -1688,10 +1691,10 @@ class PatientDeviceIdentifier(Base):
     DeviceType = Column(TINYINT(4), nullable=False, comment='0 = iOS, 1 = Android, 3 = browser')
     SessionId = Column(Text, nullable=False)
     SecurityAnswerSerNum = Column(ForeignKey('SecurityAnswer.SecurityAnswerSerNum', onupdate='CASCADE'), index=True)
-    Attempt = Column(INTEGER(11), nullable=False, server_default=text("0"))
-    Trusted = Column(TINYINT(1), nullable=False, server_default=text("0"))
+    Attempt = Column(INTEGER(11), nullable=False, server_default=text('0'))
+    Trusted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     TimeoutTimestamp = Column(TIMESTAMP)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
     SecurityAnswer = relationship('SecurityAnswer')
@@ -1702,18 +1705,18 @@ class PostControl(Base):
 
     PostControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
     PostType = Column(String(100), nullable=False, index=True)
-    PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text("0"))
+    PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     PostName_FR = Column(String(100), nullable=False)
     PostName_EN = Column(String(100), nullable=False)
     Body_FR = Column(Text, nullable=False)
     Body_EN = Column(Text, nullable=False)
     PublishDate = Column(DateTime)
-    Disabled = Column(TINYINT(1), nullable=False, server_default=text("0"))
+    Disabled = Column(TINYINT(1), nullable=False, server_default=text('0'))
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-    deleted = Column(TINYINT(1), nullable=False, server_default=text("0"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    deleted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     SessionId = Column(String(255))
 
     OAUser = relationship('OAUser')
@@ -1732,7 +1735,7 @@ class QuestionnaireControl(Base):
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     OAUser = relationship('OAUser')
@@ -1784,13 +1787,13 @@ class TestControl(Base):
     Description_FR = Column(Text, nullable=False)
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text("1"))
+    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     URL_EN = Column(String(2000), nullable=False)
     URL_FR = Column(String(2000), nullable=False)
     SessionId = Column(String(255))
@@ -1810,14 +1813,14 @@ class TestExpression(Base):
     TestControlSerNum = Column(INTEGER(11), index=True)
     TestCode = Column(String(30), nullable=False, server_default=text("''"))
     ExpressionName = Column(String(100), nullable=False)
-    DateAdded = Column(DateTime, nullable=False, server_default=text("current_timestamp()"))
+    DateAdded = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     LastPublished = Column(DateTime)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text("4"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('4'))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
     externalId = Column(String(512), nullable=False, server_default=text("'-1'"))
-    deleted = Column(INTEGER(1), nullable=False, server_default=text("0"))
+    deleted = Column(INTEGER(1), nullable=False, server_default=text('0'))
     deletedBy = Column(String(255))
     createdBy = Column(String(255), nullable=False, server_default=text("'cronjob'"))
     updatedBy = Column(String(255), nullable=False, server_default=text("'cronjob'"))
@@ -1835,11 +1838,11 @@ class TestGroupExpression(Base):
     TestGroupExpressionSerNum = Column(INTEGER(11), primary_key=True)
     TestCode = Column(String(30), nullable=False)
     ExpressionName = Column(String(100), nullable=False)
-    DateAdded = Column(DateTime, nullable=False, server_default=text("current_timestamp()"))
+    DateAdded = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     LastPublished = Column(DateTime)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text("4"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('4'))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     OAUser = relationship('OAUser')
@@ -1870,7 +1873,7 @@ class TestResult(Base):
     ValidEntry = Column(String(5), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     Patient = relationship('Patient')
@@ -1886,13 +1889,13 @@ class TestResultControl(Base):
     Description_FR = Column(Text, nullable=False)
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text("1"))
+    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     URL_EN = Column(String(2000), nullable=False)
     URL_FR = Column(String(2000), nullable=False)
     SessionId = Column(String(255))
@@ -1908,9 +1911,9 @@ class CronControlPatient(Base):
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
     cronType = Column(String(100), nullable=False, index=True, comment='Field refers to what cron controller is using this transfer flag. eg TxTeamMessage, Document, Announcement, etc. Mandatory')
-    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text("0"), comment='Marker for data that needs to be read on next cron.')
+    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     PatientControl = relationship('PatientControl')
 
@@ -1920,9 +1923,9 @@ class CronControlPatientAnnouncement(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
-    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text("0"), comment='Marker for data that needs to be read on next cron.')
+    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     PatientControl = relationship('PatientControl')
 
@@ -1932,9 +1935,9 @@ class CronControlPatientLegacyQuestionnaire(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
-    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text("0"), comment='Marker for data that needs to be read on next cron.')
+    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     PatientControl = relationship('PatientControl')
 
@@ -1944,9 +1947,9 @@ class CronControlPatientTreatmentTeamMessage(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
-    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text("0"), comment='Marker for data that needs to be read on next cron.')
+    transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     PatientControl = relationship('PatientControl')
 
@@ -1969,7 +1972,7 @@ class OaRoleModule(Base):
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
     moduleId = Column(ForeignKey('module.ID'), nullable=False, index=True, comment='Module ID')
     oaRoleId = Column(ForeignKey('oaRole.ID'), nullable=False, index=True, comment='OA Role ID')
-    access = Column(TINYINT(1), nullable=False, server_default=text("0"), comment='Access level level (0-7) for this role on this module')
+    access = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Access level level (0-7) for this role on this module')
 
     module = relationship('Module')
     oaRole = relationship('OaRole')
@@ -1987,12 +1990,12 @@ class Alias(Base):
     AliasDescription_EN = Column(Text, nullable=False)
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     HospitalMapSerNum = Column(ForeignKey('HospitalMap.HospitalMapSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text("1"))
+    SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     ColorTag = Column(String(25), nullable=False, server_default=text("'#777777'"))
-    WaitTimeValidity = Column(TINYINT(4), nullable=False, server_default=text("1"), comment='This field exist in DEV. Usage is unknow')
+    WaitTimeValidity = Column(TINYINT(4), nullable=False, server_default=text('1'), comment='This field exist in DEV. Usage is unknow')
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     EducationalMaterialControl = relationship('EducationalMaterialControl')
@@ -2008,9 +2011,9 @@ class AppointmentCheckin(Alias):
     CheckinInstruction_EN = Column(Text, nullable=False)
     CheckinInstruction_FR = Column(Text, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SessionId = Column(String(255))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    AC_LastUpdatedBy = Column('LastUpdatedBy', ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    AC_SessionId = Column('SessionId', String(255))
+    AC_LastUpdated = Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     OAUser = relationship('OAUser')
 
@@ -2025,7 +2028,7 @@ class Announcement(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     Patient = relationship('Patient')
@@ -2040,13 +2043,13 @@ class DiagnosisCode(Base):
 
     DiagnosisCodeSerNum = Column(INTEGER(11), primary_key=True)
     DiagnosisTranslationSerNum = Column(ForeignKey('DiagnosisTranslation.DiagnosisTranslationSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    SourceUID = Column(BIGINT(20), nullable=False, server_default=text("0"))
-    Source = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum'), nullable=False, index=True, server_default=text("-1"))
+    SourceUID = Column(BIGINT(20), nullable=False, server_default=text('0'))
+    Source = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum'), nullable=False, index=True, server_default=text('-1'))
     DiagnosisCode = Column(String(100), nullable=False, index=True)
     Description = Column(String(2056), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(INTEGER(11))
 
     DiagnosisTranslation = relationship('DiagnosisTranslation')
@@ -2063,7 +2066,7 @@ class EmailLog(Base):
     EmailControlSerNum = Column(ForeignKey('EmailControl.EmailControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     Status = Column(String(5), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     EmailControl = relationship('EmailControl')
@@ -2081,7 +2084,7 @@ class Notification(Base):
     DateAdded = Column(DateTime)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     RefTableRowTitle_EN = Column(String(500), nullable=False)
     RefTableRowTitle_FR = Column(String(500), nullable=False)
 
@@ -2113,7 +2116,7 @@ class PatientTestResult(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
     TestExpression = relationship('TestExpression')
@@ -2128,8 +2131,8 @@ class PatientsForPatient(Base):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text("0"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text('0'))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     Patient = relationship('Patient')
@@ -2148,7 +2151,7 @@ class Questionnaire(Base):
     CompletedFlag = Column(TINYINT(4), nullable=False)
     CompletionDate = Column(DateTime)
     SessionId = Column(Text, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     Patient = relationship('Patient')
@@ -2165,7 +2168,7 @@ class TestResultAdditionalLink(Base):
     URL_EN = Column(String(2056), nullable=False)
     URL_FR = Column(String(2056), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     TestResultControl = relationship('TestResultControl')
 
@@ -2179,7 +2182,7 @@ class TestResultExpression(Base):
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     OAUser = relationship('OAUser')
@@ -2196,7 +2199,7 @@ class TxTeamMessage(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     CronLog = relationship('CronLog')
     Patient = relationship('Patient')
@@ -2208,9 +2211,9 @@ class CronControlPostAnnouncement(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPostSerNum = Column(ForeignKey('PostControl.PostControlSerNum'), nullable=False, index=True, comment='Foreign key with PostControlSerNum from PostControl. Mandatory.')
-    publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"), comment='Marker for data that has been published from opalAdmin.')
+    publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that has been published from opalAdmin.')
     lastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last publish date.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     sessionId = Column(String(255), comment='SessionId of the user who last updated this field.')
 
     PostControl = relationship('PostControl')
@@ -2221,9 +2224,9 @@ class CronControlPostTreatmentTeamMessage(Base):
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPostSerNum = Column(ForeignKey('PostControl.PostControlSerNum'), nullable=False, index=True, comment='Foreign key with PostControlSerNum from PostControl. Mandatory.')
-    publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"), comment='Marker for data that has been published from opalAdmin.')
+    publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that has been published from opalAdmin.')
     lastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last publish date.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     sessionId = Column(String(255), comment='SessionId of the user who last updated this field.')
 
     PostControl = relationship('PostControl')
@@ -2245,10 +2248,10 @@ class Study(Base):
     phoneExt = Column(String(10), comment='Principal investigator phone number extension. Optional.')
     startDate = Column(Date, comment='Start date of the study. Optional.')
     endDate = Column(Date, comment='End date of the study. Optional.')
-    deleted = Column(TINYINT(4), nullable=False, server_default=text("0"), comment='Mark the record as deleted (1) or not (0)')
+    deleted = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='Mark the record as deleted (1) or not (0)')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of the creation of the record.')
     createdBy = Column(String(255), comment='Username of the creator of the record.')
-    lastUpdated = Column(TIMESTAMP, server_default=text("current_timestamp() ON UPDATE current_timestamp()"), comment='Date and time of the last modification')
+    lastUpdated = Column(TIMESTAMP, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of the last modification')
     updatedBy = Column(String(255), comment='Username of the last user who modify the record')
 
     questionnaire = relationship('Questionnaire')
@@ -2261,13 +2264,13 @@ class AliasExpression(Base):
     )
 
     AliasExpressionSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    AliasSerNum = Column(ForeignKey('Alias.AliasSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text("0"))
+    AliasSerNum = Column(ForeignKey('Alias.AliasSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('0'))
     masterSourceAliasId = Column(ForeignKey('masterSourceAlias.ID'), unique=True)
     ExpressionName = Column(String(250), nullable=False)
     Description = Column(String(250), nullable=False, comment='Resource Description')
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
     Alias = relationship('Alias')
@@ -2281,9 +2284,9 @@ class CronControlAlias(Base):
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlAliasSerNum = Column(ForeignKey('Alias.AliasSerNum'), nullable=False, index=True, comment='Foreign key with AliasSerNum from Alias. Mandatory.')
     cronType = Column(String(100), nullable=False, index=True, comment='Field refers to what cron controller is using this transfer flag. eg TxTeamMessages, Document, Announcement, etc. Mandatory')
-    aliasUpdate = Column(SMALLINT(6), nullable=False, index=True, server_default=text("0"), comment='Marker for data that needs to be read on next cron.')
+    aliasUpdate = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     sessionId = Column(String(255), comment='SessionId of the user who last updated this field.')
 
     Alias = relationship('Alias')
@@ -2297,7 +2300,7 @@ class PatientStudy(Base):
     studyId = Column(ForeignKey('study.ID'), nullable=False, index=True, comment='Foreign key with Id in study table.')
     consentStatus = Column(INTEGER(11), nullable=False, comment='Patient consent status for this study. 1 = invited; 2 = opalConsented; 3 = otherConsented; 4 = declined. Mandatory.')
     readStatus = Column(INTEGER(11), nullable=False, comment='Patient read status for this consent form.')
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
     study = relationship('Study')
@@ -2331,7 +2334,7 @@ class Appointment(Base):
     ScheduledEndTime = Column(DateTime, nullable=False)
     ActualStartDate = Column(DateTime, nullable=False)
     ActualEndDate = Column(DateTime, nullable=False)
-    Location = Column(INTEGER(10), nullable=False, server_default=text("10"))
+    Location = Column(INTEGER(10), nullable=False, server_default=text('10'))
     RoomLocation_EN = Column(String(100), nullable=False)
     RoomLocation_FR = Column(String(100), nullable=False)
     Checkin = Column(TINYINT(4), nullable=False)
@@ -2341,7 +2344,7 @@ class Appointment(Base):
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     SessionId = Column(Text, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     AliasExpression = relationship('AliasExpression')
     Patient = relationship('Patient')
@@ -2374,7 +2377,7 @@ class Document(Base):
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     AliasExpression = relationship('AliasExpression')
     CronLog = relationship('CronLog')
@@ -2399,7 +2402,7 @@ class Task(Base):
     CreationDate = Column(DateTime, nullable=False)
     CompletionDate = Column(DateTime, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     AliasExpression = relationship('AliasExpression')
     CronLog = relationship('CronLog')
@@ -2419,7 +2422,7 @@ class PatientLocation(Base):
     ArrivalDateTime = Column(DateTime, nullable=False)
     VenueSerNum = Column(INTEGER(11), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Appointment = relationship('Appointment')
     SourceDatabase = relationship('SourceDatabase')
@@ -2438,7 +2441,7 @@ class PatientLocationMH(Base):
     VenueSerNum = Column(INTEGER(11), nullable=False, index=True)
     HstryDateTime = Column(DateTime, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Appointment = relationship('Appointment')
     SourceDatabase = relationship('SourceDatabase')
@@ -2453,6 +2456,6 @@ class ResourceAppointment(Base):
     ExclusiveFlag = Column(String(11), nullable=False)
     PrimaryFlag = Column(String(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
+    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Appointment = relationship('Appointment')

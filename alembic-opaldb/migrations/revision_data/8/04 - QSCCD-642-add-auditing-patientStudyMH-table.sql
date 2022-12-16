@@ -15,7 +15,7 @@ CREATE TABLE `patientStudyMH` (
 );
 
 CREATE TRIGGER `patientStudy_after_insert` AFTER INSERT ON `patientStudy` FOR EACH ROW BEGIN
-    INSERT INTO `patientStudyMH` (`patientStudyId`, `action`, `patientId`, `studyId`, `consentStatus`, `readStatus`, `lastUpdated`) 
+    INSERT INTO `patientStudyMH` (`patientStudyId`, `action`, `patientId`, `studyId`, `consentStatus`, `readStatus`, `lastUpdated`)
     VALUES (NEW.ID, 'INSERT', NEW.patientId, NEW.studyId, NEW.consentStatus, NEW.readStatus, NOW());
 END;
 

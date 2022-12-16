@@ -2,7 +2,7 @@
 FROM php:8.0.26-apache-bullseye
 
 # Install required packages and apache modules.
-RUN apt-get update \ 
+RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y git openssh-client \
     && a2enmod headers \
@@ -30,7 +30,7 @@ RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitla
 RUN --mount=type=ssh,id=ssh_key git clone --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb
 RUN --mount=type=ssh,id=ssh_key git clone --branch $OPAL_REPORT_BRANCH git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_opalreportdb
 
-# Copy configuration file 
+# Copy configuration file
 COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
 COPY ./config/registrationdb-config.php ./dbv/dbv_registerdb/config.php
 COPY ./config/questionairesdb-config.php ./dbv/dbv_questionnairedb/config.php

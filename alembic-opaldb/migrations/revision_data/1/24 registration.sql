@@ -15,10 +15,10 @@ BEGIN
 	set @wsPatientSerNum = null;
 	set @wsRegistrationCode = null;
 	set @wsStatus = null;
-	
-	if wsBranchID is not null then		
-		
-		prepare stmt from 
+
+	if wsBranchID is not null then
+
+		prepare stmt from
 		'Select R.PatientSerNum, R.RegistrationCode, R.`Status`
 		into @wsPatientSerNum, @wsRegistrationCode, @wsStatus
 		from registerdb.registrationcode R
@@ -26,39 +26,39 @@ BEGIN
 		;
 
 		set @A = wsBranchID;
-		
+
 		EXECUTE stmt USING @A;
 		DEALLOCATE PREPARE stmt;
-		
+
 		if @wsRegistrationCode is not null then
-			
+
 			prepare stmt2 from
 			'Select P.SSN
 			into @wsRAMQ
 			from OpalDB.Patient P
 			where P.PatientSerNum = ?'
 			;
-			
-			
+
+
 			set @A = @wsPatientSerNum;
 			EXECUTE stmt2 USING @A;
 			DEALLOCATE PREPARE stmt2;
-			
+
 			if @wsRAMQ is NULL then
 				set @wsStatus = 'UNKNOWN CODE';
 			end if;
-			
+
 		else
 
 			set @wsStatus = 'UNKNOWN BRANCH';
 		end if;
-		
+
 	else
-	
+
 		set @wsStatus = 'MISSING INFO';
-		
+
 	end if;
-	
+
 	Select @wsRegistrationCode as RegistrationCode, @wsRAMQ as RAMQ, @wsStatus as Status;
 
 END;
@@ -78,7 +78,7 @@ set wsValid = (SELECT count(*) from Patient where SSN = wsRAMQ);
 
 if (wsValid > 0) then
 Select Id, AccessLevelName_EN, AccessLevelName_FR from accesslevel order by Id;
-else 
+else
 Select 0 AS Error;
 end if;
 END;
@@ -97,7 +97,7 @@ set wsValid = (SELECT count(*) from Patient where SSN = wsRAMQ);
 
 if (wsValid > 0) then
 Select Id,Prefix, LanguageName_EN, LanguageName_FR from language order by Id;
-else 
+else
 Select 0 AS Error;
 end if;
 END;
@@ -116,7 +116,7 @@ set wsValid = (SELECT count(*) from Patient where SSN = wsRAMQ);
 
 if (wsValid > 0) then
 Select SecurityQuestionSerNum, QuestionText_EN, QuestionText_FR from SecurityQuestion where Active = 1 order by SecurityQuestionSerNum;
-else 
+else
 Select 0 AS Error;
 end if;
 END;
@@ -135,7 +135,7 @@ set wsValid = (SELECT count(*) from Patient where SSN = wsRAMQ);
 
 if (wsValid > 0) then
 Select Id,DocumentLink_EN, DocumentLink_FR, PDFLink_EN, PDFLink_FR from termsandagreement where Active = 1 order by Id;
-else 
+else
 Select 0 AS Error;
 end if;
 END;
@@ -154,7 +154,7 @@ set wsValid = (SELECT count(*) from Patient where SSN = wsRAMQ);
 
 if (wsValid > 0) then
 Select FirstName,LastName from Patient as result where SSN = wsRAMQ;
-else 
+else
 Select 0 AS Error;
 end if;
 END;
@@ -169,18 +169,18 @@ BEGIN
 	declare wsPatientSerNum bigint;
 	declare wsMrn VARCHAR(50);
 	declare wsSite VARCHAR(50);
-	
+
 	declare wsCount int;
 	declare wsReturn int;
-	
+
 	set wsPatientSerNum = i_PatientSerNum;
 	set wsMrn = i_Mrn;
 	set wsSite = i_Site;
-	
+
 	set wsCount = -1;
 	SET wsReturn = -1;
 	SET wsCount = (SELECT COUNT(*) FROM Patient_Hospital_Identifier where MRN = wsMrn and Hospital_Identifier_Type_Code = wsSite);
-	
+
 	if (wsCount > 0) then
 		SET wsReturn = -1;
 	else
@@ -220,9 +220,9 @@ BEGIN
 	Declare wsPatientSerNum, wsTermsAndAgreementID BIGINT;
 	Declare wsValid,wsPass int;
 	Declare wsStatus VARCHAR(100);
-	
+
 	set wsPass = 0;
-	set wsValid = 0;	
+	set wsValid = 0;
 	set wsRAMQ = IfNull(i_RAMQ, 'Error');
 	set wsEmail = ifNull(i_Email, '');
 	set wsPassword = IfNull(i_Password, '');
@@ -238,24 +238,24 @@ BEGIN
    set wsAccessLevelSign = ifnull(i_AccessLevelSign,0);
 	set wsTermsAndAgreementID = ifnull(i_TermsAndAgreementID,0);
 	set wsTermsAndAgreementSign = ifnull(i_TermsAndAgreementSign,0);
-   
+
 
 	set wsValid = (select count(*) from Patient where SSN = wsRAMQ);
-	
+
 	if (wsValid = 1) then
 
 		set wsPatientSerNum = (select PatientSerNum from Patient where SSN = wsRAMQ);
-		
+
 		update Patient set Email = wsEmail, `Language` = wsLanguage, `AccessLevel` = wsAccessLevelID, SessionId='Opalmedapps' , RegistrationDate = NOW(), ConsentFormExpirationDate = Date_add(Now(), interval 1 year), `TermsAndAgreementSign`=wsTermsAndAgreementID, TermsAndAgreementSignDateTime = NOW()
 		where PatientSerNum = wsPatientSerNum;
-		
-		
+
+
 		Insert Into Users (UserType, UserTypeSerNum, Username, `Password`, SessionId)
 		Values ('Patient', wsPatientSerNum, wsUniqueId, wsPassword, 'Opalmedapps');
-		
+
 		Insert Into SecurityAnswer (SecurityQuestionSerNum, PatientSerNum, AnswerText, CreationDate)
 		Values (wsSecurityQuestion1, wsPatientSerNum, wsAnswer1, NOW());
-		
+
 		Insert Into SecurityAnswer (SecurityQuestionSerNum, PatientSerNum, AnswerText, CreationDate)
 		Values (wsSecurityQuestion2, wsPatientSerNum, wsAnswer2, NOW());
 
@@ -263,22 +263,21 @@ BEGIN
 		Values (wsSecurityQuestion3, wsPatientSerNum, wsAnswer3, NOW());
 
 		Insert Into PatientControl(PatientSerNum) Values(wsPatientSerNum);
-		
+
 		Insert Into registerdb.accesslevelconsent (PatientSerNum, AccessLevelId, AccessLevelSign, AccessLevelSignDateTime, CreationDate)
 		Values (wsPatientSerNum, wsAccessLevelId, wsAccessLevelSign, now(), now() );
-		
+
 		Insert Into registerdb.termsandagreementsign (PatientSerNum, TermsAndAgreementID, `TermsAndAgreementSign`, TermsAndAgreementSignDateTime)
 		Values (wsPatientSerNum, wsTermsAndAgreementID, wsTermsAndAgreementSign, now() );
 
 		Update registerdb.registrationcode
 		Set `Status` = 'Completed', DeleteBranch = 2
 		where PatientSerNum = wsPatientSerNum and `Status` = 'New';
-		
-		set wsStatus = 'Successfully Update';		
+
+		set wsStatus = 'Successfully Update';
  	else
 		set wsStatus = 'Failed to Update';
 	end if;
 
 	return wsStatus;
 END;
-

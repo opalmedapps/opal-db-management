@@ -76,4 +76,3 @@ CREATE TABLE `AppointmentPendingMH` (
 	CONSTRAINT `Appointment_pending_mh_ibfk_1` FOREIGN KEY (`PatientSerNum`) REFERENCES `OpalDB`.`Patient` (`PatientSerNum`) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 ;
-

@@ -6,11 +6,11 @@ Create Procedure `proc_CleanPatientDeviceIdentifier`()
 BEGIN
 /****************************************************************************************************
 Purpose: This stored procedure is to remove records from the table PatientDeviceIdentifier with
-the following condition. 
+the following condition.
 1. Any registration ID that is empty
 2. Any test accounts that are over a specified date
 
-Reason: 
+Reason:
 1. Remove useless records that is not in use. Especially caused by testing.
 2. People change cell phones
 3. Updating the app changles the device ID
@@ -20,11 +20,11 @@ Reason:
 /****************************************************************************************************
 Remove old push notification that were sent to test accounts
 ****************************************************************************************************/
-delete from PushNotification 
-where PatientDeviceIdentifierSerNum in 
+delete from PushNotification
+where PatientDeviceIdentifierSerNum in
 	(Select PatientDeviceIdentifierSerNum from PatientDeviceIdentifier
 	where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
-		and PatientSerNum in 
+		and PatientSerNum in
 		(select PatientSerNum from Patient
 		where PatientID in ('9999996', '3333', 'AAAA1', '1092300', '5324122', 'Opal6', 'Opal1',
 			'Opal2', 'Opal5', 'Opal4', 'Opal3', 'QA_0630', 'QA_ DAW_APP_HEAD',
@@ -39,7 +39,7 @@ Remove any records that are older than specified date
 ****************************************************************************************************/
 delete from PatientDeviceIdentifier
 where LastUpdated <= DATE_SUB(curdate(), INTERVAL 14 DAY)
-	and PatientSerNum in 
+	and PatientSerNum in
 	(select PatientSerNum from Patient
 	where PatientID in ('9999996', '3333', 'AAAA1', '1092300', '5324122', 'Opal6', 'Opal1',
 		'Opal2', 'Opal5', 'Opal4', 'Opal3', 'QA_0630', 'QA_ DAW_APP_HEAD',
@@ -67,7 +67,7 @@ BEGIN
 
 # Yick Mo
 # 2017-12-11
-# 
+#
 # Got the information from this website
 # URL: http://kedar.nitty-witty.com/blog/calculte-mysql-memory-usage-quick-stored-proc
 #
@@ -99,7 +99,7 @@ DECLARE wsTHREADS_RUNNING DOUBLE;
 
 #Cursor for Global Variables
 
-#### For < MySQL 5.1 
+#### For < MySQL 5.1
 #### DECLARE CUR_GBLVAR CURSOR FOR SHOW GLOBAL VARIABLES;
 
 #### For MySQL 5.1+
@@ -166,7 +166,7 @@ mylp:LOOP
   IF done=1 THEN
     LEAVE mylp;
   END IF;
-  	IF var in ('ABORTED_CLIENTS') then 
+  	IF var in ('ABORTED_CLIENTS') then
 		set wsABORTED_CLIENTS = val;
 	ELSEIF var in ('ABORTED_CONNECTS') then
 		set wsABORTED_CONNECTS = val;
@@ -182,9 +182,9 @@ mylp:LOOP
 		set wsTHREADS_CONNECTED = val;
 	ELSEIF var in ('THREADS_CREATED') then
 		set wsTHREADS_CREATED = val;
-	ELSEIF var in ('THREADS_RUNNING') then	
+	ELSEIF var in ('THREADS_RUNNING') then
 		set wsTHREADS_CREATED = val;
-		
+
 	END IF;
 
 END LOOP;
@@ -216,20 +216,20 @@ SELECT "Timestamp", wsLOG_TIME;
 END;
 
 -- Updating the Hospital Identifier Type Description
-Update Hospital_Identifier_Type 
-Set Description_EN = 'Royal Victoria Hospital', Description_FR = 'Hôpital Royal Victoria' 
+Update Hospital_Identifier_Type
+Set Description_EN = 'Royal Victoria Hospital', Description_FR = 'Hôpital Royal Victoria'
 where Hospital_Identifier_Type_Id = 1;
 
-Update Hospital_Identifier_Type 
+Update Hospital_Identifier_Type
 Set Description_EN = 'Montreal General Hospital', Description_FR = 'Hôpital Général de Montréal'
 where Hospital_Identifier_Type_Id = 2;
 
-Update Hospital_Identifier_Type 
+Update Hospital_Identifier_Type
 Set Description_EN = 'Montreal Children\'s Hospital', Description_FR = 'Hôpital de Montréal pour enfants'
 where Hospital_Identifier_Type_Id = 3;
 
-Update Hospital_Identifier_Type 
-Set Description_EN = 'Lachine Hospital', Description_FR = 'Hôpital de Lachine' 
+Update Hospital_Identifier_Type
+Set Description_EN = 'Lachine Hospital', Description_FR = 'Hôpital de Lachine'
 where Hospital_Identifier_Type_Id = 4;
 
 -- Update the connection to ORMS to get the level
@@ -255,12 +255,12 @@ Purpose: This will override the original location of the appointment by figuring
 	The morning shift is AM until 13:00 which is considered PM.
 
 	NOTE: This is temporary for now due to the fact of the hard coding of the database and hospital maps. Need to design this to be more dynamic.
-	
+
 Parameters:
 	in_DateTime = date and time of the appointment
 
 	in_Description = description of the appointment
-		NOTE: 
+		NOTE:
 			OpalDB is AliasExpression table (Description is the fieldname)
 			Wait Room Management is Clinic Resources table (ResourceName is the fieldname)
 
@@ -268,7 +268,7 @@ Parameters:
 
 Update: 2021-09-21 YM
 	Removed the connection to ORMS database because we are now using APIs
-	
+
 */
 
 	-- Declare variables
@@ -277,7 +277,7 @@ Update: 2021-09-21 YM
 	Declare wsDayOfWeek, wsBloodTest, wsDS_Area VarChar(3);
 	Declare wsAMFM, wsReturnLevel VarChar(3);
 	Declare wsReturnHospitalMap Int;
-	
+
 	-- Store the parameters
 	set wsDateTime = in_DateTime;
 	set wsDescription = in_Description;
@@ -289,20 +289,20 @@ Update: 2021-09-21 YM
 
 	-- Get the three characters of the day
 	set wsDayOfWeek = left(DAYNAME(ADDDATE(wsDateTime, INTERVAL 0 DAY)), 3);
-	
+
 	-- Get the AM or PM
 	set wsAMFM = if(hour(ADDTIME(wsDateTime, '0 0:00:00')) >= 13, 'PM', 'AM');
-	
+
 	-- Set the variables to default
 	set wsBloodTest = 'No';
 	set wsDS_Area = 'No';
-	
+
 	-- Step 1) Is the appointment a blood test
 	set wsBloodTest = if(ltrim(rtrim(wsDescription)) = 'NS - prise de sang/blood tests pre/post tx', 'Yes', 'No');
 
 	-- Step 2) If not a blood test, then is the appointment description for DS location only
 	if (wsBloodTest = 'No') then
-		if (wsDescription like '.EBC%' 
+		if (wsDescription like '.EBC%'
 			or wsDescription like '.EBP%'
 			or wsDescription like '.EBM%'
 			or wsDescription like 'CT%'
@@ -323,24 +323,24 @@ Update: 2021-09-21 YM
 					(wsDescription <> 'FU TELEMED LESS/30DAYS') AND
 					(wsDescription <> 'FU TELEMED MORE/30DAYS') AND
 					(wsDescription <> 'INTRA TREAT TELEMED')
-					)then			
+					)then
 					set wsDS_Area = 'Yes';
 				else
 					set wsDS_Area = 'No';
 				end if;
-		else 
+		else
 			set wsDS_Area = 'No';
 		end if;
 	end if;
 
 	-- Step 3) If it is not a blood test and DS location only, then get the current location of the doctor
 	if ((wsBloodTest = 'No') and (wsDS_Area = 'No')) then
-		
+
 		-- Return only the RC or DS location of the doctor
 		-- Doctors may be assigned to two different rooms
 		/*
-		set wsReturnLevel = 
-			(SELECT Level 
+		set wsReturnLevel =
+			(SELECT Level
 				FROM WaitRoomManagementFED.DoctorSchedule USE INDEX (ID_ResourceNameDayAMPM)
 				WHERE ResourceName = wsDescription
 					AND DAY = wsDayOfWeek
@@ -349,24 +349,24 @@ Update: 2021-09-21 YM
 		*/
 		-- If no location found, return N/A
 		set wsReturnLevel = (IfNull(wsReturnLevel, 'N/A'));
-		
+
 	end if;
 
 
 	-- Step 4) Return the location
 	set wsReturnHospitalMap = -1;
-	
+
 	if ((wsBloodTest = 'Yes') and (wsDS_Area = 'No')) then
 		set wsReturnHospitalMap = 23; -- Return RC level for blood test
-	else 
+	else
 		if ((wsBloodTest = 'No') and (wsDS_Area = 'Yes')) then
 			set wsReturnHospitalMap = 19; -- Return DS Level for only DS location based on the appointment description
 		else
-			
-			if ( 	((wsReturnLevel = 'S1') and (instr(wsDSLevel, wsCurrentHospitalMap) > 0))  or  
-					((wsReturnLevel = 'RC')  and (instr(wsRCLevel, wsCurrentHospitalMap) > 0)) or 
+
+			if ( 	((wsReturnLevel = 'S1') and (instr(wsDSLevel, wsCurrentHospitalMap) > 0))  or
+					((wsReturnLevel = 'RC')  and (instr(wsRCLevel, wsCurrentHospitalMap) > 0)) or
 					((wsReturnLevel = 'N/A') and (wsCurrentHospitalMap <> '||')) ) then
-				set wsReturnHospitalMap = in_HospitalMap; -- If doctor's and appointment location match or if the doctor's location is N/A, then return original location. 
+				set wsReturnHospitalMap = in_HospitalMap; -- If doctor's and appointment location match or if the doctor's location is N/A, then return original location.
 			else
 				-- If doctor's and appointment location does not match
 				if (wsReturnLevel = 'S1') then
@@ -377,14 +377,14 @@ Update: 2021-09-21 YM
 					end if;
 				end if;
 			end if;
-			
+
 		end if;
 	end if;
-	
+
 	if (wsReturnHospitalMap = -1) then
 		set wsReturnHospitalMap = 20; -- Force default for all appointment when unable to locate one
 	end if;
-	
+
  	Return wsReturnHospitalMap;
 
 END;

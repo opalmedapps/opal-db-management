@@ -112,17 +112,17 @@ Purpose: This will override the original location of the appointment by figuring
 	The morning shift is AM until 13:00 which is considered PM.
 
 	NOTE: This is temporary for now due to the fact of the hard coding of the database and hospital maps. Need to design this to be more dynamic.
-	
+
 Parameters:
 	in_DateTime = date and time of the appointment
 
 	in_Description = description of the appointment
-		NOTE: 
+		NOTE:
 			OpalDB is AliasExpression table (Description is the fieldname)
 			Wait Room Management is Clinic Resources table (ResourceName is the fieldname)
 
 	in_HospitalMap = original location where the patient is suppose to go for their appointment
-	
+
 */
 
 	-- Declare variables
@@ -131,7 +131,7 @@ Parameters:
 	Declare wsDayOfWeek, wsBloodTest, wsDS_Area VarChar(3);
 	Declare wsAMFM, wsReturnLevel VarChar(3);
 	Declare wsReturnHospitalMap Int;
-	
+
 	-- Store the parameters
 	set wsDateTime = in_DateTime;
 	set wsDescription = in_Description;
@@ -143,20 +143,20 @@ Parameters:
 
 	-- Get the three characters of the day
 	set wsDayOfWeek = left(DAYNAME(ADDDATE(wsDateTime, INTERVAL 0 DAY)), 3);
-	
+
 	-- Get the AM or PM
 	set wsAMFM = if(hour(ADDTIME(wsDateTime, '0 0:00:00')) >= 13, 'PM', 'AM');
-	
+
 	-- Set the variables to default
 	set wsBloodTest = 'No';
 	set wsDS_Area = 'No';
-	
+
 	-- Step 1) Is the appointment a blood test
 	set wsBloodTest = if(ltrim(rtrim(wsDescription)) = 'NS - prise de sang/blood tests pre/post tx', 'Yes', 'No');
 
 	-- Step 2) If not a blood test, then is the appointment description for DS location only
 	if (wsBloodTest = 'No') then
-		if (wsDescription like '.EBC%' 
+		if (wsDescription like '.EBC%'
 			or wsDescription like '.EBP%'
 			or wsDescription like '.EBM%'
 			or wsDescription like 'CT%'
@@ -177,23 +177,23 @@ Parameters:
 					(wsDescription <> 'FU TELEMED LESS/30DAYS') AND
 					(wsDescription <> 'FU TELEMED MORE/30DAYS') AND
 					(wsDescription <> 'INTRA TREAT TELEMED')
-					)then			
+					)then
 					set wsDS_Area = 'Yes';
 				else
 					set wsDS_Area = 'No';
 				end if;
-		else 
+		else
 			set wsDS_Area = 'No';
 		end if;
 	end if;
 
 	-- Step 3) If it is not a blood test and DS location only, then get the current location of the doctor
 	if ((wsBloodTest = 'No') and (wsDS_Area = 'No')) then
-		
+
 		-- Return only the RC or DS location of the doctor
 		-- Doctors may be assigned to two different rooms
-		set wsReturnLevel = 
-			(SELECT Level 
+		set wsReturnLevel =
+			(SELECT Level
 				FROM WaitRoomManagementFED.DoctorSchedule USE INDEX (ID_ResourceNameDayAMPM)
 				WHERE ResourceName = wsDescription
 					AND DAY = wsDayOfWeek
@@ -202,24 +202,24 @@ Parameters:
 
 		-- If no location found, return N/A
 		set wsReturnLevel = (IfNull(wsReturnLevel, 'N/A'));
-		
+
 	end if;
 
 
 	-- Step 4) Return the location
 	set wsReturnHospitalMap = -1;
-	
+
 	if ((wsBloodTest = 'Yes') and (wsDS_Area = 'No')) then
 		set wsReturnHospitalMap = 23; -- Return RC level for blood test
-	else 
+	else
 		if ((wsBloodTest = 'No') and (wsDS_Area = 'Yes')) then
 			set wsReturnHospitalMap = 19; -- Return DS Level for only DS location based on the appointment description
 		else
-			
-			if ( 	((wsReturnLevel = 'S1') and (instr(wsDSLevel, wsCurrentHospitalMap) > 0))  or  
-					((wsReturnLevel = 'RC')  and (instr(wsRCLevel, wsCurrentHospitalMap) > 0)) or 
+
+			if ( 	((wsReturnLevel = 'S1') and (instr(wsDSLevel, wsCurrentHospitalMap) > 0))  or
+					((wsReturnLevel = 'RC')  and (instr(wsRCLevel, wsCurrentHospitalMap) > 0)) or
 					((wsReturnLevel = 'N/A') and (wsCurrentHospitalMap <> '||')) ) then
-				set wsReturnHospitalMap = in_HospitalMap; -- If doctor's and appointment location match or if the doctor's location is N/A, then return original location. 
+				set wsReturnHospitalMap = in_HospitalMap; -- If doctor's and appointment location match or if the doctor's location is N/A, then return original location.
 			else
 				-- If doctor's and appointment location does not match
 				if (wsReturnLevel = 'S1') then
@@ -230,14 +230,14 @@ Parameters:
 					end if;
 				end if;
 			end if;
-			
+
 		end if;
 	end if;
-	
+
 	if (wsReturnHospitalMap = -1) then
 		set wsReturnHospitalMap = 20; -- Force default for all appointment when unable to locate one
 	end if;
-	
+
  	Return wsReturnHospitalMap;
 
 END;

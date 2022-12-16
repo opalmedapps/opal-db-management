@@ -32,14 +32,14 @@ if (wsramqNumber <> '') then
 		INSERT INTO Patient
 			(FirstName,LastName,Sex,DateOfBirth,Age,TelNum,EnableSMS,SSN)
 		VALUES (wsfirstName, wslastName, wssex, wsDOB, TIMESTAMPDIFF(year, wsDOB, now()), wshomePhoneNumber, 0, wsramqNumber);
-		
+
 		set wsPatientSerNum = (select ifnull((select PatientSerNum from Patient where (SSN = wsramqNumber) limit 1), -1) as PatientSerNum);
 	else
 		update Patient set FirstName = wsfirstName, LastName = wslastName, Sex=wssex , DateOfBirth=wsDOB, Age = TIMESTAMPDIFF(year, wsDOB, now()), TelNum=wshomePhoneNumber, SSN=wsramqNumber
 		where PatientSerNum = wsPatientSerNum;
-		
+
 	end if;
-	
+
 end if;
 
 Return wsPatientSerNum;

@@ -9,7 +9,7 @@ Sets all the existing education materials under "clinical" category.
 
 =============================================================================================
 
-QSCCD-642: adds new "lastUpdated" field to the "patientStudy" table that allows to see 
+QSCCD-642: adds new "lastUpdated" field to the "patientStudy" table that allows to see
 when the consent was updated.
 
 Creates "patientStudyMH" table along with "patientStudy_after_insert", "patientStudy_after_update", and

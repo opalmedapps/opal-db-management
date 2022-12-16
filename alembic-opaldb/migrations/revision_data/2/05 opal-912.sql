@@ -1,5 +1,5 @@
-ALTER TABLE study 
-	ADD COLUMN email VARCHAR(128), 
+ALTER TABLE study
+	ADD COLUMN email VARCHAR(128),
 	CHANGE COLUMN email email VARCHAR(128) COMMENT 'Principal investigator email address of the study. Mandatory.' AFTER investigator,
 	ADD COLUMN phone VARCHAR(25),
 	CHANGE COLUMN phone phone VARCHAR(25) COMMENT 'Principal investigator phone number of the study. Mandatory.' AFTER email,

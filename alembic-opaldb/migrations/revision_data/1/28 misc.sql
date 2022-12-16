@@ -2,7 +2,7 @@ CREATE PROCEDURE `getQuestionnaireResults`(
 	IN `in_QuestionnaireSerNum` INT
 )
 Generate_Report : BEGIN
-	
+
 	-- Declare variables
 	Declare wsQuestionnaireSerNum Int;
 
@@ -17,9 +17,9 @@ Generate_Report : BEGIN
 		PQ.DateTimeAnswered,
 		QT.QuestionType,
 		A.Answer,
-		Q2.QuestionQuestion, 
-		Q2.QuestionQuestion_FR	
-	from 	QuestionnaireDB.PatientQuestionnaire PQ, QuestionnaireDB.Answer A, QuestionnaireDB.Questionnaire Q1, QuestionnaireDB.QuestionnaireQuestion QQ, 
+		Q2.QuestionQuestion,
+		Q2.QuestionQuestion_FR
+	from 	QuestionnaireDB.PatientQuestionnaire PQ, QuestionnaireDB.Answer A, QuestionnaireDB.Questionnaire Q1, QuestionnaireDB.QuestionnaireQuestion QQ,
 			QuestionnaireDB.Question Q2, QuestionnaireDB.Source S, QuestionnaireDB.QuestionType QT, QuestionnaireDB.Patient P
 	where PQ.PatientQuestionnaireSerNum = A.PatientQuestionnaireSerNum
 		and A.QuestionnaireQuestionSerNum = QQ.QuestionnaireQuestionSerNum
@@ -28,24 +28,24 @@ Generate_Report : BEGIN
 		and Q2.SourceSerNum = S.SourceSerNum
 		and Q2.QuestionTypeSerNum = QT.QuestionTypeSerNum
 		and PQ.PatientSerNum = P.PatientSerNum
-		and PQ.PatientQuestionnaireSerNum in 
-				(select Q.PatientQuestionnaireDBSerNum from OpalDB.Questionnaire Q 
-					where DateAdded > '2018-11-23' and CompletedFlag = 1 
+		and PQ.PatientQuestionnaireSerNum in
+				(select Q.PatientQuestionnaireDBSerNum from OpalDB.Questionnaire Q
+					where DateAdded > '2018-11-23' and CompletedFlag = 1
 						and PatientSerNum Not In (51, 92, 197, 198, 204, 200, 199, 124, 229)
 						)
 		and Q1.QuestionnaireSerNum = wsQuestionnaireSerNum
 		and DATE_FORMAT(PQ.DateTimeAnswered, "%Y-%m-%d") >= '2018-11-23'
 	order by PQ.PatientQuestionnaireSerNum, PQ.PatientSerNum, QQ.OrderNum asc;
 
-	Select if(CompletedFlag = 0, 'No', 'Yes') Completed_Flag, count(*) 
-	from OpalDB.Questionnaire 
+	Select if(CompletedFlag = 0, 'No', 'Yes') Completed_Flag, count(*)
+	from OpalDB.Questionnaire
 		where QuestionnaireControlSerNum = wsQuestionnaireSerNum
 	group by CompletedFlag;
-	
-	Select if(ReadStatus = 0, 'No', 'Yes') Read_Status, count(*) from Notification 
-	where RefTableRowSerNum in 
-		(select QuestionnaireSerNum 
-			from Questionnaire 
+
+	Select if(ReadStatus = 0, 'No', 'Yes') Read_Status, count(*) from Notification
+	where RefTableRowSerNum in
+		(select QuestionnaireSerNum
+			from Questionnaire
 			where QuestionnaireControlSerNum = wsQuestionnaireSerNum)
 		and NotificationControlSerNum = 13
 	group by ReadStatus;
@@ -65,7 +65,7 @@ BEGIN
 	Declare wsLanguage varchar(2);
 	Declare wsRefTableRowSerNum int;
 	Declare wsNotificationRequestType varchar(50);
-	
+
 	Declare wsLanguage_EN, wsLanguage_FR varchar(2000);
 
 	set wsReturn = '';
@@ -79,18 +79,18 @@ BEGIN
 	if (ucase(wsNotificationRequestType) = 'ALIAS') then
 		Select A.AliasName_EN, A.AliasName_FR
 			into wsLanguage_EN, wsLanguage_FR
-		from Alias A, AliasExpression AE 
+		from Alias A, AliasExpression AE
 		where A.AliasSerNum = AE.AliasSerNum
 			and AE.AliasExpressionSerNum = wsRefTableRowSerNum;
 	end if;
-	
+
 /*
 * Notification that uses DOCUMENTS
 */
 	if (ucase(wsNotificationRequestType) = 'DOCUMENT') then
 		Select A.AliasName_EN, A.AliasName_FR
 			into wsLanguage_EN, wsLanguage_FR
-		from Document D, Alias A, AliasExpression AE 
+		from Document D, Alias A, AliasExpression AE
 		where A.AliasSerNum = AE.AliasSerNum
 			and AE.AliasExpressionSerNum = D.AliasExpressionSerNum
 			and D.DocumentSerNum = wsRefTableRowSerNum;
@@ -102,7 +102,7 @@ BEGIN
 	if (ucase(wsNotificationRequestType) = 'APPOINTMENT') then
 		Select A.AliasName_EN, A.AliasName_FR
 			into wsLanguage_EN, wsLanguage_FR
-		from Appointment Apt, Alias A, AliasExpression AE 
+		from Appointment Apt, Alias A, AliasExpression AE
 		where A.AliasSerNum = AE.AliasSerNum
 			and AE.AliasExpressionSerNum = Apt.AliasExpressionSerNum
 			and Apt.AppointmentSerNum = wsRefTableRowSerNum;
@@ -116,7 +116,7 @@ BEGIN
 			into wsLanguage_EN, wsLanguage_FR
 		from PostControl PC
 		where PC.PostControlSerNum = wsRefTableRowSerNum;
-	end if;	
+	end if;
 
 /*
 * Notification that uses EDUCATIONAL MATERIAL
@@ -127,7 +127,7 @@ BEGIN
 		from 	EducationalMaterial E, EducationalMaterialControl EC
 		where E.EducationalMaterialControlSerNum = EC.EducationalMaterialControlSerNum
 			and E.EducationalMaterialSerNum = wsRefTableRowSerNum;
-		
+
 	end if;
 
 /*
@@ -137,10 +137,10 @@ BEGIN
 		select QC.QuestionnaireName_EN, QC.QuestionnaireName_FR
 			into wsLanguage_EN, wsLanguage_FR
 		from QuestionnaireControl QC
-		where QC.QuestionnaireControlSerNum = wsRefTableRowSerNum;	
+		where QC.QuestionnaireControlSerNum = wsRefTableRowSerNum;
 	end if;
-		
-	if (wsLanguage = 'EN') then	
+
+	if (wsLanguage = 'EN') then
 		set wsReturn  = wsLanguage_EN;
 	else
 		set wsReturn  = wsLanguage_FR;
@@ -172,22 +172,22 @@ BEGIN
 	set wsRecNo = in_RecNo;
 	set wsActive = 0;
 	set wsCount = 0;
-	
+
 	select count(*) Total, ifnull(TranslationReplace, '') TranslationReplace
 	into wsCount, wsReturnText
-	from Translation 
-	where TranslationTableName = wsTableName 
+	from Translation
+	where TranslationTableName = wsTableName
 		and TranslationColumnName = wsColumnName
 		and TranslationCurrent = wsText
 		and RefTableRecNo = wsRecNo
 	Limit 1;
-	
+
 	if (wsCount = 0) then
 		set wsReturn = wsText;
 	else
 		set wsReturn = wsReturnText;
 	end if;
-	
+
 	Return wsReturn;
 
 END;

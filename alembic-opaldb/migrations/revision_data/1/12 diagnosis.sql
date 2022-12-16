@@ -131,24 +131,24 @@ Declare wsDiagnosisCode varchar(100);
 
 	set wsLanguage = in_Language;
 	set wsDiagnosisCode = in_DiagnosisCode;
-	
+
 	if (wsLanguage = 'EN') then
-	
-		set wsReturn  = (select DT.Name_EN from DiagnosisCode DC, DiagnosisTranslation DT 
+
+		set wsReturn  = (select DT.Name_EN from DiagnosisCode DC, DiagnosisTranslation DT
 			where DC.DiagnosisTranslationSerNum = DT.DiagnosisTranslationSerNum
 				and DC.DiagnosisCode = in_DiagnosisCode
 			limit 1);
-	
+
 	else
-	
-		set wsReturn  = (select DT.Name_FR from DiagnosisCode DC, DiagnosisTranslation DT 
+
+		set wsReturn  = (select DT.Name_FR from DiagnosisCode DC, DiagnosisTranslation DT
 			where DC.DiagnosisTranslationSerNum = DT.DiagnosisTranslationSerNum
 				and DC.DiagnosisCode = in_DiagnosisCode
 			limit 1);
-	
+
 	end if;
 
 	set wsReturn = (IfNull(wsReturn, 'N/A'));
-	
+
 	return wsReturn;
 END;
