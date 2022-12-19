@@ -14,6 +14,7 @@ from pathlib import Path
 import pymysql
 from dotenv import load_dotenv
 from pymysql.constants import CLIENT
+from pymysql.cursors import Cursor
 
 # revision identifiers, used by Alembic.
 revision = 'a7b8dd1c55b1'
@@ -32,14 +33,14 @@ REVISIONS_DIR = ROOT_DIR / 'revision_data'
 # Load db connection environment variables
 load_dotenv()
 HOST = os.getenv('DOCKER_HOST')
-PORT = int(os.getenv('MARIADB_PORT'))
+PORT = int(os.getenv(key='MARIADB_PORT', default=3007))
 USER = os.getenv('MARIADB_USER')
-PASS = os.getenv('MARIADB_PASSWORD')
+PASS = os.getenv('MARIADB_PASSWORD', default='root_password')
 OPALDB = os.getenv('LEGACY_OPAL_DB_NAME')
 QSTDB = os.getenv('LEGACY_QUESTIONNAIRE_DB_NAME')
 
 
-def get_connection_cursor(autocommit: bool):
+def get_connection_cursor(autocommit: bool) -> Cursor:
     """Get a mariadb connection context manager for SQL execution.
 
     Args:
@@ -60,15 +61,14 @@ def get_connection_cursor(autocommit: bool):
         )
         return conn.cursor()
     except pymysql.Error as err:
-        print(f'Error getting cursor or connection to mariaDB (Database {OPALDB}) {err}')
+        print('Error getting cursor or connection to mariaDB (Database {OPALDB}) {err}'.format(OPALDB=OPALDB, err=err.args[0]))  # noqa: WPS421
         sys.exit(1)
 
 
 def upgrade() -> None:
     """Insert all data & SQL scripts for dev OpalDB."""
     with get_connection_cursor(autocommit=True) as cursor:
-        cursor.execute(
-            """
+        cursor.execute(query="""
             SET foreign_key_checks=0;
             SET sql_mode='';
             SET global sql_mode='';
@@ -87,28 +87,28 @@ def upgrade() -> None:
                     handle.close()
         with get_connection_cursor(autocommit=True) as cursor:
             cursor.execute(sql_content)
-
+            cursor.close()
 
     with get_connection_cursor(autocommit=True) as cursor:
-       cursor.execute(
-        """
-        SET foreign_key_checks = 1;
-        SET SQL_MODE='ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-        SET GLOBAL SQL_MODE = 'ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-        """)
+        cursor.execute(query="""
+                SET foreign_key_checks = 1;
+                SET SQL_MODE='ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+                SET GLOBAL SQL_MODE = 'ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+            """)
+        cursor.close()
+
 
 def downgrade() -> None:
+    """Undo initial schema and data migration by deleting db and re-creating."""
     with get_connection_cursor(autocommit=True) as cursor:
-        cursor.execute(
-        """
-        SET foreign_key_checks=0;
-        SET sql_mode='';
-        SET global sql_mode='';
+        cursor.execute(query="""
+            SET foreign_key_checks=0;
+            SET sql_mode='';
+            SET global sql_mode='';
         """)
 
     with get_connection_cursor(autocommit=True) as cursor:
-        cursor.execute(
-        f"""
+        cursor.execute(query=f"""
         DROP DATABASE {OPALDB};
 
         CREATE DATABASE IF NOT EXISTS {OPALDB} /*!40100 DEFAULT CHARACTER SET latin1 */;
@@ -118,8 +118,7 @@ def downgrade() -> None:
         """)
 
     with get_connection_cursor(autocommit=True) as cursor:
-        cursor.execute(
-        """
+        cursor.execute(query="""
         SET foreign_key_checks = 1;
         SET SQL_MODE='ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
         SET GLOBAL SQL_MODE = 'ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';

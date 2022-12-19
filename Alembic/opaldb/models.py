@@ -1,4 +1,5 @@
-#  type: ignore
+# type: ignore
+"""Base ORM models file for OpalDB."""
 # coding: utf-8
 from sqlalchemy import (TIMESTAMP, Column, Date, DateTime, Enum, Float,
                         ForeignKey, Index, String, Table, Text, Time, text)

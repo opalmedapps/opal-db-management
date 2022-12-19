@@ -7,7 +7,7 @@ import os
 
 from dotenv import load_dotenv
 # Import the model for which you want to insert data
-from models import Patient
+from OpalDB.models import Patient
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -52,7 +52,7 @@ patients = [
 session_maker = sessionmaker(bind=engine)
 
 
-def create_patients():
+def create_patients() -> None:
     """Insert example data.
 
     Note: Session maker is a context manager, we want to create a new session for each interaction.
@@ -69,4 +69,3 @@ def create_patients():
 if __name__ == '__main__':
     # After specifying your insertion with the session maker, call the function here, then invoke this python file from the command line.
     create_patients()
-    # pass

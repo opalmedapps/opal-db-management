@@ -1,9 +1,11 @@
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
 from logging.config import fileConfig
+from typing import Any
 
-from alembic import context
 from models import Base
 from sqlalchemy import engine_from_config, pool
+
+from alembic import context
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -48,6 +50,18 @@ def run_migrations_offline() -> None:
         context.run_migrations()
 
 
+def process_revision_directives(directives: Any) -> None:
+    """Don't create a new migration if no changes are detected.
+
+    Args:
+        directives: migration file commands.
+    """
+    if config.cmd_opts.autogenerate:  # type: ignore
+        script = directives[0]
+        if script.upgrade_ops.is_empty():
+            directives[:] = []  # noqa: WPS362
+
+
 def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
@@ -58,12 +72,6 @@ def run_migrations_online() -> None:
     We will add the configuration for Alembic to not generate empty migrations with autogenerate if no shchema changes are detected.
 
     """
-    def process_revision_directives(context, revision, directives):  # noqa: WPS430
-        if config.cmd_opts.autogenerate:
-            script = directives[0]
-            if script.upgrade_ops.is_empty():
-                directives[:] = []  # noqa: WPS362
-
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix='sqlalchemy.',
