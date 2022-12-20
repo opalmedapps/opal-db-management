@@ -37,4 +37,6 @@ COPY db-scripts/docker-entrypoint.sh /docker-entrypoint.sh
 WORKDIR /app
 ADD Alembic /app/Alembic
 
+WORKDIR /app/Alembic/opaldb
+
 ENTRYPOINT ["/docker-entrypoint.sh", "tail", "-f", "/dev/null"]

@@ -6,7 +6,6 @@ repos:
   hooks:
   - id: check-added-large-files
   - id: check-merge-conflict
-  #- id: check-shebang-scripts-are-executable
   - id: check-json
   - id: check-yaml
   - id: double-quote-string-fixer

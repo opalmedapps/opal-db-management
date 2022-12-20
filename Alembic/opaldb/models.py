@@ -238,7 +238,6 @@ class Doctor(Base):
     BIO_EN = Column(Text)
     BIO_FR = Column(Text)
 
-
 class DoctorMH(Base):
     __tablename__ = 'DoctorMH'
 
@@ -755,49 +754,49 @@ class QuestionnaireControlMH(Base):
     SessionId = Column(String(255))
 
 
-# class DefinitionTable(Base):
-#     __tablename__ = 'definitionTable'
-#     __table_args__ = {'schema': 'QuestionnaireDB'}
+class DefinitionTable(Base):
+    __tablename__ = 'definitionTable'
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
-#     ID = Column(BIGINT(20), primary_key=True)
-#     name = Column(String(255), nullable=False)
-
-
-# class Dictionary(Base):
-#     __tablename__ = 'dictionary'
-#     __table_args__ = {'schema': 'QuestionnaireDB'}
-
-#     ID = Column(BIGINT(20), primary_key=True)
-#     tableId = Column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
-#     languageId = Column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
-#     contentId = Column(BIGINT(20), nullable=False, index=True)
-#     content = Column(MEDIUMTEXT, nullable=False)
-#     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
-#     deletedBy = Column(String(255))
-#     creationDate = Column(DateTime, nullable=False)
-#     createdBy = Column(String(255), nullable=False)
-#     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-#     updatedBy = Column(String(255), nullable=False)
-
-#     language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
-#     definitionTable = relationship('DefinitionTable')
+    ID = Column(BIGINT(20), primary_key=True)
+    name = Column(String(255), nullable=False)
 
 
-# class Language(Base):
-#     __tablename__ = 'language'
-#     __table_args__ = {'schema': 'QuestionnaireDB'}
+class Dictionary(Base):
+    __tablename__ = 'dictionary'
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
-#     ID = Column(BIGINT(20), primary_key=True)
-#     isoLang = Column(String(2), nullable=False)
-#     name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
-#     deletedBy = Column(String(255), nullable=False)
-#     creationDate = Column(DateTime, nullable=False)
-#     createdBy = Column(String(255), nullable=False)
-#     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-#     updatedBy = Column(String(255), nullable=False)
+    ID = Column(BIGINT(20), primary_key=True)
+    tableId = Column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
+    languageId = Column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
+    contentId = Column(BIGINT(20), nullable=False, index=True)
+    content = Column(MEDIUMTEXT, nullable=False)
+    deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
+    deletedBy = Column(String(255))
+    creationDate = Column(DateTime, nullable=False)
+    createdBy = Column(String(255), nullable=False)
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    updatedBy = Column(String(255), nullable=False)
 
-#     dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
+    language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
+    definitionTable = relationship('DefinitionTable')
+
+
+class Language(Base):
+    __tablename__ = 'language'
+    __table_args__ = {'schema': 'QuestionnaireDB'}
+
+    ID = Column(BIGINT(20), primary_key=True)
+    isoLang = Column(String(2), nullable=False)
+    name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
+    deletedBy = Column(String(255), nullable=False)
+    creationDate = Column(DateTime, nullable=False)
+    createdBy = Column(String(255), nullable=False)
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    updatedBy = Column(String(255), nullable=False)
+
+    dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
 
 
 class QuestionnaireMH(Base):
@@ -1495,28 +1494,28 @@ class PatientHospitalIdentifier(Base):
 #       Because this directory is for manging opaldb only, we will import the relevant QuestionnaireDB models during the creation of the alembic-questionnairedb structure.
 #       After doing so, we can run another autogenerate migration here to make sure everything works in sync properly.
 
-# class Purpose(Base):
-#     __tablename__ = 'purpose'
-#     __table_args__ = {'schema': 'QuestionnaireDB'}
+class Purpose(Base):
+    __tablename__ = 'purpose'
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
-#     ID = Column(BIGINT(20), primary_key=True)
-#     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    ID = Column(BIGINT(20), primary_key=True)
+    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
-#     dictionary = relationship('Dictionary', primaryjoin='Purpose.description == Dictionary.contentId')
-#     dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
+    dictionary = relationship('Dictionary', primaryjoin='Purpose.description == Dictionary.contentId')
+    dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
 
 
-# class Respondent(Base):
-#     __tablename__ = 'respondent'
-#     __table_args__ = {'schema': 'QuestionnaireDB'}
+class Respondent(Base):
+    __tablename__ = 'respondent'
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
-#     ID = Column(BIGINT(20), primary_key=True)
-#     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    ID = Column(BIGINT(20), primary_key=True)
+    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
-#     dictionary = relationship('Dictionary', primaryjoin='Respondent.description == Dictionary.contentId')
-#     dictionary1 = relationship('Dictionary', primaryjoin='Respondent.title == Dictionary.contentId')
+    dictionary = relationship('Dictionary', primaryjoin='Respondent.description == Dictionary.contentId')
+    dictionary1 = relationship('Dictionary', primaryjoin='Respondent.title == Dictionary.contentId')
 
 
 class SecurityAnswer(Base):
@@ -1742,40 +1741,40 @@ class QuestionnaireControl(Base):
     OAUser = relationship('OAUser')
 
 
-# class Questionnaire(Base):
-#     __tablename__ = 'questionnaire'
-#     __table_args__ = {'schema': 'QuestionnaireDB'}
+class Questionnaire(Base):
+    __tablename__ = 'questionnaire'
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
-#     ID = Column(BIGINT(20), primary_key=True)
-#     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
-#     purposeId = Column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text("1"))
-#     respondentId = Column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text("1"))
-#     title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     nickname = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     category = Column(INTEGER(11), nullable=False, server_default=text("-1"))
-#     description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     instruction = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-#     final = Column(TINYINT(4), nullable=False, server_default=text("0"))
-#     version = Column(INTEGER(11), nullable=False, server_default=text("1"))
-#     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text("-1"))
-#     private = Column(TINYINT(4), nullable=False, server_default=text("0"))
-#     optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text("1"))
-#     visualization = Column(TINYINT(4), nullable=False, server_default=text("0"), comment='0 = regular view of the answers, 1 = graph')
-#     logo = Column(String(512), nullable=False)
-#     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text("0"))
-#     deletedBy = Column(String(255), nullable=False)
-#     creationDate = Column(DateTime, nullable=False)
-#     createdBy = Column(String(255), nullable=False)
-#     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text("current_timestamp() ON UPDATE current_timestamp()"))
-#     updatedBy = Column(String(255), nullable=False)
-#     legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
+    ID = Column(BIGINT(20), primary_key=True)
+    OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
+    purposeId = Column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text('1'))
+    respondentId = Column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text('1'))
+    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    nickname = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    category = Column(INTEGER(11), nullable=False, server_default=text('-1'))
+    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    instruction = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    final = Column(TINYINT(4), nullable=False, server_default=text('0'))
+    version = Column(INTEGER(11), nullable=False, server_default=text('1'))
+    parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
+    private = Column(TINYINT(4), nullable=False, server_default=text('0'))
+    optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text('1'))
+    visualization = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = regular view of the answers, 1 = graph')
+    logo = Column(String(512), nullable=False)
+    deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
+    deletedBy = Column(String(255), nullable=False)
+    creationDate = Column(DateTime, nullable=False)
+    createdBy = Column(String(255), nullable=False)
+    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    updatedBy = Column(String(255), nullable=False)
+    legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
 
-#     dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
-#     dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
-#     dictionary2 = relationship('Dictionary', primaryjoin='Questionnaire.nickname == Dictionary.contentId')
-#     purpose = relationship('Purpose')
-#     respondent = relationship('Respondent')
-#     dictionary3 = relationship('Dictionary', primaryjoin='Questionnaire.title == Dictionary.contentId')
+    dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
+    dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
+    dictionary2 = relationship('Dictionary', primaryjoin='Questionnaire.nickname == Dictionary.contentId')
+    purpose = relationship('Purpose')
+    respondent = relationship('Respondent')
+    dictionary3 = relationship('Dictionary', primaryjoin='Questionnaire.title == Dictionary.contentId')
 
 
 class TestControl(Base):
