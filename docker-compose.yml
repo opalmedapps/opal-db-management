@@ -31,7 +31,7 @@ services:
       - ${PHP_PORT}:8080
     volumes:
       # maintain current revision of DBVs across DBV updates
-      - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
+      # - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
       - ./revisions/registerdb:/var/www/html/dbv/dbv_registerdb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
@@ -49,3 +49,25 @@ services:
       - db
     ports:
       - ${ADMINER_PORT}:8080
+
+  alembic:
+    container_name: alembic-app
+    image: alembic:latest
+    build:
+      context: .
+      dockerfile: alembic.Dockerfile
+    volumes:
+      - ./Alembic/opaldb:/app/Alembic/opaldb
+    ports:
+      - 8092:8092
+    depends_on:
+      - db
+    environment:
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
+      - MARIADB_PORT=${MARIADB_PORT}
+      - PHP_PORT=${PHP_PORT}
+      - DOCKER_HOST=${DOCKER_HOST}
+      - LEGACY_OPAL_DB_NAME=${LEGACY_OPAL_DB_NAME}
+      - LEGACY_QUESTIONNAIRE_DB_NAME=${LEGACY_QUESTIONNAIRE_DB_NAME}

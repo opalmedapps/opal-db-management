@@ -181,3 +181,11 @@ Known issues with sqlacodegen:
 
 - For some reason is forgets to add the 's' at the end of Alias related tables so it'll be `class Alia` instead of `class Alias`
 - In the situation when we have a foreign key or relationship between two tables, and those tables have identically named columns, we can get a warning because the same naming implies the mapping should combine the two columns and copy the data from one to the other. : https://docs.sqlalchemy.org/en/14/faq/ormconfiguration.html#i-m-getting-a-warning-or-error-about-implicitly-combining-column-x-under-attribute-y
+
+### Interacting with the dockerized Alembic container
+
+Not much changes for this, we just have to prefix our regular CLI alembic commands with the standard docker compose exec, plus the name of the container : `docker compose exec alembic`
+
+For example to run the current revisions to the latest:
+
+`docker compose exec alembic alembic upgrade head`
