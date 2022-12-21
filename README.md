@@ -113,11 +113,13 @@ SQLAlchemy uses an ORM similar to Django to maintain a consistent state between 
 
 https://docs.sqlalchemy.org/en/14/
 
-A solid understanding of both is required to manage database revisions in this repository.
+An understanding of both is required to manage database revisions in this repository.
 
 ### Alembic commands
 
 First assure your db-docker container is built and running so that Alembic can see and connect to it with the connection engine. When we make changes to the ORM (in models.py) and run alembic auto migrations, alembic will compare the state of the current database to it's "translation" in the ORM and produce a migration file to express the difference.
+
+Note the sections below describe the base alembic commands as if they were being run from a CLI, not a docker container. To run the alembic container and perform these commands, simply prefix with the command with `docker compose exec <container>`, in this case `docker compose exec alembic`
 
 #### Altering database schema example
 
@@ -125,7 +127,7 @@ The models file contains schema for every table in the database. It's organized 
 
 Note we have two options for creating revisions - we can generate a blank revision file with `alembic revision -m "Add column to Patient model"`, then use alembic syntax to express our change. This first option would skip the ORM defined in models.py. In the revision file, we can add the following lines to the `upgrade()` and `downgrade()` functions:
 
-`
+```python
 from alembic import op
 import sqlalchemy as sa
 
@@ -134,11 +136,11 @@ def upgrade():
 
 def downgrade():
     op.drop_column('patient', 'last_login_date')
-`
+```
 
 Option two is to express our changes in the ORM, then use alembic's autogenerate feature to automatically translate the difference between the previous revision and the current state of the models. In models.py we would edit the Patient model as follows:
 
-`
+```python
 class Patient(Base):
     __tablename__ = 'Patient'
     PatientSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -148,7 +150,7 @@ class Patient(Base):
     ...
     ...
     LastLoginDate = Column("last_login_date", DateTime)
-`
+```
 
 Then call the autogenerate:
 

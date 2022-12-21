@@ -6,6 +6,31 @@
     // Allow to receive patch updates for PHP and MariaDB while waiting with upgrading to the next minor version
     ":separatePatchReleases",
   ],
+  "pip_requirements": {
+    "fileMatch": ["^requirements/.*\\.txt$"]
+  },
   "assignees": ["mschoettle", "david.gagne"],
   "labels": ["dependencies"],
+  "packageRules": [
+    // Change commit type to build for Docker-related updates
+    {
+      "matchDatasources": ["docker"],
+      "semanticCommitType": "build"
+    },
+    // Group flake8-related updates
+    {
+      "matchPackagePatterns": ["flake8"],
+      "groupName": "flake8 packages"
+    },
+    // Group all mypy stub updates together
+    {
+      "matchPackagePatterns": ["-stubs$", "^types-"],
+      "groupName": "mypy type stubs"
+    },
+    // Allow to receive patch updates for Python while waiting with upgrading to the next minor version
+    {
+      "matchPackagePatterns": ["python"],
+      "separateMinorPatch": true
+    },
+  ]
 }
