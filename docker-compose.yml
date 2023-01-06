@@ -57,7 +57,7 @@ services:
       context: .
       dockerfile: alembic.Dockerfile
     volumes:
-      - ./alembic/opaldb:/app/Alembic/opaldb
+      - ./alembic/opaldb:/app/alembic/opaldb
     ports:
       - 8092:8092
     depends_on:
