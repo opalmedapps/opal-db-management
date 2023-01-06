@@ -1,3 +1,12 @@
 .DS_Store
-.env
 .idea/
+# Environment settings
+.venv/
+.env
+
+# ---> Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Local dev
+.vscode
