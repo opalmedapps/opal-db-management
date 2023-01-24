@@ -23,10 +23,10 @@ variables:
   POSTGRES_ENABLED: "false"
 
 
-build:
-  stage: build
-  script:
-    - whoami
+# build:
+#   stage: build
+#   script:
+#     - whoami
 
 newjob:
   stage: deploy
