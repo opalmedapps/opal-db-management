@@ -1,4 +1,4 @@
-# rdummy stages to follow the template guidelines
+# dummy stages to follow the template guidelines
 # stages:
 #   - build
 #   - test
@@ -21,85 +21,17 @@ variables:
   TEST_DISABLED: "true"
   DAST_DISABLED: "true"
   POSTGRES_ENABLED: "false"
-  CI_APPLICATION_TAG: "$CI_COMMIT_SHA"
-  CI_APPLICATION_REPOSITORY: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/$CI_JOB_NAME"
-  AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
 
 
 build:
-  extends: .build
-  before_script:
-  - eval $(ssh-agent -s)
-  - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' | ssh-add -
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
-  # - eval echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
-  # - echo $($AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS)
-  # - args="$(eval echo $foo)"
-  # - build_args=$AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
-#   ## Create the SSH directory and give it the right permissions
-#   ##
-#   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$$SSH_AUTH_SOCK"
-  # - image_tagged="$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
-  # - image_latest="$CI_APPLICATION_REPOSITORY:latest"
-  # - docker buildx build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY2 --tag $image_tagged --tag $image_latest .
-
-# services:
-#   - docker:20.10.16-dind
-clone:
   stage: build
-  image: 
-    name: alpine/git
-    entrypoint: [""]
-  before_script:
-    - git --version
-  script:
-    ## Create the SSH directory and give it the right permissions
-    ##
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-    - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' > ~/.ssh/id_ed25519
-    - chmod 0700 ~/.ssh/id_ed25519
-    - ls -la ~/.ssh
-    - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
-  rules:
-    - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
-    # - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
-# clone:
-#   stage: build
-#   image: docker
-#   before_script:
-#     - docker version
-#   script:
-#     ## Create the SSH directory and give it the right permissions
-#     ##
-#     - mkdir -p ~/.ssh
-#     - chmod 700 ~/.ssh
-#     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-#     - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_ed25519
-#     - chmod 0600 ~/.ssh/id_ed25519
-#     - ls -la ~/.ssh
-#     # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
-#     - DOCKER_BUILDKIT=1 docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
-
-ritest:
-  stage: deploy
-  tags:
-    - ri-dev
-  image: ubuntu:latest
-  before_script:
-    - uname -a
   script:
     - whoami
-    - apt update && apt install -y openssh-client
-    # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
-    - ssh opalsupt@lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+newjob:
+  stage: deploy
+  script:
+    - whoami
 
 include: 
   - template: Auto-DevOps.gitlab-ci.yml
-  - local: '.gitlab/templates/Build.gitlab-ci.yml'
