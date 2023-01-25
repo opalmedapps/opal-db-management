@@ -23,7 +23,7 @@ ARG OPAL_REPORT_BRANCH="development"
 # Create the ssh folder and add GitLab to known hosts
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
 
-# Clone the 3 dbv's repos needed using the branch name variable (default or passed as arguments)
+# Clone the 4 dbv's repos needed using the branch name variable (default or passed as arguments)
 ARG CACHEBUST=1
 RUN --mount=type=ssh,id=ssh_key git clone --branch $OPALDBV_BRANCH git@gitlab.com:opalmedapps/dbv_opaldb.git ./dbv/dbv_opaldb
 RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb
