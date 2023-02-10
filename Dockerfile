@@ -1,5 +1,5 @@
 # Install PHP and apache docker image
-FROM php:8.2.1-apache-bullseye
+FROM php:8.2.2-apache-bullseye
 
 # Install required packages and apache modules.
 RUN apt-get update \ 
