@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euxo pipefail
 
 MYSQL_PWD=$MARIADB_ROOT_PASSWORD mysql -uroot -hlocalhost << EOF
 GRANT ALL PRIVILEGES ON \`OpalDB\`.* TO \`$MARIADB_USER\`@\`%\`;

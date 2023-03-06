@@ -7,8 +7,8 @@
 
 define('DB_HOST', 'db');
 define('DB_PORT', 3306);
-define('DB_USERNAME', getenv('MARIADB_USER'));
-define('DB_PASSWORD', getenv('MARIADB_PASSWORD'));
+define('DB_USERNAME', getenv('DATABASE_USER'));
+define('DB_PASSWORD', getenv('DATABASE_PASSWORD'));
 define('DB_NAME', 'OpalReportDB');
 
 /**

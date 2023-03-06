@@ -69,6 +69,22 @@ There are 4 possible arguments, all default to `development`:
 
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
+#### Step 3.5 Temporary Workflow for Alembic with OpalDB Only
+
+Given that OpalDB has tables with direct relationships to QuestionnaireDB tables, we must run the QuestionnaireDB revisions before running the alembic container to populate OpalDB, otherwise SQLAlchemy will throw errors. This is only a temporary workaround until we have added QuestionnaireDB to alembic.
+
+Launch everything except the `alembic` service:
+
+```shell
+docker compose up --scale alembic=0
+```
+
+Now run the regular revision for QuestionnaireDB:
+
+1. http://localhost:8091/dbv/dbv_questionnairedb/
+
+With this step complete we can proceed as normal. Stop the containers then continue to Step 4 and run them again as normal; alembic will populate OpalDB and insert test data. This instruction can be removed once QuestionnaireDB is added to our alembic version control; at that point the instructions to build your db docker will return to normal.
+
 ### Step 4
 
 **Scaffold the project using docker compose**
@@ -89,9 +105,8 @@ If you open docker-desktop, you should see that you have a app called `opal-data
 
 With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
 
-1. http://localhost:8091/dbv/dbv_opaldb/
-2. http://localhost:8091/dbv/dbv_registerdb
-3. http://localhost:8091/dbv/dbv_questionnairedb/
+1. http://localhost:8091/dbv/dbv_registerdb
+2. http://localhost:8091/dbv/dbv_questionnairedb/
 
 ### Step 6: Test your installation
 
@@ -102,3 +117,92 @@ As mentioned in step 3, the docker compose command also runs an `adminer` contai
 The credentials for logging in can be found in the `.env` file.
 
 You should by now have fully up and running opal databases that can be easily started and stopped using the docker desktop GUI (or via the command-line, whichever you prefer).
+
+## Alembic Database Revisions Management
+
+[Alembic](https://alembic.sqlalchemy.org/en/latest/) is a database migrations tool written by the author of SQLAlchemy. It provides a system of object-oriented, ordered migration control for relational databases.
+
+[SQLAlchemy](https://docs.sqlalchemy.org/en/latest/) uses an Object-Relational Mapper (ORM) similar to Django to maintain a consistent state between python objects and the SQL tables they represent.
+
+An understanding of both is required to manage database revisions in this repository.
+
+### Alembic commands
+
+First assure your db-docker container is built and running so that Alembic can see and connect to it with the connection engine. When we make changes to the ORM (in models.py) and run alembic auto migrations, alembic will compare the state of the current database to it's "translation" in the ORM and produce a migration file to express the difference.
+
+Note the sections below describe the base alembic commands as if they were being run from a CLI, not a docker container. To run the alembic container and perform these commands, simply prefix with the command with `docker compose exec <container>`, in this case `docker compose exec alembic`
+
+#### Altering database schema example
+
+The models file contains schema for every table in the database. It's organized alphabetically-ish but you'd be wise to just use Ctrl-F to find your model.
+
+Note we have two options for creating revisions - we can generate a blank revision file with `alembic revision -m "Add column to Patient model"`, then use alembic syntax to express our change. This first option would skip the ORM defined in models.py. In the revision file, we can add the following lines to the `upgrade()` and `downgrade()` functions:
+
+```python
+from alembic import op
+import sqlalchemy as sa
+
+def upgrade():
+    op.add_column('patient', sa.Column('last_login_date', sa.DateTime))
+
+def downgrade():
+    op.drop_column('patient', 'last_login_date')
+```
+
+Option two is to express our changes in the ORM, then use alembic's autogenerate feature to automatically translate the difference between the previous revision and the current state of the models. In models.py we would edit the Patient model as follows:
+
+```python
+class Patient(Base):
+    __tablename__ = 'Patient'
+    PatientSerNum = Column(INTEGER(11), primary_key=True, index=True)
+    PatientAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    PatientId = Column(String(50), nullable=False)
+    ...
+    ...
+    ...
+    LastLoginDate = Column("last_login_date", DateTime)
+```
+
+Then call the autogenerate:
+
+`alembic revision --autogenerate -m "Add last login date column to Patient model"`
+
+ In general, we should be consistent about our choice of method because if we choose option 1 for several revisions, the models file will have fallen behind the up-to-date state of the database, and a future use of the autogenerate feature will cause alembic to try to un-do all of the manually-generated revisions.
+
+Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
+
+To go to the latest version for the database, simply run `alembic upgrade head`
+You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
+For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06`
+
+#### Inserting new test data
+
+We keep the insertion of test data separate from the alembic revision control to allow easier switching between development and production environments. All test data is contained within the test-data/sql/ folder and is inserted into the database with the `insert_test_data.py` script. The docker container will automatically run this command on startup, but to manually insert test data simply call `python test-data/insert_test_data.py`.
+
+To add new test data simply add the SQL to the bottom of the .sql file corresponding to the required database.
+
+#### Version controlling triggers, events, functions, procedures
+
+Object-oriented version control of these constructs isn't really supported 'natively' in Alembic, but there are workarounds like the one outlined here: https://stackoverflow.com/questions/67247268/how-to-version-control-functions-and-triggers-with-alembic. It still requires writing everything out in SQL though.
+
+### [Optional] Generating initial model structure from existing databases
+
+Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run if there isn't a populated models file for the database in question.
+
+SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema.
+
+`cd alembic-<database-name>/`
+`python initial_model_populate.py`
+
+Known issues with sqlacodegen:
+
+- For some reason is forgets to add the 's' at the end of Alias related tables so it'll be `class Alia` instead of `class Alias`
+- In the situation when we have a foreign key or relationship between two tables, and those tables have identically named columns, we can get a warning because the same naming implies the mapping should combine the two columns and copy the data from one to the other. : https://docs.sqlalchemy.org/en/14/faq/ormconfiguration.html#i-m-getting-a-warning-or-error-about-implicitly-combining-column-x-under-attribute-y
+
+### Interacting with the dockerized Alembic container
+
+Not much changes for this, we just have to prefix our regular CLI alembic commands with the standard docker compose exec, plus the name of the container : `docker compose exec alembic`
+
+For example to run the current revisions to the latest:
+
+`docker compose exec alembic alembic upgrade head`
