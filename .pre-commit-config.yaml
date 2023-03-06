@@ -4,11 +4,13 @@ repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.4.0
   hooks:
+  - id: check-added-large-files
   - id: check-merge-conflict
   - id: check-shebang-scripts-are-executable
   - id: check-json
   - id: check-yaml
   - id: double-quote-string-fixer
+  - id: end-of-file-fixer
   - id: trailing-whitespace
 - repo: https://github.com/PyCQA/isort
   rev: 5.12.0
