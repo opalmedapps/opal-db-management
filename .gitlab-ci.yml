@@ -1,0 +1,113 @@
+# set up
+# see: https://docs.gitlab.com/ee/ci/caching/#cache-python-dependencies
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+  MARIADB_USER: $MARIADB_USER
+
+default:
+  image: python:3.10.10-slim-bullseye
+  before_script:
+  - uname -a
+  - python --version
+  - which python
+  # install dependencies for mysqlclient
+  - apt update && apt-get install -y build-essential libmariadb-dev
+  # don't fail if venv is not set up yet (during setup)
+  - python -m venv .venv
+  - source .venv/bin/activate || true
+  # set up env file for DB service
+  # use sample env file
+  - cp .env.sample .env
+  - sed -i "s/^MARIADB_ROOT_PASSWORD=.*/MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD/" .env
+  - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
+  - sed -i "s/^LEGACY_QUESTIONNAIRE_DB_NAME=.*/LEGACY_QUESTIONNAIRE_DB_NAME=QuestionnaireDB/" .env
+  - sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$DATABASE_USER/" .env
+  - sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DATABASE_PASSWORD/" .env
+  - sed -i "s/^DATABASE_PORT=.*/DATABASE_PORT=$DATABASE_PORT/" .env
+  - sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=$DATABASE_HOST/" .env
+  - sed -i "s/^MARIADB_EXTERNAL_PORT=.*/MARIADB_EXTERNAL_PORT=$MARIADB_EXTERNAL_PORT/" .env
+
+stages:
+  - Static Analysis
+
+setup:
+  stage: .pre
+  script:
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements/development.txt
+  artifacts:
+    # pin artifacts to the branch
+    # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
+    name: $CI_COMMIT_REF_SLUG
+    expire_in: 1 week
+    paths:
+      - .venv
+  # Pip's cache doesn't store the python packages
+  # https://pip.pypa.io/en/stable/reference/pip_install/#caching
+  #
+  # If you want to also cache the installed packages, you have to install
+  # them in a virtualenv and cache it as well.
+  cache:
+    # pin artifacts to the branch
+    # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
+    paths:
+      - .cache/pip
+
+flake8:
+  stage: Static Analysis
+  script:
+    - flake8 --version
+    # install plugin to produce code climate report
+    - pip install flake8-gl-codeclimate
+    # don't fail if there are errors so the result can also be printed to the console for logs
+    # fix relative file paths so GitLab is happy and shows the violations properly
+    # see: https://github.com/awelzel/flake8-gl-codeclimate/issues/14
+    - flake8 --format gl-codeclimate | python -c "import sys; import json; lines = [line.replace('./', '') for line in sys.stdin]; print(json.dumps(json.loads('\n'.join(lines)), indent='\t'));" > gl-code-quality-report.json || true
+    # fail if JSON file does not contain empty array
+    - cat gl-code-quality-report.json | grep -q "\[\]"
+  artifacts:
+    when: always
+    reports:
+      codequality: gl-code-quality-report.json
+
+mypy:
+  stage: Static Analysis
+  script:
+    # install plugin to produce code climate report
+    - pip install mypy-gitlab-code-quality
+    - mypy --version
+    # export output and don't fail if there are errors
+    - mypy opal/ --no-error-summary > mypy-out.txt || true
+    - PYTHONHASHSEED=0 mypy-gitlab-code-quality < mypy-out.txt > codequality.json
+     # fail if JSON file does not contain empty array
+    - cat codequality.json | grep -q "\[\]"
+  artifacts:
+    when: always
+    reports:
+      codequality: codequality.json
+
+markdownlint:
+  stage: Static Analysis
+  image:
+    name: davidanson/markdownlint-cli2:next
+    # overwrite default entrypoint (which is a call to markdownlint-cli2)
+    entrypoint: [""]
+  before_script:
+    - markdownlint-cli2 --version
+  script:
+    # use the config file that is stored outside the root
+    - markdownlint-cli2-config .gitlab/markdownlint/.markdownlint-cli2.yaml "**/*.md" "#.venv"
+  artifacts:
+    when: always
+    reports:
+      codequality: markdownlint-cli2-codequality.json
+
+# TODO: Add testing service
+# Potential Test libraries with support for alembic migrations:
+# https://pypi.org/project/pytest-alembic/        : Test migration behaviour (single head, upgrades & downgrades succeed, data-independence of migrations, etc)
+# https://pypi.org/project/alembic-autogen-check/ : Test that migrations and SQLAlchemy models are in sync

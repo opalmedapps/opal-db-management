@@ -1,6 +1,18 @@
 .DS_Store
-.env
 .idea/
+# Environment settings
+.venv/
+.env
 
-# ignore revision files
-revisions/*/revision
+# ---> Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# ---> VisualStudioCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+revisions/

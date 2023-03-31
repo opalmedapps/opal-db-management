@@ -20,7 +20,7 @@ services:
     container_name: dbv-apps
     build:
       context: .
-      ssh: 
+      ssh:
         # require the SSH_KEY_PATH varialbe to be set and not empty
         # see: https://docs.docker.com/compose/environment-variables/#substitute-environment-variables-in-compose-files
         - ssh_key=${SSH_KEY_PATH:?err}
@@ -31,7 +31,6 @@ services:
       - ${PHP_PORT}:8080
     volumes:
       # maintain current revision of DBVs across DBV updates
-      - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
       - ./revisions/registerdb:/var/www/html/dbv/dbv_registerdb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
@@ -47,3 +46,16 @@ services:
       - db
     ports:
       - ${ADMINER_PORT}:8080
+
+  alembic:
+    container_name: alembic-app
+    image: opalmedapps/alembic:latest
+    build:
+      context: .
+      dockerfile: alembic.Dockerfile
+    volumes:
+      - ./alembic:/app
+    depends_on:
+      - db
+    env_file:
+      - .env
