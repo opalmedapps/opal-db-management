@@ -21,7 +21,7 @@ define('DBV_PASSWORD', 'dbv');
 /**
  * @see http://dbv.vizuina.com/documentation/#writing-adapters
  */
-define('DB_ADAPTER', 'MySQL');
+define('DB_ADAPTER', 'SecureMySQL');
 
 define('DS', DIRECTORY_SEPARATOR);
 define('DBV_ROOT_PATH', dirname(__FILE__));

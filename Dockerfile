@@ -19,19 +19,26 @@ ARG REGISTERDBV_BRANCH="development"
 ARG QUESTIONNAIREDBV_BRANCH="development"
 ARG OPAL_REPORT_BRANCH="development"
 
+WORKDIR /var/www/html
+
 # Create the ssh folder and add GitLab to known hosts
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
 
-# Clone the 3 dbv's repos needed using the branch name variable (default or passed as arguments)
+# Support busting the cache to force cloning the repos (without this the git clone commands will be cached)
 ARG CACHEBUST=1
-RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb
-RUN --mount=type=ssh,id=ssh_key git clone --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb
-RUN --mount=type=ssh,id=ssh_key git clone --branch $OPAL_REPORT_BRANCH git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_opalreportdb
+
+# Clone the 3 dbv's repos needed using the branch name variable (default or passed as arguments)
+RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb \
+        && git clone --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb \
+        && git clone --branch $OPAL_REPORT_BRANCH git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_opalreportdb
 
 # Copy configuration file
 COPY ./config/registrationdb-config.php ./dbv/dbv_registerdb/config.php
 COPY ./config/questionairesdb-config.php ./dbv/dbv_questionnairedb/config.php
 COPY ./config/opalreportdb-config.php ./dbv/dbv_opalreportdb/config.php
+
+# Add the SecureMySQL adapter
+COPY ./config/SecureMySQL.php ./dbv/dbv_questionnairedb/lib/adapters/
 
 # Copy the index landing page
 COPY ./index.php ./index.php
