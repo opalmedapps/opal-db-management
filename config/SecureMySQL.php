@@ -8,10 +8,8 @@ class DBV_Adapter_SecureMySQL extends DBV_Adapter_MySQL
     {
         return array(
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8",
-            'opts' => array(
-                PDO::MYSQL_ATTR_SSL_CA => '/certs/db.pem',
-            )
+            PDO::MYSQL_ATTR_SSL_CA => '/certs/ca.pem',
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
         );
     }
-    
 }

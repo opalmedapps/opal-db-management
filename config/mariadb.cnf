@@ -2,4 +2,4 @@
 # enable event scheduler since Opal DBs use events to update certain things
 event_scheduler = On
 # disable strict mode (current setup for Opal DBs)
-sql_mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+# sql_mode=ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION

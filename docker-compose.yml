@@ -7,8 +7,11 @@ services:
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
+      - ./certs:/certs
       - ./db-scripts:/docker-entrypoint-initdb.d
       - ./config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
+      # uncomment this to enforce connections over TLS
+      # - ./config/ssl.cnf:/etc/mysql/conf.d/ssl.cnf
     environment:
       - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
       - MARIADB_USER=${DATABASE_USER}
@@ -34,11 +37,12 @@ services:
       - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
       - ./revisions/registerdb:/var/www/html/dbv/dbv_registerdb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
+      - ./certs/ca.pem:/certs/ca.pem
     environment:
       - TZ=EST5EDT
     env_file:
       - .env
-  
+
   adminer:
     container_name: adminer
     image: adminer:4.8.1-standalone
