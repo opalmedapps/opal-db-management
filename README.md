@@ -118,6 +118,14 @@ The credentials for logging in can be found in the `.env` file.
 
 You should by now have fully up and running opal databases that can be easily started and stopped using the docker desktop GUI (or via the command-line, whichever you prefer).
 
+## Running the databases with encrypted connections
+
+If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To do this, first refer to the [opal docs guide on self signed certificates](https://opalmedapps.gitlab.io/docs/guides/self_signed_certificates/) for instructions on how to generate self-signed SSL certificates. Place them in the `certs` directory.
+
+In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file.
+
+Finally, uncomment the ssl.cnf line in your docker-compose.yml to add these connection parameters to the database. [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for docker to actually use the configs listed there.
+
 ## Alembic Database Revisions Management
 
 [Alembic](https://alembic.sqlalchemy.org/en/latest/) is a database migrations tool written by the author of SQLAlchemy. It provides a system of object-oriented, ordered migration control for relational databases.

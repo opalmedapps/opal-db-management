@@ -1,3 +1,6 @@
+revisions/
+certs/*
+
 .DS_Store
 .idea/
 # Environment settings
@@ -14,5 +17,3 @@ __pycache__/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-revisions/

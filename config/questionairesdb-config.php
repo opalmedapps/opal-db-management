@@ -19,9 +19,15 @@ define('DBV_USERNAME', 'dbv');
 define('DBV_PASSWORD', 'dbv');
 
 /**
+ * Use the SecureMySQL adapter if user sets `USE_SSL` in .env file
  * @see http://dbv.vizuina.com/documentation/#writing-adapters
  */
-define('DB_ADAPTER', 'MySQL');
+if (getenv('USE_SSL') == 1) {
+    define('DB_ADAPTER', 'SecureMySQL');
+} else {
+    define('DB_ADAPTER', 'MySQL');
+}
+
 
 define('DS', DIRECTORY_SEPARATOR);
 define('DBV_ROOT_PATH', dirname(__FILE__));
