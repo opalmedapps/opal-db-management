@@ -347,7 +347,7 @@ class EducationalMaterialRating(Base):
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False)
     PatientSerNum = Column(INTEGER(11), nullable=False)
     RatingValue = Column(TINYINT(6), nullable=False)
-    SessionId = Column(Text, nullable=False)
+    SessionId = Column(Text, nullable=False, server_default=text("''"), comment='Deprecated')
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
@@ -583,7 +583,7 @@ class PatientActivityLog(Base):
     TargetPatientId = Column(INTEGER(11), comment='PatientSerNum of the patient targeted by the request (if the request targets patient data).')
     Username = Column(String(255), nullable=False, index=True)
     DeviceId = Column(String(255), nullable=False, comment='This will have information about the previous and current values of fields')
-    SessionId = Column(Text, nullable=False)
+    SessionId = Column(Text, nullable=False, server_default=text("''"), comment='Deprecated')
     DateTime = Column(DateTime, nullable=False, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     AppVersion = Column(String(50), nullable=False, index=True)
@@ -1437,7 +1437,7 @@ class Feedback(Base):
     FeedbackContent = Column(String(255))
     AppRating = Column(TINYINT(4), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    SessionId = Column(Text, nullable=False)
+    SessionId = Column(Text, nullable=False, server_default=text("''"), comment='Deprecated')
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')
@@ -1702,7 +1702,7 @@ class PatientDeviceIdentifier(Base):
     appVersion = Column(String(16), nullable=False, comment='Version of Opal App installed on patient device. Eg 1.10.9. Optional.')
     RegistrationId = Column(String(256), nullable=False)
     DeviceType = Column(TINYINT(4), nullable=False, comment='0 = iOS, 1 = Android, 3 = browser')
-    SessionId = Column(Text, nullable=False)
+    SessionId = Column(Text, nullable=False, server_default=text("''"), comment='Deprecated')
     SecurityAnswerSerNum = Column(INTEGER(11), nullable=True,  index=True)
     SecurityAnswer = Column(String(256), nullable=False, server_default=text(''))
     Attempt = Column(INTEGER(11), nullable=False, server_default=text('0'))
