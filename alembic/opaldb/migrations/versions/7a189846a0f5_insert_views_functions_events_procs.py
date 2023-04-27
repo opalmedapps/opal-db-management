@@ -8,11 +8,10 @@ Create Date: 2023-02-01 10:41:21.466828
 import os
 import sys
 from pathlib import Path
+from typing import Any
 
 import pymysql
-from pymysql.constants import CLIENT
-from pymysql.cursors import Cursor
-from settings import DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT, DB_USER
+from settings import DB_NAME_OPAL, DB_USER, PYMYSQL_CONNECT_PARAMS
 
 # revision identifiers, used by Alembic.
 revision = '7a189846a0f5'
@@ -25,25 +24,14 @@ ROOT_DIR = Path(__file__).parents[1]
 REVISIONS_DIR = ROOT_DIR / 'revision_data'
 
 
-def get_connection_cursor(autocommit: bool) -> Cursor:
+def get_connection_cursor() -> Any:
     """Get a mariadb connection context manager for SQL execution.
-
-    Args:
-        autocommit: whether to always save data after executing.
 
     Returns:
         Cursor for the connection.
     """
     try:
-        conn = pymysql.connect(
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_NAME_OPAL,
-            client_flag=CLIENT.MULTI_STATEMENTS,
-            autocommit=autocommit,
-        )
+        conn = pymysql.connect(**PYMYSQL_CONNECT_PARAMS)
     except pymysql.Error as err:
         sys.exit('Error getting cursor for {OPALDB} {err}'.format(OPALDB=DB_NAME_OPAL, err=err.args[0]))
     return conn.cursor()
@@ -51,7 +39,7 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
 
 def upgrade() -> None:
     """Insert functions, events, etc for OpalDB."""
-    with get_connection_cursor(autocommit=True) as cursor:
+    with get_connection_cursor() as cursor:
         cursor.execute(query="""
             SET foreign_key_checks=0;
             """)
@@ -63,7 +51,7 @@ def upgrade() -> None:
         funcs_sql_content += file_handle.read()
         file_handle.close()
     # Execute
-    with get_connection_cursor(autocommit=True) as cursor:
+    with get_connection_cursor() as cursor:
         cursor.execute(funcs_sql_content)
         cursor.execute(query="""
             SET foreign_key_checks = 1;
@@ -73,7 +61,7 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     """Drop all from OpalDB."""
-    with get_connection_cursor(autocommit=True) as cursor:
+    with get_connection_cursor() as cursor:
         cursor.execute(query="""
             SET foreign_key_checks=0;
             """)

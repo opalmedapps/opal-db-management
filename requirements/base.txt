@@ -3,6 +3,9 @@ alembic==1.10.3  # https://pypi.org/project/alembic/
 sqlacodegen==2.3.0.post1  # https://pypi.org/project/sqlacodegen/
 sqlalchemy==1.4.47  # https://pypi.org/project/SQLAlchemy/
 
+# Inserting of data
+pymysql==1.0.3  # https://pypi.org/project/PyMySQL/
+
 # Environment variables
 python-dotenv==0.21.1  # https://pypi.org/project/python-dotenv/
 
