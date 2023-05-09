@@ -1692,7 +1692,7 @@ class NotificationControl(Base):
 class PatientDeviceIdentifier(Base):
     __tablename__ = 'PatientDeviceIdentifier'
     __table_args__ = (
-        Index('patient_device', 'PatientSerNum', 'DeviceId', unique=True),
+        Index('ix_PatientDeviceIdentifier_Unique_Username_DeviceId', 'Username', 'DeviceId', unique=True),
     )
 
     PatientDeviceIdentifierSerNum = Column(INTEGER(11), primary_key=True)
