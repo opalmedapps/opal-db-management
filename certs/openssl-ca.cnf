@@ -1,0 +1,27 @@
+[ req ]
+default_bits        = 4096
+prompt              = no
+distinguished_name  = req_distinguished_name
+default_md          = sha256
+x509_extensions	    = v3_ca
+req_extensions      = v3_req
+
+[ req_distinguished_name ]
+C  = CA
+ST = QC
+L  = Montreal
+O  = Opal Med Apps CA
+CN = ca.opalmedapps.dev
+emailAddress = muhc.app.mobile@gmail.com
+
+[ v3_req ]
+# Extensions to add to a certificate request
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v3_ca ]
+# Extensions for a typical CA
+# PKIX recommendation.
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer
+basicConstraints = critical,CA:true
