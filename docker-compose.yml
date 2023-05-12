@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     container_name: opal-dbs
-    image: mariadb:10.6.12-focal
+    image: mariadb:10.6.13-focal
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
