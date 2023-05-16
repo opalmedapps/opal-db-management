@@ -172,7 +172,7 @@ To make a change to the database schema, we express our changes in the models fi
 and let the ORM determine how to translate those model changes into DDL.
 Alembic provides an autogenerate feature to automatically translate the difference between the previous revision
 and the current state of the models.
-In models.py we would edit the Patient model as follows:
+In models.py we could edit the Patient model as follows to add a new `LastLoginDate` field, for example:
 
 ```python
 class Patient(Base):
@@ -186,6 +186,8 @@ class Patient(Base):
     LastLoginDate = Column("last_login_date", DateTime)
 ```
 
+Set `INSERT_TEST_DATA=0` in your `.env` file to avoid getting a duplicate insertion error.
+
 Then, change directory to the folder representing the database you want to modify (e.g. `./alembic/opaldb`).
 From there, call the autogenerate command:
 
@@ -195,9 +197,9 @@ docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Add l
 
 This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration.
 Make sure to check the contents of these functions to ensure nothing additional was added.
-Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create QuestionnaireDB.
+Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create a selection of QuestionnaireDB tables which are required in the OpalDB models file due to foreign key constraints between them.
 You'll need to remove these changes manually.
-The migration file will look something like this:
+The migration file will look something like this after you have cleaned it up:
 
 ```python
 from alembic import op
@@ -216,9 +218,7 @@ and any future use of the autogenerate feature would cause Alembic to try to und
 
 Note: Alembic commands must be run from the directory corresponding to the database to which you want to make changes.
 
-To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above).
-You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
-For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06`
+To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
 #### Inserting new test data
 
