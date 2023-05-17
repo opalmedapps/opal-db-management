@@ -15,7 +15,7 @@ RUN apt-get update \
 RUN sed -ri -e 's!Listen 80!Listen 8080!g' /etc/apache2/ports.conf
 
 # Initialize default branch name variable that can assign when building the images.
-ARG REGISTERDBV_BRANCH="development"
+ARG OPALDBV_BRANCH="development"
 ARG QUESTIONNAIREDBV_BRANCH="development"
 ARG OPAL_REPORT_BRANCH="development"
 
@@ -28,18 +28,18 @@ RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
 ARG CACHEBUST=1
 
 # Clone the 3 dbv's repos needed using the branch name variable (default or passed as arguments)
-RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb \
+RUN --mount=type=ssh,id=ssh_key git clone --branch $OPALDBV_BRANCH git@gitlab.com:opalmedapps/dbv_opaldbdb.git ./dbv/dbv_opaldb \
         && git clone --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb \
         && git clone --branch $OPAL_REPORT_BRANCH git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_opalreportdb
 
 # Copy configuration file
-COPY ./config/registrationdb-config.php ./dbv/dbv_registerdb/config.php
+COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
 COPY ./config/questionairesdb-config.php ./dbv/dbv_questionnairedb/config.php
 COPY ./config/opalreportdb-config.php ./dbv/dbv_opalreportdb/config.php
 
 # Add the SecureMySQL adapter
+COPY ./config/SecureMySQL.php ./dbv/dbv_opaldb/lib/adapters/
 COPY ./config/SecureMySQL.php ./dbv/dbv_questionnairedb/lib/adapters/
-COPY ./config/SecureMySQL.php ./dbv/dbv_registerdb/lib/adapters/
 COPY ./config/SecureMySQL.php ./dbv/dbv_opalreportdb/lib/adapters/
 
 # Copy the index landing page
