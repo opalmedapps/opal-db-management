@@ -34,7 +34,7 @@ Create a `.env` file at the root of the project and copy the content of `.env-sa
 
 ### Step 3: Build the PHP Docker images
 
-We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.run the following command at the root of the repository (due to missing support in `docker-compose` this step is separated currently):
+We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.
 
 ```shell
 docker compose build --build-arg CACHEBUST=$(date +%s)
@@ -63,9 +63,8 @@ docker compose build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(
 There are 4 possible arguments, all default to `development`:
 
 1. OPALDBV_BRANCH="development"
-2. REGISTERDBV_BRANCH="development"
-3. QUESTIONNAIREDBV_BRANCH="development"
-4. OPAL_REPORT_BRANCH="development"
+2. QUESTIONNAIREDBV_BRANCH="development"
+3. OPAL_REPORT_BRANCH="development"
 
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
