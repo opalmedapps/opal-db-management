@@ -35,7 +35,7 @@ services:
     volumes:
       # maintain current revision of DBVs across DBV updates
       - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
-      - ./revisions/registerdb:/var/www/html/dbv/dbv_registerdb/data/meta
+      - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
       - ./certs:/certs
     environment:
