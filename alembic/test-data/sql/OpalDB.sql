@@ -9,26 +9,6 @@ SET NAMES utf8mb4;
 
 
 
--- TODO: is this still being used?
+-- TODO: insert with value 'Production' in initial, replace with 'Development' in test data
 INSERT INTO `BuildType` (`Name`) VALUES
 ('Development');
-
--- TODO: is this still being used?
-INSERT INTO `Cron` (`CronSerNum`, `NextCronDate`, `RepeatUnits`, `NextCronTime`, `RepeatInterval`, `LastCron`) VALUES
-(1,	'2018-07-25',	'Minutes',	'10:10:00',	3,	'2018-07-25 14:07:17');
-
--- TODO: is this still needed?
-INSERT INTO `EmailControl` (`EmailControlSerNum`, `Subject_EN`, `Subject_FR`, `Body_EN`, `Body_FR`, `EmailTypeSerNum`, `DateAdded`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
-(3,	'Paediatric Patient Block',	'Blocage de patients pédiatriques',	'<h1>Hello</h1><p>This is a test email for paediatric block accounts. ENGLISH.</p>',	'<h1 style=\"font-size: 36px;\">Hello</h1><p style=\"font-size: 14px;\">This is a test email for paediatric block accounts. FRENCH.</p><!--EndFragment--><p><br/></p><p><br/></p>',	1,	'2017-06-05 09:57:11',	NULL,	'2017-10-31 22:04:22',	NULL);
-
-
-
--- TODO: is this still needed?
-INSERT INTO `EmailType` (`EmailTypeSerNum`, `EmailTypeId`, `EmailTypeName`, `DateAdded`, `LastUpdated`) VALUES
-(1,	'PaedPatientBlock',	'Paediatric Patient Block',	'2017-06-02 16:51:28',	'2017-06-05 17:46:24');
-
-
--- QSCCD-733: Modify PatientDeviceIdentifier table to use username and security questions
--- TODO: move to alembic
-UPDATE `PatientDeviceIdentifier` PDI
-SET `Username` = (SELECT `Username` FROM `Users` WHERE `UserTypeSerNum` = PDI.`PatientSerNum`)
