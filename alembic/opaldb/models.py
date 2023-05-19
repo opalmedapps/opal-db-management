@@ -1502,10 +1502,6 @@ class PatientHospitalIdentifier(Base):
     Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
-# TODO: SQLAlchemy requires us to provide it with the models corresponding to the QuestionnaireDB tables referenced by some OpalDB foreign key constraints.
-#       Because this directory is for manging opaldb only, we will import the relevant QuestionnaireDB models during the creation of the alembic-questionnairedb structure.
-#       After doing so, we can run another autogenerate migration here to make sure everything works in sync properly.
-
 class Purpose(Base):
     __tablename__ = 'purpose'
     __table_args__ = {'schema': 'QuestionnaireDB'}
@@ -2243,6 +2239,9 @@ class CronControlPostTreatmentTeamMessage(Base):
 
 
 class Study(Base):
+    """
+    This table contains a foreign key to QuestionnaireDB.questionnaire
+    """
     __tablename__ = 'study'
 
     ID = Column(BIGINT(20), primary_key=True, unique=True, comment='Primary key. Auto-increment.')
@@ -2317,6 +2316,9 @@ class PatientStudy(Base):
 
 
 class QuestionnaireStudy(Base):
+    """
+    This table contains a foreign key to QuestionnaireDB.questionnaire
+    """
     __tablename__ = 'questionnaireStudy'
 
     ID = Column(BIGINT(20), primary_key=True)
