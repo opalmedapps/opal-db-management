@@ -2,7 +2,7 @@
 from logging.config import fileConfig
 from typing import Any
 
-import settings
+from common import settings
 from models import Base
 from sqlalchemy import engine_from_config, pool
 

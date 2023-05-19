@@ -1,19 +1,50 @@
 """Global configurations settings such as database connection strings."""
 import os
+from typing import Literal, Optional, overload
 
-from dotenv import load_dotenv
 from pymysql.constants import CLIENT
 from sqlalchemy import create_engine
 
-load_dotenv()
+
+@overload
+def _env(
+    key: str,
+    default: Optional[str] = None,
+    required: Literal[True] = True,
+) -> str:
+    ...  # noqa: WPS428
+
+
+@overload
+def _env(
+    key: str,
+    default: Optional[str] = None,
+    required: Literal[False] = False,
+) -> Optional[str]:
+    ...  # noqa: WPS428
+
+
+def _env(
+    key: str,
+    default: Optional[str] = None,
+    required: bool = True,
+) -> Optional[str] | str:
+    env_value = os.getenv(key, default=default)
+
+    if required and not env_value:
+        raise AttributeError(f'Environment variable "{key}" not set')
+
+    return env_value
+
 
 # Database connection strings
-DB_HOST = os.getenv('DATABASE_HOST')
-DB_PORT = int(os.getenv(key='DATABASE_PORT', default=3306))  # noqa: WPS432
-DB_USER = os.getenv('DATABASE_USER')
-DB_PASSWORD = os.getenv('DATABASE_PASSWORD')
-DB_NAME_OPAL = os.getenv('LEGACY_OPAL_DB_NAME')
-DB_NAME_QUESTIONNAIRE = os.getenv('LEGACY_QUESTIONNAIRE_DB_NAME')
+DB_HOST = _env('DATABASE_HOST', required=True)
+DB_PORT = int(_env(key='DATABASE_PORT', default='3306'))
+DB_USER = _env('DATABASE_USER')
+DB_PASSWORD = _env('DATABASE_PASSWORD')
+DB_NAME_OPAL = _env('LEGACY_OPAL_DB_NAME')
+DB_NAME_QUESTIONNAIRE = _env('LEGACY_QUESTIONNAIRE_DB_NAME')
+
 # SQLAlchemy-->OpalDB Engine
 OPALDB_ENGINE = create_engine(
     'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'.format(
@@ -24,22 +55,11 @@ OPALDB_ENGINE = create_engine(
         database=DB_NAME_OPAL,
     ),
 )
-# SSL Settings for Deployed Environments
-USE_SSL = os.getenv('USE_SSL')
 
-# Env validation
-settings_dict = {
-    'DB_HOST': DB_HOST,
-    'DB_PORT': DB_PORT,
-    'DB_USER': DB_USER,
-    'DB_PASSWORD': DB_PASSWORD,
-    'DB_NAME_OPAL': DB_NAME_OPAL,
-    'DB_NAME_QUESTIONNAIRE': DB_NAME_QUESTIONNAIRE,
-}
+# SSL Settings
+USE_SSL = _env('USE_SSL', default='0', required=False) == '1'
+SSL_CA = _env('SSL_CA', required=False)
 
-for label, setting in settings_dict.items():
-    if not setting or setting == '':
-        raise AttributeError(f'Warning: Environment variable not set {label}')
 
 # PyMySQL connection parameters for SSL and non-SSL (used to insert test data and functions/views/events)
 # test data: alembic/insert_test_data.py
@@ -56,11 +76,12 @@ PYMYSQL_CONNECT_PARAMS = {  # noqa: WPS407
 }
 
 # SSL Validation
-if USE_SSL == '1':
+if USE_SSL:
     SSL_CA = os.getenv('SSL_CA')
     PYMYSQL_CONNECT_PARAMS.update({
         'ssl_disabled': False,
         'ssl_ca': SSL_CA,
+        'ssl_verify_identity': True,
     })
     print('LOG: Launching connection with secure transport.')
 else:
