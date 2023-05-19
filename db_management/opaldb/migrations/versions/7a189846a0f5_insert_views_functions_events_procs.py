@@ -11,7 +11,8 @@ from pathlib import Path
 from typing import Any
 
 import pymysql
-from settings import DB_NAME_OPAL, DB_USER, PYMYSQL_CONNECT_PARAMS
+
+from db_management.common.settings import DB_NAME_OPAL, DB_USER, PYMYSQL_CONNECT_PARAMS
 
 # revision identifiers, used by Alembic.
 revision = '7a189846a0f5'

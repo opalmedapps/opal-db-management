@@ -2,11 +2,12 @@
 from logging.config import fileConfig
 from typing import Any
 
-from common import settings
-from models import Base
+from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from alembic import context
+
+from db_management.opaldb.models import Base
+from db_management.common import settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -22,7 +23,7 @@ connection_params = {
 }
 connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
 # Add ssl settings if using SSL connection to db
-if settings.USE_SSL == '1':
+if settings.USE_SSL:
     connection_params.update({
         'ssl_ca': settings.SSL_CA,
     })

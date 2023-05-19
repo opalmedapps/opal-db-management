@@ -1,6 +1,4 @@
-# type: ignore
 """Base ORM models file for OpalDB."""
-# coding: utf-8
 from sqlalchemy import (
     TIMESTAMP,
     Column,
@@ -17,12 +15,12 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
 from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+# see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
+Base: DeclarativeMeta = declarative_base()
 metadata = Base.metadata
-
 
 t_Admin = Table(
     'Admin', metadata,
@@ -794,7 +792,7 @@ class Dictionary(Base):
     definitionTable = relationship('DefinitionTable')
 
 
-class Language(Base):
+class QuestionnaireDBLanguage(Base):
     __tablename__ = 'language'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -1751,7 +1749,7 @@ class QuestionnaireControl(Base):
     OAUser = relationship('OAUser')
 
 
-class Questionnaire(Base):
+class QuestionnaireDBQuestionnaire(Base):
     __tablename__ = 'questionnaire'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 

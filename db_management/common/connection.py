@@ -6,7 +6,7 @@ import pymysql
 from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 
-import settings
+from db_management.common import settings
 
 
 @dataclass(frozen=True)
