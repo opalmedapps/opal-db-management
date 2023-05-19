@@ -8,8 +8,8 @@ Create Date: 2023-02-01 10:41:21.466828
 import os
 from pathlib import Path
 
-from db_management.common.connection import connection_cursor, sql_connection_parameters
-from db_management.common.settings import DB_NAME_OPAL, DB_USER
+from db_management.connection import connection_cursor, sql_connection_parameters
+from db_management.settings import DB_NAME_OPAL, DB_USER
 
 # revision identifiers, used by Alembic.
 revision = '7a189846a0f5'
