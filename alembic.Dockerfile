@@ -22,6 +22,7 @@ RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
 COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
 WORKDIR /app/
-ADD alembic .
+COPY db_management .
+COPY alembic.ini .
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
