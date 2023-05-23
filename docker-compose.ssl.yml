@@ -1,0 +1,17 @@
+services:
+  db:
+    volumes:
+      - ./certs:/certs
+      - ./config/ssl.cnf:/etc/mysql/conf.d/ssl.cnf
+  dbv:
+    volumes:
+      - ./certs:/certs
+
+  adminer:
+    volumes:
+      - ./certs:/certs
+      - ./config/adminer-login-ssl.php:/var/www/html/plugins-enabled/adminer-login-ssl.php
+
+  alembic:
+    volumes:
+      - ./certs:/certs

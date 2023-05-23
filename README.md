@@ -119,7 +119,11 @@ You should by now have fully up and running opal databases that can be easily st
 
 ## Running the databases with encrypted connections
 
-If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To generate the SSL certificates for the database container and the client applications:
+If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic.
+
+### Generating Self-signed Certificates
+
+To generate the SSL certificates for the database container and the client applications:
 
 1. Open a bash CLI and navigate to the `certs/` directory of your db-docker. There should be three files there already, an `openssl-ca.cnf`, an `openssl-server.cnf`, and a `v3.ext`. These provide the details for openssl to generate the various certificates required to enable encrypted connections between any client application container and the database container.
 2. Generate the certificate authority (CA) certificate:
@@ -147,9 +151,21 @@ If a dev chooses they can also build the containers in this repo with SSL enable
     openssl verify -CAfile ca.pem ca.pem
     ```
 
-5. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (`/certs/ca.pem`).
+### Configuring the use of SSL/TLS
 
-6. Finally, uncomment two lines in your docker-compose.yml: In the `adminer` section uncomment the `./config/adminer-login-ssl.php` volume specification which will enable adminer to connect over SSL. Also uncomment the `./config/ssl.cnf` volume specification in the `db` section to enable the server-side SSL settings. [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for docker to actually use the configs listed there.
+To enable SSL/TLS in MariaDB and all application containers:
+
+1. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (e.g., `/certs/ca.pem`).
+
+2. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
+
+    ```shell
+    cp docker-compose.ssl.yml docker-compose.override.yml
+    ```
+
+    You can verify that it is applied by running `docker compose config`.
+
+    **Note:** [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for Docker to actually use the configs listed there.
 
 ## Alembic Database Revisions Management
 
