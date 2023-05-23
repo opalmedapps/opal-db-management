@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Alembic populates database according to version files
-# Note: Due to foreign key constraint OpalDB
+# Note: Due to foreign key constraint OpalDB must be run last
 cd /app/questionnairedb && alembic upgrade head
 cd /app/opaldb && alembic upgrade head
 

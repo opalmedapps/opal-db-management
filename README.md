@@ -4,12 +4,10 @@ Opal's databases are separated in 4 different repos. The purpose of this project
 
 ## Prerequisites
 
-- You need to have access to the 4 following repositories:
+- You need to have access to the 1 following repositories:
 
     1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
-    2. QuestionnaireDB: https://gitlab.com/opalmedapps/dbv_questionnairedb
-    3. registerdb: https://gitlab.com/opalmedapps/dbv_registerdb
-    4. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
+    2. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
 
 - Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 
@@ -32,6 +30,12 @@ git clone https://gitlab.com/opalmedapps/db-docker.git
 
 Create a `.env` file at the root of the project and copy the content of `.env-sample` to it. The file will hold our database credentials and is ignored by git. You can add any other variables you want to keep locally.
 
+Pay close attention to the following variables:
+
+1. `SSH_KEY_PATH` - set this as the absolute path to the SSH private key
+2. `INSERT_TEST_DATA` - set this to '1' if you want test data inserted into OpalDB and QuestionnaireDB. After the data has been inserted once, set this variable back to '0' to avoid duplicate data errors the next time the containers are run.
+3. `USE_SSL` - set this to '0' unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
+
 ### Step 3: Build the PHP Docker images
 
 We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.
@@ -53,36 +57,7 @@ docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuse
 > 1. Run this command in the Windows Subsystem for Linux (WSL2).
 > 2. Remove `$(date +%s)` and manually write a unique value.
 > 3. Use the --no-cache argument, which will bypass all the Docker cache system.
-
-You can also pass arguments to target specifics branches of the DBVs repository using the `--build-arg` parameter as follow.
-
-```shell
-docker compose build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(date +%s) -t opalmedapps/dbv:latest .
-```
-
-There are 4 possible arguments, all default to `development`:
-
-1. OPALDBV_BRANCH="development"
-2. QUESTIONNAIREDBV_BRANCH="development"
-3. OPAL_REPORT_BRANCH="development"
-
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
-
-#### Step 3.5 Temporary Workflow for Alembic with OpalDB Only
-
-Given that OpalDB has tables with direct relationships to QuestionnaireDB tables, we must run the QuestionnaireDB revisions before running the alembic container to populate OpalDB, otherwise SQLAlchemy will throw errors. This is only a temporary workaround until we have added QuestionnaireDB to alembic.
-
-Launch everything except the `alembic` service:
-
-```shell
-docker compose up --scale alembic=0
-```
-
-Now run the regular revision for QuestionnaireDB:
-
-1. http://localhost:8091/dbv/dbv_questionnairedb/
-
-With this step complete we can proceed as normal. Stop the containers then continue to Step 4 and run them again as normal; alembic will populate OpalDB and insert test data. This instruction can be removed once QuestionnaireDB is added to our alembic version control; at that point the instructions to build your db docker will return to normal.
 
 ### Step 4
 
@@ -102,10 +77,9 @@ If you open docker-desktop, you should see that you have a app called `opal-data
 
 ### Step 5: Run the databases revisions
 
-With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
+For the time being, the OpalReportDB is maintained with dbv. All other databases are contained within the alembic code. Run dbv to populate the report db:
 
-1. http://localhost:8091/dbv/dbv_registerdb
-2. http://localhost:8091/dbv/dbv_questionnairedb/
+1. http://localhost:8091/dbv/dbv_opalreportdb
 
 ### Step 6: Test your installation
 
@@ -187,37 +161,13 @@ class Patient(Base):
 
 Set `INSERT_TEST_DATA=0` in your `.env` file to avoid getting a duplicate insertion error.
 
-Then, change directory to the folder representing the database you want to modify (e.g. `./alembic/opaldb`).
-From there, call the autogenerate command:
+With the dbs container still running, open a separate bash CLI and run the autogenerate feature of alembic from a new alembic container. You will need to specify the name of the database folder in which you want to generate the migration, for example for OpalDB:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Add last login date column to Patient model'"
+docker compose run --rm alembic sh -c "cd /app/opaldb && alembic revision --autogenerate -m 'add_last_login_to_patient'"
 ```
 
-This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration.
-Make sure to check the contents of these functions to ensure nothing additional was added.
-Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create a selection of QuestionnaireDB tables which are required in the OpalDB models file due to foreign key constraints between them.
-You'll need to remove these changes manually.
-The migration file will look something like this after you have cleaned it up:
-
-```python
-from alembic import op
-import sqlalchemy as sa
-
-def upgrade():
-    op.add_column('Patient', sa.Column('last_login_date', sa.DateTime))
-
-def downgrade():
-    op.drop_column('Patient', 'last_login_date')
-```
-
-It's important to generate migrations in this way (by first modifying `models.py` and then running `autogenerate`).
-If migrations were written from scratch (without using `models.py`), the models file would fall behind the up-to-date state of the database,
-and any future use of the autogenerate feature would cause Alembic to try to undo all of the manually-generated revisions.
-
-Note: Alembic commands must be run from the directory corresponding to the database to which you want to make changes.
-
-To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
+This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration. Always double check the contents of the autogenerated file to ensure it is correct according to your specifications. Also be sure to pause the db-containers and re-run them with `docker compose up` to see your new migration successfully run. Alembic inserts the version identifier tag of the latest migration file into the `alembic_version` table in the database to keep track of the database state. Be sure not to manually delete or otherwise edit that table.
 
 #### Inserting new test data
 
@@ -228,20 +178,6 @@ If you want to manually insert test data simply call `python test-data/insert_te
 #### Version controlling triggers, events, functions, procedures
 
 Object-oriented version control of these constructs isn't really supported 'natively' in Alembic, but there are workarounds like the one outlined here: https://stackoverflow.com/questions/67247268/how-to-version-control-functions-and-triggers-with-alembic. It still requires writing everything out in SQL though.
-
-### [Optional] Generating initial model structure from existing databases
-
-Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run if there isn't a populated models file for the database in question.
-
-SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema.
-
-`cd alembic-<database-name>/`
-`python initial_model_populate.py`
-
-Known issues with sqlacodegen:
-
-- For some reason is forgets to add the 's' at the end of Alias related tables so it'll be `class Alia` instead of `class Alias`
-- In the situation when we have a foreign key or relationship between two tables, and those tables have identically named columns, we can get a warning because the same naming implies the mapping should combine the two columns and copy the data from one to the other. : https://docs.sqlalchemy.org/en/14/faq/ormconfiguration.html#i-m-getting-a-warning-or-error-about-implicitly-combining-column-x-under-attribute-y
 
 ### Interacting with the dockerized Alembic container
 
