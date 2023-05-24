@@ -22,11 +22,11 @@ def upgrade() -> None:
         'TestControl',
         'URL_EN',
         existing_type=mysql.VARCHAR(length=2000),
-        nullable=True
+        nullable=True,
     )
     op.alter_column(
         'TestControl',
         'URL_FR',
         existing_type=mysql.VARCHAR(length=2000),
-        nullable=True
+        nullable=True,
     )
