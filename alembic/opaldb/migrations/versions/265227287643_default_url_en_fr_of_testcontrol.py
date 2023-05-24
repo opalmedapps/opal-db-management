@@ -1,7 +1,7 @@
 """‘default_url_en_fr_of_testcontrol’
 
 Revision ID: 265227287643
-Revises: 7ebe01c0c5e0
+Revises: 357c4c529cab
 Create Date: 2023-05-24 17:25:46.042693
 
 """
@@ -11,7 +11,7 @@ from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = '265227287643'
-down_revision = '7ebe01c0c5e0'
+down_revision = '357c4c529cab'
 branch_labels = None
 depends_on = None
 
