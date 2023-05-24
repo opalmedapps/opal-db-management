@@ -2,35 +2,19 @@
 from logging.config import fileConfig
 from typing import Any
 
-import settings
-from models import Base
+from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-from alembic import context
+from db_management import connection, settings
+from db_management.opaldb.models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-# Reset sqlalchemy target url using .env vars
-connection_params = {
-    'user': settings.DB_USER,
-    'password': str(settings.DB_PASSWORD),
-    'host': settings.DB_HOST,
-    'port': settings.DB_PORT,
-    'database': settings.DB_NAME_OPAL,
-}
-connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
-# Add ssl settings if using SSL connection to db
-if settings.USE_SSL == '1':
-    connection_params.update({
-        'ssl_ca': settings.SSL_CA,
-    })
-    connection_url += '?ssl_ca={ssl_ca}'  # noqa: WPS336
-
 config.set_main_option(
     'sqlalchemy.url',
-    connection_url.format(**connection_params),
+    connection.connection_url(settings.DB_NAME_OPAL),
 )
 
 # Interpret the config file for Python logging.
@@ -65,6 +49,9 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
+    # TODO: Investigate transactional migrations:
+    # https://github.com/sqlalchemy/alembic/issues/755#issuecomment-735221194
+
 
 def process_revision_directives(directives: Any) -> None:
     """Don't create a new migration if no changes are detected.
@@ -95,9 +82,9 @@ def run_migrations_online() -> None:
         poolclass=pool.NullPool,
     )
 
-    with connectable.connect() as connection:
+    with connectable.connect() as db_connection:
         context.configure(
-            connection=connection,
+            connection=db_connection,
             target_metadata=target_metadata,
             # https://stackoverflow.com/questions/12409724/no-changes-detected-in-alembic-autogeneration-of-migrations-with-flask-sqlalchem
             compare_type=True,              # Detect changes in col type with autogenerate
@@ -106,6 +93,8 @@ def run_migrations_online() -> None:
 
         with context.begin_transaction():
             context.run_migrations()
+        # TODO: Investigate transactional migrations:
+        # https://github.com/sqlalchemy/alembic/issues/755#issuecomment-735221194
 
 
 if context.is_offline_mode():

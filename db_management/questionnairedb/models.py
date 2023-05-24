@@ -1,11 +1,11 @@
-# type: ignore
-# coding: utf-8
 from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
 from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+# see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
+Base: DeclarativeMeta = declarative_base()
+
 metadata = Base.metadata
 
 
