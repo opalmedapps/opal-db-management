@@ -18,9 +18,15 @@ depends_on = None
 
 def upgrade() -> None:
     """Alter URL_EN and URL_FR in TestControl to have proper defaults."""
-    op.alter_column('TestControl', 'URL_EN',
-               existing_type=mysql.VARCHAR(length=2000),
-               nullable=True)
-    op.alter_column('TestControl', 'URL_FR',
-               existing_type=mysql.VARCHAR(length=2000),
-               nullable=True)
+    op.alter_column(
+        'TestControl',
+        'URL_EN',
+        existing_type=mysql.VARCHAR(length=2000),
+        nullable=True
+    )
+    op.alter_column(
+        'TestControl',
+        'URL_FR',
+        existing_type=mysql.VARCHAR(length=2000),
+        nullable=True
+    )
