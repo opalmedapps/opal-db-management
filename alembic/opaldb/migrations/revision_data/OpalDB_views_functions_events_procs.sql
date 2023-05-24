@@ -530,16 +530,6 @@ BEGIN
 
 		Insert Into PatientControl(PatientSerNum) Values(wsPatientSerNum);
 
-		Insert Into registerdb.accesslevelconsent (PatientSerNum, AccessLevelId, AccessLevelSign, AccessLevelSignDateTime, CreationDate)
-		Values (wsPatientSerNum, wsAccessLevelId, wsAccessLevelSign, now(), now() );
-
-		Insert Into registerdb.termsandagreementsign (PatientSerNum, TermsAndAgreementID, `TermsAndAgreementSign`, TermsAndAgreementSignDateTime)
-		Values (wsPatientSerNum, wsTermsAndAgreementID, wsTermsAndAgreementSign, now() );
-
-		Update registerdb.registrationcode
-		Set `Status` = 'Completed', DeleteBranch = 2
-		where PatientSerNum = wsPatientSerNum and `Status` = 'New';
-
 		set wsStatus = 'Successfully Update';
  	else
 		set wsStatus = 'Failed to Update';
