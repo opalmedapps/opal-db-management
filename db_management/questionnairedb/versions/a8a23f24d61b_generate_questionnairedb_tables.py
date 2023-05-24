@@ -1,4 +1,3 @@
-# type: ignore
 """generate_questionnairedb_tables
 
 Revision ID: a8a23f24d61b
@@ -10,9 +9,8 @@ import os
 from pathlib import Path
 
 import sqlalchemy as sa
-from sqlalchemy.dialects import mysql
-
 from alembic import op
+from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
 revision = 'a8a23f24d61b'
