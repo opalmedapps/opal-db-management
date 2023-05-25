@@ -217,7 +217,7 @@ Object-oriented version control of these constructs isn't really supported 'nati
 
 ### Interacting with the dockerized Alembic container
 
-Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes. Note that the working directory configured in `alembic.Dockerfile` is `/app/`. This means that we need to specify which database folder we want to be generating the change for, so we must add a change directory command everr time we run the stand alone alembic container instance. To move QuestionnaireDB down by one revision:
+Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes.
 
 ```shell
 docker compose run --rm alembic sh -c "alembic --name <dbname> downgrade -1"
