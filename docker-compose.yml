@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     container_name: opal-dbs
@@ -7,11 +5,8 @@ services:
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
-      - ./certs:/certs
       - ./db-scripts:/docker-entrypoint-initdb.d
       - ./config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
-      # uncomment this to enforce connections over TLS
-      # - ./config/ssl.cnf:/etc/mysql/conf.d/ssl.cnf
     environment:
       - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
       - MARIADB_USER=${DATABASE_USER}
@@ -36,7 +31,6 @@ services:
       # maintain current revision of DBVs across DBV updates
       - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
-      - ./certs:/certs
     environment:
       - TZ=EST5EDT
     env_file:
@@ -49,10 +43,6 @@ services:
       - db
     ports:
       - ${ADMINER_PORT}:8080
-    volumes:
-      - ./certs:/certs
-      # uncomment this if requiring SSL in the db, otherwise leave commented out
-      # - ./config/adminer-login-ssl.php:/var/www/html/plugins-enabled/adminer-login-ssl.php
     env_file:
       - .env
 
@@ -66,7 +56,6 @@ services:
       - ./certs:/certs
       - ./alembic.ini:/app/alembic.ini
       - ./db_management:/app/db_management
-
     depends_on:
       - db
     env_file:
