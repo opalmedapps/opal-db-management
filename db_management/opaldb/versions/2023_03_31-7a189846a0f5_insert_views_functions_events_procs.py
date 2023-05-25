@@ -27,9 +27,7 @@ CONNECTION_PARAMETERS = sql_connection_parameters(DB_NAME_OPAL)
 def upgrade() -> None:
     """Insert functions, events, etc for OpalDB."""
     with connection_cursor(CONNECTION_PARAMETERS) as cursor:
-        cursor.execute(query="""
-            SET foreign_key_checks=0;
-            """)
+        cursor.execute(query='SET foreign_key_checks=0;')
 
     funcs_sql_content = ''
     funcs_file_path = os.path.join(REVISIONS_DIR, 'OpalDB_views_functions_events_procs.sql')
@@ -40,18 +38,14 @@ def upgrade() -> None:
     # Execute
     with connection_cursor(CONNECTION_PARAMETERS) as cursor:
         cursor.execute(funcs_sql_content)
-        cursor.execute(query="""
-            SET foreign_key_checks = 1;
-            """)
+        cursor.execute(query='SET foreign_key_checks = 1;')
         cursor.close()
 
 
 def downgrade() -> None:
     """Drop all from OpalDB."""
     with connection_cursor(CONNECTION_PARAMETERS) as cursor:
-        cursor.execute(query="""
-            SET foreign_key_checks=0;
-            """)
+        cursor.execute(query='SET foreign_key_checks=0;')
 
         cursor.execute(query=f"""
         DROP DATABASE {DB_NAME_OPAL};
@@ -62,7 +56,5 @@ def downgrade() -> None:
 
         """)
 
-        cursor.execute(query="""
-                SET foreign_key_checks = 1;
-            """)
+        cursor.execute(query='SET foreign_key_checks=1;')
         cursor.close()
