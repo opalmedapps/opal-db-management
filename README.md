@@ -201,11 +201,12 @@ class Patient(Base):
 
 Set `INSERT_TEST_DATA=0` in your `.env` file to avoid getting a duplicate insertion error.
 
-Then, change directory to the folder representing the database you want to modify (e.g. `./alembic/opaldb`).
-From there, call the autogenerate command:
+Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. For example, `alembic --name opaldb current`.
+
+Call the autogenerate command:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Add last login date column to Patient model'"
+docker compose run --rm alembic sh -c "alembic --name opaldb revision --autogenerate -m 'Add last login date column to Patient model'"
 ```
 
 This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration.
@@ -231,13 +232,13 @@ and any future use of the autogenerate feature would cause Alembic to try to und
 
 Note: Alembic commands must be run from the directory corresponding to the database to which you want to make changes.
 
-To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
+To go to the latest version for the database, simply run `alembic --name <dbname> </dbname>upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
 #### Inserting new test data
 
 The alembic docker container will automatically run test data insertion if you have set `INSERT_TEST_DATA=1` in your .env file. Set the variable to anything else to omit test data insertions on future runs (otherwise you will get a duplicate key error on the insertion).
 
-If you want to manually insert test data simply call `python test-data/insert_test_data.py` from the `alembic\` folder. We keep the insertion of test data separate from the alembic revision control to allow easier switching between development and production environments. All test data is contained within the test-data/sql/ folder. To add new test data simply add the SQL to the bottom of the .sql file corresponding to the required database.
+If you want to manually insert test data simply call `python test-data/insert_test_data.py` from the `db_management/` folder. We keep the insertion of test data separate from the alembic revision control to allow easier switching between development and production environments. All test data is contained within the test-data/sql/ folder. To add new test data simply add the SQL to the bottom of the .sql file corresponding to the required database.
 
 #### Version controlling triggers, events, functions, procedures
 
@@ -249,7 +250,7 @@ Note: This step is only necessary when the alembic models.py file is empty. It o
 
 SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema.
 
-`cd alembic-<database-name>/`
+`cd db_management/<database-name>/`
 `python initial_model_populate.py`
 
 Known issues with sqlacodegen:
@@ -262,7 +263,7 @@ Known issues with sqlacodegen:
 Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes, for example:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic downgrade -1"
+docker compose run --rm alembic sh -c "alembic --name <dbname> downgrade -1"
 ```
 
 To downgrade the revisions by one.
@@ -270,7 +271,7 @@ To downgrade the revisions by one.
 We use the same process for any alembic-related revision work. For example to generate a new revision in the container:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Useful_description_of_change'"
+docker compose run --rm alembic sh -c "alembic --name <dbname> revision --autogenerate -m 'Useful_description_of_change'"
 ```
 
 To re-insert test data, after setting `INSERT_TEST_DATA=1` in your .env file:

@@ -3,9 +3,11 @@ import io
 import sys
 from typing import Any
 
-from settings import OPALDB_ENGINE
 from sqlacodegen.codegen import CodeGenerator
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, create_engine
+
+from db_management.connection import connection_url
+from db_management.settings import DB_NAME_OPAL
 
 
 def generate_models(outfile: Any = None) -> None:
@@ -16,7 +18,7 @@ def generate_models(outfile: Any = None) -> None:
     Args:
         outfile: Name of file to store database model
     """
-    metadata = MetaData(bind=OPALDB_ENGINE)
+    metadata = MetaData(bind=create_engine(connection_url(DB_NAME_OPAL)))
     metadata.reflect()
     outfile = io.open(outfile, 'w', encoding='utf-8') if outfile else sys.stdout
     generator = CodeGenerator(metadata)
