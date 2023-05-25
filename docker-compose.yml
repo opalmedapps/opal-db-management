@@ -54,7 +54,9 @@ services:
       context: .
       dockerfile: alembic.Dockerfile
     volumes:
-      - ./alembic:/app
+      - ./certs:/certs
+      - ./alembic.ini:/app/alembic.ini
+      - ./db_management:/app/db_management
     depends_on:
       - db
     env_file:

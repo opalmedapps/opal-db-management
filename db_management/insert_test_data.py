@@ -1,28 +1,13 @@
 """Insert test data for all specified databases."""
 import os
-import sys
 from pathlib import Path
 
-import pymysql
-from opaldb.settings import DB_NAME_OPAL, PYMYSQL_CONNECT_PARAMS
-from pymysql.cursors import Cursor
+from db_management.connection import connection_cursor, sql_connection_parameters
+from db_management.settings import DB_NAME_OPAL
 
 # Find root and revision data paths
 ROOT_DIR = Path(__file__).parents[1]
 DATA_DIR = ROOT_DIR / 'app/test-data/sql'
-
-
-def get_connection_cursor() -> Cursor:
-    """Get a mariadb connection context manager for SQL execution.
-
-    Returns:
-        Cursor for the connection.
-    """
-    try:
-        conn = pymysql.connect(**PYMYSQL_CONNECT_PARAMS)  # type: ignore[arg-type]
-    except pymysql.Error as err:
-        sys.exit('Error getting cursor for {OPALDB} {err}'.format(OPALDB=DB_NAME_OPAL, err=err))
-    return conn.cursor()
 
 
 def insert_data(data_files: list) -> None:
@@ -41,7 +26,7 @@ def insert_data(data_files: list) -> None:
             print(f'LOG: Read test data sql for {data_file}')
             file_handle.close()
         # Execute
-        with get_connection_cursor() as cursor:
+        with connection_cursor(sql_connection_parameters(DB_NAME_OPAL)) as cursor:
             cursor.execute(query="""
                 SET foreign_key_checks=0;
                 """)
