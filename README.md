@@ -52,19 +52,6 @@ docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuse
 > 1. Run this command in the Windows Subsystem for Linux (WSL2).
 > 2. Remove `$(date +%s)` and manually write a unique value.
 > 3. Use the --no-cache argument, which will bypass all the Docker cache system.
-
-You can also pass arguments to target specifics branches of the DBVs repository using the `--build-arg` parameter as follow.
-
-```shell
-docker compose build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(date +%s) -t opalmedapps/dbv:latest .
-```
-
-There are 4 possible arguments, all default to `development`:
-
-1. OPALDBV_BRANCH="development"
-2. QUESTIONNAIREDBV_BRANCH="development"
-3. OPAL_REPORT_BRANCH="development"
-
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
 #### Step 3.5 Temporary Workflow for Alembic with OpalDB Only
@@ -104,6 +91,8 @@ If you open docker-desktop, you should see that you have a app called `opal-data
 With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
 
 1. http://localhost:8091/dbv/dbv_questionnairedb/
+
+Please scroll down to the `Inserting new test data` section to see how we insert data into OpalDB.
 
 ### Step 6: Test your installation
 
@@ -199,8 +188,6 @@ class Patient(Base):
     LastLoginDate = Column("last_login_date", DateTime)
 ```
 
-Set `INSERT_TEST_DATA=0` in your `.env` file to avoid getting a duplicate insertion error.
-
 Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. For example, `alembic --name opaldb current`.
 
 Call the autogenerate command:
@@ -236,27 +223,27 @@ To go to the latest version for the database, simply run `alembic --name <dbname
 
 #### Inserting new test data
 
-The alembic docker container will automatically run test data insertion if you have set `INSERT_TEST_DATA=1` in your .env file. Set the variable to anything else to omit test data insertions on future runs (otherwise you will get a duplicate key error on the insertion).
+In order to facilitate deployments to new institutions and development, we have split test data used by developers from 'initial' data used by institutions in production environments. These two sets of data can be inserted separately from the CLI. Note that, generally speaking, initial data should be considered the 'base' dataset upon which test data can optionally be added.
 
-If you want to manually insert test data simply call `python test-data/insert_test_data.py` from the `db_management/` folder. We keep the insertion of test data separate from the alembic revision control to allow easier switching between development and production environments. All test data is contained within the test-data/sql/ folder. To add new test data simply add the SQL to the bottom of the .sql file corresponding to the required database.
+Insert initial data to OpalDB:
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/initial/
+```
+
+Insert test data to OpalDB:
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
+```
+
+The same commands can be used for QuestionnaireDB, just replace the database name in the first argument given to the `run_sql_scripts` module.
+
+Note the `--disable-foreign-key-checks` flag is required because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
 
 #### Version controlling triggers, events, functions, procedures
 
 Object-oriented version control of these constructs isn't really supported 'natively' in Alembic, but there are workarounds like the one outlined here: https://stackoverflow.com/questions/67247268/how-to-version-control-functions-and-triggers-with-alembic. It still requires writing everything out in SQL though.
-
-### [Optional] Generating initial model structure from existing databases
-
-Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run if there isn't a populated models file for the database in question.
-
-SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema.
-
-`cd db_management/<database-name>/`
-`python initial_model_populate.py`
-
-Known issues with sqlacodegen:
-
-- For some reason is forgets to add the 's' at the end of Alias related tables so it'll be `class Alia` instead of `class Alias`
-- In the situation when we have a foreign key or relationship between two tables, and those tables have identically named columns, we can get a warning because the same naming implies the mapping should combine the two columns and copy the data from one to the other. : https://docs.sqlalchemy.org/en/14/faq/ormconfiguration.html#i-m-getting-a-warning-or-error-about-implicitly-combining-column-x-under-attribute-y
 
 ### Interacting with the dockerized Alembic container
 
@@ -273,8 +260,6 @@ We use the same process for any alembic-related revision work. For example to ge
 ```shell
 docker compose run --rm alembic sh -c "alembic --name <dbname> revision --autogenerate -m 'Useful_description_of_change'"
 ```
-
-To re-insert test data, after setting `INSERT_TEST_DATA=1` in your .env file:
 
 ```shell
 docker compose run --rm alembic
