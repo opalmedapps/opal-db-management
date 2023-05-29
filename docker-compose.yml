@@ -31,10 +31,10 @@ services:
       # maintain current revision of DBVs across DBV updates
       - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
-    environment:
-      - TZ=EST5EDT
     env_file:
       - .env
+    environment:
+      - TZ=EST5EDT
 
   adminer:
     container_name: adminer
