@@ -15,7 +15,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
-from sqlalchemy.ext.declarative import declarative_base, DeclarativeMeta
+from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import relationship
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
@@ -1501,9 +1501,6 @@ class PatientHospitalIdentifier(Base):
     Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
-# TODO: SQLAlchemy requires us to provide it with the models corresponding to the QuestionnaireDB tables referenced by some OpalDB foreign key constraints.
-#       Because this directory is for manging opaldb only, we will import the relevant QuestionnaireDB models during the creation of the alembic-questionnairedb structure.
-#       After doing so, we can run another autogenerate migration here to make sure everything works in sync properly.
 
 class Purpose(Base):
     __tablename__ = 'purpose'
