@@ -71,6 +71,20 @@ docker compose up
 
 **Hint:** append `-d` to run in detached mode and not keep it in the foreground.
 
+**Note:** There is a known bug wherein the alembic container can crash on the very first setup of a database. This can happen when the db container hasn't had enough time to actually create the databases before alembic runs and tries to connect to them. If this occurs you can simply re-run `docker compose up` and the second time alembic won't crash. Alternatively, you could choose to run the three containers in proper order to guarantee no errors will occur:
+
+```shell
+docker compose up -d dbv
+```
+
+```shell
+docker compose up -d adminer
+```
+
+```shell
+docker compose up -d alembic
+```
+
 If you open docker-desktop, you should see that you have a app called `opal-database` running with 3 container.
 > For more information about Docker compose view the [official Docker documentation](https://docs.docker.com/compose/)
 
@@ -224,9 +238,19 @@ Insert test data to OpalDB:
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
 ```
 
-The same commands can be used for QuestionnaireDB, just replace the database name in the first argument given to the `run_sql_scripts` module.
+The same commands can be used for inserting data to QuestionnaireDB, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data. So to complete your initial and test data insertions:
 
-Note the `--disable-foreign-key-checks` flag is required because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
+```
+
+and
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/
+```
+
+Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed. Foreign key checks are disabled by default for QuestionnaireDB due to a circular foreign key dependency between `language` and `dictionary`.
 
 ### Interacting with the dockerized Alembic container
 

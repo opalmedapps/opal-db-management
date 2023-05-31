@@ -58,5 +58,9 @@ services:
       - ./db_management:/app/db_management
     depends_on:
       - db
+      # TODO: Enable a health check on db container before alembic runs to fix
+      #       "Can't connect to MySQL server on 'db' (115)" error thrown by alembic.
+      #       This error occurs when alembic tries to run before db is finished creating the dbs.
+      #       If the error is encountered, simply re-start the containers a second time and alembic will work.
     env_file:
       - .env
