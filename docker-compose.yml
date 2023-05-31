@@ -29,7 +29,6 @@ services:
       - ${PHP_PORT}:8080
     volumes:
       # maintain current revision of DBVs across DBV updates
-      - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
       - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
     env_file:
