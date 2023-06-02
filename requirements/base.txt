@@ -1,5 +1,5 @@
 # SQLAlchemy & Alembic base
-alembic==1.10.4  # https://pypi.org/project/alembic/
+alembic==1.11.1  # https://pypi.org/project/alembic/
 # sqlacodegen==2.3.0.post1  # https://pypi.org/project/sqlacodegen/
 sqlalchemy==2.0.15  # https://pypi.org/project/SQLAlchemy/
 
