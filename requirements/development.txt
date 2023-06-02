@@ -17,4 +17,4 @@ wemake-python-styleguide==0.17.0
 
 # Pre-commit
 #
-pre-commit==2.20.0  # https://github.com/pre-commit/pre-commit
+pre-commit==3.3.2  # https://github.com/pre-commit/pre-commit
