@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.add_column(
         'Patient',
         sa.Column(
-            'UUID',
+            'OpalUUID',
             sa.String(length=36, collation='latin1_swedish_ci'),
             server_default=sa.text("''"),
             nullable=False,
