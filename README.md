@@ -1,13 +1,23 @@
-# DBV Docker Container
+# DB Docker
 
-Opal's databases are separated in 4 different repos. The purpose of this project is to run a Docker container that installs and manages all the DBs in one place.
+Opal currently has several different databases for the various services it provides. Some of these are from legacy systems and over time will continue to have their functionality ported to the new Django system via the strangler fig pattern. The databases maintained in this repository include:
+
+1. OpalDB (Legacy)
+2. QuestionnaireDB (Legacy)
+3. orms
+4. ormsLog
+5. OpalReportDB
+
+The Django database is maintained and managed directly in the Django repository, but it does reside on the same server as the above databases. That server can either be brought up by developers in their local environments using the db container from this repository, or by a database administrator in an institution environment.
 
 ## Prerequisites
 
-- You need to have access to the 2 following repositories:
+- Users who **require** the old DBV versioning system will need to have access to the 2 following repositories:
 
     1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
     2. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
+
+- All other users have everything required to build the databases in this repository alone.
 
 - Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 
@@ -74,7 +84,7 @@ docker compose up
 **Note:** There is a known bug wherein the alembic container can crash on the very first setup of a database. This can happen when the db container hasn't had enough time to actually create the databases before alembic runs and tries to connect to them. If this occurs you can simply re-run `docker compose up` and the second time alembic won't crash. Alternatively, you could choose to run the three containers in proper order to guarantee no errors will occur:
 
 ```shell
-docker compose up -d dbv
+docker compose up -d db
 ```
 
 ```shell
