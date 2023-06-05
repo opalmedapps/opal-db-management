@@ -26,9 +26,11 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
 
         with connection_cursor(sql_connection_parameters(db_name)) as cursor:
             if disable_foreign_key_checks or db_name == 'QuestionnaireDB':
+                print('LOG: Foreign key checks temporarily disabled')
                 cursor.execute(query='SET foreign_key_checks=0')
 
             cursor.execute(sql_queries)
+            cursor.execute(query='SET foreign_key_checks=1')
 
         print(f'LOG: Successfully ran SQL for {path}')
 
