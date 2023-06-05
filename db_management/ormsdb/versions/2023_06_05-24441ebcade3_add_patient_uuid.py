@@ -36,5 +36,5 @@ def upgrade() -> None:
 def downgrade() -> None:
     """Drop UUID"""
     op.execute('SET @@system_versioning_alter_history = 1;')
-    op.drop_column('Patient', 'UUID')
+    op.drop_column('Patient', 'OpalUUID')
     op.execute('SET @@system_versioning_alter_history = 0;')

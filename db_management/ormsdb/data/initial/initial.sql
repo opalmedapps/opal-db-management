@@ -1,3 +1,9 @@
+INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
+(1,	'RVH',	'Hospital',	'^[0-9]{7}$');
+
+INSERT INTO `SpecialityGroup` (`SpecialityGroupId`, `HospitalId`, `SpecialityGroupCode`, `SpecialityGroupName`, `LastUpdated`) VALUES
+(1,	1,	'AAA',	'Test Group',	'2022-05-11 01:18:31');
+
 INSERT INTO `AppointmentCode` (`AppointmentCodeId`, `AppointmentCode`, `SpecialityGroupId`, `DisplayName`, `SourceSystem`, `Active`, `LastModified`) VALUES
 (1,	'ATST',	1,	NULL,	'BBB',	1,	'2022-05-11 01:19:23');
 
@@ -9,9 +15,6 @@ INSERT INTO `ClinicResources` (`ClinicResourcesSerNum`, `ResourceCode`, `Resourc
 
 INSERT INTO `ExamRoom` (`AriaVenueId`, `ClinicHubId`, `ScreenDisplayName`, `VenueEN`, `VenueFR`, `ExamRoomSerNum`, `IntermediateVenueSerNum`, `PositionOrder`) VALUES
 ('Exam Room',	1,	'Exam Room',	'Exam Room',	'Exam Room',	1,	NULL,	NULL);
-
-INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
-(1,	'RVH',	'Hospital',	'^[0-9]{7}$');
 
 INSERT INTO `Insurance` (`InsuranceId`, `InsuranceCode`, `InsuranceName`, `Format`) VALUES
 (1,	'RAMA',	'Régie de l\'assurance maladie de l\'Alberta',	'^[0-9]{9}$'),
@@ -74,10 +77,6 @@ INSERT INTO `ProfileColumns` (`ProfileColumnSer`, `ProfileSer`, `ProfileColumnDe
 (17,	1,	15,	-1,	0,	'2022-05-11 15:07:17'),
 (18,	1,	18,	5,	1,	'2023-05-04 12:30:00');
 
-
-INSERT INTO `SmsAppointment` (`SmsAppointmentId`, `ClinicResourcesSerNum`, `AppointmentCodeId`, `SpecialityGroupId`, `SourceSystem`, `Type`, `Active`, `LastUpdated`) VALUES
-(1,	1,	1,	1,	'BBB',	'GENERAL',	1,	'2022-05-11 11:10:05');
-
 INSERT INTO `SmsMessage` (`SmsMessageId`, `SpecialityGroupId`, `Type`, `Event`, `Language`, `Message`, `LastUpdated`) VALUES
 (1,	NULL,	'GENERAL',	'FAILED_CHECK_IN',	'English',	'Failed check in',	'2022-05-11 05:54:08'),
 (2,	NULL,	'GENERAL',	'FAILED_CHECK_IN',	'French',	'Erreur d\'enregistrement',	'2022-05-11 05:54:40'),
@@ -90,8 +89,7 @@ INSERT INTO `SmsMessage` (`SmsMessageId`, `SpecialityGroupId`, `Type`, `Event`, 
 (9,	1,	'GENERAL',	'REMINDER',	'English',	'Reminder for your appointment(s):\r\n<app>\r\nTo check-in for an appointment, please respond to this message with \"arrive\" when you arrive at the hospital tomorrow.',	'2022-05-11 06:04:33'),
 (10,	1,	'GENERAL',	'REMINDER',	'French',	'Rappel pour vos rendez-vous:\r\n<app>\r\nPour vous enregistrer pour un rendez-vous, répondez à ce numéro avec \"arrive\" lorsque vous arrivez à l\'hôpital demain.',	'2022-05-11 06:04:44');
 
-INSERT INTO `SpecialityGroup` (`SpecialityGroupId`, `HospitalId`, `SpecialityGroupCode`, `SpecialityGroupName`, `LastUpdated`) VALUES
-(1,	1,	'AAA',	'Test Group',	'2022-05-11 01:18:31');
-
+INSERT INTO `SmsAppointment` (`SmsAppointmentId`, `ClinicResourcesSerNum`, `AppointmentCodeId`, `SpecialityGroupId`, `SourceSystem`, `Type`, `Active`, `LastUpdated`) VALUES
+(1,	1,	1,	1,	'BBB',	'GENERAL',	1,	'2022-05-11 11:10:05');
 
 -- 2023-06-02 15:38:29
