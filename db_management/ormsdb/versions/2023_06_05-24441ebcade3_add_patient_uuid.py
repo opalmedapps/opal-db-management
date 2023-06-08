@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.add_column(
         'Patient',
         sa.Column(
-            'UUID',
+            'OpalUUID',
             sa.String(length=36, collation='latin1_swedish_ci'),
             server_default=sa.text("''"),
             nullable=False,
@@ -36,5 +36,5 @@ def upgrade() -> None:
 def downgrade() -> None:
     """Drop UUID"""
     op.execute('SET @@system_versioning_alter_history = 1;')
-    op.drop_column('Patient', 'UUID')
+    op.drop_column('Patient', 'OpalUUID')
     op.execute('SET @@system_versioning_alter_history = 0;')
