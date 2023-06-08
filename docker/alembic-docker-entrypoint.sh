@@ -6,5 +6,6 @@ set -euo pipefail
 alembic --name questionnairedb upgrade head
 alembic --name opaldb upgrade head
 alembic --name ormsdb upgrade head
+alembic --name ormslogdb upgrade head
 
 exec "$@"
