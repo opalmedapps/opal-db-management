@@ -53,7 +53,7 @@ class Patient(Base):
     SMSAlertNum = Column(String(11))
     SMSSignupDate = Column(DateTime)
     OpalPatient = Column(TINYINT(1), nullable=False, server_default=text('0'))
-    UUID = Column(String(length=36, collation='latin1_swedish_ci'), nullable=False, server_default=text("''"), comment='UUID provided only for Opal patients, and received from Opal')
+    UUID = Column(String(length=37, collation='latin1_swedish_ci'), nullable=False, server_default=text("''"), comment='UUID provided only for Opal patients, and received from Opal')
     LanguagePreference = Column(Enum('English', 'French'))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SMSLastUpdated = Column(DateTime)
