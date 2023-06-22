@@ -10,4 +10,4 @@ pymysql==1.0.3  # https://pypi.org/project/PyMySQL/
 python-dotenv==1.0.0  # https://pypi.org/project/python-dotenv/
 
 # SQLAlchemy connect engine - mysql dialect: https://docs.sqlalchemy.org/en/20/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb
-mysqlclient==2.2.0rc1 # https://github.com/PyMySQL/mysqlclient
+mysqlclient==2.2.0 # https://github.com/PyMySQL/mysqlclient
