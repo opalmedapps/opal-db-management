@@ -2,7 +2,7 @@
 
 # Code quality
 #
-flake8==4.0.1  # https://github.com/PyCQA/flake8
+flake8==6.0.0  # https://github.com/PyCQA/flake8
 flake8-builtins==2.1.0  # https://github.com/gforcada/flake8-builtins
 isort==5.12.0  # https://github.com/PyCQA/isort
 
@@ -12,8 +12,8 @@ mypy==1.3.0  # https://github.com/python/mypy
 types-PyMySQL==1.0.19.7  # https://pypi.org/project/types-PyMySQL/
 
 # wemake Python Styleguide
-# see: https://wemake-python-stylegui.de/en/latest/index.html
-wemake-python-styleguide==0.17.0
+# see: https://wemake-python-styleguide.readthedocs.io/en/latest/
+wemake-python-styleguide==0.18.0
 
 # Pre-commit
 #
