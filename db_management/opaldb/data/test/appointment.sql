@@ -1,17 +1,22 @@
 INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `AppointmentAriaSer`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `CheckinUsername`, `ChangeRequest`, `DateAdded`, `ReadStatus`, `ReadBy`, `SessionId`, `LastUpdated`) VALUES
 
 -- marge
-(209677,	38,	NULL,	51,	1,	2380974,	0,	26,	'Open',	'Active',	'2023-03-02 17:27:00',	'2023-03-02 17:42:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-02 16:34:30',	0,	'[]',	'',	'2023-01-12 16:39:17'),
-(222045,	27,	NULL,	51,	1,	2427624,	0,	26,	'Open',	'Active',	'2023-03-16 10:00:00',	'2023-03-16 10:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-09-16 08:46:33',	0,	'[]',	'',	'2023-01-12 16:39:17'),
+(217542,	174,	NULL,	51,	1,	2401356,	0,	26,	'Open',	'Active',	'2023-04-06 22:00:00',	'2023-04-06 22:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-06 10:40:31',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
 -- homer
-(217542,	174,	NULL,	52,	1,	2401356,	0,	26,	'Open',	'Active',	'2023-04-06 22:00:00',	'2023-04-06 22:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-06 10:40:31',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 (219505,	8114,	NULL,	52,	1,	2406382,	0,	26,	'Open',	'Active',	'2023-04-25 14:00:00',	'2023-04-25 14:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-25 10:22:33',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
 -- bart
-(209441,	7827,	NULL,	53,	2,	1844923,	0,	0,	'Open',	'Active',	'2023-05-31 15:00:00',	'2023-05-31 15:00:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-05-31 17:04:08',	0,	'[]',	'',	'2023-01-12 16:39:17'),
-(209498,	147,	NULL,	53,	1,	2380118,	0,	26,	'Cancelled',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'2023-04-06 13:33:20',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17');
+(209498,	147,	NULL,	53,	1,	2380118,	0,	26,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17');
 
 UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 2 hour)));
 UPDATE Appointment set ScheduledEndTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 3 hour)));
 UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 1 minute)));
+-- Move homers to later
+UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 4 hour))) where PatientSerNum=53;
+UPDATE Appointment set ScheduledEndTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 5 hour))) where PatientSerNum=53;
+UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 1 minute))) where PatientSerNum=53;
+-- Move bart's to later
+UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 6 hour))) where PatientSerNum=53;
+UPDATE Appointment set ScheduledEndTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 7 hour))) where PatientSerNum=53;
+UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 1 minute))) where PatientSerNum=53;
