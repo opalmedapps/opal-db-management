@@ -35,6 +35,29 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
         print(f'LOG: Successfully ran SQL for {path}')
 
 
+def _existing_directory(directory: str) -> Path:
+    """
+    Convert a directory argument as a string to a Path.
+
+    If the path does not exist an error is raised.
+
+    Args:
+        directory: the directory on the file system
+
+    Returns:
+        the path instance for the directory
+
+    Raises:
+        ArgumentTypeError: if the directory does not exist
+    """
+    directory_path = Path(directory)
+
+    if not directory_path.exists():
+        raise argparse.ArgumentTypeError('the directory does not exist')
+
+    return directory_path
+
+
 def main(argv: list[str]) -> int:
     """
     Parse command-line arguments and run the SQL files.
@@ -53,7 +76,12 @@ def main(argv: list[str]) -> int:
         choices=['OpalDB', 'QuestionnaireDB', 'orms'],
         type=str,
     )
-    parser.add_argument('sql_dir', metavar='sql-dir', help='the directory that contains SQL files', type=Path)
+    parser.add_argument(
+        'sql_dir',
+        metavar='sql-dir',
+        help='the directory that contains SQL files',
+        type=_existing_directory,
+    )
     parser.add_argument('--disable-foreign-key-checks', action='store_true', required=False)
 
     args = parser.parse_args(argv)
