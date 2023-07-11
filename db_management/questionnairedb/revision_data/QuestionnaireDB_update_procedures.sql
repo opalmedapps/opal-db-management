@@ -1190,6 +1190,362 @@ BEGIN
 
 END;
 
+DROP PROCEDURE IF EXISTS `getCompletedQuestionnairesList`;
+
+-- Dumping structure for procedure questionnairedb.getCompletedQuestionnairesList
+CREATE PROCEDURE `getCompletedQuestionnairesList`(
+    IN `i_externalPatientId`        VARCHAR(64),
+    IN `i_questionnairePurposeId`   BIGINT(20),
+    IN `i_isoLang`                  VARCHAR(2)
+)
+BEGIN
+
+    -- this procedure is intended to get the questionnaire, section, questions and answers from an externalPatientId.
+    -- the language is passed in iso form, i.e. 'EN', 'FR'. If the language is not valid, default to French
+
+    -- declare variables
+    DECLARE patient_id BIGINT;
+    DECLARE wsCountLang, wsCountQuestionnaires, wsReturn, questionnaire_status INT;
+    DECLARE language_id BIGINT;
+    DECLARE default_isoLang VARCHAR(2);
+    DECLARE answer_id_text TEXT;
+
+    -- set default language to French
+    SET default_isoLang = 'FR';
+
+    -- note: wsReturn convention for this procedure: success = 0, language error = -1, error in answerQuestionnaireId = -2, purpose error = -3
+
+    -- get internal patient id
+    SELECT
+        p.ID
+    INTO patient_id
+    FROM patient p
+    WHERE p.externalId = i_externalPatientId;
+
+    -- get language
+    SELECT
+        count(*),
+        ID
+    INTO wsCountLang, language_id
+    FROM language
+    WHERE isoLang = i_isoLang AND deleted = 0;
+
+    -- label is a way to do early exit
+    get_questionnaire: BEGIN
+
+        -- verify language is correct
+        IF wsCountLang <> 1
+        THEN
+
+            -- try to get language again using default language
+            SELECT
+                count(*),
+                ID
+            INTO wsCountLang, language_id
+            FROM language
+            WHERE isoLang = default_isoLang AND deleted = 0;
+
+            -- verify again that language is correct
+            IF wsCountLang <> 1
+            THEN
+                SET wsReturn = -1;
+                LEAVE get_questionnaire;
+            END IF;
+
+        END IF;
+
+        -- Get the information about questionnaires by a patient id
+        -- temporary table is created to store questionnaire_id(s) for fetching sections, questions and answers
+        DROP TABLE IF EXISTS questionnaires_info;
+        CREATE TEMPORARY TABLE IF NOT EXISTS questionnaires_info AS
+            (
+                SELECT
+                    q.ID                                                                            AS questionnaire_id,
+                    aq.ID                                                                           AS ans_questionnaire_id,
+                    aq.`status`                                                                     AS status,
+                    getDisplayName(q.title, language_id)                                            AS nickname,
+                    q.logo                                                                          AS logo,
+                    getDisplayName(q.description,
+                                   2)                                                               AS description,
+                    getDisplayName(q.instruction,
+                                   2)                                                               AS instruction,
+                    q.optionalFeedback                                                              AS allow_questionnaire_feedback,
+                    q.purposeId                                                                     AS purposeId
+                FROM answerQuestionnaire aq
+                         LEFT JOIN questionnaire q ON (aq.questionnaireId = q.ID)
+                WHERE aq.patientId = patient_id
+                  AND aq.status = 2
+                  AND aq.deleted = 0
+                  AND q.deleted = 0
+                  AND q.final = 1
+            );
+
+        -- verify that purpose ID is in the range between 0 and 6
+        IF i_questionnairePurposeId < 0 OR i_questionnairePurposeId > 6
+        THEN
+            SET wsReturn = -3;
+            LEAVE get_questionnaire;
+        END IF;
+
+        -- filter questionnaires by questionnaire purpose
+        -- otherwise all the questionnaires will be returned
+        IF i_questionnairePurposeId <> 0
+        THEN
+            DELETE FROM questionnaires_info
+            WHERE purposeId <> i_questionnairePurposeId;
+        END IF;
+
+#       -- get the questionnaires
+        SELECT
+            count(*),
+            aq.`status`
+        INTO wsCountQuestionnaires, questionnaire_status
+        FROM answerQuestionnaire aq
+        WHERE aq.patientId = patient_id
+          AND aq.status = 2
+          AND aq.deleted = 0;
+
+        -- verify that the questionnaires are being returned
+        IF wsCountQuestionnaires = 0
+        THEN
+            SET wsReturn = -2;
+            LEAVE get_questionnaire;
+        END IF;
+
+        -- Get the information about sections in questionnaires
+        -- temporary table is created to store section_id(s) for the next step
+        DROP TABLE IF EXISTS sections_info;
+        CREATE TEMPORARY TABLE IF NOT EXISTS sections_info AS
+            (
+                SELECT
+                    sec.questionnaireId                                             AS questionnaire_id,
+                    sec.ID                                                          AS section_id,
+                    if(sec.title <> -1, getDisplayName(sec.title, language_id), '') AS section_title,
+                    getDisplayName(sec.instruction, language_id)                    AS section_instruction,
+                    sec.`order`                                                     AS section_position
+                FROM section sec
+                WHERE sec.questionnaireId IN (SELECT qi.questionnaire_id FROM questionnaires_info qi)
+                  AND sec.deleted = 0
+            );
+
+        -- get questions for those sections
+        CREATE TEMPORARY TABLE IF NOT EXISTS questions_info AS (
+            SELECT
+            sec.questionnaireId                     AS questionnaire_id,
+            qSec.sectionId                          AS section_id,
+            q.ID                                    AS question_id,
+            qSec.ID                                 AS questionSection_id,
+            qSec.order                              AS question_position,
+            qSec.orientation                        AS orientation,
+            qSec.optional                           AS optional,
+            getDisplayName(q.question, language_id) AS question_text,
+            getDisplayName(q.display, language_id)  AS question_label,
+            q.typeId                                AS type_id,
+            q.polarity                              AS polarity,
+            q.optionalFeedback                      AS allow_question_feedback,
+            sl.minValue                             AS min_value,
+            sl.maxValue                             AS max_value
+        FROM questionSection qSec
+                 LEFT JOIN question q ON (q.ID = qSec.questionId)
+                 LEFT JOIN section sec ON (sec.ID = qSec.sectionID)
+                 LEFT JOIN slider sl ON (sl.questionId = q.ID)
+        WHERE qSec.sectionId IN (SELECT section_id
+                                 FROM sections_info)
+          AND q.deleted = 0
+          AND q.final = 1
+        );
+
+        IF questionnaire_status = 0
+        THEN
+            -- the line below is not really needed, however, since without it the number of query returned will not be the same for new and other status questionnaire, this is added to prevent error when calling this procedure.
+            SELECT questionnaire_status AS status;
+
+        ELSE
+
+            -- if the questionnaire is not new, then get its answer
+
+            -- get answers_id for this questionnaire
+            DROP TABLE IF EXISTS answer_summary;
+            CREATE TEMPORARY TABLE IF NOT EXISTS answer_summary AS (
+                SELECT
+                    aSec.answerQuestionnaireId AS answer_questionnaire_id,
+                    a.questionnaireId          AS questionnaire_id,
+                    aSec.sectionId             AS section_id,
+                    a.ID                       AS answer_id,
+                    a.questionId               AS question_id,
+                    a.typeId                   AS type_id,
+                    a.answered                 AS answered,
+                    a.skipped                  AS skipped,
+                    a.creationDate             AS created,
+                    a.lastUpdated              AS last_updated,
+                    a.languageId               AS answer_language_id,
+                    qSec.ID                    AS questionSection_id
+                FROM (answerSection aSec
+                         LEFT JOIN answer a ON (a.answerSectionId = aSec.ID)),
+                     questionSection qSec
+                WHERE a.patientId = patient_id
+                  AND a.deleted = 0
+                  AND qSec.questionId = a.questionId
+                  AND qSec.sectionId = a.sectionId
+            );
+
+            -- GROUP_CONCAT() is used to convert multiple rows (ids) into a single string.
+            -- By default, the maximum length of the result of this function is 1024 characters.
+            -- To check the character length that GROUP_CONCAT supports in the mysql instance:
+            -- SHOW VARIABLES LIKE '%group_concat%';
+
+            -- makes a temporary session-scope setting for the group_concat
+            SET SESSION group_concat_max_len = 1000000;
+
+            -- get the list of answer_id for which to get their values
+            SELECT GROUP_CONCAT(answer_id)
+            INTO answer_id_text
+            FROM answer_summary;
+
+            -- this is to prevent when answer_id_text is NULL, -1 is not a possible value
+            SET answer_id_text = COALESCE(answer_id_text, "-1");
+
+            -- get answer from the answer_ids
+            SET @wsSQL = concat(
+                    "CREATE TEMPORARY TABLE IF NOT EXISTS answers_info AS (select answer_summary.*,
+                      a.answer_value,
+                      a.answer_option_text,
+                      a.intensity,
+                      a.posX,
+                      a.posY,
+                      a.selected
+                    from answer_summary left join (
+                      select rb.answerId as answer_id,
+                        CONVERT(rb.value, CHAR(516)) as answer_value,
+                        getDisplayName((select rbOpt.description from radioButtonOption rbOpt where rbOpt.ID = rb.value),",
+                    language_id, ") as answer_option_text,
+						-1 as intensity,
+						-1 as posX,
+						-1 as posY,
+						-1 as selected
+					from answerRadioButton rb
+					where rb.answerId in (", answer_id_text, ")
+					UNION
+					select c.answerId as answer_id,
+						CONVERT(c.value, CHAR(516)) as answer_value,
+						getDisplayName((select cOpt.description from checkboxOption cOpt where cOpt.ID = c.value), ", language_id, ") as answer_option_text,
+						-1 as intensity,
+						-1 as posX,
+						-1 as posY,
+						-1 as selected
+					from answerCheckbox c
+					where c.answerId in (", answer_id_text, ")
+					UNION
+					select t.answerId,
+						CONVERT(t.value, CHAR(516)) as answer_value,
+						-1 as answer_option_text,
+						-1 as intensity,
+						-1 as posX,
+						-1 as posY,
+						-1 as selected
+					from answerTextBox t
+					where t.answerId in (", answer_id_text, ")
+					UNION
+					select d.answerId,
+						CONVERT(d.value, CHAR(516)) as answer_value,
+						-1 as answer_option_text,
+						-1 as intensity,
+						-1 as posX,
+						-1 as posY,
+						-1 as selected
+					from answerDate d
+					where d.answerId in (", answer_id_text, ")
+					UNION
+					select answerTime.answerId,
+						CONVERT(answerTime.value, CHAR(516)) as answer_value,
+						-1 as answer_option_text,
+						-1 as intensity,
+						-1 as posX,
+						-1 as posY,
+						-1 as selected
+					from answerTime
+					where answerTime.answerId in (", answer_id_text, ")
+					UNION
+					select s.answerId,
+						CONVERT(s.value, CHAR(516)) as answer_value,
+						-1 as answer_option_text,
+						-1 as intensity,
+						-1 as posX,
+						-1 as posY,
+						-1 as selected
+					from answerSlider s
+					where s.answerId in (", answer_id_text, ")
+					UNION
+					select l.answerId,
+						CONVERT(l.value, CHAR(516)) as answer_value,
+						getDisplayName((select lOpt.description from labelOption lOpt where lOpt.ID = l.value), ", language_id, ") as answer_option_text,
+						l.intensity,
+						l.posX,
+						l.posY,
+						l.selected
+					from answerLabel l
+					where l.answerId in (", answer_id_text, ")) a
+				on (answer_summary.answer_id = a.answer_id)
+				);"
+                );
+
+            -- execute SQL statement
+            PREPARE stmt FROM @wsSQL;
+
+            EXECUTE stmt;
+
+            DEALLOCATE PREPARE stmt;
+
+        END IF; -- end of getting answers
+
+        SET wsReturn = 0;
+
+    END; -- end of get_questionnaire block
+
+
+    -- get completed questionnaires and their answers in JSON format
+    DROP TABLE IF EXISTS completed_questionnaires;
+    CREATE TEMPORARY TABLE IF NOT EXISTS completed_questionnaires AS (
+        SELECT
+            JSON_OBJECT(
+                'questionnaire_id', ai.questionnaire_id,
+                'questionnaire_nickname', qi.nickname,
+                'last_updated', MAX(ai.last_updated),
+                'questions', (
+                    SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'question_text', quest.question_text,
+                            'question_label', quest.question_label,
+                            'question_type_id', quest.type_id,
+                            'position', quest.question_position,
+                            'min_value', quest.min_value,
+                            'max_value', quest.max_value,
+                            'polarity', quest.polarity,
+                            'section_id', quest.section_id,
+                            'values', (
+                                SELECT JSON_ARRAYAGG(JSON_ARRAY(UNIX_TIMESTAMP(_ai.last_updated) * 1000, _ai.answer_value))
+                                FROM answers_info _ai
+                                WHERE _ai.question_id = quest.question_id
+                            )
+                    )
+                    ) FROM questions_info quest
+                    WHERE quest.questionnaire_id = qi.questionnaire_id
+                )
+            ) AS json_answer
+        FROM questionnaires_info qi
+            LEFT JOIN answers_info ai ON (qi.questionnaire_id = ai.questionnaire_id)
+        GROUP BY qi.questionnaire_id
+    );
+
+    SELECT cq.json_answer AS json_answer
+    FROM completed_questionnaires cq;
+
+    SELECT
+        wsReturn    AS procedure_status,
+        language_id AS language_id;
+
+END;
+
 
 SET foreign_key_checks = 1;
 -- 2023-05-23 16:57:52
