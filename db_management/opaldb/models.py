@@ -2,6 +2,7 @@
 """Base ORM models file for OpalDB."""
 from sqlalchemy import (
     TIMESTAMP,
+    Boolean,
     Column,
     Date,
     DateTime,
@@ -18,6 +19,7 @@ from sqlalchemy import (
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import false
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
 Base: DeclarativeMeta = declarative_base()
@@ -1796,6 +1798,7 @@ class TestControl(Base):
     Group_FR = Column(String(200), nullable=False)
     SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    InterpretationRecommended = Column(Boolean, nullable=False, server_default=false(), comment='Clinician interpretation recommended.')
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
