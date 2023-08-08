@@ -244,6 +244,14 @@ Optional: To remove data in all tables with the exception of the `alembic_versio
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/
 ```
 
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/truncate/
+```
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts orms db_management/ormsdb/data/truncate/
+```
+
 Insert initial data to OpalDB:
 
 ```shell
