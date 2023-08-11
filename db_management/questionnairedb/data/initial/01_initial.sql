@@ -1,4 +1,6 @@
 -- Insert the initial data required to start a project.
+INSERT INTO `BuildType` (`Name`) VALUES
+('Production');
 
 INSERT INTO `checkbox` (`ID`, `questionId`, `minAnswer`, `maxAnswer`) VALUES
 (1,	811,	1,	9),
