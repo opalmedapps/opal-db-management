@@ -94,4 +94,7 @@ INSERT INTO `SmsMessage` (`SmsMessageId`, `SpecialityGroupId`, `Type`, `Event`, 
 INSERT INTO `SmsAppointment` (`SmsAppointmentId`, `ClinicResourcesSerNum`, `AppointmentCodeId`, `SpecialityGroupId`, `SourceSystem`, `Type`, `Active`, `LastUpdated`) VALUES
 (1,	1,	1,	1,	'BBB',	'GENERAL',	1,	'2022-05-11 11:10:05');
 
+INSERT INTO `BuildType` (`Name`) VALUES
+('Production');
+
 -- 2023-06-02 15:38:29
