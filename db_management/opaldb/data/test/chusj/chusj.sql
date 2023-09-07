@@ -41,12 +41,12 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 -- ReadBy field can be added to the list separated by comma e.g. [\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]
 -- Bart
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(5,	NULL,	53,	1,	'56190000000000039165511',	99,	890,	'2023-06-01 12:36:00',	890,	'2023-06-08 12:35:00',	'',	'Y',	'',	'bart_2009Feb23_note.pdf',	'bart_2009Feb23_note.pdf',	890,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');
+(5,	NULL,	53,	1,	'56190000000000039165511',	99,	894,	'2023-06-01 12:36:00',	894,	'2023-06-08 12:35:00',	'',	'Y',	'',	'bart_2009Feb23_note_chusj.pdf',	'bart_2009Feb23_note_chusj.pdf',	894,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');
 -- Lisa
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(6,	NULL,	54,	1,	'56190000000000039165512',	99,	890,	'2023-06-01 12:36:00',	890,	'2023-06-08 12:35:00',	'',	'Y',	'',	'lisa_2014May09_note.pdf',	'lisa_2014May09_note.pdf',	890,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');
+(6,	NULL,	54,	1,	'56190000000000039165512',	99,	894,	'2023-06-01 12:36:00',	894,	'2023-06-08 12:35:00',	'',	'Y',	'',	'lisa_2014May09_note_chusj.pdf',	'lisa_2014May09_note_chusj.pdf',	894,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');
 
 -- We insert staff that are defined in the documents added in the `Document` insert query above to make sure
 -- the doctor referred to in the document exists in the test data
 INSERT INTO `Staff` (`StaffSerNum`, `SourceDatabaseSerNum`, `StaffId`, `FirstName`, `LastName`, `LastUpdated`) VALUES
-(890,	1,	'1300',	'John',	'Frink', '2015-08-07 00:15:57');
+(894,	1,	'1304',	'John',	'Thurmond', '2023-06-08 12:35:00');

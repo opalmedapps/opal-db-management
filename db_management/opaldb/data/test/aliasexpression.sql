@@ -3826,5 +3826,4 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (8403,	292,	NULL,	'TV-ADCHM-FU',	'Dr. D. Cournoyer - Haem',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
 (8404,	292,	NULL,	'TV-ADCHM-FU',	'Dr. K. Davison - Haem',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
 (8405,	292,	NULL,	'TV-ADCHM-FU',	'Gyne Onc',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
-(8406,	292,	NULL,	'TV-ADCHM-FU',	'Bienz M. N. MD - resident hémato-oncologie',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
-(8408,	464,	4363,	'Pathology',	'Pathology',	'2019-01-01 00:00:00',	3,	'2023-08-21 11:02:36',	'kV0AUjLT35');
+(8406,	292,	NULL,	'TV-ADCHM-FU',	'Bienz M. N. MD - resident hémato-oncologie',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB');
