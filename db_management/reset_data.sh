@@ -48,7 +48,7 @@ declare -a commands=(
 for cmd in "${commands[@]}"; do
     log "Executing: $cmd"
     eval "$cmd"
-    if [ $? -eq 0 ]; then
+    if eval "$cmd"; then
         log "Command executed successfully."
     else
         log "Error executing command. Exiting."
