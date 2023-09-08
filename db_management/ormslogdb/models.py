@@ -56,3 +56,15 @@ class VirtualWaitingRoomLog(Base):
     Type = Column(String(255), nullable=False, server_default=text("''"))
     Message = Column(Text, nullable=False, server_default=text("''"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+
+
+class LoginLog(Base):
+    __tablename__ = 'LoginLog'
+
+    ID = Column(INTEGER(11), primary_key=True)
+    UserName = Column(String(50), nullable=False, index=True)
+    DisplayName = Column(String(50), server_default=text("''"))
+    LoginDate = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp()'))
+    Status = Column(INTEGER(11), nullable=False)
+    Error = Column(String(200), server_default=text("''"))
+    LoginIPAddress = Column(String(20), nullable=False, server_default=text("''"))
