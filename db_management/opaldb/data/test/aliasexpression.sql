@@ -64,7 +64,6 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (92,	17,	NULL,	'RO - End of Treatment Note',	'RO - End of Treatment Note',	'2021-09-30 00:56:01',	NULL,	'2018-10-19 23:55:39',	NULL),
 (93,	20,	NULL,	'RO - Patient Document',	'RO - Patient Document',	'2021-09-30 00:56:01',	NULL,	'2018-10-19 23:55:39',	NULL),
 (98,	44,	NULL,	'NS Plan II',	'NS Plan II',	'2018-08-13 16:36:02',	NULL,	'2018-04-09 23:13:57',	NULL),
-(99,	12,	NULL,	'RO - Consult',	'RO - Consult',	'2021-09-30 00:56:01',	NULL,	'2018-10-19 23:55:39',	NULL),
 (100,	44,	NULL,	'Daily Rx',	'Daily Rx',	'2018-08-13 16:36:02',	NULL,	'2018-08-03 00:20:12',	'Bw4kvRJLvN'),
 (101,	44,	NULL,	'Last Rx',	'Last Rx',	'2018-08-13 16:36:02',	NULL,	'2018-08-03 00:20:12',	'Bw4kvRJLvN'),
 (114,	44,	NULL,	'Blood Test',	'Blood Test',	'2018-08-13 16:36:02',	NULL,	'2018-08-03 00:03:25',	'Bw4kvRJLvN'),
@@ -3827,5 +3826,4 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (8403,	292,	NULL,	'TV-ADCHM-FU',	'Dr. D. Cournoyer - Haem',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
 (8404,	292,	NULL,	'TV-ADCHM-FU',	'Dr. K. Davison - Haem',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
 (8405,	292,	NULL,	'TV-ADCHM-FU',	'Gyne Onc',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
-(8406,	292,	NULL,	'TV-ADCHM-FU',	'Bienz M. N. MD - resident hémato-oncologie',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB'),
-(8408,	464,	4363,	'Pathology',	'Pathology',	'2019-01-01 00:00:00',	3,	'2023-08-21 11:02:36',	'kV0AUjLT35');
+(8406,	292,	NULL,	'TV-ADCHM-FU',	'Bienz M. N. MD - resident hémato-oncologie',	'2021-09-30 00:56:01',	NULL,	'2021-06-16 15:45:22',	'eLWUtGT7KB');
