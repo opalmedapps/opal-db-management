@@ -21,7 +21,7 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
     Raises:
         SystemExit: If production truncation safety check fails
     """
-    for path in directory.glob('*.sql'):
+    for path in sorted(directory.glob('*.sql')):
         # Halt execution if db is Production and action is truncate
         try:
             _truncate_production_safety_check(path, db_name)
