@@ -47,7 +47,6 @@ declare -a commands=(
 # Execute each command
 for cmd in "${commands[@]}"; do
     log "Executing: $cmd"
-    eval "$cmd"
     if eval "$cmd"; then
         log "Command executed successfully."
     else
