@@ -18,4 +18,6 @@ INSERT INTO `Alias` (`AliasType`, `AliasUpdate`, `AliasName_FR`, `AliasName_EN`,
 INSERT INTO `AliasExpression` (`AliasSerNum`, `masterSourceAliasId`, `ExpressionName`, `Description`, `SessionId`) VALUES
 (LAST_INSERT_ID(),	Null,	'Pathology',	'Pathology',	'kV0AUjLT35');
 
+UPDATE `module` SET name_EN = 'Opal User Administration', name_FR = 'Administration des utilisateurs', description_EN = 'Manage the user account information', description_FR = 'Gérer les informations du compte utilisateur' WHERE name_EN = 'Patient Administration';
+
 -- TODO: add databank consent form
