@@ -5,4 +5,4 @@ INSERT INTO `Announcement` (`AnnouncementSerNum`, `CronLogSerNum`, `PatientSerNu
 (9,	NULL,	52,	16,	'2023-04-12 00:00:00',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17'),
 (10,	NULL,	52,	20,	'2023-04-12 00:00:00',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17'),
 (11,	NULL,	52,	17,	'2023-04-12 00:00:00',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17'),
-(12,	NULL,	52,	23,	'2023-04-13 00:00:00',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17'),
+(12,	NULL,	52,	23,	'2023-04-13 00:00:00',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17');
