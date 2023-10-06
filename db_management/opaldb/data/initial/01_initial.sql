@@ -140,7 +140,7 @@ INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name
 
 
 INSERT INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
-(1,	'Administration',	'Administration',	0,	'',	'2020-06-04 09:08:14',	'BODO6005',	'2020-08-19 16:47:32',	'BODO6005'),
+(1,	'System Administrator',	'Administrateur du système',	0,	'',	'2020-06-04 09:08:14',	'BODO6005',	'2020-08-19 16:47:32',	'BODO6005'),
 (4,	'Patient Registration',	'Enregistrement patient',	0,	'',	'2020-06-04 09:08:35',	'BODO6005',	'2020-06-04 17:08:35',	'BODO6005'),
 (5,	'Test Role',	'Test Rôle',	1,	'BODO6005',	'2020-08-10 09:22:33',	'BODO6005',	'2020-08-10 17:58:21',	'BODO6005'),
 (6,	'Publication',	'Publication',	0,	'',	'2020-08-10 09:59:18',	'BODO6005',	'2020-08-10 21:10:32',	'BODO6005'),
