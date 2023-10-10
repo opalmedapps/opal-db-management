@@ -1906,7 +1906,6 @@ INSERT INTO `purpose` (`ID`, `title`, `description`) VALUES
 (6,	20021,	20022);
 
 INSERT INTO `question` (`ID`, `OAUserId`, `display`, `definition`, `question`, `typeId`, `version`, `parentId`, `polarity`, `private`, `final`, `optionalFeedback`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `legacyTypeId`) VALUES
-(792,	-1,	33,	34,	35,	2,	1,	-1,	0,	0,	1,	0,	1,	'MACFARIA',	'2019-11-05 19:04:14',	'QUESTIONNAIRE_MIGRATION_2019',	'2020-08-14 05:02:43',	'MACFARIA',	2),
 (800,	-1,	25,	26,	27,	4,	1,	-1,	0,	0,	1,	0,	1,	'dbourdua',	'2019-11-05 19:04:14',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-18 20:31:54',	'dbourdua',	1),
 (801,	-1,	106,	107,	108,	3,	1,	-1,	0,	0,	1,	0,	1,	'dbourdua',	'2019-11-05 19:04:14',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-18 20:31:13',	'dbourdua',	3),
 (802,	-1,	109,	110,	111,	4,	1,	-1,	0,	0,	1,	0,	1,	'dbourdua',	'2019-11-05 19:04:14',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-18 20:31:02',	'dbourdua',	1),
