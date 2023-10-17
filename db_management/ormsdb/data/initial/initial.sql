@@ -4,7 +4,8 @@ INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) 
 (3,	'MCH',	'Montreal Childrens Hospital',	'^[0-9]{7}$');
 
 INSERT INTO `SpecialityGroup` (`SpecialityGroupId`, `HospitalId`, `SpecialityGroupCode`, `SpecialityGroupName`, `LastUpdated`) VALUES
-(1,	1,	'AAA',	'Test Group',	'2022-05-11 01:18:31');
+(1,	1,	'AAA',	'Test Group',	'2022-05-11 01:18:31'),
+(2,	1,	'CCC',	'Aria Appointment Group',	'2023-10-17 01:18:31');
 
 INSERT INTO `AppointmentCode` (`AppointmentCodeId`, `AppointmentCode`, `SpecialityGroupId`, `DisplayName`, `SourceSystem`, `Active`, `LastModified`) VALUES
 (1,	'ATST',	1,	NULL,	'BBB',	1,	'2022-05-11 01:19:23');
