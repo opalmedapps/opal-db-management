@@ -1,4 +1,4 @@
-FROM python:3.10.13-slim-bullseye
+FROM python:3.11.6-slim-bookworm
 
 RUN apt-get update \
   # dependencies for building Python packages
