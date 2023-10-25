@@ -47,10 +47,10 @@ INSERT INTO `module` (`ID`, `operation`, `name_EN`, `name_FR`, `description_EN`,
 (9,	7,	'Diagnosis Import and Aliasing',	'Importation et alias de diagnostics',	'Manage diagnosis codes.',	'Gestion les codes de diagnostic.',	'DiagnosisTranslation',	'DiagnosisTranslation',	'DiagnosisTranslationSerNum',	'fa fa-stethoscope',	'diagnosis-translation',	NULL,	0,	0,	1,	2,	0,	1,	1,	10,	'',	'',	'',	'',	'',	''),
 (10,	3,	'Cron Logs',	'Journal des tâches cron',	'Control publishing event times and frequency. View publishing logs.',	'Contrôle des temps et fréquence des événements de publication et des journaux de publication.',	'CronLog',	'CronLog',	'CronLogSerNum',	'glyphicon glyphicon-time',	'cron',	NULL,	0,	0,	1,	2,	0,	0,	1,	11,	'',	'',	'',	'',	'',	''),
 (11,	3,	'Patients',	'Patients',	'Manage patients listing, registration and activities.',	'Gérer la liste, l\'inscription et les activités des patients.',	'Patient',	'Patient',	'PatientSerNum',	'fa fa-address-card',	'patients/menu',	'{\"1\":{\"name_EN\":\"View Patients\",\"name_FR\":\"Voir les patients\",\"description_EN\":\"View the list of patients.\",\"description_FR\":\"Voir la liste des patients.\",\"iconClass\":\"fa fa-address-card\",\"url\":\"patients\"},\"2\":{\"name_EN\":\"Patient Activity\",\"name_FR\":\"Activité patient\",\"description_EN\":\"List of patient sessions, connection / disconnection time and app activities.\",\"description_FR\":\"Liste des sessions des patients, heure de connexion / déconnexion et activités de l\'appli.\",\"iconClass\":\"fa fa-hourglass-half\",\"url\":\"patients/activity\"},\"3\":{\"name_EN\":\"Patient Report\",\"name_FR\":\"Rapport patient\",\"description_EN\":\"Search and generate reports for Opal patients.\",\"description_FR\":\"Rechercher et générer des rapports pour les patients utilisant Opal.\",\"iconClass\":\"fa fa fa-file-text\",\"url\":\"patients/report\"}}',	1,	1,	1,	2,	0,	0,	1,	12,	'',	'',	'',	'',	'',	''),
-(12,	3,	'Users',	'Utilisateurs',	'Monitor user activity. Change passwords.',	'Surveiller l\'activité des utilisateurs. Changer les mots de passe.',	'OAUser',	'OAUser',	'OAUserSerNum',	'fa fa-users',	'users',	NULL,	0,	1,	1,	2,	0,	0,	1,	14,	'',	'',	'',	'',	'',	''),
+(12,	7,	'Users',	'Utilisateurs',	'Monitor user activity. Change passwords.',	'Surveiller l\'activité des utilisateurs. Changer les mots de passe.',	'OAUser',	'OAUser',	'OAUserSerNum',	'fa fa-users',	'users',	NULL,	0,	1,	1,	2,	0,	0,	1,	14,	'',	'',	'',	'',	'',	''),
 (13,	3,	'Studies',	'Études',	'Manage studies to which are associated patients.',	'Gérer les études cliniques auxquelles sont associées certains patients.',	'study',	'study',	'ID',	'fa fa-pie-chart',	'study',	NULL,	0,	0,	1,	2,	0,	0,	1,	16,	'',	'',	'',	'',	'',	''),
 (14,	3,	'Emails',	'Courriels',	'Tool for creating email templates.',	'Outil pour créer des modèles de courriel.',	'EmailControl',	'EmailControl',	'EmailControlSerNum',	'fa fa-envelope',	'email',	NULL,	0,	0,	0,	1,	0,	0,	1,	8,	'',	'',	'',	'',	'',	''),
-(16,	3,	'Roles',	'Rôles',	'Manage the list of roles of the users.',	'Gestion de la liste des rôles des utilisateurs.',	'oaRole',	'oaRole',	'ID',	'fa fa-address-card-o',	'role',	NULL,	0,	1,	1,	2,	0,	0,	1,	16,	'',	'',	'',	'',	'',	''),
+(16,	7,	'Roles',	'Rôles',	'Manage the list of roles of the users.',	'Gestion de la liste des rôles des utilisateurs.',	'oaRole',	'oaRole',	'ID',	'fa fa-address-card-o',	'role',	NULL,	0,	1,	1,	2,	0,	0,	1,	16,	'',	'',	'',	'',	'',	''),
 (17,	3,	'Alerts',	'Alertes',	'Manage the list of alerts and triggers for conditions.',	'Gestion de la liste des alertes et déclencheurs pour conditions.',	'alert',	'alert',	'ID',	'glyphicon glyphicon-exclamation-sign',	'alert',	NULL,	0,	0,	1,	2,	0,	0,	1,	17,	'',	'',	'',	'',	'',	''),
 (18,	1,	'Audit',	'Audit',	'Audit the users operations in OpalAdmin.',	'Auditer les opérations des utilisateurs dans OpalAdmin.',	'audit',	'audit',	'ID',	'fa fa-gavel',	'audit',	NULL,	0,	0,	1,	2,	0,	0,	1,	18,	'',	'',	'',	'',	'',	''),
 (19,	3,	'Trigger (API only / No GUI)',	'Déclencheur (API seulement / pas de GUI)',	'Tool to manage triggers for different conditions',	'Gestion des déclencheurs pour les différentes conditions.',	'jsonTrigger',	'jsonTrigger',	'id',	'fa fa-gavel',	'trigger',	NULL,	0,	0,	1,	2,	0,	0,	1,	19,	'',	'',	'',	'',	'',	''),
@@ -228,7 +228,9 @@ INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (80,	23,	1,	3),
 (81,	24,	1,	3),
 (82,	11,	29,	1),
-(83,	25,	1,	3);
+(83,	25,	1,	3),
+(84,	12,	1,	7),
+(85,	16,	1,	7);
 
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (3,	'admin',	'9575c78e5351af3746a845294532e436b3ccfc329ff09c21f2c89d2f6bdffd9f',	1,	1,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
