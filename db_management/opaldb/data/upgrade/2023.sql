@@ -33,3 +33,19 @@ CREATE TABLE `alembic_version` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 INSERT INTO `alembic_version` (`version_num`) VALUES
 ('7a189846a0f5');
+
+
+-- Remove CronLogs
+DELETE oaRoleModule FROM oaRoleModule JOIN module ON module.ID = oaRoleModule.moduleId WHERE module.tableName = 'CronLog';
+
+DELETE FROM module WHERE tableName = 'CronLog';
+
+DROP TABLE IF EXISTS cronControlPatient;
+
+DROP TABLE IF EXISTS cronControlAlias;
+
+ALTER TABLE CronLog DROP FOREIGN KEY CronLog_ibfk_1;
+
+ALTER TABLE CronLog DROP CronSerNum;
+
+DROP TABLE IF EXISTS Cron;
