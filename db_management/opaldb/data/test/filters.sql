@@ -1,6 +1,13 @@
 -- Temporarily removing Filter data to aid clean up of dev data environment
 
--- INSERT INTO `Filters` (`FilterSerNum`, `ControlTable`, `ControlTableSerNum`, `FilterType`, `FilterId`, `DateAdded`, `LastUpdatedBy`, `SessionId`) VALUES
+INSERT INTO `Filters` (`FilterSerNum`, `ControlTable`, `ControlTableSerNum`, `FilterType`, `FilterId`, `DateAdded`, `LastUpdatedBy`, `SessionId`) VALUES
+-- Databank consent questionnaire patient trigger
+(1,	'LegacyQuestionnaireControl',	157,	'Patient',	'51',	'2023-09-22 11:00:03',	13,	'UbZJWUNnLl'),
+(2,	'LegacyQuestionnaireControl',	157,	'Patient',	'52',	'2023-09-22 11:00:03',	13,	'UbZJWUNnLl'),
+(3,	'LegacyQuestionnaireControl',	157,	'Patient',	'53',	'2023-09-22 11:00:03',	13,	'UbZJWUNnLl'),
+(4,	'LegacyQuestionnaireControl',	157,	'Patient',	'54',	'2023-09-22 11:00:03',	13,	'UbZJWUNnLl'),
+(5,	'LegacyQuestionnaireControl',	157,	'Patient',	'55',	'2023-09-22 11:00:03',	13,	'UbZJWUNnLl');
+
 -- (1,	'PostControl',	15,	'Diagnosis',	'HPB',	'2016-03-14 12:11:48',	NULL,	NULL),
 -- (20,	'PostControl',	22,	'Doctor',	'5631',	'2016-12-29 14:24:09',	NULL,	NULL),
 -- (93,	'PostControl',	26,	'Diagnosis',	'CNS',	'2017-05-03 10:46:15',	NULL,	NULL),

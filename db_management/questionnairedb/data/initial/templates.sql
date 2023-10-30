@@ -230,7 +230,10 @@ INSERT INTO `templateQuestion` (`ID`, `OAUserId`, `name`, `typeId`, `version`, `
 (226,	74,	10631,	4,	0,	-1,	0,	0,	0,	'',	'2021-07-21 09:13:07',	'CABR6008',	'2021-07-21 17:13:07',	'CABR6008'),
 (227,	74,	10636,	4,	0,	-1,	0,	0,	0,	'',	'2021-07-21 09:15:21',	'CABR6008',	'2021-07-21 17:15:21',	'CABR6008'),
 (228,	74,	10744,	4,	0,	-1,	0,	0,	0,	'',	'2021-08-03 11:21:31',	'CABR6008',	'2021-08-03 19:21:31',	'CABR6008'),
-(229,	62,	10779,	2,	0,	-1,	0,	0,	0,	'',	'2021-09-06 09:43:36',	'FAMA6017',	'2021-09-06 17:43:36',	'FAMA6017');
+(229,	62,	10779,	2,	0,	-1,	0,	0,	0,	'',	'2021-09-06 09:43:36',	'FAMA6017',	'2021-09-06 17:43:36',	'FAMA6017'),
+-- open ended text box question template
+(230,	13,	20041,	3,	0,	-1,	0,	0,	0,	'',	'2023-09-22 10:29:36',	'AGKE6000',	'2023-09-22 14:29:48',	'AGKE6000');
+
 
 INSERT INTO `templateQuestionCheckbox` (`ID`, `templateQuestionId`, `minAnswer`, `maxAnswer`) VALUES
 (1,	26,	1,	6),
@@ -1740,7 +1743,9 @@ INSERT INTO `templateQuestionSlider` (`ID`, `templateQuestionId`, `minValue`, `m
 INSERT INTO `templateQuestionTextBox` (`ID`, `templateQuestionId`) VALUES
 (1,	23),
 (2,	61),
-(3,	143);
+(3,	143),
+-- open ended text box response
+(4,	230);
 
 
 INSERT INTO `templateQuestionTime` (`ID`, `templateQuestionId`) VALUES
