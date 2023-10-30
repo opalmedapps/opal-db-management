@@ -137,3 +137,6 @@ INSERT INTO `questionnaire` VALUES (240, 62, 1, 1, 10737, 10739, -1, 10738, 1074
 INSERT INTO `questionnaire` VALUES (241, 62, 1, 1, 10747, 10749, -1, 10748, 10750, 1, 1, -1, 0, 1, 0, '', 0, '', '2021-08-03 14:33:30', 'FAMA6017', '2021-08-03 18:33:40', 'FAMA6017', '');
 INSERT INTO `questionnaire` VALUES (242, 62, 2, 1, 10753, 10755, -1, 10754, 10756, 1, 1, -1, 0, 1, 0, '', 0, '', '2021-08-06 11:36:55', 'FAMA6017', '2021-08-06 15:37:03', 'FAMA6017', '');
 INSERT INTO `questionnaire` VALUES (243, 62, 1, 1, 10771, 10773, -1, 10772, 10774, 1, 1, -1, 0, 1, 0, '', 1, 'FAMA6017', '2021-08-27 12:13:10', 'FAMA6017', '2021-08-27 16:22:54', 'FAMA6017', '');
+-- databank consent form
+INSERT INTO `questionnaire` (`ID`, `OAUserId`, `purposeId`, `respondentId`, `title`, `nickname`, `category`, `description`, `instruction`, `final`, `version`, `parentId`, `private`, `optionalFeedback`, `visualization`, `logo`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `legacyName`) VALUES
+(247,	13,	4,	1,	20048,	20050,	-1,	20049,	20051,	1,	1,	-1,	0,	1,	0,	'',	0,	'',	'2023-09-22 10:39:05',	'AGKE6000',	'2023-09-22 14:39:27',	'AGKE6000',	'');
