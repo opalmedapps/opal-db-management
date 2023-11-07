@@ -8,13 +8,12 @@ INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred
 (56,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
 (57,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0);
 
-INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `PatientSerNum`, `Hospital_Identifier_Type_Code`, `MRN`, `Is_Active`) VALUES,
+INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `PatientSerNum`, `Hospital_Identifier_Type_Code`, `MRN`, `Is_Active`) VALUES
 (7, 56, 'RVH',  '9999991',  1),
-(8,	57,	'RVH',	'9999994',	1),
 (9,	57,	'MCH',	'9999999',	1);
 
 INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
-(1,	'Patient',	56,	'ZYHAjhNy6hhr4tOW8nFaVEeKngt1',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59');
+(5,	'Patient',	56,	'ZYHAjhNy6hhr4tOW8nFaVEeKngt1',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59');
 
 -- Documents: Pathology && Clinical Notes
 -- Filestore must have these pdfs inserted separately (and readable by the listener) for the chart Clinical Reports section to function properly
