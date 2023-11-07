@@ -228,7 +228,9 @@ INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (82,	11,	29,	1),
 (83,	25,	1,	3),
 (84,	12,	1,	7),
-(85,	16,	1,	7);
+(85,   	16,	1,	7),
+(86,    21, 29, 7),
+(87,    20, 29, 7);
 
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (3,	'admin',	'9575c78e5351af3746a845294532e436b3ccfc329ff09c21f2c89d2f6bdffd9f',	1,	1,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
