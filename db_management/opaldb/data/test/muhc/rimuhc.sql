@@ -20,10 +20,10 @@ INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Pa
 
 -- Fred Pathology
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(12,	NULL,	56,	1,	'56190000000000039165518',	8408,	890,	'2023-11-03 12:35:00',	890,	'2023-11-03 12:35:00',	'',	'Y',	'',	'fred_2023Nov03_pathology.pdf',	'fred_2023Nov03_pathology.pdf',	890,	'2023-11-03 14:35:00',	'T',	'Transfer successful',	'',	'2023-11-03 14:35:00',	0,	'[]',	'2023-11-03 14:35:00');
+(12,	NULL,	56,	1,	'56190000000000039165518',	8408,	890,	'2023-11-03 12:35:00',	890,	'2023-11-03 12:35:00',	'',	'Y',	'',	'fred_2023Nov03_pathology_rvh.pdf',	'fred_2023Nov03_pathology_rvh.pdf',	890,	'2023-11-03 14:35:00',	'T',	'Transfer successful',	'',	'2023-11-03 14:35:00',	0,	'[]',	'2023-11-03 14:35:00');
 -- Pebbles Pathology
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(13,	NULL,	57,	1,	'56190000000000039165519',	8408,	890,	'2023-10-29 12:35:00',	890,	'2023-10-29 12:35:00',	'',	'Y',	'',	'pebbles_2023Oct29_pathology.pdf',	'pebbles_2023Oct29_pathology.pdf',	890,	'2023-10-29 14:35:00',	'T',	'Transfer successful',	'',	'2023-10-29 14:35:00',	0,	'[]',	'2023-10-29 14:35:00');
+(13,	NULL,	57,	1,	'56190000000000039165519',	8408,	890,	'2023-10-29 12:35:00',	890,	'2023-10-29 12:35:00',	'',	'Y',	'',	'pebbles_2023Oct29_pathology_mch.pdf',	'pebbles_2023Oct29_pathology_mch.pdf',	890,	'2023-10-29 14:35:00',	'T',	'Transfer successful',	'',	'2023-10-29 14:35:00',	0,	'[]',	'2023-10-29 14:35:00');
 
 
 -- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `muhc` demo purposes
