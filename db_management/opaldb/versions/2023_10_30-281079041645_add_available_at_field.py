@@ -22,8 +22,7 @@ def upgrade() -> None:
         sa.Column(
             'AvailableAt',
             sa.DateTime(),
-            server_default=sa.text("'2000-01-01 00:00:00'"),
-            nullable=False,
+            nullable=True,
         ),
     )
 
