@@ -1167,5 +1167,5 @@ INSERT INTO `questionSection` VALUES (2649, 100, 193, 1, 0, 0);
 INSERT INTO `questionSection` VALUES (2650, 104, 193, 2, 0, 0);
 -- databank consent form
 INSERT INTO `questionSection` (`ID`, `questionId`, `sectionId`, `order`, `orientation`, `optional`) VALUES
-(2654,	1940,	197,	1,	0,	0),
+(2654,	1940,	197,	1,	0,	1),
 (2655,	1941,	197,	2,	0,	0);
