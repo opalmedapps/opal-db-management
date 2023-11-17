@@ -1,7 +1,7 @@
 -- additional records for secondary test patient family (Flintstones)
 INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
 (56,	0,	'',	'',	'Fred',	'Flintstone',	'fred_test',	NULL,	'Male',	'1960-08-01 00:00:00',	0,	15144758941,	0,	'fred@opalmedapps.ca',	'EN',	'FLIF60080199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
-(57,	0,	'',	'',	'Pebbles',	'Flintstone',	'pebbles_test',	NULL,	'Female',	'2015-02-22 00:00:00',	0,	14381234567,	0,	'pebbles@opalmedapps.ca',	'EN',	'FLIP15022299',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	NULL,	NULL);
+(57,	0,	'',	'',	'Pebbles',	'Flintstone',	'pebbles_test',	NULL,	'Female',	'2015-02-22 00:00:00',	0,	14381234567,	0,	'pebbles@opalmedapps.ca',	'EN',	'FLIP15022299',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	NULL,	NULL);
 UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0;
 
 INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred`, `LastUpdated`, `TransferFlag`) VALUES
