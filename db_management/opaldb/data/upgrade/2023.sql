@@ -76,3 +76,5 @@ INSERT INTO `EducationalMaterialControl` (`EducationalMaterialControlSerNum`, `E
 (650,	'Video',	'Vidéo',	1,	1,	'Detailed video: The fertility preservation process for women',	'Vidéo détaillée: Le processus de préservation de la fertilité pour les femmes',	'https://www.youtube.com/embed/POqONVyEZv0',	'https://www.youtube.com/embed/HqXepsD7Oug',	'website',	'website',	'https://www.youtube.com/watch?v=POqONVyEZv0',	'https://www.youtube.com/watch?v=HqXepsD7Oug',	1,	1,	'2020-02-14 11:14:28',	16,	'2020-02-14 11:18:02',	'2020-02-15 02:27:13',	0,	'WceMOf0ovB'),
 (651,	'Booklet',	'Brochure',	1,	1,	'Frequently Asked Questions',	'Foire aux questions',	'',	'',	NULL,	NULL,	'',	'',	1,	1,	'2020-02-14 11:14:28',	16,	'2020-02-14 11:18:02',	'2020-02-15 02:27:46',	0,	'WceMOf0ovB');
 
+-- Add missing NotificationType for lab results
+UPDATE `NotificationControl` SET NotificationType = 'NewLabResult' WHERE NotificationTypeSerNum = 9;
