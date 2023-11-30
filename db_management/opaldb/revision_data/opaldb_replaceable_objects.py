@@ -1,9 +1,10 @@
 """Lists of all ReplaceableObject instance definitions for OpalDB non-table entities."""
 from typing import Final
+
 from db_management.opaldb.custom_operations import ReplaceableObject
 
 TRIGGER_LIST: Final = (
-     ReplaceableObject(
+    ReplaceableObject(
         name='`alert_after_delete`',
         sqltext="""AFTER DELETE ON `alert` FOR EACH ROW BEGIN\n	INSERT INTO `alertMH` (`alertId`, `contact`, `subject`, `body`, `trigger`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `action`, `active`, `deleted`, `deletedBy`) VALUES (OLD.ID, OLD.contact, OLD.subject, OLD.body, OLD.trigger, NOW(), OLD.createdBy, OLD.lastUpdated, OLD.updatedBy, 'DELETE', OLD.active, OLD.deleted, OLD.deletedBy);\nEND;\n"""),
 
@@ -174,10 +175,6 @@ TRIGGER_LIST: Final = (
     ReplaceableObject(
         name='`insert_task_trigger`',
         sqltext="""AFTER INSERT ON `Task` FOR EACH ROW BEGIN\nINSERT INTO `TaskMH`(`TaskSerNum`,`CronLogSerNum`, `PatientSerNum`, `AliasExpressionSerNum`, `PrioritySerNum`, `DiagnosisSerNum`, `SourceDatabaseSerNum`, `TaskAriaSer`, `Status` , `State`, `DueDateTime`, `DateAdded`, `CreationDate`, `CompletionDate`, `LastUpdated`, `ModificationAction`) VALUES (NEW.TaskSerNum,NEW.CronLogSerNum, NEW.PatientSerNum,NEW.AliasExpressionSerNum, NEW.PrioritySerNum, NEW.DiagnosisSerNum, NEW.SourceDatabaseSerNum, NEW.TaskAriaSer, NEW.Status, NEW.State, NEW.DueDateTime, NEW.CreationDate, NEW.CompletionDate, NEW.DateAdded,NULL, 'INSERT');\nEND;\n"""),
-
-    # ReplaceableObject(
-    #     name='`insert_test_result_notification_queue_trigger`',
-    #     sqltext="""AFTER INSERT ON `TestResultNotificationQueue`\n     FOR EACH ROW BEGIN\n    INSERT INTO `TestResultNotificationProcessingLog`\n        (`TestResultNotificationQueueId`, `Status`, `InsertedRows`, `UpdatedRows`, `ProcessingDateTime`,`ProcessingAttemptNumber`,`ProcessingError`,  `ModificationAction`) VALUES (NEW.TestResultNotificationQueueId, NEW.Status, NEW.InsertedRows, NEW.UpdatedRows, NEW.LastProcessingDateTime, NEW.ProcessingAttemptNumber,NEW.LastProcessingError,'INSERT');\nEND;\n"""),
 
     ReplaceableObject(
         name='`legacy_questionnaire_delete_trigger`',
