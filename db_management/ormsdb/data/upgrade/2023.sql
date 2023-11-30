@@ -7,3 +7,7 @@ CREATE TABLE `alembic_version` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 INSERT INTO `alembic_version` (`version_num`) VALUES
 ('da79ad032892');
+
+INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
+(4,	'LAC', 'Lachine Hospital', '^[0-9]{7}$');
+(5,	'CRE', 'Cree Board of Health and Social Services of James Bay', '^[0-9]{7}$');
