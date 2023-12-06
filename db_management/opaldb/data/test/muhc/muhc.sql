@@ -27,7 +27,7 @@ INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `Pa
 (4,	53,	'MCH',	'9999996',	1),
 (5,	54,	'MCH',	'9999993',	1),
 (6,	55,	'RVH',	'9999993',	1),
-(6,	55,	'MCH',	'5407383',	1);
+(7,	55,	'MCH',	'5407383',	1);
 
 INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
 (1,	'Patient',	51,	'QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59'),
