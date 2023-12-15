@@ -4,7 +4,7 @@
 #
 flake8==6.1.0  # https://github.com/PyCQA/flake8
 flake8-builtins==2.2.0  # https://github.com/gforcada/flake8-builtins
-isort==5.13.1  # https://github.com/PyCQA/isort
+isort==5.13.2  # https://github.com/PyCQA/isort
 
 # Testing
 #
