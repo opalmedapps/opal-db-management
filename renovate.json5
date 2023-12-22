@@ -43,5 +43,10 @@
       "matchPackagePatterns": ["python", "mariadb"],
       "separateMinorPatch": true
     },
-  ]
+  ],
+  // enable updates for pre-commit
+  // see: https://docs.renovatebot.com/modules/manager/pre-commit/
+  "pre-commit": {
+    "enabled": true
+  }
 }
