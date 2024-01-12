@@ -165,7 +165,7 @@ mypy:
 markdownlint:
   stage: Static Analysis
   image:
-    name: davidanson/markdownlint-cli2:next
+    name: davidanson/markdownlint-cli2:v0.12.0
     # overwrite default entrypoint (which is a call to markdownlint-cli2)
     entrypoint: [""]
   before_script:
