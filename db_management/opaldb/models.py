@@ -2120,6 +2120,7 @@ class PatientTestResult(Base):
     SequenceNum = Column(INTEGER(11), comment='Order of Lab Tests in which they should be displayed')
     CollectedDateTime = Column(DateTime, nullable=False)
     ResultDateTime = Column(DateTime, nullable=False)
+    AvailableAt = Column(DateTime, nullable=True)
     NormalRangeMin = Column(Float)
     NormalRangeMax = Column(Float)
     NormalRange = Column(String(30), nullable=False, server_default=text("''"))
