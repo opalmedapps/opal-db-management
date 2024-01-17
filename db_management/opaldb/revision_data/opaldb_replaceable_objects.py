@@ -22,15 +22,15 @@ TRIGGER_LIST: Final = (
 
     ReplaceableObject(
         name='`alias_expression_delete_trigger`',
-        sqltext="""AFTER DELETE ON `AliasExpression` FOR EACH ROW BEGIN\n   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (OLD.AliasSerNum, OLD.ExpressionName, OLD.Description, OLD.LastTransferred, OLD.LastUpdatedBy, OLD.SessionId, 'DELETE', NOW());\nEND;\n"""),
+        sqltext="""AFTER DELETE ON `AliasExpression` FOR EACH ROW BEGIN\n   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `SessionId`, `ModificationAction`, `DateAdded`) VALUES (OLD.AliasSerNum, OLD.ExpressionName, OLD.Description, OLD.LastTransferred, OLD.LastUpdatedBy, OLD.SessionId, 'DELETE', NOW());\nEND;\n"""),
 
     ReplaceableObject(
         name='`alias_expression_insert_trigger`',
-        sqltext="""AFTER INSERT ON `AliasExpression` FOR EACH ROW BEGIN\n   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (NEW.AliasSerNum, NEW.ExpressionName, NEW.Description, NEW.LastTransferred, NEW.LastUpdatedBy, NEW.SessionId, 'INSERT', NOW());\nEND;\n"""),
+        sqltext="""AFTER INSERT ON `AliasExpression` FOR EACH ROW BEGIN\n   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `SessionId`, `ModificationAction`, `DateAdded`) VALUES (NEW.AliasSerNum, NEW.ExpressionName, NEW.Description, NEW.LastTransferred, NEW.LastUpdatedBy, NEW.SessionId, 'INSERT', NOW());\nEND;\n"""),
 
     ReplaceableObject(
         name='`alias_expression_update_trigger`',
-        sqltext="""AFTER UPDATE ON `AliasExpression` FOR EACH ROW BEGIN\nif NEW.LastTransferred <=> OLD.LastTransferred THEN\n   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `ExpressionName`, Description, `LastTransferred`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (NEW.AliasSerNum, NEW.ExpressionName, NEW.Description, NEW.LastTransferred, NEW.LastUpdatedBy, NEW.SessionId, 'UPDATE', NOW());\nEND IF;\nEND;\n"""),
+        sqltext="""AFTER UPDATE ON `AliasExpression` FOR EACH ROW BEGIN\nif NEW.LastTransferred <=> OLD.LastTransferred THEN\n   INSERT INTO `AliasExpressionMH`(`AliasSerNum`, `ExpressionName`, Description, `LastTransferred`, `LastUpdatedBy`, `SessionId`, `ModificationAction`, `DateAdded`) VALUES (NEW.AliasSerNum, NEW.ExpressionName, NEW.Description, NEW.LastTransferred, NEW.LastUpdatedBy, NEW.SessionId, 'UPDATE', NOW());\nEND IF;\nEND;\n"""),
 
     ReplaceableObject(
         name='`alias_insert_trigger`',
@@ -102,15 +102,15 @@ TRIGGER_LIST: Final = (
 
     ReplaceableObject(
         name='`doctor_delete_trigger`',
-        sqltext="""AFTER DELETE ON `Doctor` FOR EACH ROW BEGIN\n INSERT INTO DoctorMH (DoctorSerNum, DoctorRevSerNum, ResourceSerNum, SourceDatabaseSer, DoctorAriaSer, FirstName, LastName, Role, Workplace, Email, Phone, Address, ProfileImage, LastUpdated, ModificationAction, BIO_EN, BIO_FR) VALUES (OLD.DoctorSerNum, NULL, OLD.ResourceSerNum, OLD.SourceDatabaseSerNum, OLD.DoctorAriaSer, OLD.FirstName, OLD.LastName, OLD.Role, OLD.Workplace, OLD.Email, OLD.Phone, OLD.Address,OLD.ProfileImage,NOW(), 'DELETE', OLD.BIO_EN, OLD.BIO_FR);\nEND;\n"""),
+        sqltext="""AFTER DELETE ON `Doctor` FOR EACH ROW BEGIN\n INSERT INTO DoctorMH (`DoctorSerNum`, `DoctorRevSerNum`, `ResourceSerNum`, `SourceDatabaseSer`, `DoctorAriaSer`, `FirstName`, `LastName`, `Role`, `Workplace`, `Email`, `Phone`, `Address`, `ProfileImage`, `LastUpdated`, `ModificationAction`, `BIO_EN`, `BIO_FR`) VALUES (OLD.DoctorSerNum, NULL, OLD.ResourceSerNum, OLD.SourceDatabaseSerNum, OLD.DoctorAriaSer, OLD.FirstName, OLD.LastName, OLD.Role, OLD.Workplace, OLD.Email, OLD.Phone, OLD.Address,OLD.ProfileImage,NOW(), 'DELETE', OLD.BIO_EN, OLD.BIO_FR);\nEND;\n"""),
 
     ReplaceableObject(
         name='`doctor_insert_trigger`',
-        sqltext="""AFTER INSERT ON `Doctor` FOR EACH ROW BEGIN\n INSERT INTO DoctorMH (DoctorSerNum, DoctorRevSerNum, ResourceSerNum, SourceDatabaseSerNum, DoctorAriaSer, FirstName, LastName, Role, Workplace, Email, Phone, Address, ProfileImage, LastUpdated, ModificationAction, BIO_EN, BIO_FR) VALUES (NEW.DoctorSerNum, NULL, NEW.ResourceSerNum, NEW.SourceDatabaseSerNum, NEW.DoctorAriaSer, NEW.FirstName, NEW.LastName, NEW.Role, NEW.Workplace, NEW.Email, NEW.Phone, NEW.Address,NEW.ProfileImage,NOW(), 'INSERT', NEW.BIO_EN, NEW.BIO_FR);\nEND;\n"""),
+        sqltext="""AFTER INSERT ON `Doctor` FOR EACH ROW BEGIN\n INSERT INTO DoctorMH (`DoctorSerNum`, `DoctorRevSerNum`, `ResourceSerNum`, `SourceDatabaseSerNum`, `DoctorAriaSer`, `FirstName`, `LastName`, `Role`, `Workplace`, `Email`, `Phone`, `Address`, `ProfileImage`, `LastUpdated`, `ModificationAction`, `BIO_EN`, `BIO_FR`) VALUES (NEW.DoctorSerNum, NULL, NEW.ResourceSerNum, NEW.SourceDatabaseSerNum, NEW.DoctorAriaSer, NEW.FirstName, NEW.LastName, NEW.Role, NEW.Workplace, NEW.Email, NEW.Phone, NEW.Address,NEW.ProfileImage,NOW(), 'INSERT', NEW.BIO_EN, NEW.BIO_FR);\nEND;\n"""),
 
     ReplaceableObject(
         name='`doctor_update_trigger`',
-        sqltext="""AFTER UPDATE ON `Doctor` FOR EACH ROW BEGIN\n INSERT INTO DoctorMH (DoctorSerNum, DoctorRevSerNum, ResourceSerNum, SourceDatabaseSerNum, DoctorAriaSer, FirstName, LastName, Role, Workplace, Email, Phone, Address, ProfileImage, LastUpdated, ModificationAction, BIO_EN, BIO_FR) VALUES (NEW.DoctorSerNum, NULL, NEW.ResourceSerNum, NEW.SourceDatabaseSerNum, NEW.DoctorAriaSer, NEW.FirstName, NEW.LastName, NEW.Role, NEW.Workplace, NEW.Email, NEW.Phone, NEW.Address,NEW.ProfileImage,NOW(), 'UPDATE', NEW.BIO_EN, NEW.BIO_FR);\nEND;\n"""),
+        sqltext="""AFTER UPDATE ON `Doctor` FOR EACH ROW BEGIN\n INSERT INTO DoctorMH (`DoctorSerNum`, `DoctorRevSerNum`, `ResourceSerNum`, `SourceDatabaseSerNum`, `DoctorAriaSer`, `FirstName`, `LastName`, `Role`, `Workplace`, `Email`, `Phone`, `Address`, `ProfileImage`, `LastUpdated`, `ModificationAction`, `BIO_EN`, `BIO_FR`) VALUES (NEW.DoctorSerNum, NULL, NEW.ResourceSerNum, NEW.SourceDatabaseSerNum, NEW.DoctorAriaSer, NEW.FirstName, NEW.LastName, NEW.Role, NEW.Workplace, NEW.Email, NEW.Phone, NEW.Address,NEW.ProfileImage,NOW(), 'UPDATE', NEW.BIO_EN, NEW.BIO_FR);\nEND;\n"""),
 
     ReplaceableObject(
         name='`document_delete_trigger`',
