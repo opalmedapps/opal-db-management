@@ -16,14 +16,11 @@ depends_on = None
 
 
 # Ensure that the AvailableAt column have been populated with the value from column ResultDateTime.
-# After that switch AvailableAt to be non nullable.
-availableat_migration_query = """
+available_at_migration_query = """
     UPDATE PatientTestResult ptr
     SET ptr.AvailableAt = ptr.ResultDateTime
     WHERE ptr.ResultDateTime IS NOT NULL
     ;
-    ALTER TABLE PatientTestResult
-    MODIFY COLUMN AvailableAt datetime NOT NULL;
 """
 
 
@@ -38,7 +35,13 @@ def upgrade() -> None:
         ),
     )
     # Ensure the AvailableAt fields have been populated with the values of the ResultDateTime field
-    op.execute(availableat_migration_query)
+    op.execute(available_at_migration_query)
+    op.alter_column(
+        'PatientTestResult',
+        'AvailableAt',
+        existing_type=sa.DateTime(),
+        nullable=False,
+    )
 
 
 def downgrade() -> None:
