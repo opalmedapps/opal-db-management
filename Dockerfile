@@ -1,5 +1,5 @@
 # Install PHP and apache docker image
-FROM php:8.2.13-apache-bookworm
+FROM php:8.3.1-apache-bookworm
 
 # Install required packages and apache modules.
 RUN apt-get update \
