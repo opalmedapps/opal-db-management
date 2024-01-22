@@ -1,17 +1,16 @@
-import pytest
-
-from pytest_alembic import Config
-
-from pytest_alembic import Config, create_alembic_fixture, tests
+from pytest_alembic import create_alembic_fixture, tests
 
 opaldb = create_alembic_fixture({'script_location': 'db_management/opaldb'})
 questionnairedb = create_alembic_fixture({'script_location': 'db_management/questionnairedb'})
 
+
 def test_opaldb_single_head_revision(opaldb):
     tests.test_single_head_revision(opaldb)
 
+
 def test_opaldb_upgrade(opaldb):
     tests.test_upgrade(opaldb)
+
 
 def test_opaldb_model_definitions_match_ddl(opaldb):
     # print(opaldb.config)
