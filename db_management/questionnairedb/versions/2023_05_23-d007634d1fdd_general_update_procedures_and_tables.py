@@ -108,9 +108,7 @@ def upgrade() -> None:
         existing_type=mysql.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
-        comment="""This field is mandatory to make the app works during the migration process.
-        This field must be removed once the migration of the legacy questionnaire will be done,
-        the triggers stopped and the app changed to use the correct standards.""",
+        comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.',  # noqa: E501
     )
     op.alter_column(
         'questionnaireFeedback',

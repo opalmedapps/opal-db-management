@@ -18,9 +18,9 @@ default:
   - source .venv/bin/activate || true
 
 stages:
-  - test
   - Build
   - Static Analysis
+  - test
 
 setup:
   stage: .pre
@@ -175,6 +175,8 @@ markdownlint:
 
 run migrations:
   stage: test
+  needs:
+    - setup
   variables:
     MARIADB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
     # ensure that user has permissions for test DB to be used by pytest
