@@ -53,3 +53,9 @@ DROP TABLE IF EXISTS Cron;
 -- Add missing NotificationType for lab results
 UPDATE `NotificationControl` SET NotificationType = 'NewLabResult' WHERE NotificationTypeSerNum = 9;
 
+-- Add new NotificationType for appointment reminders
+INSERT INTO `NotificationTypes` (`NotificationTypeSerNum`, `NotificationTypeId`, `NotificationTypeName`, `DateAdded`, `LastUpdated`) VALUES
+(19,	'AppointmentReminder',	'Appointment Reminder',	'2023-11-27 11:39:14',	'2023-11-27 16:39:14');
+
+INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `NotificationType`, `NotificationTypeSerNum`, `DateAdded`, `LastUpdatedBy`, `LastPublished`, `LastUpdated`, `SessionId`) VALUES
+(18,	'Appointment Reminder',	'Rappel de rendez-vous',	'$patientName: Reminder for an appointment at the $hospitalEN: $appointmentAliasEN on $appointmentDate at $appointmentTime',	'$patientName: Rappel pour un rendez-vous au $hospitalFR : $appointmentAliasFR le $appointmentDate à $appointmentTime',	'AppointmentReminder',	19,	'2023-11-27 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-11-27 16:39:16',	NULL);
