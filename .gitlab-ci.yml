@@ -173,10 +173,9 @@ markdownlint:
       codequality: markdownlint-cli2-codequality.json
 
 
-run migrations:
-  stage: test
+.database_service:
   needs:
-    - setup
+    - job: setup
   variables:
     MARIADB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
     # ensure that user has permissions for test DB to be used by pytest
@@ -199,6 +198,15 @@ run migrations:
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
+
+
+pytest:
+  stage: test
+  extends:
+    - .database_service
+  script:
+    # see: https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags
+    - !reference [.database_service, script]
     - pytest --version
     - pytest -v --junitxml=report.xml
   artifacts:
@@ -206,3 +214,17 @@ run migrations:
     expire_in: "7 days"
     reports:
       junit: report.xml
+
+run sql scripts:
+  stage: test
+  extends:
+    - .database_service
+  needs:
+    # ensure the artifacts from setup are available
+    - setup
+    - pytest
+  script:
+    - !reference [.database_service, script]
+    # migrate databases first
+    - ./docker/alembic-upgrade.sh
+    - db_management/reset_data.sh MUHC
