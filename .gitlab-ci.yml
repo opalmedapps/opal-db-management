@@ -4,8 +4,6 @@
 # only cache local items.
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
-  MARIADB_USER: $MARIADB_USER
 
 default:
   image: python:3.11.7-slim-bookworm
@@ -18,21 +16,11 @@ default:
   # don't fail if venv is not set up yet (during setup)
   - python -m venv .venv
   - source .venv/bin/activate || true
-  # set up env file for DB service
-  # use sample env file
-  - cp .env.sample .env
-  - sed -i "s/^MARIADB_ROOT_PASSWORD=.*/MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD/" .env
-  - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
-  - sed -i "s/^LEGACY_QUESTIONNAIRE_DB_NAME=.*/LEGACY_QUESTIONNAIRE_DB_NAME=QuestionnaireDB/" .env
-  - sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$DATABASE_USER/" .env
-  - sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DATABASE_PASSWORD/" .env
-  - sed -i "s/^DATABASE_PORT=.*/DATABASE_PORT=$DATABASE_PORT/" .env
-  - sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=$DATABASE_HOST/" .env
-  - sed -i "s/^MARIADB_EXTERNAL_PORT=.*/MARIADB_EXTERNAL_PORT=$MARIADB_EXTERNAL_PORT/" .env
 
 stages:
   - Build
   - Static Analysis
+  - test
 
 setup:
   stage: .pre
@@ -131,6 +119,8 @@ build alembic image:
 
 flake8:
   stage: Static Analysis
+  needs:
+    - setup
   script:
     - flake8 --version
     # install plugin to produce code climate report
@@ -148,6 +138,8 @@ flake8:
 
 mypy:
   stage: Static Analysis
+  needs:
+    - setup
   script:
     # install plugin to produce code climate report
     - pip install mypy-gitlab-code-quality
@@ -164,6 +156,8 @@ mypy:
 
 markdownlint:
   stage: Static Analysis
+  needs:
+    - setup
   image:
     name: davidanson/markdownlint-cli2:v0.12.1
     # overwrite default entrypoint (which is a call to markdownlint-cli2)
@@ -178,7 +172,37 @@ markdownlint:
     reports:
       codequality: markdownlint-cli2-codequality.json
 
-# TODO: Add testing service
-# Potential Test libraries with support for alembic migrations:
-# https://pypi.org/project/pytest-alembic/        : Test migration behaviour (single head, upgrades & downgrades succeed, data-independence of migrations, etc)
-# https://pypi.org/project/alembic-autogen-check/ : Test that migrations and SQLAlchemy models are in sync
+
+run migrations:
+  stage: test
+  needs:
+    - setup
+  variables:
+    MARIADB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+    # ensure that user has permissions for test DB to be used by pytest
+    MARIADB_DATABASE: OpalDB
+    MARIADB_USER: citest
+    MARIADB_PASSWORD: $DB_PASSWORD
+  services:
+    - mariadb:10.6.16-focal
+  script:
+    # set up env file for DB service
+    # use sample env file
+    - cp .env.sample .env
+    - sed -i "s/^DATABASE_ROOT_PASSWORD=.*/DATABASE_ROOT_PASSWORD=$DB_ROOT_PASSWORD/" .env
+    - sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$MARIADB_USER/" .env
+    - sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DB_PASSWORD/" .env
+    - sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=mariadb/" .env
+    - cat .env
+    # create additional DBs for legacy DB tests (OpalDB & QuestionnaireDB)
+    - apt update && apt-get install -y default-mysql-client
+    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;"
+    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
+    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
+    - pytest --version
+    - pytest -v --junitxml=report.xml
+  artifacts:
+    when: always
+    expire_in: "7 days"
+    reports:
+      junit: report.xml
