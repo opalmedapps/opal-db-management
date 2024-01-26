@@ -1173,8 +1173,8 @@ def upgrade() -> None:
     op.create_index(op.f('ix_resourcePendingMH_updatedBy'), 'resourcePendingMH', ['updatedBy'], unique=False)
     op.create_table('termsandagreement',
     sa.Column('Id', mysql.BIGINT(display_width=20), nullable=False),
-    sa.Column('DocumentLink_EN', sa.String(length=10000), nullable=False),
-    sa.Column('DocumentLink_FR', sa.String(length=10000), nullable=False),
+    sa.Column('DocumentLink_EN', sa.String(length=2000), nullable=False),
+    sa.Column('DocumentLink_FR', sa.String(length=2000), nullable=False),
     sa.Column('PDFLink_EN', mysql.MEDIUMTEXT(), nullable=False),
     sa.Column('PDFLink_FR', mysql.MEDIUMTEXT(), nullable=False),
     sa.Column('Version', sa.String(length=10000), nullable=False),

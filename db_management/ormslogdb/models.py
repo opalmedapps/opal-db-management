@@ -1,6 +1,6 @@
 from sqlalchemy import TIMESTAMP, Column, DateTime, Enum, Index, String, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
+from sqlalchemy.orm import DeclarativeMeta, declarative_base
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
 Base: DeclarativeMeta = declarative_base()
