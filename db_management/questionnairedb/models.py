@@ -1,7 +1,6 @@
 from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Table, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import DeclarativeMeta, declarative_base, relationship
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
 Base: DeclarativeMeta = declarative_base()
@@ -179,7 +178,7 @@ class Questionnaire(Base):
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(255), nullable=False)
-    legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
+    legacyName = Column(String(255), nullable=False, server_default=text("''"), comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
 
     dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
