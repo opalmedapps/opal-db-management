@@ -49,9 +49,9 @@ setup:
 
 build dbv image:
   stage: Build
-  image: docker:25.0.2
+  image: docker:25.0.3
   services:
-    - docker:25.0.2-dind
+    - docker:25.0.3-dind
   variables:
     # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
     DOCKER_HOST: tcp://docker:2376
@@ -86,9 +86,9 @@ build dbv image:
 
 build alembic image:
   stage: Build
-  image: docker:25.0.2
+  image: docker:25.0.3
   services:
-    - docker:25.0.2-dind
+    - docker:25.0.3-dind
   variables:
     # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
     DOCKER_HOST: tcp://docker:2376
