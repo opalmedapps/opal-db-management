@@ -1,4 +1,4 @@
-FROM python:3.11.7-slim-bookworm
+FROM python:3.11.8-slim-bookworm
 
 RUN apt-get update \
   # dependencies for building Python packages
