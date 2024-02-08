@@ -6,7 +6,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image: python:3.11.7-slim-bookworm
+  image: python:3.11.8-slim-bookworm
   before_script:
   - uname -a
   - python --version
