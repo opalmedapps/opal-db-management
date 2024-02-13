@@ -183,7 +183,7 @@ markdownlint:
     MARIADB_USER: citest
     MARIADB_PASSWORD: $DB_PASSWORD
   services:
-    - mariadb:10.6.16-focal
+    - mariadb:10.6.17-focal
   script:
     # set up env file for DB service
     # use sample env file
