@@ -12,13 +12,6 @@ The Django database is maintained and managed directly in the Django repository,
 
 ## Prerequisites
 
-- Users who **require** the old DBV versioning system will need to have access to the 2 following repositories:
-
-    1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
-    2. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
-
-- All other users have everything required to build the databases in this repository alone.
-
 - Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 
 - Generate an SSH key to login to GitLab (if you haven't yet). See: https://gitlab.com/-/profile/keys
@@ -27,6 +20,16 @@ The Django database is maintained and managed directly in the Django repository,
 > **Note:** This SSH key cannot have a passphrase. It is recommended to create a dedicated deploy key so your actual SSH key that you usually use can have a passphrase.
 
 - Have git installed on your local machine
+
+## Running DBV (legacy)
+
+If you need to run DBV, you can use the last built image that contains the remaining DBV projects:
+
+```shell
+docker run --rm --env-file $PWD/envs/dbv.env --volume $PWD/certs/muhc-trust.crt:/certs/muhc-trust.crt -p 8080:8080 registry.gitlab.com/opalmedapps/db-docker/dbv:latest
+```
+
+You can then access it on the corresponding host on port `8080`.
 
 ## Installation
 
@@ -45,30 +48,7 @@ Pay close attention to the following variables:
 1. `SSH_KEY_PATH` - set this as the absolute path to the SSH private key
 2. `USE_SSL` - set this to '0' unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
 
-### Step 3: Build the PHP Docker images
-
-We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.
-
-```shell
-docker compose build --build-arg CACHEBUST=$(date +%s)
-```
-
-If you prefer to build the image separately use the following command:
-
-```shell
-docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
-```
-
-> **Note:** This feature requires *Buildkit*. If it is not enabled by default you can follow the official instructions to [enable Buildkit builds](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds).
-> **Note:** The `CACHEBUST` build argument is required in order for the Docker builder to not use the cached `git clone` commands and ensure that the latest version from the cloned DBV repositories are retrieved.
-> The `$(date +%s)` argument might not work on **Windows systems**. You can either:
->
-> 1. Run this command in the Windows Subsystem for Linux (WSL2).
-> 2. Remove `$(date +%s)` and manually write a unique value.
-> 3. Use the --no-cache argument, which will bypass all the Docker cache system.
-> For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
-
-### Step 4
+### Step 3
 
 **Scaffold the project using docker compose**
 The docker compose command uses the directive written in the `docker-compose.yml` file to initiate the required container for a project. In our case, it creates a database using the MariaDB image, a PHP environment using the image built in step 2 of this guide, then finally install `adminer`, a GUI to visualize the databases. Database information (username, password, etc) and port are set in the `.env` file.
@@ -98,15 +78,7 @@ docker compose up -d alembic
 If you open docker-desktop, you should see that you have a app called `opal-database` running with 3 container.
 > For more information about Docker compose view the [official Docker documentation](https://docs.docker.com/compose/)
 
-### Step 5: Run the databases revisions
-
-For the time being, the OpalReportDB is maintained with dbv. All other databases are contained within the alembic code. Run dbv to populate the report db:
-
-1. http://localhost:8091/dbv/dbv_opalreportdb
-
-Please scroll down to the `Inserting new test data` section to see how we insert data into OpalDB.
-
-### Step 6: Test your installation
+### Step 4: Test your installation
 
 As mentioned in step 3, the docker compose command also runs an `adminer` container. To access the UI in a web browser visit:
 
