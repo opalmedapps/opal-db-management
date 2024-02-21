@@ -3,4 +3,5 @@ INSERT INTO `Diagnosis` (`DiagnosisSerNum`, `PatientSerNum`, `SourceDatabaseSerN
 (2,	52,	1,	'23314',	'C07',	'Ca of parotid gland',	'',	NULL,	NULL,	'2023-03-02 00:00:00',	'CronJob',	'2023-03-21 16:39:16',	'CronJob'),
 (3,	53,	1,	'22324',	'C16.9',	'Stomach, NOS',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob'),
 (4,	56,	1,	'22325',	'C34.10',	'Upper lobe, lung',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob'),
-(5,	57,	1,	'22326',	'C69.6a',	'Orbit, NOS',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob');
+(5,	57,	1,	'22326',	'C69.6a',	'Orbit, NOS',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob'),
+(6,	58,	1,	'39325',	'C71.9',	'Ca of brain, unspecified',	'',	NULL,	NULL,	'2022-02-12 00:00:00',	'CronJob',	'2022-02-12 16:39:16',	'CronJob');
