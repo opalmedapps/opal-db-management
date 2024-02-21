@@ -263,4 +263,7 @@ gemnasium-python-dependency_scanning:
   before_script:
     - apt update && apt install -y libmariadb-dev pkg-config
   after_script:
+    - ls -la
+    - ls -la /
+    - ls -la ~/
     - ls -la dist/
