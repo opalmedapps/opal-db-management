@@ -255,4 +255,9 @@ include:
 # https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
 gemnasium-python-dependency_scanning:
   variables:
-    PIP_REQUIREMENTS_FILE: "base.txt"
+    PIP_REQUIREMENTS_FILE: "development.txt"
+  # the scanner actually installs the dependencies via pip and therefore requires the mysql client to be installed
+  before_script:
+    - uname -a
+    - whoami
+    - apt update && apt install default-mysql-client
