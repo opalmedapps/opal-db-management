@@ -3,7 +3,6 @@
 # only cache local items.
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  SECURE_LOG_LEVEL: "debug"
 
 default:
   image: python:3.11.8-slim-bookworm
@@ -264,4 +263,4 @@ gemnasium-python-dependency_scanning:
   before_script:
     - apt update && apt install -y libmariadb-dev pkg-config
   after_script:
-    - ls -la dest/
+    - ls -la dist/
