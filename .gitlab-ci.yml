@@ -252,6 +252,6 @@ include:
 # Customizations
 # Dependency Scanning
 # https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
-gemnasium-dependency_scanning:
+gemnasium-python-dependency_scanning:
   before_script:
     - mv requirements/development.txt requirements/requirements.txt
