@@ -236,7 +236,8 @@ INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (3,	'admin',	'9575c78e5351af3746a845294532e436b3ccfc329ff09c21f2c89d2f6bdffd9f',	1,	1,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
-(22,	'OpalInterfaceEngineAccess',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15');
+(22,	'OpalInterfaceEngineAccess',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
+(23,	'CronJob',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2024-02-16 16:29:50',	'2024-02-16 16:29:50');
 
 INSERT INTO `OAUserRole` (`OAUserSerNum`, `RoleSerNum`, `LastUpdated`) VALUES
 (3,	1,	'2017-02-11 01:43:16'),
