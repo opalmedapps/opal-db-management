@@ -3,6 +3,7 @@
 # only cache local items.
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  SECURE_LOG_LEVEL: "debug"
 
 default:
   image: python:3.11.8-slim-bookworm
@@ -211,6 +212,9 @@ include:
   # Dependency Scanning: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Dependency-Scanning.latest.gitlab-ci.yml
   - template: Jobs/Dependency-Scanning.latest.gitlab-ci.yml
+  # Container Scanning: https://docs.gitlab.com/ee/user/application_security/container_scanning/
+  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Container-Scanning.latest.gitlab-ci.yml
+  - template: Jobs/Container-Scanning.latest.gitlab-ci.yml
   # SAST Scanning: https://docs.gitlab.com/ee/user/application_security/sast/
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/SAST.latest.gitlab-ci.yml
   - template: Jobs/SAST.latest.gitlab-ci.yml
@@ -229,3 +233,8 @@ gemnasium-python-dependency_scanning:
   # the scanner actually installs the dependencies via pip and therefore requires the mysql client to be installed
   before_script:
     - apt update && apt install -y libmariadb-dev pkg-config
+
+# Container Scanning
+container_scanning:
+  variables:
+    CS_IMAGE: $CI_REGISTRY_IMAGE/alembic:$CI_COMMIT_REF_SLUG
