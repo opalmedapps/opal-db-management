@@ -3,7 +3,6 @@
 # only cache local items.
 variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
-  SECURE_LOG_LEVEL: "debug"
 
 default:
   image: python:3.11.8-slim-bookworm
@@ -222,6 +221,12 @@ include:
 # Customizations
 #
 
+# Secret Detection
+# https://docs.gitlab.com/ee/user/application_security/secret_detection/#configure-scan-settings
+secret_detection:
+  variables:
+    SECRET_DETECTION_EXCLUDED_PATHS: ".venv"
+
 # Dependency Scanning
 # https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
 gemnasium-python-dependency_scanning:
@@ -235,6 +240,7 @@ gemnasium-python-dependency_scanning:
     - apt update && apt install -y libmariadb-dev pkg-config
 
 # Container Scanning
+# https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 container_scanning:
   variables:
     CS_IMAGE: $CI_REGISTRY_IMAGE/alembic:$CI_COMMIT_REF_SLUG
