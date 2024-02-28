@@ -226,6 +226,8 @@ include:
 secret_detection:
   # ignore artifacts from previous jobs, such as .venv directory
   dependencies: []
+  variables:
+    SECURE_LOG_LEVEL: "debug"
 
 # Dependency Scanning
 # https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
