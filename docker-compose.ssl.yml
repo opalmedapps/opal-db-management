@@ -3,10 +3,6 @@ services:
     volumes:
       - ./certs:/certs
       - ./config/ssl.cnf:/etc/mysql/conf.d/ssl.cnf
-  dbv:
-    volumes:
-      - ./certs:/certs
-
   adminer:
     volumes:
       - ./certs:/certs
