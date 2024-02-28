@@ -224,8 +224,8 @@ include:
 # Secret Detection
 # https://docs.gitlab.com/ee/user/application_security/secret_detection/#configure-scan-settings
 secret_detection:
-  variables:
-    SECRET_DETECTION_EXCLUDED_PATHS: ".venv"
+  # ignore artifacts from previous jobs, such as .venv directory
+  dependencies: []
 
 # Dependency Scanning
 # https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
