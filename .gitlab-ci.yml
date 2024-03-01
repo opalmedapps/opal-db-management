@@ -217,6 +217,9 @@ include:
   # SAST Scanning: https://docs.gitlab.com/ee/user/application_security/sast/
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/SAST.latest.gitlab-ci.yml
   - template: Jobs/SAST.latest.gitlab-ci.yml
+  # Infrastructure as Code Scanning: https://docs.gitlab.com/ee/user/application_security/iac_scanning/
+  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/SAST-IaC.latest.gitlab-ci.yml
+  - template: Jobs/SAST-IaC.latest.gitlab-ci.yml
 
 # Customizations
 #
