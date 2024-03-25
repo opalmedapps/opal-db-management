@@ -1,7 +1,7 @@
 # SQLAlchemy & Alembic base
 alembic==1.13.1  # https://pypi.org/project/alembic/
 # sqlacodegen==2.3.0.post1  # https://pypi.org/project/sqlacodegen/
-sqlalchemy==2.0.28  # https://pypi.org/project/SQLAlchemy/
+sqlalchemy==2.0.29  # https://pypi.org/project/SQLAlchemy/
 
 # Inserting of data
 pymysql==1.1.0  # https://pypi.org/project/PyMySQL/
