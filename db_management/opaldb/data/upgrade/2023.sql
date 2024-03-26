@@ -20,11 +20,9 @@ INSERT INTO `oaRoleModule` (`moduleId`, `oaRoleId`, `access`) VALUES
 INSERT INTO `Alias` (`AliasType`, `AliasUpdate`, `AliasName_FR`, `AliasName_EN`, `AliasDescription_FR`, `AliasDescription_EN`, `EducationalMaterialControlSerNum`, `HospitalMapSerNum`, `SourceDatabaseSerNum`, `ColorTag`, `WaitTimeValidity`, `SessionId`) VALUES
 ('Document',	1,	'Pathologie Chirurgicale Rapport Final',	'Surgical Pathology Final Report',	'<p><b>Qu\'est-ce qu\'un rapport de pathologie?</b></p><p>Un rapport de pathologie est un document médical décrivant l\'examen d\'un tissu par un pathologiste. Le pathologiste est un médecin spécialiste qui travaille en étroite collaboration avec les autres médecins de l\'équipe soignante.</p><p><b>Quelles sont les informations contenues dans un rapport de pathologie?</b></p><p>Tous les rapports de pathologie comprennent des sections consacrées aux informations sur le patient, à la source de l\'échantillon, aux antécédents cliniques et au diagnostic. Les rapports de pathologie chirurgicale (ceux qui décrivent l\'examen d\'échantillons de tissus plus importants tels que les biopsies, les excisions et les résections) comprennent généralement aussi des sections pour les descriptions microscopiques et macroscopiques et les commentaires du pathologiste.</p><p>Cette explication est tirée de la section FAQ du site web <a href=\"https://www.mypathologyreport.ca/fr/pathology-reports-frequently-asked-questions/\" target=\"\">MonRapportPathologique</a>.<!--EndFragment--></p><p><a href=\"https://www.mypathologyreport.ca/fr/pathology-reports-frequently-asked-questions/\" target=\"\">MonRapportPathologique</a> est un outil éducatif créé par des médecins pour aider les patients à lire et à comprendre leurs rapports de pathologie.</p><p>Pour toute autre question ou demande de renseignements, veuillez en discuter avec votre équipe clinique.<br/></p>',	'<p><b>What is a pathology report?</b></p><p>A pathology report is a medical document describing the examination of tissue by a pathologist. A pathologist is a specialist medical doctor who works closely with the other doctors in your healthcare team.<!--EndFragment--></p><p><b>What information is included in a pathology report?</b></p><p>All pathology reports include sections for patient information, specimen source, clinical history, and diagnosis. Surgical pathology reports (those that describe the examination of larger tissue samples such as biopsies, excisions, and resections) will typically also include sections for microscopic and gross descriptions and comments by the pathologist.</p><p>This explanation was taken from the FAQ section of the <a href=\"https://www.mypathologyreport.ca/pathology-reports-frequently-asked-questions/\" target=\"\">MyPathologyReport.ca</a> website.</p><p><a href=\"https://www.mypathologyreport.ca/pathology-reports-frequently-asked-questions/\" target=\"\">MyPathologyReport.ca</a> is an educational tool created by doctors to help patients read and understand their pathology reports.</p><p>For all other questions or inquiries, please discuss them with your clinical team.<br/></p>',	NULL,	NULL,	1,	'#64FFDA',	1,	'kV0AUjLT35');
 INSERT INTO `AliasExpression` (`AliasSerNum`, `masterSourceAliasId`, `ExpressionName`, `Description`, `SessionId`) VALUES
-(LAST_INSERT_ID(),	4363,	'Pathology',	'Pathology',	'kV0AUjLT35');
+(LAST_INSERT_ID(),	4198,	'Pathology',	'Pathology',	'kV0AUjLT35');
 
 UPDATE `module` SET name_EN = 'Opal User Administration', name_FR = 'Administration des utilisateurs', description_EN = 'Manage the user account information', description_FR = 'Gérer les informations du compte utilisateur' WHERE name_EN = 'Patient Administration';
-
--- TODO: add databank consent form
 
 -- Insert alembic tracking table
 CREATE TABLE `alembic_version` (
@@ -59,3 +57,17 @@ INSERT INTO `NotificationTypes` (`NotificationTypeSerNum`, `NotificationTypeId`,
 
 INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `NotificationType`, `NotificationTypeSerNum`, `DateAdded`, `LastUpdatedBy`, `LastPublished`, `LastUpdated`, `SessionId`) VALUES
 (18,	'Appointment Reminder',	'Rappel de rendez-vous',	'$patientName: Reminder for an appointment at the $hospitalEN: $appointmentAliasEN on $appointmentDate at $appointmentTime',	'$patientName: Rappel pour un rendez-vous au $hospitalFR : $appointmentAliasFR le $appointmentDate à $appointmentTime',	'AppointmentReminder',	19,	'2023-11-27 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-11-27 16:39:16',	NULL);
+
+-- Update cronjob user role for resource-pending and appointment-pending access via cron container
+UPDATE `OAUser` SET oaRoleId=29, `type`=2 where Username='cronjob';
+
+-- Remove Questionnaire notification type to avoid confusion.
+-- Currently we are using only LegacyQuestionnaire notification types.
+DELETE FROM `NotificationControl` WHERE NotificationControlSerNum=11;
+
+DELETE FROM `NotificationTypes` WHERE NotificationTypeSerNum=13;
+
+-- Update descriptions for the NotificationControl
+UPDATE `NotificationControl` SET Description_EN='$patientName: Successfully checked in for your appointment(s) at $getDateTime. You will receive another notification when you are called in to your appointment(s).', Description_FR='$patientName: Enregistrement réussi à votre/vos rendez-vous de $getDateTime. Vous recevrez une autre notification lorsque vous serez appelé(e) à votre/vos rendez-vous.' WHERE NotificationControlSerNum=12;
+
+UPDATE `NotificationControl` SET Description_EN='$patientName: New questionnaire received. Please complete it before seeing your health care provider.', Description_FR='$patientName: Nouveau questionnaire reçu. Veuillez le compléter avant votre rendez-vous avec votre professionnel de la santé.' WHERE NotificationControlSerNum=13;

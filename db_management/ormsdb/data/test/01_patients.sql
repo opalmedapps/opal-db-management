@@ -1,11 +1,12 @@
 INSERT INTO `Patient` (`PatientSerNum`, `LastName`, `FirstName`, `DateOfBirth`, `Sex`, `SMSAlertNum`, `SMSSignupDate`, `OpalPatient`, `OpalUUID`, `LanguagePreference`, `LastUpdated`, `SMSLastUpdated`) VALUES
-(1,	'Marge',	'Simpson',	'1986-10-01 00:00:00',	'F',	'15144758941',	NULL,	1, '8586479c-4960-4ade-b534-04b06392f380' ,	NULL,	'2022-05-11 05:26:33',	NULL),
-(2,	'Homer',	'Simpson',	'1983-05-12 00:00:00',	'M',	'14381234567',	NULL,	1, 'aa772608-9501-4799-9b52-661f6eeacc79' ,	NULL,	'2022-05-11 05:26:33',	NULL),
-(3,	'Bart',	'Simpson',	'1986-10-01 00:00:00',	'M',	'61292507111',	NULL,	1, '2345e93a-d7f9-49b0-820d-70d0a663753b' ,	NULL,	'2022-05-11 05:26:33',	NULL),
-(4,	'Lisa',	'Simpson',	'2014-05-09 00:00:00',	'F',	'61292507111',	NULL,	1, 'f8f20abc-ec24-496d-bb8c-25af1853e4fb' ,	NULL,	'2022-05-11 05:26:33',	NULL),
-(5,	'Mona',	'Simpson',	'1940-03-15 00:00:00',	'F',	'15144758941',	NULL,	1, 'f8f20abc-ec24-496d-bb8c-25af1853e4fb' ,	NULL,	'2022-05-11 05:26:33',	NULL),
-(6,	'Fred',	'Flintstone',	'1960-08-01 00:00:00',	'M',	'15144758941',	NULL,	1, '8586479c-4960-4ade-b534-04b06392f380' ,	NULL,	'2022-05-11 05:26:33',	NULL),
-(7,	'Pebbles',	'Flintstone',	'2015-02-22 00:00:00',	'F',	'14381234567',	NULL,	1, '8586479c-4960-4ade-b534-04b06392f380' ,	NULL,	'2022-05-11 05:26:33',	NULL);
+(1,	'Simpson', 'Marge',	'1986-10-01 00:00:00',	'F',	'15144758941',	NULL,	1, '8586479c-4960-4ade-b534-04b06392f380' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(2,	'Simpson', 'Homer',	'1983-05-12 00:00:00',	'M',	'14381234567',	NULL,	1, 'aa772608-9501-4799-9b52-661f6eeacc79' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(3,	'Simpson', 'Bart',	'1986-10-01 00:00:00',	'M',	'61292507111',	NULL,	1, '2345e93a-d7f9-49b0-820d-70d0a663753b' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(4,	'Simpson', 'Lisa',	'2014-05-09 00:00:00',	'F',	'61292507111',	NULL,	1, 'f8f20abc-ec24-496d-bb8c-25af1853e4fb' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(5,	'Simpson', 'Mona',	'1940-03-15 00:00:00',	'F',	'15144758941',	NULL,	1, 'f8f20abc-ec24-496d-bb8c-25af1853e4fb' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(6,	'Flintstone', 'Fred',	'1960-08-01 00:00:00',	'M',	'15144758941',	NULL,	1, '8586479c-4960-4ade-b534-04b06392f380' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(7,	'Flintstone', 'Pebbles',	'2015-02-22 00:00:00',	'F',	'14381234567',	NULL,	1, '8586479c-4960-4ade-b534-04b06392f380' ,	NULL,	'2022-05-11 05:26:33',	NULL),
+(8,	'Addams', 'Wednesday',	'2009-02-13 00:00:00',	'F',	'14381234567',	NULL,	0, '' ,	NULL,	'2024-02-19 05:26:33',	NULL);
 
 
 INSERT INTO `PatientHospitalIdentifier` (`PatientHospitalIdentifierId`, `PatientId`, `HospitalId`, `MedicalRecordNumber`, `Active`, `DateAdded`, `LastModified`) VALUES
@@ -17,4 +18,5 @@ INSERT INTO `PatientHospitalIdentifier` (`PatientHospitalIdentifierId`, `Patient
 (6,	5,	1,	'9999993',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
 (7,	6,	1,	'9999998',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
 (8,	7,	3,	'9999999',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
-(9,	5,	3,	'5407383',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58');
+(9,	5,	3,	'5407383',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
+(10, 8,	1,	'9999991',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58');

@@ -112,7 +112,6 @@ INSERT INTO `NotificationTypes` (`NotificationTypeSerNum`, `NotificationTypeId`,
 (10,	'UpdDocument',	'Updated Document',	'2016-10-18 00:00:00',	'2016-10-18 23:32:49'),
 (11,	'RoomAssignment',	'Room Assignment',	'2016-11-30 15:38:00',	'2016-12-01 01:38:06'),
 (12,	'PatientsForPatients',	'Patients For Patients Announcement	',	'2017-01-30 15:08:00',	'2017-01-31 01:08:00'),
-(13,	'Questionnaire',	'Questionnaire',	'2017-08-18 10:38:07',	'2017-08-18 18:38:07'),
 (14,	'LegacyQuestionnaire',	'Legacy Questionnaire',	'2017-10-13 10:57:08',	'2017-10-13 18:57:08'),
 (15,	'CheckInNotification',	'CheckInNotification',	'2017-11-07 17:41:49',	'2017-11-08 03:41:51'),
 (16,	'CheckInError',	'Check In Error',	'2018-03-27 10:21:16',	'2018-03-27 18:21:16'),
@@ -236,7 +235,8 @@ INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (3,	'admin',	'9575c78e5351af3746a845294532e436b3ccfc329ff09c21f2c89d2f6bdffd9f',	1,	1,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
-(22,	'OpalInterfaceEngineAccess',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15');
+(22,	'OpalInterfaceEngineAccess',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
+(23,	'CronJob',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2024-02-16 16:29:50',	'2024-02-16 16:29:50');
 
 INSERT INTO `OAUserRole` (`OAUserSerNum`, `RoleSerNum`, `LastUpdated`) VALUES
 (3,	1,	'2017-02-11 01:43:16'),
