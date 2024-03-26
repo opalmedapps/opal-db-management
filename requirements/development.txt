@@ -16,7 +16,7 @@ pytest-alembic==0.11.0  # https://github.com/schireson/pytest-alembic
 
 # wemake Python Styleguide
 # see: https://wemake-python-styleguide.readthedocs.io/en/latest/
-wemake-python-styleguide==0.19.1
+wemake-python-styleguide==0.19.2
 
 # Pre-commit
 #
