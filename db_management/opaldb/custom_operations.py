@@ -1,7 +1,10 @@
 """Custom operations file for version controlling other SQL entities."""
-from typing import Any
+from typing import Any, Final
 
 from alembic.operations import MigrateOperation, Operations
+
+INVOKE_FOR_TARGET: Final[str] = 'invoke_for_target'
+REPLACE: Final[str] = 'replace'
 
 
 class ReplaceableObject:
@@ -115,7 +118,7 @@ class ReversibleOp(MigrateOperation):
         raise ValueError('script directory not found')
 
 
-@Operations.register_operation('create_trigger')
+@Operations.register_operation('create_trigger', INVOKE_FOR_TARGET)
 class CreateTriggerOp(ReversibleOp):
     """Create a Trigger."""
 
@@ -128,7 +131,7 @@ class CreateTriggerOp(ReversibleOp):
         return DropTriggerOp(self.target)
 
 
-@Operations.register_operation('drop_trigger')
+@Operations.register_operation('drop_trigger', INVOKE_FOR_TARGET)
 class DropTriggerOp(ReversibleOp):
     """Drop a Trigger."""
 
@@ -163,8 +166,8 @@ def drop_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
     operations.execute('DROP TRIGGER IF EXISTS {0}'.format(operation.target.name))
 
 
-@Operations.register_operation('create_procedure', 'invoke_for_target')
-@Operations.register_operation('replace_procedure', 'replace')
+@Operations.register_operation('create_procedure', INVOKE_FOR_TARGET)
+@Operations.register_operation('replace_procedure', REPLACE)
 class CreateProcedureOp(ReversibleOp):
     """Create stored procedure operation."""
 
@@ -178,7 +181,7 @@ class CreateProcedureOp(ReversibleOp):
         return DropProcedureOp(self.target)
 
 
-@Operations.register_operation('drop_procedure', 'invoke_for_target')
+@Operations.register_operation('drop_procedure', INVOKE_FOR_TARGET)
 class DropProcedureOp(ReversibleOp):
     """Drop stored procedure operation."""
 
