@@ -1,5 +1,5 @@
 """Custom operations file for version controlling other SQL entities."""
-from typing import Any, Type
+from typing import Any
 
 from alembic.operations import MigrateOperation, Operations
 
@@ -116,31 +116,8 @@ class ReversibleOp(MigrateOperation):
 
 
 @Operations.register_operation('create_trigger')
-class CreateTriggerOp(MigrateOperation):
+class CreateTriggerOp(ReversibleOp):
     """Create a Trigger."""
-
-    def __init__(self, replaceable_obj: ReplaceableObject) -> None:
-        """Extract the name and sql_text from the operation object.
-
-        Args:
-            replaceable_obj: a ReplaceableObject or other class wrapper with name and sql_text fields.
-        """
-        self.name = replaceable_obj.name
-        self.sql_text = replaceable_obj.sql_text
-
-    @classmethod
-    def create_trigger(cls: Type['CreateTriggerOp'], operations: Operations, replaceable_obj: ReplaceableObject) -> Any:
-        """Issue a "CREATE TRIGGER" instruction.
-
-        Args:
-            operations: Alembic Operations instance (context in which the migration is being performed)
-            replaceable_obj: The trigger object to be created
-
-        Returns:
-            Any return from the invocation of the operation, though not strictly used
-        """
-        op = cls(replaceable_obj)
-        return operations.invoke(op)
 
     def reverse(self) -> MigrateOperation:
         """Call the inverse method to reverse the effect of the CreateTrigger operation.
@@ -148,35 +125,12 @@ class CreateTriggerOp(MigrateOperation):
         Returns:
             Instance of MigrateOperation
         """
-        return DropTriggerOp(self.name, sql_text=self.sql_text)
+        return DropTriggerOp(self.target)
 
 
 @Operations.register_operation('drop_trigger')
-class DropTriggerOp(MigrateOperation):
+class DropTriggerOp(ReversibleOp):
     """Drop a Trigger."""
-
-    def __init__(self, replaceable_obj: ReplaceableObject) -> None:
-        """Extract the name and sql_text from the operation object.
-
-        Args:
-            replaceable_obj: a ReplaceableObject or other class wrapper with name and sql_text fields.
-        """
-        self.name = replaceable_obj.name
-        self.sql_text = replaceable_obj.sql_text
-
-    @classmethod
-    def drop_trigger(cls: Type['DropTriggerOp'], operations: Operations, replaceable_obj: ReplaceableObject) -> Any:
-        """Issue a "DROP TRIGGER" instruction.
-
-        Args:
-            operations: Alembic Operations instance (context in which the migration is being performed)
-            replaceable_obj: The trigger object to be created
-
-        Returns:
-            Any return from the invocation of the operation, though not strictly used
-        """
-        op = cls(replaceable_obj)
-        return operations.invoke(op)
 
     def reverse(self) -> MigrateOperation:
         """Call the inverse method to reverse the effect of the DropTrigger operation.
@@ -184,7 +138,7 @@ class DropTriggerOp(MigrateOperation):
         Returns:
             Instance of MigrateOperation
         """
-        return CreateTriggerOp(self.name, sql_text=self.sql_text)
+        return CreateTriggerOp(self.target)
 
 
 @Operations.implementation_for(CreateTriggerOp)
@@ -195,7 +149,7 @@ def create_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
         operations: Alembic Operations instance (context in which the migration is being performed)
         operation: CreateTriggerOp instance
     """
-    operations.execute('CREATE TRIGGER {0} {1}'.format(operation.name, operation.sql_text))
+    operations.execute('CREATE TRIGGER {0} {1}'.format(operation.target.name, operation.target.sql_text))
 
 
 @Operations.implementation_for(DropTriggerOp)
@@ -206,7 +160,7 @@ def drop_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
         operations: Alembic Operations instance (context in which the migration is being performed)
         operation: DropTriggerOp instance
     """
-    operations.execute('DROP TRIGGER IF EXISTS {0}'.format(operation.name))
+    operations.execute('DROP TRIGGER IF EXISTS {0}'.format(operation.target.name))
 
 
 @Operations.register_operation('create_procedure', 'invoke_for_target')
