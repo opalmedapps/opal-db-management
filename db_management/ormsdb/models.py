@@ -14,10 +14,11 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import INTEGER, SMALLINT, TINYINT
-from sqlalchemy.orm import DeclarativeMeta, declarative_base, relationship
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-# see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
-Base: DeclarativeMeta = declarative_base()
+
+class Base(DeclarativeBase):
+    pass
 
 metadata = Base.metadata
 
@@ -71,7 +72,7 @@ class Patient(Base):
     SMSSignupDate = Column(DateTime)
     OpalPatient = Column(TINYINT(1), nullable=False, server_default=text('0'))
     OpalUUID = Column(String(length=37, collation='latin1_swedish_ci'), nullable=False, server_default=text("''"), comment='UUID provided only for Opal patients, and received from Opal')
-    LanguagePreference = Column(Enum('English', 'French'))
+    LanguagePreference: Mapped[Enum] = mapped_column(Enum('English', 'French'), nullable=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SMSLastUpdated = Column(DateTime)
 
@@ -128,7 +129,7 @@ class ProfileOption(Base):
     ProfileOptionSer = Column(INTEGER(11), primary_key=True)
     ProfileSer = Column(INTEGER(11), nullable=False, index=True)
     Options = Column(String(255), nullable=False)
-    Type = Column(Enum('ExamRoom', 'IntermediateVenue', 'Resource'), nullable=False)
+    Type: Mapped[Enum] = mapped_column(Enum('ExamRoom', 'IntermediateVenue', 'Resource'), nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
 
@@ -145,7 +146,7 @@ class DiagnosisCode(Base):
     __tablename__ = 'DiagnosisCode'
 
     DiagnosisCodeId = Column(INTEGER(11), primary_key=True)
-    DiagnosisChapterId = Column(ForeignKey('DiagnosisChapter.DiagnosisChapterId'), nullable=False, index=True)
+    DiagnosisChapterId: Mapped[int] = mapped_column(ForeignKey('DiagnosisChapter.DiagnosisChapterId'), nullable=False, index=True)
     Code = Column(String(20), nullable=False, unique=True)
     Category = Column(Text, nullable=False)
     Description = Column(Text, nullable=False)
@@ -160,8 +161,8 @@ class PatientHospitalIdentifier(Base):
     )
 
     PatientHospitalIdentifierId = Column(INTEGER(11), primary_key=True)
-    PatientId = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
-    HospitalId = Column(ForeignKey('Hospital.HospitalId'), nullable=False)
+    PatientId: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
+    HospitalId: Mapped[int] = mapped_column(ForeignKey('Hospital.HospitalId'), nullable=False)
     MedicalRecordNumber = Column(String(50), nullable=False)
     Active = Column(TINYINT(4), nullable=False)
     DateAdded = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
@@ -178,8 +179,8 @@ class PatientInsuranceIdentifier(Base):
     )
 
     PatientInsuranceIdentifierId = Column(INTEGER(11), primary_key=True)
-    PatientId = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
-    InsuranceId = Column(ForeignKey('Insurance.InsuranceId'), nullable=False)
+    PatientId: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
+    InsuranceId: Mapped[int] = mapped_column(ForeignKey('Insurance.InsuranceId'), nullable=False)
     InsuranceNumber = Column(String(50), nullable=False)
     ExpirationDate = Column(DateTime, nullable=False)
     Active = Column(TINYINT(4), nullable=False)
@@ -194,7 +195,7 @@ class PatientMeasurement(Base):
     __tablename__ = 'PatientMeasurement'
 
     PatientMeasurementSer = Column(INTEGER(11), primary_key=True)
-    PatientSer = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
+    PatientSer: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
     AppointmentId = Column(String(100), nullable=False)
     PatientId = Column(String(50), nullable=False)
     Date = Column(Date, nullable=False)
@@ -211,7 +212,7 @@ class SpecialityGroup(Base):
     __tablename__ = 'SpecialityGroup'
 
     SpecialityGroupId = Column(INTEGER(11), primary_key=True)
-    HospitalId = Column(ForeignKey('Hospital.HospitalId'), nullable=False, index=True)
+    HospitalId: Mapped[int] = mapped_column(ForeignKey('Hospital.HospitalId'), nullable=False, index=True)
     SpecialityGroupCode = Column(String(50), nullable=False, unique=True)
     SpecialityGroupName = Column(String(50), nullable=False)
     LastUpdated = Column(DateTime, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -227,7 +228,7 @@ class AppointmentCode(Base):
 
     AppointmentCodeId = Column(INTEGER(11), primary_key=True)
     AppointmentCode = Column(String(100), nullable=False)
-    SpecialityGroupId = Column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
+    SpecialityGroupId: Mapped[SpecialityGroup] = mapped_column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
     DisplayName = Column(String(100))
     SourceSystem = Column(String(50), nullable=False)
     Active = Column(TINYINT(4), nullable=False, server_default=text('1'))
@@ -240,7 +241,7 @@ class ClinicHub(Base):
     __tablename__ = 'ClinicHub'
 
     ClinicHubId = Column(INTEGER(11), primary_key=True)
-    SpecialityGroupId = Column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
+    SpecialityGroupId: Mapped[int] = mapped_column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
     ClinicHubName = Column(String(50), nullable=False)
     LastUpdated = Column(DateTime, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
@@ -256,7 +257,7 @@ class ClinicResource(Base):
     ClinicResourcesSerNum = Column(INTEGER(11), primary_key=True)
     ResourceCode = Column(String(200), nullable=False)
     ResourceName = Column(String(200), nullable=False, index=True, comment='Both Aria and Medivisit resources listed here')
-    SpecialityGroupId = Column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
+    SpecialityGroupId: Mapped[int] = mapped_column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
     SourceSystem = Column(String(50), nullable=False)
     LastModified = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     Active = Column(TINYINT(4), nullable=False, index=True, server_default=text('1'), comment='1 = Active / 0 = Not Active')
@@ -268,7 +269,7 @@ class DiagnosisSubcode(Base):
     __tablename__ = 'DiagnosisSubcode'
 
     DiagnosisSubcodeId = Column(INTEGER(11), primary_key=True)
-    DiagnosisCodeId = Column(ForeignKey('DiagnosisCode.DiagnosisCodeId'), nullable=False, index=True)
+    DiagnosisCodeId: Mapped[int] = mapped_column(ForeignKey('DiagnosisCode.DiagnosisCodeId'), nullable=False, index=True)
     Subcode = Column(String(20), nullable=False, unique=True)
     Description = Column(Text, nullable=False)
 
@@ -280,8 +281,8 @@ class Profile(Base):
 
     ProfileSer = Column(INTEGER(11), primary_key=True)
     ProfileId = Column(String(255), nullable=False, unique=True)
-    Category = Column(Enum('PAB', 'Physician', 'Nurse', 'Checkout Clerk', 'Pharmacy', 'Treatment Machine'), nullable=False)
-    SpecialityGroupId = Column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
+    Category: Mapped[Enum] = mapped_column(Enum('PAB', 'Physician', 'Nurse', 'Checkout Clerk', 'Pharmacy', 'Treatment Machine'), nullable=False)
+    SpecialityGroupId: Mapped[int] = mapped_column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp()'))
 
     SpecialityGroup = relationship('SpecialityGroup')
@@ -294,10 +295,10 @@ class SmsMessage(Base):
     )
 
     SmsMessageId = Column(INTEGER(11), primary_key=True)
-    SpecialityGroupId = Column(ForeignKey('SpecialityGroup.SpecialityGroupId'))
+    SpecialityGroupId: Mapped[int] = mapped_column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=True)
     Type = Column(String(50), nullable=False, index=True)
     Event = Column(String(50), nullable=False)
-    Language = Column(Enum('English', 'French'), nullable=False)
+    Language: Mapped[Enum] = mapped_column(Enum('English', 'French'), nullable=False)
     Message = Column(Text, nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
@@ -308,7 +309,7 @@ class ExamRoom(Base):
     __tablename__ = 'ExamRoom'
 
     AriaVenueId = Column(String(250), nullable=False, unique=True)
-    ClinicHubId = Column(ForeignKey('ClinicHub.ClinicHubId'), nullable=False, index=True)
+    ClinicHubId: Mapped[int] = mapped_column(ForeignKey('ClinicHub.ClinicHubId'), nullable=False, index=True)
     ScreenDisplayName = Column(String(100), nullable=False)
     VenueEN = Column(String(100), nullable=False, server_default=text("''"))
     VenueFR = Column(String(100), nullable=False, server_default=text("''"))
@@ -324,7 +325,7 @@ class IntermediateVenue(Base):
 
     IntermediateVenueSerNum = Column(INTEGER(11), primary_key=True)
     AriaVenueId = Column(String(250), nullable=False)
-    ClinicHubId = Column(ForeignKey('ClinicHub.ClinicHubId'), nullable=False, index=True)
+    ClinicHubId: Mapped[int] = mapped_column(ForeignKey('ClinicHub.ClinicHubId'), nullable=False, index=True)
     ScreenDisplayName = Column(String(100), nullable=False)
     VenueEN = Column(String(100), nullable=False)
     VenueFR = Column(String(100), nullable=False)
@@ -339,16 +340,16 @@ class MediVisitAppointmentList(Base):
         {'comment': 'Appointment list to be read in daily from Medivist schedule, as provided by Ngoc'}
     )
 
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
-    ClinicResourcesSerNum = Column(ForeignKey('ClinicResources.ClinicResourcesSerNum'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
+    ClinicResourcesSerNum: Mapped[int] = mapped_column(ForeignKey('ClinicResources.ClinicResourcesSerNum'), nullable=False, index=True)
     ScheduledDateTime = Column(DateTime, nullable=False, index=True)
     ScheduledDate = Column(Date, nullable=False, index=True)
     ScheduledTime = Column(Time, nullable=False)
     AppointmentReminderSent = Column(TINYINT(1), nullable=False, server_default=text('0'))
-    AppointmentCodeId = Column(ForeignKey('AppointmentCode.AppointmentCodeId'), nullable=False, index=True)
+    AppointmentCodeId: Mapped[int] = mapped_column(ForeignKey('AppointmentCode.AppointmentCodeId'), nullable=False, index=True)
     AppointId = Column(String(100), nullable=False, comment='From Interface Engine')
     AppointSys = Column(String(50), nullable=False, index=True)
-    Status = Column(Enum('Open', 'Cancelled', 'Completed', 'Deleted'), nullable=False, index=True)
+    Status: Mapped[Enum] = mapped_column(Enum('Open', 'Cancelled', 'Completed', 'Deleted'), nullable=False, index=True)
     MedivisitStatus = Column(Text)
     CreationDate = Column(DateTime, nullable=False)
     AppointmentSerNum = Column(INTEGER(11), primary_key=True)
@@ -364,10 +365,10 @@ class PatientDiagnosi(Base):
     __tablename__ = 'PatientDiagnosis'
 
     PatientDiagnosisId = Column(INTEGER(11), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
+    PatientSerNum: Mapped[Patient] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
     RecordedMrn = Column(String(50), nullable=False)
-    DiagnosisSubcodeId = Column(ForeignKey('DiagnosisSubcode.DiagnosisSubcodeId'), nullable=False, index=True)
-    Status = Column(Enum('Active', 'Deleted'), nullable=False, server_default=text("'Active'"))
+    DiagnosisSubcodeId: Mapped[int] = mapped_column(ForeignKey('DiagnosisSubcode.DiagnosisSubcodeId'), nullable=False, index=True)
+    Status: Mapped[Enum] = mapped_column(Enum('Active', 'Deleted'), nullable=False, server_default=text("'Active'"))
     DiagnosisDate = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     CreatedDate = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     LastUpdated = Column(DateTime, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -384,11 +385,11 @@ class SmsAppointment(Base):
     )
 
     SmsAppointmentId = Column(INTEGER(11), primary_key=True)
-    ClinicResourcesSerNum = Column(ForeignKey('ClinicResources.ClinicResourcesSerNum'), nullable=False)
-    AppointmentCodeId = Column(ForeignKey('AppointmentCode.AppointmentCodeId'), nullable=False, index=True)
-    SpecialityGroupId = Column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
+    ClinicResourcesSerNum: Mapped[int] = mapped_column(ForeignKey('ClinicResources.ClinicResourcesSerNum'), nullable=False)
+    AppointmentCodeId: Mapped[int] = mapped_column(ForeignKey('AppointmentCode.AppointmentCodeId'), nullable=False, index=True)
+    SpecialityGroupId: Mapped[int] = mapped_column(ForeignKey('SpecialityGroup.SpecialityGroupId'), nullable=False, index=True)
     SourceSystem = Column(String(50), nullable=False)
-    Type = Column(ForeignKey('SmsMessage.Type'), index=True)
+    Type: Mapped[int] = mapped_column(ForeignKey('SmsMessage.Type'), nullable=True, index=True)
     Active = Column(TINYINT(4), nullable=False, server_default=text('0'))
     LastUpdated = Column(DateTime, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 

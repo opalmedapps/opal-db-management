@@ -1,8 +1,10 @@
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
+from collections.abc import Iterable
 from logging.config import fileConfig
-from typing import Any
 
 from alembic import context
+from alembic.environment import MigrationContext
+from alembic.operations import MigrationScript
 from sqlalchemy import engine_from_config, pool
 
 from db_management import connection, settings
@@ -11,6 +13,7 @@ from db_management.questionnairedb.models import Base
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+print(config.get_section(config.config_ini_section))
 
 config.set_main_option(
     'sqlalchemy.url',
@@ -53,15 +56,21 @@ def run_migrations_offline() -> None:
     # https://github.com/sqlalchemy/alembic/issues/755#issuecomment-735221194
 
 
-def process_revision_directives(directives: Any) -> None:
+def process_revision_directives(
+    context: MigrationContext,  # noqa: WPS442
+    revision: str | Iterable[str | None] | Iterable[str],
+    directives: list[MigrationScript],
+) -> None:
     """Don't create a new migration if no changes are detected.
 
     Args:
-        directives: migration file commands.
+        context: the migration context
+        revision: the revision
+        directives: migration file commands
     """
     if config.cmd_opts and config.cmd_opts.autogenerate:
         script = directives[0]
-        if script.upgrade_ops.is_empty():
+        if script.upgrade_ops and script.upgrade_ops.is_empty():
             directives[:] = []  # noqa: WPS362
 
 
@@ -77,7 +86,7 @@ def run_migrations_online() -> None:
 
     """
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        config.get_section(config.config_ini_section, {}),
         prefix='sqlalchemy.',
         poolclass=pool.NullPool,
     )
@@ -86,6 +95,7 @@ def run_migrations_online() -> None:
         context.configure(
             connection=db_connection,
             target_metadata=target_metadata,
+            process_revision_directives=process_revision_directives,
             # https://stackoverflow.com/questions/12409724/no-changes-detected-in-alembic-autogeneration-of-migrations-with-flask-sqlalchem
             compare_type=True,              # Detect changes in col type with autogenerate
             compare_server_default=True,    # Detect changes in col defaults with autogenerate

@@ -7,7 +7,6 @@ Create Date: 2023-05-19 16:57:01.636308
 """
 import sqlalchemy as sa
 from alembic import op
-from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
 revision = '7ebe01c0c5e0'
@@ -21,7 +20,7 @@ def upgrade() -> None:
     op.alter_column(
         'alert',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=128),
+        existing_type=sa.VARCHAR(length=128),
         server_default=sa.text("''"),
         existing_nullable=False,
         existing_comment='Username of the person who deleted the record',
@@ -33,7 +32,7 @@ def downgrade() -> None:
     op.alter_column(
         'alert',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=128),
+        existing_type=sa.VARCHAR(length=128),
         server_default=None,
         existing_nullable=False,
         existing_comment='Username of the person who deleted the record',
