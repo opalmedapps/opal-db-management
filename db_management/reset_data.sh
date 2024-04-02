@@ -1,7 +1,7 @@
 #!/bin/bash
 # Description: This script resets the test data insertions for OpalDB, QuestionnaireDB, and orms.
 # Args:
-#      Institution: muhc or chusj
+#      Institution: omi or ohigph
 
 set -euo pipefail
 
@@ -15,7 +15,7 @@ log "Beginning test data reset."
 # Check for the institution argument
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <institution>"
-    echo "Valid institutions: muhc, chusj, MUHC, CHUSJ"
+    echo "Valid institutions: omi, ohigph, OMI, OHIGPH"
     exit 1
 fi
 
@@ -23,9 +23,9 @@ fi
 institution=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 
 # Validate the institution
-if [[ "$institution" != "muhc" && "$institution" != "chusj" ]]; then
+if [[ "$institution" != "omi" && "$institution" != "ohigph" ]]; then
     echo "Invalid argument: $institution"
-    echo "Valid arguments: muhc, chusj"
+    echo "Valid arguments: omi, ohigph"
     exit 1
 fi
 
