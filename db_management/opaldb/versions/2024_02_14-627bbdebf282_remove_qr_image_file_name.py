@@ -20,7 +20,7 @@ depends_on = None
 
 UPDATED_HOSPITALMAP_DELETE_TRIGGER = ReplaceableObject(
     name='`hospitalmap_delete_trigger`',
-    sqltext="""AFTER DELETE ON `HospitalMap` FOR EACH ROW BEGIN\n
+    sql_text="""AFTER DELETE ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`,
 `MapURL_FR`, `QRMapAlias`, `MapName_EN`, `MapDescription_EN`, `MapName_FR`,
 `MapDescription_FR`, `DateAdded`, `LastUpdatedBy`, `SessionId`, `ModificationAction`)
@@ -30,7 +30,7 @@ OLD.LastUpdatedBy, OLD.SessionId, 'DELETE');\nEND;\n""")
 
 UPDATED_HOSPITALMAP_INSERT_TRIGGER = ReplaceableObject(
     name='`hospitalmap_insert_trigger`',
-    sqltext="""AFTER INSERT ON `HospitalMap` FOR EACH ROW BEGIN\n
+    sql_text="""AFTER INSERT ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`,
 `MapURL_FR`, `QRMapAlias`, `MapName_EN`, `MapDescription_EN`, `MapName_FR`,
 `MapDescription_FR`, `DateAdded`, `LastUpdatedBy`, `SessionId`, `ModificationAction`)
@@ -40,7 +40,7 @@ NEW.LastUpdatedBy, NEW.SessionId, 'INSERT');\nEND;\n""")
 
 UPDATED_HOSPITALMAP_UPDATE_TRIGGER = ReplaceableObject(
     name='`hospitalmap_update_trigger`',
-    sqltext="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n
+    sql_text="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`,
 `MapURL_FR`, `QRMapAlias`, `MapName_EN`, `MapDescription_EN`, `MapName_FR`,
 `MapDescription_FR`, `DateAdded`, `LastUpdatedBy`, `SessionId`, `ModificationAction`)
@@ -50,7 +50,7 @@ NEW.LastUpdatedBy, NEW.SessionId, 'UPDATE');\nEND;\n""")
 
 OLD_HOSPITALMAP_DELETE_TRIGGER = ReplaceableObject(
     name='`hospitalmap_delete_trigger`',
-    sqltext="""AFTER DELETE ON `HospitalMap` FOR EACH ROW BEGIN\n
+    sql_text="""AFTER DELETE ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`,
 `MapURL_EN`, `MapURL_FR`, `QRMapAlias`, `QRImageFileName`, `MapName_EN`,
 `MapDescription_EN`, `MapName_FR`, `MapDescription_FR`, `DateAdded`,
@@ -62,7 +62,7 @@ OLD.SessionId, 'DELETE');\nEND;\n""")
 
 OLD_HOSPITALMAP_INSERT_TRIGGER = ReplaceableObject(
     name='`hospitalmap_insert_trigger`',
-    sqltext="""AFTER INSERT ON `HospitalMap` FOR EACH ROW BEGIN\n
+    sql_text="""AFTER INSERT ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`,
 `MapURL_EN`, `MapURL_FR`, `QRMapAlias`, `QRImageFileName`, `MapName_EN`,
 `MapDescription_EN`, `MapName_FR`, `MapDescription_FR`, `DateAdded`,
@@ -74,7 +74,7 @@ NEW.SessionId, 'INSERT');\nEND;\n""")
 
 OLD_HOSPITALMAP_UPDATE_TRIGGER = ReplaceableObject(
     name='`hospitalmap_update_trigger`',
-    sqltext="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n
+    sql_text="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`,
 `MapURL_EN`, `MapURL_FR`, `QRMapAlias`, `QRImageFileName`, `MapName_EN`,
 `MapDescription_EN`, `MapName_FR`, `MapDescription_FR`, `DateAdded`,
@@ -89,21 +89,21 @@ def upgrade() -> None:
     """Update QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
     op.drop_column('HospitalMap', 'QRImageFileName')
     op.drop_column('HospitalMapMH', 'QRImageFileName')
-    op.drop_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)
-    op.drop_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)
-    op.drop_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)
-    op.create_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)
-    op.create_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)
-    op.create_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)
+    op.drop_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
 
 
 def downgrade() -> None:
     """Revert QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
     op.add_column('HospitalMapMH', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
     op.add_column('HospitalMap', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
-    op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)
-    op.drop_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)
-    op.drop_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)
-    op.create_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)
-    op.create_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)
-    op.create_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)
+    op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
