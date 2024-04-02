@@ -1,3 +1,5 @@
+-- OPAL RESEARCH INSTITUTION
+
 -- additional records for secondary test patient family (Flintstones) and Addamms
 INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
 (56,	0,	'',	'',	'Fred',	'Flintstone',	'fred_test',	NULL,	'Male',	'1960-08-01 00:00:00',	0,	15144758941,	0,	'fred@opalmedapps.ca',	'EN',	'FLIF60080199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
@@ -28,7 +30,7 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (13,	NULL,	57,	1,	'56190000000000039165519',	8408,	890,	'2023-10-29 12:35:00',	890,	'2023-10-29 12:35:00',	'',	'Y',	'',	'pebbles_2023Oct29_pathology_mch.pdf',	'pebbles_2023Oct29_pathology_mch.pdf',	890,	'2023-10-29 14:35:00',	'T',	'Transfer successful',	'',	'2023-10-29 14:35:00',	0,	'[]',	'2023-10-29 14:35:00');
 
--- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `muhc` demo purposes
+-- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `omi` demo purposes
 -- Pebbles Note
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (14,	NULL,	57,	1,	'56190000000000039165520',	99,	891,	'2023-10-14 12:36:00',	891,	'2023-10-14 12:36:00',	'',	'Y',	'',	'pebbles_2023Oct14_note_mch.pdf',	'pebbles_2023Oct14_note_mch.pdf',	891,	'2023-10-14 15:36:00',	'T',	'Transfer successful',	'',	'2023-10-14 15:36:00',	0,	'[]',	'2023-10-14 15:36:00');
