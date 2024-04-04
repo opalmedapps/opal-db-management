@@ -77,3 +77,15 @@ INSERT INTO `Alias` (`AliasType`, `AliasUpdate`, `AliasName_EN`, `AliasName_FR`,
 ('Appointment', 1, 'RVH Appointment', 'Appointment HRV', '<p>TBD</p>', '<p>ADT</p>', NULL, 28, 1, '#757575', 1),
 ('Appointment', 1, 'MGH Appointment', 'Appointment HGM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1),
 ('Appointment', 1, 'MCH Appointment', 'Appointment HEM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1);
+
+-- Add ORMS role with read on Clinician Dashboard
+INSERT INTO `oaRole` (`name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
+('ORMS', 'ORMS', 0, '', '2024-03-19 09:22:20', 'SCMA6024', '2024-03-19 09:22:31', 'SCMA6024');
+INSERT INTO `oaRoleModule` (`moduleId`, `oaRoleId`, `access`) VALUES
+(25, LAST_INSERT_ID(), 1);
+
+-- Add Medical Records role with read on Patients
+INSERT INTO `oaRole` (`name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
+('Medical Records',	'Dossiers médicaux',	0,	'',	'2024-03-19 09:22:20',	'AGKE6000',	'2024-03-19 09:22:20',	'AGKE6000');
+INSERT INTO `oaRoleModule` (`moduleId`, `oaRoleId`, `access`) VALUES
+(11, LAST_INSERT_ID(), 1);
