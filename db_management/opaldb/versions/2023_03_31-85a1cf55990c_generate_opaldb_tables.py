@@ -1297,7 +1297,7 @@ def upgrade() -> None:
     sa.Column('EducationalMaterialCategoryId', mysql.BIGINT(display_width=20), server_default=sa.text('1'), nullable=False, comment='Foreign key with ID in EducationalMaterialCategory table.'),
     sa.Column('PublishFlag', mysql.INTEGER(display_width=11), server_default=sa.text('0'), nullable=False),
     sa.Column('Name_EN', sa.String(length=200), nullable=False),
-    sa.Column('Name_FR', mysql.VARCHAR(length=200), nullable=False),
+    sa.Column('Name_FR', sa.VARCHAR(length=200), nullable=False),
     sa.Column('URL_EN', sa.String(length=2000), nullable=True),
     sa.Column('URL_FR', sa.String(length=2000), nullable=True),
     sa.Column('URLType_EN', sa.String(length=100), nullable=True),

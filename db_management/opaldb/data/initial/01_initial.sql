@@ -152,7 +152,9 @@ INSERT INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creat
 (32,	'Listener',	'Listener',	0,	'',	'2021-03-26 10:52:35',	'BODO6005',	'2021-03-26 18:59:26',	'MOYI6000'),
 (33,	'Superuser',	'Superutilisateur',	1,	'CABR6008',	'2021-08-25 10:11:59',	'CABR6008',	'2021-08-25 18:13:18',	'CABR6008'),
 (34,	'Superuser',	'Superutilisateur',	0,	'',	'2021-08-25 10:14:37',	'CABR6008',	'2021-08-25 18:53:22',	'CABR6008'),
-(35,	'Lab Results',	'Résultats de laboratoire',	0,	'',	'2021-09-21 08:47:42',	'CABR6008',	'2021-09-21 16:47:42',	'CABR6008');
+(35,	'Lab Results',	'Résultats de laboratoire',	0,	'',	'2021-09-21 08:47:42',	'CABR6008',	'2021-09-21 16:47:42',	'CABR6008'),
+(36,    'ORMS', 'ORMS', 0, '', '2024-03-19 09:22:20', 'AGKE6000', '2024-03-19 09:22:31', 'AGKE6000'),
+(37,	'Medical Records',	'Dossiers médicaux',	0,	'',	'2024-03-19 09:22:20',	'AGKE6000',	'2024-03-19 09:22:20',	'AGKE6000');
 
 INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (1,	1,	1,	3),
@@ -231,7 +233,9 @@ INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (84,	12,	1,	7),
 (85,   	16,	1,	7),
 (86,    21, 29, 7),
-(87,    20, 29, 7);
+(87,    20, 29, 7),
+(88,    25, 36, 1),
+(89,	11,	37,	1);
 
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (3,	'admin',	'9575c78e5351af3746a845294532e436b3ccfc329ff09c21f2c89d2f6bdffd9f',	1,	1,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),

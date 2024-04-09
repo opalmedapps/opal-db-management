@@ -210,7 +210,7 @@ In order to facilitate deployments to new institutions and development, we have 
 These two sets of data can be inserted separately from the CLI.
 Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
 
-To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert institution-specific test data according to the required command line institution argument (`muhc` or `chusj`).
+To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
 
 ```shell
 docker compose run --rm alembic db_management/reset_data.sh <institution>
@@ -241,10 +241,10 @@ docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB d
 Insert data specific to the institution (patients, hospital sites etc.):
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/muhc/
+docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/omi/
 ```
 
-Note: Replace `muhc` with `chusj` to insert data for Sainte-Justine.
+Note: Replace `omi` with `ohigph` to insert data for a general pediatric institute.
 
 Insert test data to OpalDB:
 

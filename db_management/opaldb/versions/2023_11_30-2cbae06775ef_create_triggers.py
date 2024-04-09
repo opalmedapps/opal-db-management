@@ -20,10 +20,10 @@ depends_on = None
 def upgrade() -> None:
     """Create all triggers for OpalDB using custom operations."""
     for trigger in TRIGGER_LIST:
-        op.create_trigger(trigger)
+        op.create_trigger(trigger)  # type: ignore[attr-defined]
 
 
 def downgrade() -> None:
     """Delete all triggers for OpalDB using custom operations."""
     for trigger in TRIGGER_LIST:
-        op.drop_trigger(trigger)
+        op.drop_trigger(trigger)  # type: ignore[attr-defined]
