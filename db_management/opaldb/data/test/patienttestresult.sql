@@ -152,9 +152,15 @@ WHERE PatientSerNum = 57
 
 -- Wednesday's data read by no one (no relationships in Django)
 
--- Lisas data read by Marge
+-- Lisas data read by Marge and received 12 days ago
 UPDATE PatientTestResult
-SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+SET
+CollectedDateTime = DATE_ADD(now(), INTERVAL -12 DAY),
+ResultDateTime = DATE_ADD(now(), INTERVAL -12 DAY),
+DateAdded = DATE_ADD(now(), INTERVAL -12 DAY),
+LastUpdated = DATE_ADD(now(), INTERVAL -12 DAY),
+AvailableAt = DATE_ADD(now(), INTERVAL -12 DAY),
+ReadStatus = 1,
+ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
 WHERE PatientSerNum = 54
 ;

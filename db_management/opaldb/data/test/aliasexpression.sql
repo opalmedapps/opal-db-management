@@ -4191,7 +4191,6 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (9043, 561, 16284, 'NEPH-NURSE-DYP-NEW', 'Nephrologie Infirmiere - Nephrology Nursing Visit : DYP New', '2000-01-01 00:00:00', 74, '2022-12-02 09:00:46', 'HOPTrJZ4Uk'),
 (9044, 561, 16288, 'NEPH-NURSE-NEW', 'Nephrologie Infirmiere - Nephrology Nursing Visit : New', '2000-01-01 00:00:00', 74, '2022-12-02 09:00:46', 'HOPTrJZ4Uk'),
 (9045, 562, 16290, 'NEPH-NURSE-PH-NEW', 'Nephrologie Infirmiere - Nephrology Nursing Visit : Teleconsult. Phone - New', '2000-01-01 00:00:00', 74, '2022-12-02 09:02:21', 'HOPTrJZ4Uk'),
-(9046, 558, 16507, 'DIAL-HEMO-FUP', 'Dialysis - DIAL Hemodialysis Outpt : Follow Up', '2000-01-01 00:00:00', 74, '2022-03-09 14:05:04', '4vLNZDCZ2G'),
 (9047, 562, 16285, 'NEPH-NURSE-DYP-PH-NEW', 'Nephrologie Infirmiere - Nephrology Nursing Visit : DYP Teleconsult. Phone - New', '2000-01-01 00:00:00', 74, '2022-12-02 09:02:21', 'HOPTrJZ4Uk'),
 (9048, 563, 16521, 'CTNPT039-ISCORE', 'Dr. B.P. Lebouché - MCI - CTNPT039-ISCORE STUDY', '2000-01-01 00:00:00', 63, '2022-03-04 13:53:10', 'NNovRuCfo3'),
 (9049, 564, 16522, 'CTNPT039-RQ1', 'Dr. B.P. Lebouché - MCI - CTNPT039-RQ1 STUDY', '2000-01-01 00:00:00', 7, '2022-03-04 15:48:06', 'Qu3CTPhi9A'),

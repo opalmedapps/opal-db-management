@@ -1481,4 +1481,4 @@ INSERT INTO `DiagnosisCode` (`DiagnosisCodeSerNum`, `DiagnosisTranslationSerNum`
 (2959,	1129,	-11187,	-1,	'D24',	'Benign neoplasm of breast',	'2021-08-27 13:59:13',	NULL,	'2023-01-12 16:39:12',	NULL),
 (2960,	1129,	-11430,	-1,	'inflammatory bre',	'Ca of upper-outer quadrant of breast',	'2021-08-27 13:59:13',	NULL,	'2023-01-12 16:39:12',	NULL),
 (2961,	1129,	-9106,	-1,	'T1c N0 (0/6)M0',	'Ca of breast, unspecified',	'2021-08-27 13:59:13',	NULL,	'2023-01-12 16:39:12',	NULL),
-(2962,	1129,	-11431,	-1,	'R31.9',	'Hematuria, unspecified',	'2024-05-10 13:59:13',	NULL,	'2024-05-10 16:39:12',	NULL);
+(2962,	1161,	-11431,	-1,	'R31.9',	'Hematuria, unspecified',	'2024-05-10 13:59:13',	NULL,	'2024-05-10 16:39:12',	NULL);
