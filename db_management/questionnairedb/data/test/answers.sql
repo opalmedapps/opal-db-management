@@ -2450,10 +2450,12 @@ WHERE questionnaireId=204
 and sectionId=154;
 
 INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `respondentUsername`, `respondentDisplayName`) VALUES
--- esas-r answer instances for bart homer and marge
+-- esas-r answer instances for bart homer and marge and lisa
 (184,	136,	1,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
 (190,	136,	2,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
 (207,	136,	3,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
+(208,	136,	4,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
+
 -- breast recons for marge
 (5354,	204,	1,	2,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'1_APP_1.30.0',	'QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2',	'Marge Simpson'),
 (5355,	205,	1,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_1.10.9',	'',	''),
@@ -2472,8 +2474,8 @@ INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status
 -- Update all Questionnaire dates to make the data more similar to a live environment
 -- ESAS-r sent 3 days ago
 UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -3 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -3 DAY)
+SET creationDate = now(),
+    lastUpdated = now()
 WHERE questionnaireId=136;
 -- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
 UPDATE answerQuestionnaire

@@ -11,7 +11,7 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 -- homer: QOL head and neck
 (6,	NULL,	108,	52,	'2000-01-01 00:00:00',	3457,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
--- all get databank consent questionnaire
+-- all get databank consent questionnaire except lisa
 (8,	85504,	157,	51,	'2000-01-01 00:00:00',	5359,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 (9,	85504,	157,	52,	'2000-01-01 00:00:00',	5360,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 (10,	85504,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00'),
@@ -20,7 +20,10 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 (13,	85504,	157,	57,	'2000-01-01 00:00:00',	5364,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
 -- fred: GAD7
-(14,	85504,	50,	56,	'2000-01-01 00:00:00',	5365,	0,	NULL,	'',	'2000-01-01 00:00:00');
+(14,	85504,	50,	56,	'2000-01-01 00:00:00',	5365,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+
+-- add an esas for lisa
+(15,	NULL,	42,	54,	'2000-01-01 00:00:00',	208,	0,	NULL,	'',	'2000-01-01 00:00:00');
 
 -- Update all Questionnaire dates to make the data more similar to a live environment
 
@@ -33,7 +36,7 @@ UPDATE Notification
 SET DateAdded = now(),
     LastUpdated = now()
 WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum in (1, 2, 3);
+AND RefTableRowSerNum in (1, 2, 3, 15);
 
 -- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
 UPDATE Questionnaire

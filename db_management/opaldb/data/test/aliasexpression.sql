@@ -3937,7 +3937,6 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (8786, 554, 15972, 'NEPHR-UROL-FUP', 'Gupta, Indra Rani - Neph Urol RDV Commun : Follow Up', '2000-01-01 00:00:00', 74, '2022-12-01 15:25:01', 'M9yTQRrMRA'),
 (8787, 555, 15974, 'NEPHR-UROL-PH-FUP', 'Gupta, Indra Rani - Neph Urol RDV Commun : Teleconsult. Phone - Follow Up', '2000-01-01 00:00:00', 74, '2022-12-01 15:42:24', 'wOlvSIJ6Vm'),
 (8788, 556, 15976, 'NEPHR-UROL-TV-FUP', 'Gupta, Indra Rani - Neph Urol RDV Commun : Teleconsult. Video - Follow Up', '2000-01-01 00:00:00', 74, '2022-12-01 15:43:33', 'wOlvSIJ6Vm'),
-(8789, 557, 15501, 'NEPHR-DYP-NEW', 'Altenor, Ketly fellow - Nephrology General : DYP New', '2000-01-01 00:00:00', 74, '2022-12-01 15:52:21', 'wOlvSIJ6Vm'),
 (8790, 557, 15505, 'NEPHR-NEW', 'Altenor, Ketly fellow - Nephrology General : New', '2000-01-01 00:00:00', 74, '2022-12-01 15:52:21', 'wOlvSIJ6Vm'),
 (8791, 557, 15996, 'NEPHR-DYP-NEW', 'Johnston, James Fellow - Nephrology General : DYP New', '2000-01-01 00:00:00', 74, '2022-12-01 15:52:21', 'wOlvSIJ6Vm'),
 (8792, 557, 16000, 'NEPHR-NEW', 'Johnston, James Fellow - Nephrology General : New', '2000-01-01 00:00:00', 74, '2022-12-01 15:52:21', 'wOlvSIJ6Vm'),
