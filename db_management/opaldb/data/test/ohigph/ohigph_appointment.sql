@@ -1,7 +1,7 @@
 INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `AppointmentAriaSer`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `CheckinUsername`, `ChangeRequest`, `DateAdded`, `ReadStatus`, `ReadBy`, `SessionId`, `LastUpdated`) VALUES
 
 -- marge
-(217542,	174,	NULL,	51,	2,	217542,	0,	1,	'Open',	'Active',	'2023-04-06 22:00:00',	'2023-04-06 22:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-06 10:40:31',	0,	'[]',	'',	'2023-01-12 16:39:17'),
+-- (217542,	174,	NULL,	51,	2,	217542,	0,	1,	'Open',	'Active',	'2023-04-06 22:00:00',	'2023-04-06 22:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-06 10:40:31',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
 -- bart
 (209498,	147,	NULL,	53,	2,	209498,	0,	3,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17'),
