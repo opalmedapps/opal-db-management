@@ -26,3 +26,76 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 (14,	NULL,	979,	55,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
 (15,	NULL,	979,	56,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
 (16,	NULL,	979,	57,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55');
+
+
+-- Treatment guidelines sent 1 day after diagnosis for all
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -6 DAY)
+WHERE PatientSerNum = 51
+AND `EducationalMaterialControlSerNum` = 105;
+
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -11 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -11 DAY)
+WHERE PatientSerNum = 52
+AND `EducationalMaterialControlSerNum` = 105;
+
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -2 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -2 DAY)
+WHERE PatientSerNum = 53
+AND `EducationalMaterialControlSerNum` = 105;
+
+-- Marge's extra materials sent last week
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -6 DAY)
+WHERE PatientSerNum = 51
+AND `EducationalMaterialSerNum` IN (4, 5, 6);
+
+-- Homers extra materials all sent 10 days ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -10 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -10 DAY)
+WHERE PatientSerNum = 52
+AND `EducationalMaterialSerNum` IN (7, 8);
+
+-- DatabankConsent study sent to all 1 day ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -1 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -1 DAY)
+WHERE `EducationalMaterialControlSerNum` = 979;
+
+
+-- Remove some notifications
+-- Marge read all her own materials
+UPDATE  `EducationalMaterial`
+SET ReadStatus = 1,
+    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE `EducationalMaterialSerNum` IN (1, 4, 5, 6);
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE NotificationControlSerNum = 7
+AND RefTableRowSerNum in (1, 4, 5, 6);
+-- Homer and Marge read homer's materials
+UPDATE  `EducationalMaterial`
+SET ReadStatus = 1,
+    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE `EducationalMaterialSerNum` IN (2, 7, 8);
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE NotificationControlSerNum = 7
+AND RefTableRowSerNum in (2, 7, 8);
+-- Bart and Marge read his materials
+UPDATE  `EducationalMaterial`
+SET ReadStatus = 1,
+    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE `EducationalMaterialSerNum` IN (3);
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE NotificationControlSerNum = 7
+AND RefTableRowSerNum in (3);
