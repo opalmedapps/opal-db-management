@@ -17,4 +17,5 @@ REPLACE INTO `ProfileColumnDefinition` (`ProfileColumnDefinitionSer`, `ColumnNam
 (24, 'WeighPatient', 'Weigh Patient', 'glyphicon-hand-down', 'Enables a patient\'s height, weight and BSA to be measured', '2020-08-18 05:27:31'),
 (25, 'SendForWeight', 'Send For Weight', 'glyphicon-hand-down', 'Similar to the WeightPatient column, except is allows any patient to be sent for weight', '2020-08-18 05:27:32'),
 (26, 'Diagnosis', 'Diagnosis', 'glyphicon-tint', 'Patient Diagnosis', '2022-01-22 00:42:03'),
-(27, 'Labs', 'Labs', 'glyphicon-stats', 'Patient lab result data', '2023-11-14 17:30:00');
+(27, 'Labs', 'Labs', 'glyphicon-stats', 'Patient lab result data', '2023-11-14 17:30:00'),
+(28, 'WearablesData', 'Wearables Data', 'glyphicon-stats', 'Patient wearables data', '2024-05-04 08:30:00');
