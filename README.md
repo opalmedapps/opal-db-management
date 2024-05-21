@@ -1,35 +1,21 @@
 # DB Docker
 
-Opal currently has several different databases for the various services it provides. Some of these are from legacy systems and over time will continue to have their functionality ported to the new Django system via the strangler fig pattern. The databases maintained in this repository include:
+Opal currently has several different databases for the various services it provides.
+Some of these are from legacy systems and over time will continue to have their functionality ported to the new backend component (using the Django web framework) via the strangler fig pattern.
+The databases maintained in this repository include:
 
 1. OpalDB (Legacy)
 2. QuestionnaireDB (Legacy)
 3. OrmsDatabase (Legacy)
 4. OrmsLog (Legacy)
-5. OpalReportDB
+5. OpalReportDB (Legacy)
 
-The Django database is maintained and managed directly in the Django repository, but it does reside on the same server as the above databases. That server can either be brought up by developers in their local environments using the db container from this repository, or by a database administrator in an institution environment.
+The backend database is maintained and managed directly in the backend repository.
 
 ## Prerequisites
 
-- Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
-
-- Generate an SSH key to login to GitLab (if you haven't yet). See: https://gitlab.com/-/profile/keys
-    - https://docs.gitlab.com/ee/ssh/index.html#generate-an-ssh-key-pair
-
-> **Note:** This SSH key cannot have a passphrase. It is recommended to create a dedicated deploy key so your actual SSH key that you usually use can have a passphrase.
-
+- Install Docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 - Have git installed on your local machine
-
-## Running DBV (legacy)
-
-If you need to run DBV, you can use the last built image that contains the remaining DBV projects:
-
-```shell
-docker run --rm --env-file $PWD/envs/dbv.env --volume $PWD/certs/muhc-trust.crt:/certs/muhc-trust.crt -p 8080:8080 registry.gitlab.com/opalmedapps/db-docker/dbv:latest
-```
-
-You can then access it on the corresponding host on port `8080`.
 
 ## Installation
 
@@ -41,92 +27,70 @@ git clone https://gitlab.com/opalmedapps/db-docker.git
 
 ### Step 2: Create a local `.env` file
 
-Create a `.env` file at the root of the project and copy the content of `.env-sample` to it. The file will hold our database credentials and is ignored by git. You can add any other variables you want to keep locally.
+Create a `.env` file at the root of the project and copy the content of `.env.sample` to it.
+The file will hold our database credentials and is ignored by git.
 
-Pay close attention to the following variables:
+Pay close attention to the following variable:
 
-1. `SSH_KEY_PATH` - set this as the absolute path to the SSH private key
-2. `USE_SSL` - set this to '0' unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
+1. `USE_SSL` - set this to `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on [Running the databases with encrypted connections](#running-the-databases-with-encrypted-connections))
 
-### Step 3
+### Step 3: Scaffold the project using docker compose
 
-**Scaffold the project using docker compose**
-The docker compose command uses the directive written in the `docker-compose.yml` file to initiate the required container for a project. In our case, it creates a database using the MariaDB image, a PHP environment using the image built in step 2 of this guide, then finally install `adminer`, a GUI to visualize the databases. Database information (username, password, etc) and port are set in the `.env` file.
+The docker compose command uses the directive written in the `docker-compose.yml` file to initiate the required container for a project.
+In our case, it runs a database service using the MariaDB image, `adminer` as a web GUI to interact with the database, and an `alembic` service to manage database migrations and test data.
+Database information (username, password, etc) and port are set in the `.env` file.
 
 To scaffold our project simply run the command:
-
-```shell
-docker compose up
-```
-
-**Hint:** append `-d` to run in detached mode and not keep it in the foreground.
-
-**Note:** There is a known bug wherein the alembic container can crash on the very first setup of a database. This can happen when the db container hasn't had enough time to actually create the databases before alembic runs and tries to connect to them. If this occurs you can simply re-run `docker compose up` and the second time alembic won't crash. Alternatively, you could choose to run the three containers in proper order to guarantee no errors will occur:
-
-```shell
-docker compose up -d db
-```
 
 ```shell
 docker compose up -d adminer
 ```
 
+This starts adminer and the database.
+
+**Hint:** remove `-d` to run in the foreground instead of detached mode.
+
+Once the database server is initialized and all databases created, run `alembic` to migrate the databases:
+
 ```shell
-docker compose up -d alembic
+docker compose run --rm alembic
 ```
 
-If you open docker-desktop, you should see that you have a app called `opal-database` running with 3 container.
-> For more information about Docker compose view the [official Docker documentation](https://docs.docker.com/compose/)
+See further below for inserting the test data.
 
 ### Step 4: Test your installation
 
-As mentioned in step 3, the docker compose command also runs an `adminer` container. To access the UI in a web browser visit:
-
-- http://localhost:8090/
+As mentioned in step 3, the docker compose command also runs an `adminer` container.
+To access the UI in a web browser visit: http://localhost:8090/
 
 The credentials for logging in can be found in the `.env` file.
 
-You should by now have fully up and running opal databases that can be easily started and stopped using the docker desktop GUI (or via the command-line, whichever you prefer).
+You should by now have fully up and running databases that can be easily started and stopped using the Docker Desktop GUI (or via the command-line, whichever you prefer).
+
+### Step 5: Insert test data
+
+In order to facilitate deployments to new institutions and development, we have split test data used by developers from "initial" data used by institutions in production environments.
+These two sets of data can be inserted separately from the CLI.
+Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
+
+To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
+
+```shell
+docker compose run --rm alembic db_management/reset_data.sh <institution>
+```
 
 ## Running the databases with encrypted connections
 
-If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic.
+If a developer chooses they can also enable SSL/TLS to enforce encryption of all DB connections and traffic.
 
-### Generating Self-signed Certificates
+Follow the guide to [generate self-signed certificates](https://opalmedapps.gitlab.io/docs/development/guides/self_signed_certificates/).
 
-To generate the SSL certificates for the database container and the client applications:
+### Configuring the use of TLS
 
-1. Open a bash CLI and navigate to the `certs/` directory of your db-docker. There should be three files there already, an `openssl-ca.cnf`, an `openssl-server.cnf`, and a `v3.ext`. These provide the details for openssl to generate the various certificates required to enable encrypted connections between any client application container and the database container.
-2. Generate the certificate authority (CA) certificate:
-
-    ```shell
-    # Create CA private key
-    openssl genrsa 4096 > ca-key.pem
-    # Create CA public key
-    openssl req -config openssl-ca.cnf -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem
-    ```
-
-3. Generate the server certificate:
-
-    ```shell
-    # Create the server's private key and a certificate request for the CA
-    openssl req -config openssl-server.cnf -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem
-    # let the CA issue a certificate for the server
-    openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem -sha256 -extfile v3.ext
-    ```
-
-4. Check the validity of these certs (a message like 'certificate OK' should appear.)
-
-    ```shell
-    openssl verify -CAfile ca.pem server-cert.pem
-    openssl verify -CAfile ca.pem ca.pem
-    ```
-
-### Configuring the use of SSL/TLS
-
-To enable SSL/TLS in MariaDB and all application containers:
+To enable TLS in MariaDB and all application containers:
 
 1. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (e.g., `/certs/ca.pem`).
+Note that this file needs to be accessible inside the containers (the setup provides a volume moount from `./certs` to `/certs` already).
 
 2. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
 
@@ -204,19 +168,9 @@ Note: When interacting with `alembic` you need to provide the database you want 
 
 To go to the latest version for the database, simply run `alembic --name <dbname> </dbname>upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
-#### Inserting new test data
+#### Informational only: Inserting new test data
 
-In order to facilitate deployments to new institutions and development, we have split test data used by developers from "initial" data used by institutions in production environments.
-These two sets of data can be inserted separately from the CLI.
-Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
-
-To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
-
-```shell
-docker compose run --rm alembic db_management/reset_data.sh <institution>
-```
-
-The description of the ten commands below is left for informational purposes, but these are not required to be run if the reset_data script is called first.
+**Note:** The description of the ten commands below is left for informational purposes, but these are not required to be run if the `reset_data` script is called first (see the [inserting test data](#step-5-insert-test-data) section).
 
 Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real Production databases.
 
@@ -252,7 +206,8 @@ Insert test data to OpalDB:
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
 ```
 
-The same commands can be used for inserting data to QuestionnaireDB and the OrmsDatabase databases, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data. So to complete your initial and test data insertions:
+The same commands can be used for inserting data to QuestionnaireDB and the OrmsDatabase databases, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data.
+So to complete your initial and test data insertions:
 
 ```shell
 docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
@@ -309,3 +264,14 @@ To run the tests:
 ```shell
 pytest
 ```
+
+## Optional: Running DBV (legacy)
+
+If you need to run DBV, you can use the last built image that contains the remaining DBV projects.
+The below command shows an example where the required environment variables are loaded from a file and a custom certificate for the TLS connection to the DB server is used.
+
+```shell
+docker run --rm --env-file $PWD/envs/dbv.env --volume $PWD/certs/muhc-trust.crt:/certs/muhc-trust.crt -p 8080:8080 registry.gitlab.com/opalmedapps/db-docker/dbv:latest
+```
+
+You can then access it on the corresponding host on port `8080`.
