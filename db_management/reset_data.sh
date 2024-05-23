@@ -43,6 +43,7 @@ declare -a commands=(
 "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/"
 "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/initial/"
 "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/"
+"python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/$institution/"
 )
 
 
