@@ -46,3 +46,19 @@ INSERT INTO `PatientTestResult` VALUES (4000031, 4, 78, 58, '', 14, '2023-10-15 
 INSERT INTO `PatientTestResult` VALUES (4000032, 4, 81, 58, 'H', 15, '2023-10-15 07:54:00', '2023-10-15 08:43:08', 0, 0.5, '0.00-0.50', 1, '1.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
 INSERT INTO `PatientTestResult` VALUES (4000033, 4, 82, 58, 'H', 16, '2023-10-15 07:54:00', '2023-10-15 08:43:08', 0, 0.22, '0.00-0.22', 1, '1.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
 INSERT INTO `PatientTestResult` VALUES (4000034, 4, 83, 58, '', 17, '2023-10-15 07:54:00', '2023-10-15 08:43:08', NULL, NULL, '', 5, '5.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
+
+
+-- Mark all initial PatientTestResults as read
+-- Pebbles's data read by Fred
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE PatientSerNum = 57
+;
+
+-- Fred's data read by Fred
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE PatientSerNum = 56
+;
