@@ -1,7 +1,7 @@
 services:
   db:
     container_name: opal-dbs
-    image: mariadb:10.11.7-jammy
+    image: mariadb:10.11.8-jammy
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
