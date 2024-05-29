@@ -11,7 +11,6 @@ INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientI
 (51,	0,	'',	'',	'Marge',	'Simpson',	'marge_test',	NULL,	'Female',	'1986-10-01 00:00:00',	0,	15144758941,	0,	'marge@opalmedapps.ca',	'EN',	'SIMM86600199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
 (52,	0,	'',	'',	'Homer',	'Simpson',	'homer_test',	NULL,	'Male',	'1983-05-12 00:00:00',	0,	14381234567,	0,	'homer@opalmedapps.ca',	'EN',	'SIMH83051299',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
 (53,	0,	'',	'',	'Bart',	    'Simpson',	'bart_test',	NULL,	'Other',	'2009-02-23 00:00:00',	0,	61292507111,	0,	'bart@opalmedapps.ca',	'EN',	'SIMB13022399',	'3',	DATE_ADD(NOW(), INTERVAL -14 DAY),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -14 DAY)),
-(54,	0,	'',	'',	'Lisa',	    'Simpson',	'lisa_test',	NULL,	'Female',	'2014-05-09 00:00:00',	0,	61292507111,	0,	'lisa@opalmedapps.ca',	'EN',	'SIML14550999',	'3',	DATE_ADD(NOW(), INTERVAL -7 DAY),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	NULL,	NULL),
 (55,	0,	'',	'',	'Mona',	    'Simpson',	'mona_test',	NULL,	'Female',	'1940-03-15 00:00:00',	0,	15144758941,	0,	'mona@opalmedapps.ca',	'EN',	'SIMM40531599',	'1',	DATE_ADD(NOW(), INTERVAL -1 YEAR),	'2019-01-01 00:00:00',	1,	'Deceased',	'2021-05-29 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 YEAR));
 
 UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0;
@@ -20,7 +19,6 @@ INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred
 (51,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
 (52,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
 (53,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
-(54,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
 (55,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0);
 
 INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `PatientSerNum`, `Hospital_Identifier_Type_Code`, `MRN`, `Is_Active`) VALUES
@@ -28,7 +26,6 @@ INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `Pa
 (2,	52,	'RVH',	'9999997',	1),
 (3,	52,	'MGH',	'9999998',	1),
 (4,	53,	'MCH',	'9999996',	1),
-(5,	54,	'MCH',	'9999993',	1),
 (6,	55,	'RVH',	'9999993',	1),
 (7,	55,	'MCH',	'5407383',	1),
 (8,	51,	'LAC',	'0389731',	1);
@@ -83,107 +80,4 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (8114, 382, 1233, 'INTRA TREAT OUT', 'INTRA TREAT OUT', '2022-01-21 17:58:01', 3, '2022-01-21 20:45:32', 'SUlHb39TI7'),
 (8408,	464,	4198,	'Pathology',	'Pathology',	'2019-01-01 00:00:00',	3,	'2023-08-21 11:02:36',	'kV0AUjLT35');
 
-INSERT INTO `Staff` (`StaffSerNum`, `SourceDatabaseSerNum`, `StaffId`, `FirstName`, `LastName`, `LastUpdated`) VALUES
-(890,	1,	'1300',	'John',	'Frink', '2023-06-08 12:35:00'),
-(891,	1,	'1301',	'',	'Velimirovic', '2023-06-08 12:35:00'),
-(892,	1,	'1302',	'Juan',	'Riviera', '2023-06-08 12:35:00'),
-(893,	1,	'1303',	'',	'Hibbert', '2023-06-08 12:35:00'),
-(894,	1,	'1304',	'John',	'Thurmond', '2023-06-08 12:35:00');
 
--- Documents: Pathology && Clinical Notes
--- Filestore must have these pdfs inserted separately (and readable by the listener) for the chart Clinical Reports section to function properly
-
--- Bart
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(5,	NULL,	53,	1,	'56190000000000039165511',	8408,	890,	'2023-08-22 10:35:00',	890,	'2023-08-29 10:35:00',	'',	'Y',	'',	'bart_2009Feb23_pathology.pdf',	'bart_2009Feb23_pathology.pdf',	890,	'2023-08-29 10:36:00',	'T',	'Transfer successful',	'',	'2023-08-30 10:36:00',	0,	'[]',	'2023-08-30 10:36:00');
-UPDATE `Document`
-SET
-`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -5 DAY),
-`DateOfService` = DATE_ADD(now(), INTERVAL -5 DAY),
-`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -5 DAY),
-`DateAdded` = DATE_ADD(now(), INTERVAL -5 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE PatientSerNum = 53;
-
--- Homer
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(6,	NULL,	52,	1,	'56190000000000039165512',	8408,	890,	'2022-06-13 9:15:00',	890,	'2022-06-20 09:15:00',	'',	'Y',	'',	'homer_1983May12_pathology.pdf',	'homer_1983May12_pathology.pdf',	890,	'2022-06-20 09:16:00',	'T',	'Transfer successful',	'',	'2023-06-21 9:38:26',	0,	'[]',	'2023-06-21 9:38:26');
-UPDATE `Document`
-SET
-`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -8 DAY),
-`DateOfService` = DATE_ADD(now(), INTERVAL -8 DAY),
-`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -8 DAY),
-`DateAdded` = DATE_ADD(now(), INTERVAL -8 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -8 DAY)
-WHERE PatientSerNum = 52;
-
--- Marge
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(7,	NULL,	51,	1,	'56190000000000039165513',	8408,	890,	'2021-11-28 11:52:00',	890,	'2021-12-05 11:52:00',	'',	'Y',	'',	'marge_1986Oct01_pathology_1.pdf',	'marge_1986Oct01_pathology_1.pdf',	890,	'2021-12-05 11:53:00',	'T',	'Transfer successful',	'',	'2021-12-06 11:53:00',	0,	'[]',	'2021-12-06 11:53:00');
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(8,	NULL,	51,	1,	'56190000000000039165514',	8408,	890,	'2023-04-12 10:26:00',	890,	'2023-04-19 10:26:00',	'',	'Y',	'',	'marge_1986Oct01_pathology_2.pdf',	'marge_1986Oct01_pathology_2.pdf',	890,	'2023-04-19 10:27:00',	'T',	'Transfer successful',	'',	'2023-04-20 10:27:00',	0,	'[]',	'2023-04-20 10:27:00');
-UPDATE `Document`
-SET
-`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -2 DAY),
-`DateOfService` = DATE_ADD(now(), INTERVAL -2 DAY),
-`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -2 DAY),
-`DateAdded` = DATE_ADD(now(), INTERVAL -2 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -2 DAY)
-WHERE PatientSerNum = 51;
-
-
--- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `omi` demo purposes
--- Bart
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(9,	NULL,	53,	1,	'56190000000000039165515',	99,	891,	'2023-08-22 10:35:00',	891,	'2023-08-29 10:35:00',	'',	'Y',	'',	'bart_2009Feb23_note_mch.pdf',	'bart_2009Feb23_note_mch.pdf',	891,	'2023-08-29 10:36:00',	'T',	'Transfer successful',	'',	'2023-08-30 10:36:00',	0,	'[]',	'2023-08-30 10:36:00');
-UPDATE `Document`
-SET
-`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -5 DAY),
-`DateOfService` = DATE_ADD(now(), INTERVAL -5 DAY),
-`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -5 DAY),
-`DateAdded` = DATE_ADD(now(), INTERVAL -5 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE PatientSerNum = 53;
--- Homer
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(10,	NULL,	52,	1,	'56190000000000039165516',	99,	892,	'2023-08-22 10:35:00',	892,	'2023-08-29 10:35:00',	'',	'Y',	'',	'homer_1983May12_note_mgh.pdf',	'homer_1983May12_note_mgh.pdf',	892,	'2023-08-29 10:36:00',	'T',	'Transfer successful',	'',	'2023-08-30 10:36:00',	0,	'[]',	'2023-08-30 10:36:00');
-UPDATE `Document`
-SET
-`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -3 DAY),
-`DateOfService` = DATE_ADD(now(), INTERVAL -3 DAY),
-`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -3 DAY),
-`DateAdded` = DATE_ADD(now(), INTERVAL -3 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE PatientSerNum = 52;
-
--- Marge
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(11,	NULL,	51,	1,	'56190000000000039165517',	99,	893,	'2023-08-22 10:35:00',	893,	'2023-08-29 10:35:00',	'',	'Y',	'',	'marge_1986Oct01_note_rvh.pdf',	'marge_1986Oct01_note_rvh.pdf',	893,	'2023-08-29 10:36:00',	'T',	'Transfer successful',	'',	'2023-08-30 10:36:00',	0,	'[]',	'2023-08-30 10:36:00');
-UPDATE `Document`
-SET
-`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -1 DAY),
-`DateOfService` = DATE_ADD(now(), INTERVAL -1 DAY),
-`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -1 DAY),
-`DateAdded` = DATE_ADD(now(), INTERVAL -1 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -1 DAY)
-WHERE PatientSerNum = 51;
-
-
-UPDATE `Document`
-SET `ReadStatus` = 1,
-    `ReadBy` = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE
-    `PatientSerNum` = 51
-;
-UPDATE `Document`
-SET `ReadStatus` = 1,
-    `ReadBy` = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE
-    `PatientSerNum` = 52
-;
-UPDATE `Document`
-SET `ReadStatus` = 1,
-    `ReadBy` = '["SipDLZCcOyTYj7O3C8HnWLalb4G3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE
-    `PatientSerNum` = 53
-;
