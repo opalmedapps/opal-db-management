@@ -1,25 +1,3 @@
--- OPAL RESEARCH INSTITUTION
-
--- additional records for secondary test patient family (Flintstones) and Addamms
-INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
-(56,	0,	'',	'',	'Fred',	'Flintstone',	'fred_test',	NULL,	'Male',	'1960-08-01 00:00:00',	0,	15144758941,	0,	'fred@opalmedapps.ca',	'EN',	'FLIF60080199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
-(57,	0,	'',	'',	'Pebbles',	'Flintstone',	'pebbles_test',	NULL,	'Female',	'2015-02-22 00:00:00',	0,	14381234567,	0,	'pebbles@opalmedapps.ca',	'EN',	'FLIP15022299',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	NULL,	NULL),
-(58,	0,	'',	'',	'Wednesday',	'Addams',	'wednesday_test',	NULL,	'Female',	'2009-02-13 00:00:00',	0,	14381234567,	0,	'wednesday@opalmedapps.ca',	'EN',	'ADAW09021399',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	NULL,	NULL);
-UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0;
-
-INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred`, `LastUpdated`, `TransferFlag`) VALUES
-(56,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
-(57,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
-(58,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0);
-
-INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `PatientSerNum`, `Hospital_Identifier_Type_Code`, `MRN`, `Is_Active`) VALUES
-(9, 56, 'RVH',  '9999998',  1),
-(10,	57,	'MCH',	'9999999',	1),
-(11,	58,	'RVH',	'9999991',	1);
-
-INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
-(5,	'Patient',	56,	'ZYHAjhNy6hhr4tOW8nFaVEeKngt1',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59');
-
 -- Documents: Pathology && Clinical Notes
 -- Filestore must have these pdfs inserted separately (and readable by the listener) for the chart Clinical Reports section to function properly
 
@@ -40,12 +18,37 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 
 -- Wednesday Pathology
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(16,	NULL,	57,	1,	'56190000000000039165520',	8408,	890,	'2024-02-19 12:35:00',	890,	'2024-02-19 12:35:00',	'',	'Y',	'',	'wednesday_2024Feb19_pathology_rvh.pdf',	'wednesday_2024Feb19_pathology_rvh.pdf',	890,	'2024-02-19 14:35:00',	'T',	'Transfer successful',	'',	'2024-02-19 14:35:00',	0,	'[]',	'2024-02-19 14:35:00');
+(16,	NULL,	58,	1,	'56190000000000039165520',	8408,	890,	'2024-02-19 12:35:00',	890,	'2024-02-19 12:35:00',	'',	'Y',	'',	'wednesday_2024Feb19_pathology_rvh.pdf',	'wednesday_2024Feb19_pathology_rvh.pdf',	890,	'2024-02-19 14:35:00',	'T',	'Transfer successful',	'',	'2024-02-19 14:35:00',	0,	'[]',	'2024-02-19 14:35:00');
 
-
+-- Fred and pebbles 4 days ago
 UPDATE `Document`
 SET `CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -4 DAY),
-    `DateAdded` = DATE_ADD(now(), INTERVAL -3 DAY),
-    `LastUpdated` = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE `PatientSerNum` NOT IN (51,52,53)
+    `DateAdded` = DATE_ADD(now(), INTERVAL -4 DAY),
+    `LastUpdated` = DATE_ADD(now(), INTERVAL -4 DAY)
+WHERE `PatientSerNum` IN (56, 57)
+;
+
+-- Wednesday 15 days ago
+UPDATE `Document`
+SET `CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -15 DAY),
+    `DateAdded` = DATE_ADD(now(), INTERVAL -15 DAY),
+    `LastUpdated` = DATE_ADD(now(), INTERVAL -15 DAY)
+WHERE `PatientSerNum` = 58
+;
+
+
+-- pebbles docs read by fred
+UPDATE `Document`
+SET `ReadStatus` = 1,
+    `ReadBy` = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE
+    `PatientSerNum` = 57
+;
+
+-- freds docs read by fred
+UPDATE `Document`
+SET `ReadStatus` = 1,
+    `ReadBy` = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE
+    `PatientSerNum` = 56
 ;

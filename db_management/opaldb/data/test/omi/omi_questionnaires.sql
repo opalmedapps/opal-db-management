@@ -1,30 +1,20 @@
 INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
 -- all get: esas-r
-(1,	NULL,	42,	51,	'2000-01-01 00:00:00',	184,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(2,	NULL,	42,	52,	'2000-01-01 00:00:00',	190,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(3,	NULL,	42,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(1,	1,	42,	51,	'2000-01-01 00:00:00',	184,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(2,	1,	42,	52,	'2000-01-01 00:00:00',	190,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(3,	1,	42,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
 -- marge: breast, preop completed
-(4,	NULL,	155,	51,	'2000-01-01 00:00:00',	5354,	1,	NULL,	'',	'2000-01-01 00:00:00'),
-(5,	NULL,	156,	51,	'2000-01-01 00:00:00',	5355,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(4,	1,	155,	51,	'2000-01-01 00:00:00',	5354,	1,	NULL,	'',	'2000-01-01 00:00:00'),
+(5,	1,	156,	51,	'2000-01-01 00:00:00',	5355,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
 -- homer: QOL head and neck
-(6,	NULL,	108,	52,	'2000-01-01 00:00:00',	3457,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(6,	1,	108,	52,	'2000-01-01 00:00:00',	3457,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
 -- all get databank consent questionnaire except lisa
-(8,	85504,	157,	51,	'2000-01-01 00:00:00',	5359,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(9,	85504,	157,	52,	'2000-01-01 00:00:00',	5360,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(10,	85504,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(11,	85504,	157,	55,	'2000-01-01 00:00:00',	5362,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(12,	85504,	157,	56,	'2000-01-01 00:00:00',	5363,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(13,	85504,	157,	57,	'2000-01-01 00:00:00',	5364,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- fred: GAD7
-(14,	85504,	50,	56,	'2000-01-01 00:00:00',	5365,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- add an esas for lisa
-(15,	NULL,	42,	54,	'2000-01-01 00:00:00',	208,	0,	NULL,	'',	'2000-01-01 00:00:00');
-
+(8,	1,	157,	51,	'2000-01-01 00:00:00',	5359,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(9,	1,	157,	52,	'2000-01-01 00:00:00',	5360,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(10,	1,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00');
 -- Update all Questionnaire dates to make the data more similar to a live environment
 
 -- ESAS-r sent today
@@ -36,7 +26,7 @@ UPDATE Notification
 SET DateAdded = now(),
     LastUpdated = now()
 WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum in (1, 2, 3, 15);
+AND RefTableRowSerNum in (1, 2, 3);
 
 -- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
 UPDATE Questionnaire
@@ -80,18 +70,7 @@ UPDATE Notification
 SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
     LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
 WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum IN (8, 9, 10, 11, 12, 13);
-
--- GAD7 sent 7 days ago
-UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
-WHERE QuestionnaireControlSerNum = 50;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum = 14;
+AND RefTableRowSerNum IN (8, 9, 10);
 
 -- Set Marge's preop notification to `Read` following the insert operation trigger
 UPDATE Notification
