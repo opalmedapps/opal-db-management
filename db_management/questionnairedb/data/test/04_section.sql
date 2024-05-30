@@ -141,4 +141,3 @@ INSERT INTO `section` (`ID`, `questionnaireId`, `title`, `instruction`, `order`,
 (197,	247,	20052,	20053,	1,	0,	'',	'2023-09-22 10:39:05',	'AGKE6000',	'2023-09-22 14:39:18',	'AGKE6000'),
 -- finalized databank consent form
 (198,	248,	20081,	20082,	1,	0,	'',	'2023-12-20 13:52:15',	'AGKE6000',	'2023-12-20 13:52:16',	'AGKE6000');
-
