@@ -1374,4 +1374,7 @@ INSERT INTO `TestExpression` (`TestExpressionSerNum`, `TestControlSerNum`, `Test
 (1375,	NULL,	'CD:1597617',	'Hepatitis Bs Ag Neutralization',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	NULL,	4,	'2023-01-12 16:39:14',	NULL,	'-1',	0,	'',	'cronjob',	'cronjob'),
 (1376,	NULL,	'AAMC',	'AU Comment microscopie auto',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	NULL,	4,	'2023-01-12 16:39:14',	NULL,	'-1',	0,	'',	'cronjob',	'cronjob'),
 (1377,	NULL,	'MITO',	'Mitotane',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	NULL,	4,	'2023-01-12 16:39:14',	NULL,	'-1',	0,	'',	'cronjob',	'cronjob'),
-(1378,	NULL,	'EWGS',	'MO Sarcome Ewing',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	NULL,	4,	'2023-01-12 16:39:14',	NULL,	'-1',	0,	'',	'cronjob',	'cronjob');
+(1378,	NULL,	'EWGS',	'MO Sarcome Ewing',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	NULL,	4,	'2023-01-12 16:39:14',	NULL,	'-1',	0,	'',	'cronjob',	'cronjob'),
+(1381,  1414,   'UIBC', 'UIBC', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 4, '2022-09-06 15:26:57', 'Z5hjoPuMOW', '-1', 0, '', 'cronjob', 'cronjob'),
+(1382,  1262,    'TIBC', 'Iron Binding Capacity Total', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 4, '2022-04-29 10:21:47', 'lAxgxvsKkI', '-1', 0, '', 'cronjob', 'cronjob');
+

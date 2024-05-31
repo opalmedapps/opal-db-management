@@ -984,3 +984,193 @@ CREATE EVENT `evt_Cleanup` ON SCHEDULE EVERY 1 DAY STARTS '2023-10-25 01:00:00' 
 	-- remove old and deleted appointmens
 	call proc_AppointmentPendingCleanup;
 END;
+
+
+USE OpalDB;
+DROP PROCEDURE IF EXISTS `fetch_patient_data`;
+CREATE PROCEDURE `fetch_patient_data` (IN `i_OpalDB_PatientSerNum` INT)
+BEGIN
+    DECLARE ser_num_valid INT;
+    DECLARE function_status VARCHAR(100);
+
+    SET @patient_ser_num = i_OpalDB_PatientSerNum;
+    SET ser_num_valid = (SELECT COUNT(*) FROM `OpalDB`.Patient WHERE PatientSerNum = @patient_ser_num);
+
+    IF ser_num_valid = 1 THEN
+      -- identifiers
+		SELECT * FROM `OpalDB`.Patient p WHERE PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.PatientControl pc WHERE pc.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.Patient_Hospital_Identifier phi WHERE phi.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.Users u WHERE u.UserTypeSerNum=@patient_ser_num;
+
+		-- diagnosis
+		SELECT * FROM `OpalDB`.Diagnosis d WHERE d.PatientSerNum=@patient_ser_num;
+
+		-- announcements
+		SELECT * FROM `OpalDB`.Announcement a WHERE a.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.PostControl pc WHERE pc.PostControlSerNum IN (SELECT a.PostControlSerNum FROM `OpalDB`.Announcement a WHERE a.PatientSerNum=@patient_ser_num);
+
+		-- documents (To add in db-docker/backend: Pathology)
+		SELECT * FROM `OpalDB`.Document d WHERE d.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.AliasExpression ae WHERE ae.AliasExpressionSerNum IN (SELECT d.AliasExpressionSerNum FROM `OpalDB`.Document d WHERE d.PatientSerNum=@patient_ser_num);
+		SELECT * FROM `OpalDB`.Alias a WHERE a.AliasSerNum IN (SELECT ae.AliasSerNum FROM `OpalDB`.AliasExpression ae WHERE ae.AliasExpressionSerNum IN (SELECT d.AliasExpressionSerNum FROM `OpalDB`.Document d WHERE d.PatientSerNum=@patient_ser_num));
+
+
+		-- patient actions and activity logs
+		SELECT * FROM `OpalDB`.PatientActionLog pal WHERE pal.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.PatientActivityLog pal WHERE pal.Username IN (SELECT u.Username FROM `OpalDB`.Users u WHERE u.UserTypeSerNum=@patient_ser_num);
+
+		-- appointment data
+		SELECT * FROM `OpalDB`.Appointment a WHERE a.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.AliasExpression ae WHERE ae.AliasExpressionSerNum IN (SELECT a.AliasExpressionSerNum FROM `OpalDB`.Appointment a WHERE a.PatientSerNum=@patient_ser_num);
+		SELECT * FROM `OpalDB`.Alias a WHERE a.AliasSerNum IN (SELECT ae.AliasSerNum FROM `OpalDB`.AliasExpression ae WHERE ae.AliasExpressionSerNum IN (SELECT a.AliasExpressionSerNum FROM `OpalDB`.Appointment a WHERE a.PatientSerNum=@patient_ser_num));
+
+		-- labs
+		SELECT * FROM `OpalDB`.PatientTestResult ptr WHERE ptr.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.TestGroupExpression tge WHERE tge.TestGroupExpressionSerNum IN (SELECT ptr.TestGroupExpressionSerNum FROM `OpalDB`.PatientTestResult ptr WHERE ptr.PatientSerNum=@patient_ser_num);
+		SELECT * FROM `OpalDB`.TestExpression te WHERE te.TestExpressionSerNum IN (SELECT ptr.TestExpressionSerNum FROM `OpalDB`.PatientTestResult ptr WHERE ptr.PatientSerNum=@patient_ser_num);
+
+		-- tx team messages
+		SELECT * FROM `OpalDB`.TxTeamMessage tx WHERE tx.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.PostControl pc WHERE pc.PostControlSerNum IN (SELECT tx.PostControlSerNum FROM `OpalDB`.TxTeamMessage tx WHERE tx.PatientSerNum=@patient_ser_num);
+
+		-- educational materials
+		SELECT * FROM `OpalDB`.EducationalMaterial em WHERE em.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.EducationalMaterialControl emc WHERE emc.EducationalMaterialControlSerNum IN (SELECT em.EducationalMaterialControlSerNum FROM `OpalDB`.EducationalMaterial em WHERE em.PatientSerNum=@patient_ser_num);
+		SELECT * FROM `OpalDB`.EducationalMaterialPackageContent empc WHERE empc.EducationalMaterialControlSerNum IN (SELECT em.EducationalMaterialControlSerNum FROM `OpalDB`.EducationalMaterial em WHERE em.PatientSerNum=@patient_ser_num);
+		SELECT *
+		   FROM `OpalDB`.EducationalMaterialControl emc WHERE emc.EducationalMaterialControlSerNum IN (
+				SELECT empc.ParentSerNum FROM `OpalDB`.EducationalMaterialPackageContent empc
+				WHERE empc.EducationalMaterialControlSerNum IN (
+					SELECT em.EducationalMaterialControlSerNum
+					FROM `OpalDB`.EducationalMaterial em
+					WHERE em.PatientSerNum=@patient_ser_num
+				)
+		);
+
+		-- Notifications ?
+		-- These should get auto-inserted by the Notification triggers, so can be ignored
+		-- SELECT * FROM Notification n WHERE n.PatientSerNum=@patient_ser_num;
+
+		-- questionnaires
+		SELECT * FROM `OpalDB`.Questionnaire q WHERE q.PatientSerNum=@patient_ser_num;
+		SELECT * FROM `OpalDB`.QuestionnaireControl qc WHERE qc.QuestionnaireControlSerNum IN (SELECT q.QuestionnaireControlSerNum FROM `OpalDB`.Questionnaire q WHERE q.PatientSerNum=@patient_ser_num);
+
+
+		-- ------------------------------------------- QUESTIONNAIREDB DATA
+
+		-- Get patient identifier for QstnDB
+		SELECT * FROM `QuestionnaireDB`.patient p WHERE p.externalId=@patient_ser_num;
+		SET @patient_qstndb_id = (SELECT p.ID FROM `QuestionnaireDB`.patient p WHERE p.externalId=@patient_ser_num);
+
+		-- Start from answerQuestionnaire records to get questionnaire records
+		SELECT * FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0;
+
+		-- ------------------------------------------- All data for the definition of the questionnaires themselves
+
+		SELECT * FROM `QuestionnaireDB`.questionnaire q WHERE q.ID IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0);
+		-- all dictionary contents for the questionnaire itself
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.title FROM `QuestionnaireDB`.questionnaire q WHERE q.ID IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		   UNION
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.nickname FROM `QuestionnaireDB`.questionnaire q WHERE q.ID IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		   UNION
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.`description` FROM `QuestionnaireDB`.questionnaire q WHERE q.ID IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		   UNION
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.instruction FROM `QuestionnaireDB`.questionnaire q WHERE q.ID IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		;
+
+		SELECT * FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0);
+		-- dictionary contents for section
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT sec.title FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		UNION
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT sec.instruction FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		;
+
+		SELECT * FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0));
+		SELECT * FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		);
+		-- dictionary contents for question
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.display FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		))
+		   UNION
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.`definition` FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		))
+		   UNION
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT q.`question` FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		));
+
+		-- checkbox options and translations for the relevant questions
+		SELECT * FROM `QuestionnaireDB`.checkbox che WHERE che.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		));
+		SELECT * FROM `QuestionnaireDB`.checkboxOption copt WHERE copt.parentTableId IN (SELECT che.ID FROM `QuestionnaireDB`.checkbox che WHERE che.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		)));
+		-- dictionary content for the checkbox options
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT copt.`description` FROM `QuestionnaireDB`.checkboxOption copt WHERE copt.parentTableId IN (SELECT che.ID FROM `QuestionnaireDB`.checkbox che WHERE che.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		))));
+
+		-- radio buttons and translations for the relevant questions
+		SELECT * FROM `QuestionnaireDB`.radioButton rb WHERE rb.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		));
+		SELECT * FROM `QuestionnaireDB`.radioButtonOption rbopt WHERE rbopt.parentTableId IN (SELECT rb.ID FROM `QuestionnaireDB`.radioButton rb WHERE rb.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		)));
+		-- dictionary content for radio button options
+		SELECT * FROM `QuestionnaireDB`.dictionary d WHERE d.contentId IN (SELECT rbopt.`description` FROM `QuestionnaireDB`.radioButtonOption rbopt WHERE rbopt.parentTableId IN (SELECT rb.ID FROM `QuestionnaireDB`.radioButton rb WHERE rb.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		))));
+
+		-- sliders
+		SELECT * FROM `QuestionnaireDB`.slider sl WHERE sl.questionId IN (SELECT q.ID FROM `QuestionnaireDB`.question q WHERE q.ID IN (
+			SELECT qsec.questionId FROM `QuestionnaireDB`.questionSection qsec WHERE qsec.sectionId IN (SELECT sec.ID FROM `QuestionnaireDB`.section sec WHERE sec.questionnaireId IN (SELECT aq.questionnaireId FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0))
+		));
+
+		-- ------------------------------------------- All data for the answers to the questionnaires
+
+		SELECT * FROM `QuestionnaireDB`.answerSection asec WHERE asec.answerQuestionnaireId IN (SELECT aq.ID FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0);
+		SELECT * FROM `QuestionnaireDB`.answer a WHERE a.answerSectionId IN (SELECT asec.ID FROM `QuestionnaireDB`.answerSection asec WHERE asec.answerQuestionnaireId IN (SELECT aq.ID FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0));
+
+		SELECT * FROM `QuestionnaireDB`.answerCheckbox ache WHERE ache.answerId IN (
+			SELECT a.ID FROM `QuestionnaireDB`.answer a WHERE a.answerSectionId IN (
+				SELECT asec.ID FROM `QuestionnaireDB`.answerSection asec WHERE asec.answerQuestionnaireId IN (
+					SELECT aq.ID FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0
+				)
+			)
+		);
+		SELECT * FROM `QuestionnaireDB`.answerRadioButton arb WHERE arb.answerId IN (
+			SELECT a.ID FROM `QuestionnaireDB`.answer a WHERE a.answerSectionId IN (
+				SELECT asec.ID FROM `QuestionnaireDB`.answerSection asec WHERE asec.answerQuestionnaireId IN (
+					SELECT aq.ID FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0
+				)
+			)
+		);
+		SELECT * FROM `QuestionnaireDB`.answerSlider asli WHERE asli.answerId IN (
+			SELECT a.ID FROM `QuestionnaireDB`.answer a WHERE a.answerSectionId IN (
+				SELECT asec.ID FROM `QuestionnaireDB`.answerSection asec WHERE asec.answerQuestionnaireId IN (
+					SELECT aq.ID FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0
+				)
+			)
+		);
+		SELECT * FROM `QuestionnaireDB`.answerTextBox  atb WHERE atb.answerId IN (
+			SELECT a.ID FROM `QuestionnaireDB`.answer a WHERE a.answerSectionId IN (
+				SELECT asec.ID FROM `QuestionnaireDB`.answerSection asec WHERE asec.answerQuestionnaireId IN (
+					SELECT aq.ID FROM `QuestionnaireDB`.answerQuestionnaire aq WHERE aq.patientId = @patient_qstndb_id AND aq.deleted=0
+				)
+			)
+		);
+
+
+        SET function_status = 'Success';
+    ELSE
+        SET function_status = 'Invalid PatientSerNum';
+    END IF;
+
+    SELECT function_status;
+END;
