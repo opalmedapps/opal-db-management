@@ -94,7 +94,7 @@ class PatientLocationMH(Base):
 
     PatientLocationSerNum = Column(INTEGER(10), primary_key=True, comment='This key comes from the PatientLocation table but it should be unique')
     PatientLocationRevCount = Column(INTEGER(3), nullable=False)
-    AppointmentSerNum = Column(INTEGER(10), nullable=False, index=True)
+    AppointmentSerNum = Column(INTEGER(10), nullable=False, index=True, unique=True)
     CheckinVenueName = Column(String(50), nullable=False)
     ArrivalDateTime = Column(DateTime, nullable=False)
     DichargeThisLocationDateTime = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp()'), comment='This is effectively the LastUpdated Column')
