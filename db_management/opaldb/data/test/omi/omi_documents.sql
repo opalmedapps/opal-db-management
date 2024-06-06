@@ -124,9 +124,9 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 (29, NULL, 92, 1, '437600000000000367349966', 93, 306, '2019-05-10 09:25:47', 756, '2019-05-10 09:23:29', '', 'Y', '', '1008120.pdf', '1008120.pdf', 756, '2019-05-10 09:25:49', 'T', 'Transfer successful', 1, '', '2019-05-10 09:26:50', '["a51fba18-3810-4808-9238-4d0e487785c8"]' ,'2019-05-10 09:35:10'),
 (30, NULL, 92, 1, '4376000000000003673410068', 99, 305, '2019-05-17 10:41:16', 784, '2019-05-16 10:59:26', '', 'Y', '', '1009942.pdf', '1009942.pdf', 784, '2019-05-16 11:24:40', 'T', 'Transfer successful', 1, '', '2019-05-17 10:41:55', '["a51fba18-3810-4808-9238-4d0e487785c8"]' ,'2019-05-17 11:57:44');
 
--- fake pathology for laurie
+-- pathology for laurie
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(31,	NULL,	92,	1,	'4376000000000003673410069',	8408,	890,	'2023-04-12 10:26:00',	890,	'2023-04-19 10:26:00',	'',	'Y',	'',	'laurie_pathology.pdf',	'laurie_pathology.pdf',	890,	'2023-04-19 10:27:00',	'T',	'Transfer successful',	'',	'2023-04-20 10:27:00',	1,	'["a51fba18-3810-4808-9238-4d0e487785c8"]',	'2023-04-20 10:27:00');
+(31,	NULL,	92,	1,	'4376000000000003673410069',	8408,	890,	'2023-04-12 10:26:00',	890,	'2023-04-19 10:26:00',	'',	'Y',	'',	'Laurie_Hendren_2024-May-31_16-10-34_pathology.pdf',	'Laurie_Hendren_2024-May-31_16-10-34_pathology.pdf',	890,	'2023-04-19 10:27:00',	'T',	'Transfer successful',	'',	'2023-04-20 10:27:00',	1,	'["a51fba18-3810-4808-9238-4d0e487785c8"]',	'2023-04-20 10:27:00');
 UPDATE `Document`
 SET
 `ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -2205 DAY),
