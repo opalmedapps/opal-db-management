@@ -7,14 +7,18 @@ INSERT INTO `Hospital_Identifier_Type` (`Hospital_Identifier_Type_Id`, `Code`, `
 (4,	'LAC',	'LC_ADT',	'Opal General Hospital 3 (LAC)',	'Hôpital général Opal 3 (LAC)'),
 (5,	'CRE',	'CR_ADT',	'Opal General Hospital 4 (CRE)',	'Hôpital général Opal 4 (CRE)');
 
+-- Some dates are calculated relative to current to maintain constant age
 INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
-(51,	0,	'',	'',	'Marge',	'Simpson',	'marge_test',	NULL,	'Female',	'1986-10-01 00:00:00',	0,	15144758941,	0,	'marge@opalmedapps.ca',	'EN',	'SIMM86600199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
-(52,	0,	'',	'',	'Homer',	'Simpson',	'homer_test',	NULL,	'Male',	'1983-05-12 00:00:00',	0,	14381234567,	0,	'homer@opalmedapps.ca',	'EN',	'SIMH83051299',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
-(53,	0,	'',	'',	'Bart',	    'Simpson',	'bart_test',	NULL,	'Other',	'2009-02-23 00:00:00',	0,	61292507111,	0,	'bart@opalmedapps.ca',	'EN',	'SIMB13022399',	'3',	DATE_ADD(NOW(), INTERVAL -14 DAY),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -14 DAY)),
-(55,	0,	'',	'',	'Mona',	    'Simpson',	'mona_test',	NULL,	'Female',	'1940-03-15 00:00:00',	0,	15144758941,	0,	'mona@opalmedapps.ca',	'EN',	'SIMM40531599',	'1',	DATE_ADD(NOW(), INTERVAL -1 YEAR),	'2019-01-01 00:00:00',	1,	'Deceased',	'2021-05-29 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 YEAR)),
+(51,	0,	'',	'',	'Marge',	'Simpson',	'marge_test',	NULL,	'Female',
+CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -36 YEAR), '%Y'), '-10-01') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '1001') YEAR,	0,	5551234567,	0,	'marge@opalmedapps.ca',	'EN',	'SIMM86600199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
+(52,	0,	'',	'',	'Homer',	'Simpson',	'homer_test',	NULL,	'Male',
+CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -39 YEAR), '%Y'), '-05-12') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '0512') YEAR,	0,	5557654321,	0,	'homer@opalmedapps.ca',	'EN',	'SIMH83051299',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
+(53,	0,	'',	'',	'Bart',	    'Simpson',	'bart_test',	NULL,	'Other',
+CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -14 YEAR), '%Y'), '-02-23') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '0223') YEAR,	0,	61292507111,	0,	'bart@opalmedapps.ca',	'EN',	'SIMB13022399',	'3',	DATE_ADD(NOW(), INTERVAL -14 DAY),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -14 DAY)),
+(55,	0,	'',	'',	'Mona',	    'Simpson',	'mona_test',	NULL,	'Female', '1940-03-15 00:00:00',	0,	5144758941,	0,	'mona@opalmedapps.ca',	'EN',	'SIMM40531599',	'1',	DATE_ADD(NOW(), INTERVAL -1 YEAR),	'2019-01-01 00:00:00',	1,	'Deceased',	DATE_ADD(NOW(), INTERVAL -2 YEAR),	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 YEAR)),
 (92, 43235, '1092300', '5024737', 'Laurie', 'Hendren', 'Pointer Lady', '', 'Female', '1958-12-13 00:00:00', 64, 5144415642, 1, 'laurie@opalmedapps.ca', 'EN', 'HENL58621319', '3', '2018-01-01 00:00:00', '2019-01-01 00:00:00', 0, 'Unlock by Johns Request', '2019-05-27 00:00:00', '', '2024-04-18 17:59:43', 0, NULL, NULL);
 
-UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0;
+UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0 where PatientSerNum <> 92;
 
 INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred`, `LastUpdated`, `TransferFlag`) VALUES
 (51,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0),
