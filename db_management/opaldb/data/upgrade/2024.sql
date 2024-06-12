@@ -1,9 +1,4 @@
 -- Upgrade script to upgrade from the latest version (January 2022) at the MUHC to the new version (TBD in 2023)
-
--- enable strict mode
-SET SQL_MODE='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-SET GLOBAL SQL_MODE = 'STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
-
 -- Update Patient Dashboard --> Patients set name_en = Patients' name_FR = Patients
 UPDATE `module` SET `name_EN` = 'Patients', `name_FR` = 'Patients' WHERE `name_EN` = 'Patient Dashboard';
 
