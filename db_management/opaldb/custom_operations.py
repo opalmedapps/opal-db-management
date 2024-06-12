@@ -152,7 +152,7 @@ def create_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
         operations: Alembic Operations instance (context in which the migration is being performed)
         operation: CreateTriggerOp instance
     """
-    operations.execute('CREATE TRIGGER {0} {1}'.format(operation.target.name, operation.target.sql_text))
+    operations.execute('CREATE TRIGGER IF NOT EXISTS {0} {1}'.format(operation.target.name, operation.target.sql_text))
 
 
 @Operations.implementation_for(DropTriggerOp)
