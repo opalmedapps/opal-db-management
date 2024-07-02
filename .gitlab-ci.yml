@@ -51,9 +51,9 @@ setup:
 
 build alembic image:
   stage: build
-  image: docker:26.1.4
+  image: docker:27.0.3
   services:
-    - docker:26.1.4-dind
+    - docker:27.0.3-dind
   variables:
     # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
     DOCKER_HOST: tcp://docker:2376
