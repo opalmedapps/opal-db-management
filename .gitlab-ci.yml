@@ -5,7 +5,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image: python:3.11.9-slim-bookworm
+  image: python:3.11.9-alpine3.19
 
 .default_before:
   before_script:
@@ -13,7 +13,7 @@ default:
     - python --version
     - which python
     # install dependencies for mysqlclient
-    - apt update && apt-get install -y libmariadb-dev pkg-config
+    - apk add --no-cache build-base mariadb-dev
     # don't fail if venv is not set up yet (during setup)
     - python -m venv .venv
     - source .venv/bin/activate || true
@@ -162,7 +162,7 @@ markdownlint:
     - sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=mariadb/" .env
     - cat .env
     # create additional DBs for legacy DB tests (OpalDB & QuestionnaireDB)
-    - apt update && apt-get install -y default-mysql-client
+    - apk add --no-cache mariadb-client
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
@@ -195,6 +195,8 @@ run sql scripts:
     - !reference [.database_service, script]
     # migrate databases first
     - ./docker/alembic-upgrade.sh
+    # the shell script below requires bash
+    - apk add --no-cache bash
     # Full refresh for both OMI and OHIGPH datasets to ensure no broken data links/inconsistencies
     - db_management/reset_data.sh OMI
     - db_management/reset_data.sh OHIGPH
