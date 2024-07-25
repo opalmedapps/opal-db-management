@@ -1,4 +1,4 @@
-FROM python:3.11.9-alpine3.19 as build
+FROM python:3.11.9-alpine3.20 AS build
 
 # dependencies for building Python packages
 RUN apk add --no-cache build-base \
@@ -10,7 +10,7 @@ RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
 RUN python -m pip install --no-cache-dir -r /tmp/base.txt
 
-FROM python:3.11.9-alpine3.19
+FROM python:3.11.9-alpine3.20
 
 RUN apk upgrade --no-cache \
   # mysqlclient dependencies
@@ -19,10 +19,10 @@ RUN apk upgrade --no-cache \
   && apk add --no-cache bash
 
 # Keeps Python from generating .pyc files in the container
-ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE=1
 
 # Turns off buffering for easier container logging
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # get Python packages lib and bin
 COPY --from=build /usr/local/bin /usr/local/bin
