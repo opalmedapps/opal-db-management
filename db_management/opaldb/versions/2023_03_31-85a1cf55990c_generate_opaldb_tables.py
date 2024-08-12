@@ -569,7 +569,7 @@ def upgrade() -> None:
     sa.Column('DoctorSerNum', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('OncologistFlag', mysql.INTEGER(display_width=11), nullable=False),
     sa.Column('PrimaryFlag', mysql.INTEGER(display_width=11), nullable=False),
-    sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text("'0000-00-00 00:00:00'"), nullable=False)
+    sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text("CURRENT_TIMESTAMP"), nullable=False)
     )
     op.create_table('PatientMH',
     sa.Column('PatientSerNum', mysql.INTEGER(display_width=11), nullable=False),
