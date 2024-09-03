@@ -605,7 +605,7 @@ t_PatientDoctorHistory = Table(
     Column('DoctorSerNum', INTEGER(11), nullable=False),
     Column('OncologistFlag', INTEGER(11), nullable=False),
     Column('PrimaryFlag', INTEGER(11), nullable=False),
-    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text("'0000-00-00 00:00:00'"))
 )
 
 
