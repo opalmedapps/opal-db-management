@@ -6,6 +6,8 @@ INSERT INTO `Announcement` (`AnnouncementSerNum`, `CronLogSerNum`, `PatientSerNu
 (5,	NULL,	52,	20,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (6,	NULL,	52,	17,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (7,	NULL,	52,	23,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
+(11,	NULL,	59,	16,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
+(12,	NULL,	59,	23,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 -- Add all of Laurie's data, all set to read
 (8, NULL, 92, 16, '2016-05-06 17:24:41', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-05-16 18:08:44'),
 (9, NULL, 92, 17, '2016-05-06 17:24:41', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-05-16 18:08:30'),
@@ -81,6 +83,18 @@ WHERE PatientSerNum = 52
   AND NotificationControlSerNum = 5
 ;
 
+-- Rorys data read by rory
+UPDATE Announcement
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59
+;
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59
+  AND NotificationControlSerNum = 5
+;
 -- "No radiotherapy treatments" sent 1 week ago
 UPDATE Announcement
 SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),

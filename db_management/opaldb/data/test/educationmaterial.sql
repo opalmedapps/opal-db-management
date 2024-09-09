@@ -25,7 +25,12 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 (13,	NULL,	979,	53,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
 (14,	NULL,	979,	55,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
 (15,	NULL,	979,	56,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-(16,	NULL,	979,	57,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55');
+(16,	NULL,	979,	57,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
+
+-- rory: treatment guidelines, fertility preservation, databank info
+(17,	NULL,	105,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
+(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
+(19,	NULL,	642,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
 
 
 -- Treatment guidelines sent 1 day after diagnosis for all
@@ -53,6 +58,12 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
 WHERE PatientSerNum = 57
 AND `EducationalMaterialControlSerNum` = 105;
 
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -13 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -13 DAY)
+WHERE PatientSerNum = 59
+AND `EducationalMaterialControlSerNum` = 105;
+
 -- Marge's extra materials sent last week
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
@@ -67,12 +78,12 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -10 DAY),
 WHERE PatientSerNum = 52
 AND `EducationalMaterialSerNum` IN (7, 8);
 
--- Fred's extra materials sent 5 days ago
+-- Fred and Rory's extra materials sent 5 days ago
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -5 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE PatientSerNum = 56
-AND `EducationalMaterialSerNum` IN (9);
+WHERE PatientSerNum IN (56, 59)
+AND `EducationalMaterialSerNum` IN (9, 19);
 
 -- DatabankConsent study sent to all 1 day ago
 UPDATE `EducationalMaterial`
@@ -132,14 +143,19 @@ SET ReadStatus = 1,
     ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
 WHERE NotificationControlSerNum = 7
 AND RefTableRowSerNum in (10, 16);
+-- Rory has read all their own data
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59;
 
 
 -- laurie data
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(17, NULL, 8, 92, '2016-05-06 16:10:21', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-02 10:25:10'),
-(18, NULL, 12, 92, '2016-05-06 17:49:11', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-05-16 18:08:10'),
-(19, NULL, 10, 92, '2016-06-09 12:20:14', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-21 18:16:39'),
-(20, NULL, 13, 92, '2016-06-09 12:20:14', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-21 18:16:17'),
+(20, NULL, 8, 92, '2016-05-06 16:10:21', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-02 10:25:10'),
+(21, NULL, 12, 92, '2016-05-06 17:49:11', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-05-16 18:08:10'),
+(22, NULL, 10, 92, '2016-06-09 12:20:14', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-21 18:16:39'),
+(23, NULL, 13, 92, '2016-06-09 12:20:14', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-21 18:16:17'),
 (26, NULL, 179, 92, '2016-06-09 12:45:15', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-06-16 11:00:30'),
 (43, NULL, 208, 92, '2016-10-31 17:00:00', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-11-03 16:05:20'),
 (75, NULL, 269, 92, '2017-01-19 13:15:33', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2017-01-19 14:00:41'),

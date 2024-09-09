@@ -5,4 +5,5 @@ INSERT INTO `SmsAppointment` (`SmsAppointmentId`, `ClinicResourcesSerNum`, `Appo
 (4, 1312, 501, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43'),
 (5, 1312, 504, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43'),
 (6, 1088, 22, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43'),
-(7, 2360, 105, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43');
+(7, 2360, 105, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43'),
+(8, 1312, 137, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43');
