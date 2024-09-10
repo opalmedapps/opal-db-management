@@ -144,10 +144,15 @@ SET ReadStatus = 1,
 WHERE NotificationControlSerNum = 7
 AND RefTableRowSerNum in (10, 16);
 -- Rory has read all their own data
-UPDATE Notification
+UPDATE `EducationalMaterial`
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59;
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59
+AND NotificationControlSerNum = 7;
 
 
 -- laurie data
