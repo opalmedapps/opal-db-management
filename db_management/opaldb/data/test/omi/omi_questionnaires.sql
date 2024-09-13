@@ -14,7 +14,12 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 -- all get databank consent questionnaire except lisa
 (8,	1,	157,	51,	'2000-01-01 00:00:00',	5359,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 (9,	1,	157,	52,	'2000-01-01 00:00:00',	5360,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(10,	1,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00');
+(10,	1,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+
+-- rory: esas-r, databank
+(15,	1,	42,	59,	'2000-01-01 00:00:00',	209,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(16,	1,	157, 59,	'2000-01-01 00:00:00',	5367,	0,	NULL,	'',	'2000-01-01 00:00:00');
+
 -- Update all Questionnaire dates to make the data more similar to a live environment
 
 -- ESAS-r sent today
@@ -26,7 +31,7 @@ UPDATE Notification
 SET DateAdded = now(),
     LastUpdated = now()
 WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum in (1, 2, 3);
+AND RefTableRowSerNum in (1, 2, 3, 15);
 
 -- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
 UPDATE Questionnaire
@@ -70,7 +75,7 @@ UPDATE Notification
 SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
     LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
 WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum IN (8, 9, 10);
+AND RefTableRowSerNum IN (8, 9, 10, 16);
 
 -- Set Marge's preop notification to `Read` following the insert operation trigger
 UPDATE Notification

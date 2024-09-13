@@ -2646,11 +2646,12 @@ WHERE questionnaireId=204
 and sectionId=154;
 
 INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `respondentUsername`, `respondentDisplayName`) VALUES
--- esas-r answer instances for bart homer and marge and lisa
+-- esas-r answer instances for bart homer and marge and lisa and rory
 (184,	136,	1,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
 (190,	136,	2,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
 (207,	136,	3,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
 (208,	136,	4,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
+(209,	136,	10,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'3_APP_100.100.100',	'',	''),
 
 -- breast recons for marge
 (5354,	204,	1,	2,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'1_APP_1.30.0',	'QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2',	'Marge Simpson'),
@@ -2664,6 +2665,7 @@ INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status
 (5362,	248,	5,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'',	''),
 (5363,	248,	6,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'',	''),
 (5364,	248,	7,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'',	''),
+(5367,	248,	10,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'',	''),
 -- gad7 for fred
 (5365,	111,	6,	0,	0,	'',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2000-01-01 00:00:00',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'',	''),
 -- laurie data
