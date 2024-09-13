@@ -48,6 +48,18 @@ SET
 `LastUpdated` = DATE_ADD(now(), INTERVAL -12 DAY)
 WHERE PatientSerNum = 51 AND DocumentSerNum = 8;
 
+-- rory pathology at RVH
+INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
+(32,	NULL,	59,	1,	'56190000000000039165518',	8408,	890,	'2024-09-10 12:35:00',	890,	'2024-09-10 12:35:00',	'',	'Y',	'',	'rory_1972_pathology_rvh.pdf',	'rory_1972_pathology_rvh.pdf',	890,	'2024-09-10 14:35:00',	'T',	'Transfer successful',	'',	'2024-09-10 14:35:00',	0,	'[]',	'2024-09-10 14:35:00');
+UPDATE `Document`
+SET
+`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -12 DAY),
+`DateOfService` = DATE_ADD(now(), INTERVAL -12 DAY),
+`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -12 DAY),
+`DateAdded` = DATE_ADD(now(), INTERVAL -12 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -12 DAY)
+WHERE PatientSerNum = 59 AND DocumentSerNum = 32;
+
 
 
 -- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `omi` demo purposes
@@ -86,6 +98,18 @@ SET
 `LastUpdated` = DATE_ADD(now(), INTERVAL -1 DAY)
 WHERE PatientSerNum = 51;
 
+-- rory clinical note at RVH
+INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
+(33,	NULL,	59,	1,	'56190000000000039165517',	99,	893,	'2024-09-10 10:35:00',	893,	'2024-09-10 10:35:00',	'',	'Y',	'',	'rory_1972_note_rvh.pdf',	'rory_1972_note_rvh.pdf',	893,	'2024-09-10 10:36:00',	'T',	'Transfer successful',	'',	'2024-09-10 10:36:00',	0,	'[]',	'2024-09-10 10:36:00');
+UPDATE `Document`
+SET
+`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -2 DAY),
+`DateOfService` = DATE_ADD(now(), INTERVAL -2 DAY),
+`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -2 DAY),
+`DateAdded` = DATE_ADD(now(), INTERVAL -2 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -2 DAY)
+WHERE PatientSerNum = 59 and DocumentSerNum=33;
+
 
 UPDATE `Document`
 SET `ReadStatus` = 1,
@@ -105,6 +129,18 @@ SET `ReadStatus` = 1,
 WHERE
     `PatientSerNum` = 53
 ;
+UPDATE `Document`
+SET `ReadStatus` = 1,
+    `ReadBy` = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE
+    `PatientSerNum` = 59
+;
+UPDATE `Notification`
+SET `ReadStatus` = 1,
+    `ReadBy` = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE `PatientSerNum` = 59
+AND `NotificationControlSerNum` = 2;
+
 
 
 -- Laurie documents
