@@ -16,7 +16,7 @@ CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -39 YEAR), '%Y'), '-05-12') - INTERV
 (53,	0,	'',	'',	'Bart',	    'Simpson',	'bart_test',	NULL,	'Other',
 CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -14 YEAR), '%Y'), '-02-23') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '0223') YEAR,	0,	61292507111,	0,	'bart@opalmedapps.ca',	'EN',	'SIMB13022399',	'3',	DATE_ADD(NOW(), INTERVAL -14 DAY),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -14 DAY)),
 (55,	0,	'',	'',	'Mona',	    'Simpson',	'mona_test',	NULL,	'Female', '1940-03-15 00:00:00',	0,	5144758941,	0,	'mona@opalmedapps.ca',	'EN',	'SIMM40531599',	'1',	DATE_ADD(NOW(), INTERVAL -1 YEAR),	'2019-01-01 00:00:00',	1,	'Deceased',	DATE_ADD(CURRENT_DATE(), INTERVAL -2 YEAR),	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 YEAR)),
-(59,	0,	'',	'',	"O\'Brien",	'Rory',	'rory_test',	NULL,	'Other',
+(59,	0,	'',	'',	'Rory',	"O\'Brien",	'rory_test',	NULL,	'Other',
 CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -52 YEAR), '%Y'), '-06-11') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '0611') YEAR,	0,	5557654321,	0,	'rory@opalmedapps.ca',	'EN',	'OBRR72061199',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2024-09-09 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
 (92, 43235, '1092300', '5024737', 'Laurie', 'Hendren', 'Pointer Lady', '', 'Female', '1958-12-13 00:00:00', 64, 5144415642, 1, 'laurie@opalmedapps.ca', 'EN', 'HENL58621319', '3', '2018-01-01 00:00:00', '2019-01-01 00:00:00', 0, 'Unlocked by Johns Request', '2019-05-27 00:00:00', '', '2024-04-18 17:59:43', 0, NULL, NULL);
 
