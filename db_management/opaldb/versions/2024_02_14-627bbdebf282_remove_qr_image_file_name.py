@@ -1,4 +1,5 @@
-"""remove_QR_Image_File_Name
+"""
+Remove QR Image File Name.
 
 Revision ID: 627bbdebf282
 Revises: 281079041645
@@ -85,7 +86,7 @@ NEW.SessionId, 'UPDATE');\nEND;\n""")
 
 
 def upgrade() -> None:
-    """Update QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
+    """Update QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance."""
     op.drop_column('HospitalMap', 'QRImageFileName')
     op.drop_column('HospitalMapMH', 'QRImageFileName')
     op.drop_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
@@ -97,7 +98,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Revert QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
+    """Revert QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance."""
     op.add_column('HospitalMapMH', sa.Column('QRImageFileName', sa.VARCHAR(length=255), nullable=False))
     op.add_column('HospitalMap', sa.Column('QRImageFileName', sa.VARCHAR(length=255), nullable=False))
     op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]

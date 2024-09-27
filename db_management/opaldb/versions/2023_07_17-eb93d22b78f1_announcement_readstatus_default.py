@@ -1,4 +1,5 @@
-"""‘Announcement_readStatus_default’
+"""
+Add default for Announcement.readStatus.
 
 Revision ID: eb93d22b78f1
 Revises: 759547f5ca7d

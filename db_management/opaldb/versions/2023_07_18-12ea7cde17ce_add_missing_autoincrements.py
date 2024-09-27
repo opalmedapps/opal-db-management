@@ -1,4 +1,5 @@
-"""Adds missing autoincrements to OpalDB.
+"""
+Adds missing autoincrements to OpalDB.
 
 Note that autoincrements are not supported by alembic revision autogenerate
 due to the non-agnostic nature of MariaDB autoincrements... or something

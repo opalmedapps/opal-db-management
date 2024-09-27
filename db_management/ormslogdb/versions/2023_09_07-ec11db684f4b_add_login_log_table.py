@@ -1,4 +1,5 @@
-"""add_login_log_table
+"""
+Add login log table.
 
 Revision ID: ec11db684f4b
 Revises: 07f067b25688
@@ -17,7 +18,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Upgrade function to create LoginLog table"""
+    """Upgrade function to create LoginLog table."""
     op.create_table(
         'LoginLog',
         sa.Column('ID', mysql.INTEGER(display_width=11), nullable=False),
@@ -33,6 +34,6 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Downgrade function to delete LoginLog table"""
+    """Downgrade function to delete LoginLog table."""
     op.drop_index(op.f('ix_LoginLog_UserName'), table_name='LoginLog')
     op.drop_table('LoginLog')

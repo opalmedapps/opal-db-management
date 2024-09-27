@@ -1,4 +1,5 @@
-"""alter_doctor_phone_varchar
+"""
+Alter doctor phone varchar.
 
 Revision ID: 759547f5ca7d
 Revises: 295142b4e158
@@ -35,7 +36,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Revert varchar phone fields"""
+    """Revert varchar phone fields."""
     op.alter_column(
         'DoctorMH',
         'Phone',

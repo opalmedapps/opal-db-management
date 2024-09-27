@@ -1,4 +1,5 @@
-"""Updates Patient table defaults and deprecates some fields. Also deprecated one field in Users.
+"""
+Updates Patient table defaults and deprecates some fields. Also deprecated one field in Users.
 
 Revision ID: 295142b4e158
 Revises: 46d686c984cc

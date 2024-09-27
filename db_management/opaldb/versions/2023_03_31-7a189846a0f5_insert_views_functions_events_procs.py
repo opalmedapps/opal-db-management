@@ -1,11 +1,11 @@
-"""insert-views-functions-events-procs
+"""
+Insert views, functions, events, and procedures.
 
 Revision ID: 7a189846a0f5
 Revises: 85a1cf55990c
 Create Date: 2023-02-01 10:41:21.466828
 
 """
-import os
 from pathlib import Path
 
 from db_management.connection import connection_cursor, sql_connection_parameters
@@ -30,7 +30,7 @@ def upgrade() -> None:
         cursor.execute(query='SET foreign_key_checks=0;')
 
     funcs_sql_content = ''
-    funcs_file_path = os.path.join(REVISIONS_DIR, 'OpalDB_views_functions_events_procs.sql')
+    funcs_file_path = REVISIONS_DIR.joinpath('OpalDB_views_functions_events_procs.sql')
     # Read in SQL content from handle
     with Path(funcs_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()

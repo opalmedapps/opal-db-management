@@ -1,4 +1,5 @@
-"""Disable system versioning for OrmsDatabase.
+"""
+Disable system versioning for OrmsDatabase.
 
 Revision ID: 62f6dbb1514f
 Revises: 7b734eb191ab

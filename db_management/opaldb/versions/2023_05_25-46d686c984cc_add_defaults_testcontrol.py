@@ -1,4 +1,5 @@
-"""Add server defaults (empty strings) to DT and TC tables.
+"""
+Add server defaults (empty strings) to DT and TC tables.
 
 Revision ID: 46d686c984cc
 Revises: 7ebe01c0c5e0
@@ -16,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Define server defaults for DiagnosisTranslation, TestControl tables"""
+    """Define server defaults for DiagnosisTranslation, TestControl tables."""
     op.alter_column(
         'DiagnosisTranslation',
         'AliasName',
@@ -41,7 +42,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Remove server defaults for DiagnosisTranslation, TestControl tables"""
+    """Remove server defaults for DiagnosisTranslation, TestControl tables."""
     op.alter_column(
         'TestControl',
         'URL_FR',

@@ -1,4 +1,5 @@
-"""add_autoincrement_to_revisionid
+"""
+Add autoincrement to revisionid.
 
 Revision ID: e4fb28a17cb6
 Revises: 759547f5ca7d
@@ -16,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Set autoincrement to True for the revisionId column"""
+    """Set autoincrement to True for the revisionId column."""
     op.alter_column(
         'AppointmentPendingMH',
         'revisionId',
@@ -28,7 +29,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Set autoincrement to False for the revisionId column"""
+    """Set autoincrement to False for the revisionId column."""
     op.alter_column(
         'AppointmentPendingMH',
         'revisionId',

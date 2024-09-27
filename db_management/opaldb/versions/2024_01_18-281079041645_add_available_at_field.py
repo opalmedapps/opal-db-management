@@ -1,4 +1,5 @@
-"""add_available_at_field
+"""
+Add available at field.
 
 Revision ID: 281079041645
 Revises: ee749ce6f599

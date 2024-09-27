@@ -20,12 +20,14 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 class Base(DeclarativeBase):
     pass
 
+
 metadata = Base.metadata
 
 t_BuildType = Table(
     'BuildType', metadata,
     Column('Name', String(30), nullable=False)
 )
+
 
 class Cron(Base):
     __tablename__ = 'Cron'

@@ -1,4 +1,5 @@
-"""add_missing_defaults
+"""
+Add missing defaults.
 
 Revision ID: bcf300b3df7b
 Revises: 9f32d05833a5

@@ -1,4 +1,5 @@
-"""Leave comments indicating intent to rename instances of educational material to reference material.
+"""
+Leave comments indicating intent to rename instances of educational material to reference material.
 
 Revision ID: 799788987ccd
 Revises: 07fe49bfe5dd
@@ -175,7 +176,7 @@ def downgrade() -> None:
     op.create_table_comment(
         'EducationalMaterialPackageContent',
         'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes.',
-        existing_comment='Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes. All Educational names to be changed to ReferenceMaterial when migrated to Django.',  # noqa: E501
+        existing_comment='Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes. All Educational names to be changed to ReferenceMaterial when migrated to Django.',
         schema=None,
     )
     op.drop_table_comment(

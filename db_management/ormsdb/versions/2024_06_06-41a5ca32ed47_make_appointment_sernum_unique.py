@@ -1,4 +1,5 @@
-"""make_appointment_sernum_unique
+"""
+Make appointment sernum unique.
 
 Revision ID: 41a5ca32ed47
 Revises: 62f6dbb1514f

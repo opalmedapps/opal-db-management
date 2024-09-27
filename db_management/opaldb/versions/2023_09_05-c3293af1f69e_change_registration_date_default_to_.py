@@ -1,4 +1,5 @@
-"""Change registration date default to current timetstamp.
+"""
+Change registration date default to current timetstamp.
 
 Revision ID: c3293af1f69e
 Revises: 7714d52efeaf

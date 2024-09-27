@@ -1,4 +1,5 @@
-"""add_build_type
+"""
+Add build type.
 
 Revision ID: 7b734eb191ab
 Revises: 24441ebcade3

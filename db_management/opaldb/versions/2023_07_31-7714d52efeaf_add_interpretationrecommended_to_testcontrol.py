@@ -1,4 +1,5 @@
-"""add_InterpretationRecommended_to_TestControl
+"""
+Add InterpretationRecommended to TestControl.
 
 Revision ID: 7714d52efeaf
 Revises: eb93d22b78f1
@@ -16,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Add InterpretationRecommended column to record if the clinician interpretation is recommended"""
+    """Add InterpretationRecommended column to record if the clinician interpretation is recommended."""
     op.add_column('TestControl', sa.Column(
         'InterpretationRecommended',
         sa.Boolean(),
@@ -27,5 +28,5 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Drop InterpretationRecommended column"""
+    """Drop InterpretationRecommended column."""
     op.drop_column('TestControl', 'InterpretationRecommended')

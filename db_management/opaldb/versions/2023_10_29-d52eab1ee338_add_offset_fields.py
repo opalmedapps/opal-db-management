@@ -1,4 +1,5 @@
-"""add_offset_fields
+"""
+Add offset fields.
 
 Revision ID: d52eab1ee338
 Revises: ee749ce6f599

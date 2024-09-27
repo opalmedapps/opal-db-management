@@ -1,3 +1,5 @@
+from types import MappingProxyType
+
 from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Table, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
@@ -6,12 +8,14 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 class Base(DeclarativeBase):
     pass
 
+
 metadata = Base.metadata
 
 t_BuildType = Table(
     'BuildType', metadata,
     Column('Name', String(30), nullable=False)
 )
+
 
 class DefinitionTable(Base):
     __tablename__ = 'definitionTable'
@@ -143,7 +147,7 @@ class Type(Base):
 
 class LegacyType(Base):
     __tablename__ = 'legacyType'
-    __table_args__ = {'comment': 'This table is a direct replication from the legacy table QuestionType in questionnaireDB. It is required for the time of the migration. When the migration will be over and the triggers will stop, this table needs to be deleted.'}
+    __table_args__ = MappingProxyType({'comment': 'This table is a direct replication from the legacy table QuestionType in questionnaireDB. It is required for the time of the migration. When the migration will be over and the triggers will stop, this table needs to be deleted.'})
 
     ID = Column(BIGINT(20), primary_key=True)
     legacyName = Column(String(255), nullable=False)
@@ -220,7 +224,6 @@ class TemplateQuestion(Base):
 
     dictionary = relationship('Dictionary')
     type = relationship('Type')
-
 
 
 class AnswerQuestionnaire(Base):
@@ -418,6 +421,7 @@ class AnswerSection(Base):
     answerQuestionnaire = relationship('AnswerQuestionnaire')
     section = relationship('Section')
 
+
 class Checkbox(Base):
     __tablename__ = 'checkbox'
 
@@ -540,7 +544,6 @@ class Slider(Base):
     question = relationship('Question')
 
 
-
 class TagQuestion(Base):
     __tablename__ = 'tagQuestion'
 
@@ -580,6 +583,7 @@ class TemplateQuestionLabelOption(Base):
 
     dictionary = relationship('Dictionary')
     templateQuestionLabel = relationship('TemplateQuestionLabel')
+
 
 class TemplateQuestionRadioButtonOption(Base):
     __tablename__ = 'templateQuestionRadioButtonOption'
@@ -663,7 +667,6 @@ class CheckboxOption(Base):
 
     dictionary = relationship('Dictionary')
     checkbox = relationship('Checkbox')
-
 
 
 class LabelOption(Base):
