@@ -1,4 +1,5 @@
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
+
 from collections.abc import Iterable
 from logging.config import fileConfig
 
@@ -99,8 +100,8 @@ def run_migrations_online() -> None:
             target_metadata=target_metadata,
             process_revision_directives=process_revision_directives,
             # https://stackoverflow.com/questions/12409724/no-changes-detected-in-alembic-autogeneration-of-migrations-with-flask-sqlalchem
-            compare_type=True,              # Detect changes in col type with autogenerate
-            compare_server_default=True,    # Detect changes in col defaults with autogenerate
+            compare_type=True,  # Detect changes in col type with autogenerate
+            compare_server_default=True,  # Detect changes in col defaults with autogenerate
         )
 
         with context.begin_transaction():

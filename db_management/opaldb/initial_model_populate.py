@@ -1,4 +1,5 @@
 """Generate model structure file from viewing current database."""
+
 import sys
 from pathlib import Path
 

@@ -6,6 +6,7 @@ Revises: 85a1cf55990c
 Create Date: 2023-02-01 10:41:21.466828
 
 """
+
 from pathlib import Path
 
 from db_management.connection import connection_cursor, sql_connection_parameters
@@ -47,14 +48,16 @@ def downgrade() -> None:
     with connection_cursor(CONNECTION_PARAMETERS) as cursor:
         cursor.execute(query='SET foreign_key_checks=0;')
 
-        cursor.execute(query=f"""
+        cursor.execute(
+            query=f"""
         DROP DATABASE {DB_NAME_OPAL};
 
         CREATE DATABASE IF NOT EXISTS {DB_NAME_OPAL} /*!40100 DEFAULT CHARACTER SET latin1 */;
         USE {DB_NAME_OPAL};
         GRANT ALL PRIVILEGES ON {DB_NAME_OPAL}.* TO {DB_USER}@`%`;
 
-        """)
+        """
+        )
 
         cursor.execute(query='SET foreign_key_checks=1;')
         cursor.close()

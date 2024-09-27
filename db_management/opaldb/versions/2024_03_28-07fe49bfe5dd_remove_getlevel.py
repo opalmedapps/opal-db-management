@@ -9,6 +9,7 @@ Revises: bc09885fdeec
 Create Date: 2024-03-28 01:27:23.883537
 
 """
+
 from alembic import op
 
 from db_management.opaldb.custom_operations import ReplaceableObject

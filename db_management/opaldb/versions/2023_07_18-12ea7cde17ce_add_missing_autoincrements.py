@@ -11,6 +11,7 @@ Revises: 759547f5ca7d
 Create Date: 2023-07-18 16:04:02.348834
 
 """
+
 from alembic import op
 from sqlalchemy.dialects import mysql
 

@@ -1,4 +1,5 @@
 """Global configurations settings such as database connection strings."""
+
 import os
 from typing import Literal, Optional, overload
 
@@ -13,8 +14,7 @@ def _env(
     key: str,
     default: Optional[str] = None,
     required: Literal[True] = True,
-) -> str:
-    ...
+) -> str: ...
 
 
 @overload
@@ -22,8 +22,7 @@ def _env(
     key: str,
     default: Optional[str] = None,
     required: Literal[False] = False,
-) -> Optional[str]:
-    ...
+) -> Optional[str]: ...
 
 
 def _env(

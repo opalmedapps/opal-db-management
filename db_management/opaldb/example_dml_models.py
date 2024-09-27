@@ -9,6 +9,7 @@ Note the metadata object for this file must be registered in this
 alembic folder's env.py file for the changes to be seen
 by the autogenerate migration feature.
 """
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 

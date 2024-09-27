@@ -6,6 +6,7 @@ Revises: 627bbdebf282
 Create Date: 2024-02-19 21:52:59.876836
 
 """
+
 from alembic import op
 
 from db_management.opaldb.custom_operations import ReplaceableObject

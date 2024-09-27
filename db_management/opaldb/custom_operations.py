@@ -1,4 +1,5 @@
 """Custom operations file for version controlling other SQL entities."""
+
 from typing import Any, Final
 
 from alembic.operations import MigrateOperation, Operations

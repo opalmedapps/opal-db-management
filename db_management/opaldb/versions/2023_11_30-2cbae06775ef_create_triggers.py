@@ -6,6 +6,7 @@ Revises: d52eab1ee338
 Create Date: 2023-11-30 16:00:26.413244
 
 """
+
 from alembic import op
 
 from db_management.opaldb.revision_data.opaldb_replaceable_objects import TRIGGER_LIST

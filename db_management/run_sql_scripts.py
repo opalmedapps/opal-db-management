@@ -1,4 +1,5 @@
 """Run SQL scripts from a directory on a specific database."""
+
 import argparse
 import sys
 from pathlib import Path
@@ -88,8 +89,7 @@ def _truncate_safety_check(path: Path, db_name: str) -> None:
             build_type = cursor.fetchone()
             if build_type and build_type[0] != 'Development':
                 raise OSError(
-                    'Cannot execute truncate file on non-development databases.'
-                    + ' Check BuildType table value.',
+                    'Cannot execute truncate file on non-development databases.' + ' Check BuildType table value.',
                 )
 
 

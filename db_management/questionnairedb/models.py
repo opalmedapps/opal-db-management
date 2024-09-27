@@ -11,10 +11,7 @@ class Base(DeclarativeBase):
 
 metadata = Base.metadata
 
-t_BuildType = Table(
-    'BuildType', metadata,
-    Column('Name', String(30), nullable=False)
-)
+t_BuildType = Table('BuildType', metadata, Column('Name', String(30), nullable=False))
 
 
 class DefinitionTable(Base):
@@ -36,7 +33,9 @@ class Dictionary(Base):
     deletedBy = Column(String(255))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
@@ -53,7 +52,9 @@ class Language(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
@@ -69,7 +70,9 @@ class Patient(Base):
     deletedBy = Column(String(255), nullable=False)
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
 
@@ -85,7 +88,9 @@ class Library(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     dictionary = relationship('Dictionary')
@@ -122,7 +127,9 @@ class Tag(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     dictionary = relationship('Dictionary')
@@ -147,7 +154,9 @@ class Type(Base):
 
 class LegacyType(Base):
     __tablename__ = 'legacyType'
-    __table_args__ = MappingProxyType({'comment': 'This table is a direct replication from the legacy table QuestionType in questionnaireDB. It is required for the time of the migration. When the migration will be over and the triggers will stop, this table needs to be deleted.'})
+    __table_args__ = MappingProxyType({
+        'comment': 'This table is a direct replication from the legacy table QuestionType in questionnaireDB. It is required for the time of the migration. When the migration will be over and the triggers will stop, this table needs to be deleted.'
+    })
 
     ID = Column(BIGINT(20), primary_key=True)
     legacyName = Column(String(255), nullable=False)
@@ -163,8 +172,12 @@ class Questionnaire(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
-    purposeId: Mapped[int] = mapped_column(ForeignKey('purpose.ID'), nullable=False, index=True, server_default=text('1'))
-    respondentId: Mapped[int] = mapped_column(ForeignKey('respondent.ID'), nullable=False, index=True, server_default=text('1'))
+    purposeId: Mapped[int] = mapped_column(
+        ForeignKey('purpose.ID'), nullable=False, index=True, server_default=text('1')
+    )
+    respondentId: Mapped[int] = mapped_column(
+        ForeignKey('respondent.ID'), nullable=False, index=True, server_default=text('1')
+    )
     title: Mapped[int] = mapped_column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     nickname: Mapped[int] = mapped_column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     category = Column(INTEGER(11), nullable=False, server_default=text('-1'))
@@ -175,15 +188,24 @@ class Questionnaire(Base):
     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
     private = Column(TINYINT(4), nullable=False, server_default=text('0'))
     optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text('1'))
-    visualization = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = regular view of the answers, 1 = graph')
+    visualization = Column(
+        TINYINT(4), nullable=False, server_default=text('0'), comment='0 = regular view of the answers, 1 = graph'
+    )
     logo = Column(String(512), nullable=False, server_default=text("''"))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
-    legacyName = Column(String(255), nullable=False, server_default=text("''"), comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
+    legacyName = Column(
+        String(255),
+        nullable=False,
+        server_default=text("''"),
+        comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.',
+    )
 
     dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
@@ -219,7 +241,9 @@ class TemplateQuestion(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     dictionary = relationship('Dictionary')
@@ -232,14 +256,28 @@ class AnswerQuestionnaire(Base):
     ID = Column(BIGINT(20), primary_key=True)
     questionnaireId: Mapped[int] = mapped_column(ForeignKey('questionnaire.ID'), nullable=False, index=True)
     patientId: Mapped[int] = mapped_column(ForeignKey('patient.ID'), nullable=False, index=True)
-    respondentUsername = Column(String(255), nullable=False, server_default=text("''"), comment='Firebase username of the user who answered (or is answering) the questionnaire')
-    respondentDisplayName = Column(String(255), nullable=False, server_default=text("''"), comment='First name and last name of the respondent for display purposes.')
-    status = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='0 = New, 1 = In Progress, 2 = Completed')
+    respondentUsername = Column(
+        String(255),
+        nullable=False,
+        server_default=text("''"),
+        comment='Firebase username of the user who answered (or is answering) the questionnaire',
+    )
+    respondentDisplayName = Column(
+        String(255),
+        nullable=False,
+        server_default=text("''"),
+        comment='First name and last name of the respondent for display purposes.',
+    )
+    status = Column(
+        INTEGER(11), nullable=False, server_default=text('0'), comment='0 = New, 1 = In Progress, 2 = Completed'
+    )
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255), nullable=False)
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     patient = relationship('Patient')
@@ -257,7 +295,12 @@ class Question(Base):
     typeId: Mapped[int] = mapped_column(ForeignKey('type.ID'), nullable=False, index=True)
     version = Column(INTEGER(11), nullable=False, server_default=text('1'))
     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
-    polarity = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = lowGood (the lower the score, the better the answer), 1 = highGood (the higher the score, the better the answer)')
+    polarity = Column(
+        TINYINT(4),
+        nullable=False,
+        server_default=text('0'),
+        comment='0 = lowGood (the lower the score, the better the answer), 1 = highGood (the higher the score, the better the answer)',
+    )
     private = Column(TINYINT(4), nullable=False, server_default=text('0'))
     final = Column(TINYINT(4), nullable=False, server_default=text('0'))
     optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text('0'))
@@ -265,9 +308,16 @@ class Question(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
-    legacyTypeId: Mapped[int] = mapped_column(ForeignKey('legacyType.ID'), nullable=False, index=True, comment='This ID linked to the legacyTypes table must be removed once the migration of the legacy questionnaire will be done and the triggers stopped.')
+    legacyTypeId: Mapped[int] = mapped_column(
+        ForeignKey('legacyType.ID'),
+        nullable=False,
+        index=True,
+        comment='This ID linked to the legacyTypes table must be removed once the migration of the legacy questionnaire will be done and the triggers stopped.',
+    )
 
     dictionary = relationship('Dictionary', primaryjoin='Question.definition == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Question.display == Dictionary.contentId')
@@ -288,7 +338,9 @@ class QuestionnaireFeedback(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     language = relationship('Language')
@@ -309,7 +361,9 @@ class QuestionnaireRating(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     language = relationship('Language')
@@ -329,7 +383,9 @@ class Section(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     dictionary = relationship('Dictionary', primaryjoin='Section.instruction == Dictionary.contentId')
@@ -447,7 +503,12 @@ class Label(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     questionId: Mapped[int] = mapped_column(ForeignKey('question.ID'), nullable=False, index=True)
-    displayIntensity = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = patient cannot select intensity, 1 = patient can select intensity')
+    displayIntensity = Column(
+        TINYINT(4),
+        nullable=False,
+        server_default=text('0'),
+        comment='0 = patient cannot select intensity, 1 = patient can select intensity',
+    )
     pathImage = Column(String(512), nullable=False)
 
     question = relationship('Question')
@@ -476,7 +537,9 @@ class QuestionFeedback(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     language = relationship('Language')
@@ -497,7 +560,9 @@ class QuestionRating(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     language = relationship('Language')
@@ -512,7 +577,9 @@ class QuestionSection(Base):
     questionId: Mapped[int] = mapped_column(ForeignKey('question.ID'), nullable=False, index=True)
     sectionId: Mapped[int] = mapped_column(ForeignKey('section.ID'), nullable=False, index=True)
     order = Column(INTEGER(11), nullable=False, server_default=text('1'))
-    orientation = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='0 = Portrait, 1 = Landscape, 2 = Both')
+    orientation = Column(
+        INTEGER(11), nullable=False, server_default=text('0'), comment='0 = Portrait, 1 = Landscape, 2 = Both'
+    )
     optional = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = false, 1 = true')
 
     question = relationship('Question')
@@ -562,7 +629,9 @@ class TemplateQuestionCheckboxOption(Base):
     parentTableId: Mapped[int] = mapped_column(ForeignKey('templateQuestionCheckbox.ID'), nullable=False, index=True)
     description: Mapped[int] = mapped_column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     order = Column(INTEGER(11), nullable=False, server_default=text('1'))
-    specialAction = Column(INTEGER(11), nullable=False, comment='0 = nothing special, 1 = check everything, 2 = uncheck everything')
+    specialAction = Column(
+        INTEGER(11), nullable=False, comment='0 = nothing special, 1 = check everything, 2 = uncheck everything'
+    )
 
     dictionary = relationship('Dictionary')
     templateQuestionCheckbox = relationship('TemplateQuestionCheckbox')
@@ -644,7 +713,9 @@ class Answer(Base):
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
-    lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    lastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
     updatedBy = Column(String(255), nullable=False)
 
     answerSection = relationship('AnswerSection')
@@ -663,7 +734,12 @@ class CheckboxOption(Base):
     parentTableId: Mapped[int] = mapped_column(ForeignKey('checkbox.ID'), nullable=False, index=True)
     order = Column(INTEGER(11), nullable=False, server_default=text('1'))
     description: Mapped[int] = mapped_column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
-    specialAction = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='0 = nothing special, 1 = check everything, 2 = uncheck everything')
+    specialAction = Column(
+        INTEGER(11),
+        nullable=False,
+        server_default=text('0'),
+        comment='0 = nothing special, 1 = check everything, 2 = uncheck everything',
+    )
 
     dictionary = relationship('Dictionary')
     checkbox = relationship('Checkbox')
