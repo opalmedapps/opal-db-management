@@ -1,11 +1,12 @@
-"""insert-views-functions-events-procs
+"""
+Insert views, functions, events, and procedures.
 
 Revision ID: 7a189846a0f5
 Revises: 85a1cf55990c
 Create Date: 2023-02-01 10:41:21.466828
 
 """
-import os
+
 from pathlib import Path
 
 from db_management.connection import connection_cursor, sql_connection_parameters
@@ -30,7 +31,7 @@ def upgrade() -> None:
         cursor.execute(query='SET foreign_key_checks=0;')
 
     funcs_sql_content = ''
-    funcs_file_path = os.path.join(REVISIONS_DIR, 'OpalDB_views_functions_events_procs.sql')
+    funcs_file_path = REVISIONS_DIR.joinpath('OpalDB_views_functions_events_procs.sql')
     # Read in SQL content from handle
     with Path(funcs_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()
@@ -47,14 +48,16 @@ def downgrade() -> None:
     with connection_cursor(CONNECTION_PARAMETERS) as cursor:
         cursor.execute(query='SET foreign_key_checks=0;')
 
-        cursor.execute(query=f"""
+        cursor.execute(
+            query=f"""
         DROP DATABASE {DB_NAME_OPAL};
 
         CREATE DATABASE IF NOT EXISTS {DB_NAME_OPAL} /*!40100 DEFAULT CHARACTER SET latin1 */;
         USE {DB_NAME_OPAL};
         GRANT ALL PRIVILEGES ON {DB_NAME_OPAL}.* TO {DB_USER}@`%`;
 
-        """)
+        """
+        )
 
         cursor.execute(query='SET foreign_key_checks=1;')
         cursor.close()

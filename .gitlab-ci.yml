@@ -5,7 +5,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image: python:3.11.10-alpine3.19
+  image: python:3.11.10-alpine3.20
 
 .default_before:
   before_script:
@@ -84,21 +84,24 @@ build alembic image:
         docker push $IMAGE_COMMIT
       fi
 
-flake8:
+pre-commit:
   stage: static analysis
   extends: .default_before
   needs:
     - setup
   script:
-    - flake8 --version
-    # install plugin to produce code climate report
-    - pip install flake8-gl-codeclimate
-    # don't fail if there are errors so the result can also be printed to the console for logs
-    # fix relative file paths so GitLab is happy and shows the violations properly
-    # see: https://github.com/awelzel/flake8-gl-codeclimate/issues/14
-    - flake8 --format gl-codeclimate | python -c "import sys; import json; lines = [line.replace('./', '') for line in sys.stdin]; print(json.dumps(json.loads('\n'.join(lines)), indent='\t'));" > gl-code-quality-report.json || true
-    # fail if JSON file does not contain empty array
-    - cat gl-code-quality-report.json | grep -q "\[\]"
+    - apk add --no-cache git bash
+    - python -m nodeenv --node lts --python-virtualenv
+    - SKIP=ruff,mypy,markdownlint pre-commit run --all-files
+
+ruff:
+  stage: static analysis
+  extends: .default_before
+  needs:
+    - setup
+  script:
+    - ruff --version
+    - ruff check --output-format gitlab > gl-code-quality-report.json
   artifacts:
     when: always
     reports:

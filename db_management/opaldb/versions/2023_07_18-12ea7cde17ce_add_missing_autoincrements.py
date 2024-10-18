@@ -1,4 +1,5 @@
-"""Adds missing autoincrements to OpalDB.
+"""
+Adds missing autoincrements to OpalDB.
 
 Note that autoincrements are not supported by alembic revision autogenerate
 due to the non-agnostic nature of MariaDB autoincrements... or something
@@ -10,6 +11,7 @@ Revises: 759547f5ca7d
 Create Date: 2023-07-18 16:04:02.348834
 
 """
+
 from alembic import op
 from sqlalchemy.dialects import mysql
 

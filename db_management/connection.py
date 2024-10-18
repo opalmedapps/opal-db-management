@@ -1,4 +1,5 @@
 """TBD."""
+
 from dataclasses import dataclass
 from typing import Optional
 
@@ -10,7 +11,7 @@ from db_management import settings
 
 
 @dataclass(frozen=True)
-class SQLConnectionParameters(object):
+class SQLConnectionParameters:
     """
     The connection parameters for PyMySQL.
 
@@ -69,7 +70,8 @@ def connection_cursor(connection_parameters: SQLConnectionParameters) -> Cursor:
     try:
         connection: pymysql.Connection[Cursor] = pymysql.connect(**connection_parameters.__dict__)
     except pymysql.Error as exc:
-        raise ConnectionError('Error connecting to database') from exc
+        message = 'Error connecting to database'
+        raise ConnectionError(message) from exc
 
     return connection.cursor()
 
@@ -102,6 +104,6 @@ def connection_url(db_name: str) -> str:
         # VERIFY_IDENTIFY is MySQL's equivalent to MariaDB's verify-server-cert
         # see: https://github.com/PyMySQL/mysqlclient/pull/475
         # see also: https://mariadb.com/kb/en/secure-connections-overview/#certificate-verification
-        url += '?ssl_ca={ssl_ca}&ssl_mode=VERIFY_IDENTITY'  # noqa: WPS336
+        url += '?ssl_ca={ssl_ca}&ssl_mode=VERIFY_IDENTITY'
 
     return url.format(**connection_params)

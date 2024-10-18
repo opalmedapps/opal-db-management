@@ -1,4 +1,5 @@
 """Run SQL scripts from a directory on a specific database."""
+
 import argparse
 import sys
 from pathlib import Path
@@ -6,7 +7,11 @@ from pathlib import Path
 from db_management.connection import connection_cursor, sql_connection_parameters
 
 
-def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: bool = False) -> None:
+def run_sql_scripts(
+    db_name: str,
+    directory: Path,
+    disable_foreign_key_checks: bool = False,
+) -> None:
     """
     Run all SQL scripts of the given directory on the database.
 
@@ -25,10 +30,11 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
         # Halt execution if db is Production and action is truncate
         try:
             _truncate_safety_check(path, db_name)
-        except EnvironmentError as err:
-            raise SystemExit(f'Error encountered during execution: {err}')
+        except OSError as err:
+            message = 'Error encountered during execution:'
+            raise SystemExit(message) from err
         print(f'LOG: Running SQL of file: {path}')
-        with Path(path).open() as fd:
+        with Path(path).open(encoding='utf-8') as fd:
             sql_queries = fd.read()
 
         with connection_cursor(sql_connection_parameters(db_name)) as cursor:
@@ -60,29 +66,30 @@ def _existing_directory(directory: str) -> Path:
     directory_path = Path(directory)
 
     if not directory_path.exists():
-        raise argparse.ArgumentTypeError('the directory does not exist')
+        message = 'the directory does not exist'
+        raise argparse.ArgumentTypeError(message)
 
     return directory_path
 
 
 def _truncate_safety_check(path: Path, db_name: str) -> None:
-    """Throw an error and halt execution if a user tries to truncate a non-Development database.
+    """
+    Throw an error and halt execution if a user tries to truncate a non-Development database.
 
     Args:
         path: The path to the sql script being executed
         db_name: the name of the database to check
 
     Raises:
-        EnvironmentError: If the current database build type is anything except `Development`
+        OSError: If the current database build type is anything except `Development`
     """
     if 'truncate' in str(path):
         with connection_cursor(sql_connection_parameters(db_name)) as cursor:
             cursor.execute('SELECT Name FROM BuildType;')
             build_type = cursor.fetchone()
             if build_type and build_type[0] != 'Development':
-                raise EnvironmentError(
-                    'Cannot execute truncate file on non-development databases.'
-                    + ' Check BuildType table value.',
+                raise OSError(
+                    'Cannot execute truncate file on non-development databases.' + ' Check BuildType table value.',
                 )
 
 

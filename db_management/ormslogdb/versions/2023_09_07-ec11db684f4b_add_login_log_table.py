@@ -1,10 +1,12 @@
-"""add_login_log_table
+"""
+Add login log table.
 
 Revision ID: ec11db684f4b
 Revises: 07f067b25688
 Create Date: 2023-09-07 14:52:49.462284
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import mysql
@@ -17,7 +19,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Upgrade function to create LoginLog table"""
+    """Upgrade function to create LoginLog table."""
     op.create_table(
         'LoginLog',
         sa.Column('ID', mysql.INTEGER(display_width=11), nullable=False),
@@ -33,6 +35,6 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Downgrade function to delete LoginLog table"""
+    """Downgrade function to delete LoginLog table."""
     op.drop_index(op.f('ix_LoginLog_UserName'), table_name='LoginLog')
     op.drop_table('LoginLog')

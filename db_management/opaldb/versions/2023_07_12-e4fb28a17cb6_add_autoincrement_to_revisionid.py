@@ -1,10 +1,12 @@
-"""add_autoincrement_to_revisionid
+"""
+Add autoincrement to revisionid.
 
 Revision ID: e4fb28a17cb6
 Revises: 759547f5ca7d
 Create Date: 2023-07-12 17:43:36.846170
 
 """
+
 from alembic import op
 from sqlalchemy.dialects import mysql
 
@@ -16,7 +18,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Set autoincrement to True for the revisionId column"""
+    """Set autoincrement to True for the revisionId column."""
     op.alter_column(
         'AppointmentPendingMH',
         'revisionId',
@@ -28,7 +30,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Set autoincrement to False for the revisionId column"""
+    """Set autoincrement to False for the revisionId column."""
     op.alter_column(
         'AppointmentPendingMH',
         'revisionId',

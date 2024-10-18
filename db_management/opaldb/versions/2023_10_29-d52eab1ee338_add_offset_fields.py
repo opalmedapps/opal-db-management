@@ -1,10 +1,12 @@
-"""add_offset_fields
+"""
+Add offset fields.
 
 Revision ID: d52eab1ee338
 Revises: ee749ce6f599
 Create Date: 2023-10-29 22:40:49.035315
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import mysql

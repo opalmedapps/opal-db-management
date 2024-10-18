@@ -1,10 +1,12 @@
-"""Change registration date default to current timetstamp.
+"""
+Change registration date default to current timetstamp.
 
 Revision ID: c3293af1f69e
 Revises: 7714d52efeaf
 Create Date: 2023-09-05 19:21:44.983692
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import mysql

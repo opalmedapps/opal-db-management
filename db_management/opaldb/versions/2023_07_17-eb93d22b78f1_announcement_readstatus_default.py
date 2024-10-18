@@ -1,10 +1,12 @@
-"""‘Announcement_readStatus_default’
+"""
+Add default for Announcement.readStatus.
 
 Revision ID: eb93d22b78f1
 Revises: 759547f5ca7d
 Create Date: 2023-07-17 18:22:23.476788
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import mysql

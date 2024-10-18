@@ -1225,4 +1225,3 @@ REPLACE INTO `questionSection` (`ID`, `questionId`, `sectionId`, `order`, `orien
 (352, 969, 46, 5, 0, 0),
 (363, 975, 48, 1, 0, 0),
 (364, 976, 48, 2, 0, 0);
-

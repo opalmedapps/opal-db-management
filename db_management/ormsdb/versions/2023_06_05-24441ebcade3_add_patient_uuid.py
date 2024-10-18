@@ -1,10 +1,12 @@
-"""Add UUID to Patient table
+"""
+Add UUID to Patient table.
 
 Revision ID: 24441ebcade3
 Revises: da79ad032892
 Create Date: 2023-06-05 15:15:55.694347
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 
@@ -34,7 +36,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Drop UUID"""
+    """Drop UUID."""
     op.execute('SET @@system_versioning_alter_history = 1;')
     op.drop_column('Patient', 'OpalUUID')
     op.execute('SET @@system_versioning_alter_history = 0;')
