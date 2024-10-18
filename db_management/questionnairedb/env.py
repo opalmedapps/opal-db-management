@@ -1,4 +1,5 @@
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
+
 from collections.abc import Iterable
 from logging.config import fileConfig
 
@@ -29,7 +30,8 @@ target_metadata = [Base.metadata]
 
 
 def run_migrations_offline() -> None:
-    """Run migrations in 'offline' mode.
+    """
+    Run migrations in 'offline' mode.
 
     This configures the context with just a URL
     and not an Engine, though an Engine is acceptable
@@ -56,11 +58,12 @@ def run_migrations_offline() -> None:
 
 
 def process_revision_directives(
-    context: MigrationContext,  # noqa: WPS442
-    revision: str | Iterable[str | None] | Iterable[str],
+    context: MigrationContext,  # noqa: ARG001
+    revision: str | Iterable[str | None] | Iterable[str],  # noqa: ARG001
     directives: list[MigrationScript],
 ) -> None:
-    """Don't create a new migration if no changes are detected.
+    """
+    Don't create a new migration if no changes are detected.
 
     Args:
         context: the migration context
@@ -70,11 +73,12 @@ def process_revision_directives(
     if config.cmd_opts and config.cmd_opts.autogenerate:
         script = directives[0]
         if script.upgrade_ops and script.upgrade_ops.is_empty():
-            directives[:] = []  # noqa: WPS362
+            directives[:] = []
 
 
 def run_migrations_online() -> None:
-    """Run migrations in 'online' mode.
+    """
+    Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
     and associate a connection with the context.
@@ -96,8 +100,8 @@ def run_migrations_online() -> None:
             target_metadata=target_metadata,
             process_revision_directives=process_revision_directives,
             # https://stackoverflow.com/questions/12409724/no-changes-detected-in-alembic-autogeneration-of-migrations-with-flask-sqlalchem
-            compare_type=True,              # Detect changes in col type with autogenerate
-            compare_server_default=True,    # Detect changes in col defaults with autogenerate
+            compare_type=True,  # Detect changes in col type with autogenerate
+            compare_server_default=True,  # Detect changes in col defaults with autogenerate
         )
 
         with context.begin_transaction():

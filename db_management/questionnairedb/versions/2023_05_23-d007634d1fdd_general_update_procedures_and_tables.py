@@ -1,11 +1,12 @@
-"""general_update_procedures_and_tables
+"""
+General update procedures and tables.
 
 Revision ID: d007634d1fdd
 Revises: a8a23f24d61b
 Create Date: 2023-05-23 18:36:01.996021
 
 """
-import os
+
 from pathlib import Path
 
 import sqlalchemy as sa
@@ -24,7 +25,7 @@ REVISIONS_DIR = ROOT_DIR / 'revision_data'
 
 
 def upgrade() -> None:
-    """Table and procedure updates covering QuestionnaireDB DBV revisions 3-9"""
+    """Table and procedure updates covering QuestionnaireDB DBV revisions 3-9."""
     op.execute('SET foreign_key_checks=0;')
     op.alter_column(
         'answer',
@@ -108,7 +109,7 @@ def upgrade() -> None:
         existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
-        comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.',  # noqa: E501
+        comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.',
     )
     op.alter_column(
         'questionnaireFeedback',
@@ -154,7 +155,7 @@ def upgrade() -> None:
     )
     # Latest procedure updates
     funcs_sql_content = ''
-    funcs_file_path = os.path.join(REVISIONS_DIR, 'QuestionnaireDB_update_procedures.sql')
+    funcs_file_path = REVISIONS_DIR.joinpath('QuestionnaireDB_update_procedures.sql')
     # Read in SQL content from handle
     with Path(funcs_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()
@@ -279,7 +280,7 @@ def downgrade() -> None:
     # Revert to old procedures, functions, etc
     op.execute('DROP PROCEDURE IF EXISTS `getCompletedQuestionnairesList`;')
     funcs_sql_content = ''
-    funcs_file_path = os.path.join(REVISIONS_DIR, 'QuestionnaireDB_views_functions_events_procs.sql')
+    funcs_file_path = REVISIONS_DIR.joinpath('QuestionnaireDB_views_functions_events_procs.sql')
     # Read in SQL content from handle
     with Path(funcs_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()

@@ -1,10 +1,12 @@
-"""add_available_at_field
+"""
+Add available at field.
 
 Revision ID: 281079041645
 Revises: ee749ce6f599
 Create Date: 2024-01-18
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 

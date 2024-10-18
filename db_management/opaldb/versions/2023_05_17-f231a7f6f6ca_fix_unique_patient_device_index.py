@@ -1,10 +1,12 @@
-"""Fix unique index in PatientDeviceIdentifier since PatientSerNum was replaced by Username (QSCCD-1123)
+"""
+Fix unique index in PatientDeviceIdentifier since PatientSerNum was replaced by Username.
 
 Revision ID: f231a7f6f6ca
 Revises: 83ccbdfcf3b5
 Create Date: 2023-05-09 17:58:55.818233
 
 """
+
 from alembic import op
 
 # revision identifiers, used by Alembic.

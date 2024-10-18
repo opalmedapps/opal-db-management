@@ -1,4 +1,5 @@
-"""Remove the `getLevel` stored procedure.
+"""
+Remove the `getLevel` stored procedure.
 
 getLevel was being used to determine a default hospital map for appointments if there was none in the alias.
 However, this is specific to the Cedar's Cancer Centre and doesn't work for other sites and institutions.
@@ -8,6 +9,7 @@ Revises: bc09885fdeec
 Create Date: 2024-03-28 01:27:23.883537
 
 """
+
 from alembic import op
 
 from db_management.opaldb.custom_operations import ReplaceableObject
@@ -19,7 +21,7 @@ branch_labels = None
 depends_on = None
 
 get_level_procedure = ReplaceableObject(
-    'getLevel',  # noqa: WPS462
+    'getLevel',
     """
     (`in_DateTime` datetime, `in_Description` varchar(255), `in_HospitalMap` int) RETURNS int(11)
     DETERMINISTIC

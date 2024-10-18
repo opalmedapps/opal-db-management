@@ -62,4 +62,3 @@ INSERT INTO `TestGroupExpression` (`TestGroupExpressionSerNum`, `TestCode`, `Exp
 (370, 'TBIL', 'Bili Total', '2022-01-24 17:57:21', NULL, NULL, 4, '2022-01-24 17:57:21', NULL),
 (458, 'DIG', 'Digoxin', '2022-02-03 10:57:35', NULL, NULL, 4, '2022-02-03 10:57:35', NULL),
 (478, 'TRIG', 'TRIG', '2022-02-16 07:38:06', NULL, NULL, 4, '2022-02-16 07:38:06', NULL);
-

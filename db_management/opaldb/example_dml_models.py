@@ -1,5 +1,5 @@
-# coding: utf-8
-"""Example file to demonstrate SQLAlchemy-based db management.
+"""
+Example file to demonstrate SQLAlchemy-based db management.
 
 This example file shows how to insert data with SQLAlchemy models
 instead of relying on raw SQL This is the preferred method for
@@ -9,6 +9,7 @@ Note the metadata object for this file must be registered in this
 alembic folder's env.py file for the changes to be seen
 by the autogenerate migration feature.
 """
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
@@ -31,7 +32,7 @@ patients = [
         LastName='Patient',
         Sex='Male',
         DateOfBirth='1996-07-06',
-        Age=26,  # noqa: WPS432
+        Age=26,
         Email='example@email.com',
         TelNum='1234567890',
         EnableSMS=1,
@@ -48,7 +49,8 @@ session_maker = sessionmaker(bind=create_engine(connection_url(DB_NAME_OPAL)))
 
 
 def create_patients() -> None:
-    """Insert example data.
+    """
+    Insert example data.
 
     Note: Session maker is a context manager, we want to create a new session for each interaction.
 

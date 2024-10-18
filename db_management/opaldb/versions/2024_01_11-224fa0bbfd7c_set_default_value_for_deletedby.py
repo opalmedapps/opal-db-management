@@ -1,10 +1,12 @@
-"""set_default_value_for_deleteby
+"""
+Set default value for deleteby.
 
 Revision ID: 224fa0bbfd7c
 Revises: 2cbae06775ef
 Create Date: 2024-01-11 10:39:27.381090
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 
@@ -16,7 +18,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Set default value empty string for deletedBy, createdBy, updatedBy"""
+    """Set default value empty string for deletedBy, createdBy, updatedBy."""
     op.alter_column(
         'alert',
         'createdBy',
@@ -124,7 +126,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Remove default value from deletedBy, createdBy, updatedBy"""
+    """Remove default value from deletedBy, createdBy, updatedBy."""
     op.alter_column(
         'oaRole',
         'updatedBy',

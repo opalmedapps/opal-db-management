@@ -1,10 +1,12 @@
-"""KA.various-default-fixes-and-pdi
+"""
+Various fixes for defaults and PDI.
 
 Revision ID: 75c66041e347
 Revises: 7a189846a0f5
 Create Date: 2023-03-30 15:49:58.952989
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import mysql
@@ -17,7 +19,8 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Add server defaults to several tables and update PDI with new Username-based workflow.
+    """
+    Add server defaults to several tables and update PDI with new Username-based workflow.
 
     The following tickets are covered by this migration:
         https://o-hig.atlassian.net/browse/QSCCD-764?search_id=2b5fc479-a6f8-4797-8151-11caae59b6fc

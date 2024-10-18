@@ -1,4 +1,5 @@
 """Global configurations settings such as database connection strings."""
+
 import os
 from typing import Literal, Optional, overload
 
@@ -13,8 +14,7 @@ def _env(
     key: str,
     default: Optional[str] = None,
     required: Literal[True] = True,
-) -> str:
-    ...  # noqa: WPS428
+) -> str: ...
 
 
 @overload
@@ -22,8 +22,7 @@ def _env(
     key: str,
     default: Optional[str] = None,
     required: Literal[False] = False,
-) -> Optional[str]:
-    ...  # noqa: WPS428
+) -> Optional[str]: ...
 
 
 def _env(
@@ -34,7 +33,8 @@ def _env(
     env_value = os.getenv(key, default=default)
 
     if required and not env_value:
-        raise AttributeError(f'Environment variable "{key}" not set')
+        message = f'Environment variable "{key}" not set'
+        raise AttributeError(message)
 
     return env_value
 
