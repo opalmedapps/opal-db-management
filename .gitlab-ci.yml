@@ -90,9 +90,8 @@ pre-commit:
   needs:
     - setup
   script:
-    - apk add --no-cache git bash
-    - python -m nodeenv --node lts --python-virtualenv
-    - SKIP=ruff,mypy,markdownlint pre-commit run --all-files
+    - apk add --no-cache git
+    - SKIP=ruff,ruff-format,mypy,markdownlint-cli2 pre-commit run --all-files
 
 ruff:
   stage: static analysis
