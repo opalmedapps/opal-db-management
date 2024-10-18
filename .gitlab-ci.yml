@@ -5,7 +5,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image: python:3.11.10-alpine3.20
+  image: python:3.13.0-alpine3.20
 
 .default_before:
   before_script:
