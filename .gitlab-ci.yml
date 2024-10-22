@@ -209,6 +209,10 @@ run sql scripts:
 # to support merge trains
 # see: https://gitlab.com/gitlab-org/gitlab/-/issues/13159#note_373865588
 include:
+  - component: $CI_SERVER_FQDN/opalmedapps/engineering/ci-templates/check-thirdparty-notice@main
+    inputs:
+      pip-requirements-files: requirements/base.txt
+
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Workflows/MergeRequest-Pipelines.gitlab-ci.yml
   - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
   # use latest template versions to run security scanning jobs also in merge request pipelines:
