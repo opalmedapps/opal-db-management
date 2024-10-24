@@ -130,7 +130,7 @@ class AppointmentMH(Base):
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True)
-    AppointmentAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    SourceSystemID = Column(String(100), nullable=False, index=True)
     PrioritySerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisSerNum = Column(INTEGER(11), nullable=False, index=True)
     Status = Column(String(100), nullable=False)
@@ -1558,7 +1558,7 @@ class ResourcePending(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     sourceName = Column(String(128), nullable=False)
-    appointmentId = Column(BIGINT(20), nullable=False)
+    appointmentId = Column(String(100), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
     level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     creationDate = Column(DateTime, nullable=False)
@@ -1574,7 +1574,7 @@ class ResourcePendingError(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     sourceName = Column(String(128), nullable=False)
-    appointmentId = Column(BIGINT(20), nullable=False)
+    appointmentId = Column(String(100), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
     level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     error = Column(MEDIUMTEXT, nullable=False)
@@ -1593,7 +1593,7 @@ class ResourcePendingMH(Base):
     revisionId = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
     action = Column(String(128), nullable=False)
     sourceName = Column(String(128), nullable=False)
-    appointmentId = Column(BIGINT(20), nullable=False)
+    appointmentId = Column(String(100), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
     level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     creationDate = Column(DateTime, nullable=False)
@@ -1623,7 +1623,7 @@ class Termsandagreement(Base):
 
 class AppointmentPending(Base):
     __tablename__ = 'AppointmentPending'
-    __table_args__ = (Index('UniqueAppointment', 'sourceName', 'AppointmentAriaSer', unique=True),)
+    __table_args__ = (Index('UniqueAppointment', 'sourceName', 'SourceSystemID', unique=True),)
 
     ID = Column(BIGINT(20), primary_key=True)
     PatientSerNum: Mapped[int] = mapped_column(
@@ -1632,7 +1632,7 @@ class AppointmentPending(Base):
     sourceName = Column(String(255), nullable=False, index=True)
     appointmentTypeCode = Column(String(250), nullable=False, comment='Appointment Type Code')
     appointmentTypeDescription = Column(String(250), nullable=False, comment='Appointment Type Description')
-    AppointmentAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    SourceSystemID = Column(String(100), nullable=False, index=True)
     PrioritySerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisSerNum = Column(INTEGER(11), nullable=False, index=True)
     Status = Column(String(100), nullable=False)
@@ -1661,7 +1661,7 @@ class AppointmentPending(Base):
 
 class AppointmentPendingMH(Base):
     __tablename__ = 'AppointmentPendingMH'
-    __table_args__ = (Index('UniqueAppointment', 'sourceName', 'AppointmentAriaSer'),)
+    __table_args__ = (Index('UniqueAppointment', 'sourceName', 'SourceSystemID'),)
 
     AppointmentPendingId = Column(BIGINT(20), primary_key=True, nullable=False, server_default=text('0'))
     revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True, autoincrement=True)
@@ -1672,7 +1672,7 @@ class AppointmentPendingMH(Base):
     sourceName = Column(String(128), nullable=False, index=True)
     appointmentTypeCode = Column(String(250), nullable=False, comment='Appointment Type Code')
     appointmentTypeDescription = Column(String(250), nullable=False, comment='Appointment Type Description')
-    AppointmentAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    SourceSystemID = Column(String(100), nullable=False, index=True)
     PrioritySerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisSerNum = Column(INTEGER(11), nullable=False, index=True)
     Status = Column(String(100), nullable=False)
@@ -3175,7 +3175,18 @@ class Appointment(Base):
     SourceDatabaseSerNum: Mapped[int] = mapped_column(
         ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True
     )
-    AppointmentAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    AppointmentAriaSer = Column(
+        INTEGER(11),
+        nullable=True,
+        index=True,
+        comment='Deprecated - systems now use SourceSystemID. DO NOT DELETE (to preserve legacy data for possible downgrade operation).',
+    )
+    SourceSystemID = Column(
+        String(100),
+        nullable=False,
+        index=True,
+        comment='Unique identifier for the appointment in the source system. Equivalent to ORMs MVA.AppointId field, if ORMs is installed.',
+    )
     PrioritySerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisSerNum = Column(INTEGER(11), nullable=False, index=True)
     Status = Column(String(100), nullable=False, index=True)

@@ -12,7 +12,7 @@ INSERT INTO `PatientHospitalIdentifier` (`PatientHospitalIdentifierId`, `Patient
 -- Note that for every entry in the MediVisitAppointmentList there must be a corresponding entry in SmsAppointments with a matching ClinicResourcesSerNum
 --   This is needed for sms functionality in ORMs, and might cause errors with Opal checkins if not added
 INSERT INTO `MediVisitAppointmentList` (`PatientSerNum`, `ClinicResourcesSerNum`, `ScheduledDateTime`, `ScheduledDate`, `ScheduledTime`, `AppointmentReminderSent`, `AppointmentCodeId`, `AppointId`, `AppointSys`, `Status`, `MedivisitStatus`, `CreationDate`, `AppointmentSerNum`, `LastUpdated`, `LastUpdatedUserIP`) VALUES
-(1, 1312, '2024-01-24 05:30:00', '2024-01-24', '05:30:00', 0, 516, '217542', 'Aria', 'Open',	'Active', '2024-01-24 11:47:30', 1, '2024-01-24 11:48:12', '0.0.0.0'),
+(1, 1312, '2024-01-24 05:30:00', '2024-01-24', '05:30:00', 0, 516, '2024A21342134', 'MEDIVISIT', 'Open',	'Active', '2024-01-24 11:47:30', 1, '2024-01-24 11:48:12', '0.0.0.0'),
 (3, 1312, '2023-11-24 18:05:00', '2023-11-24', '18:05:00', 0, 507, '209498', 'Aria', 'Open',	'Active', '2023-11-24 16:01:16', 3, '2023-11-24 16:02:03', '0.0.0.0'),
 (4, 1312, '2023-11-24 17:45:00', '2023-11-24', '17:45:00', 0, 501, '219507', 'Aria', 'Open',	'Active', '2023-11-24 15:59:53', 4, '2023-11-24 16:00:38', '0.0.0.0');
 UPDATE MediVisitAppointmentList set ScheduledDateTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 2 hour)));
