@@ -1,16 +1,16 @@
-INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `AppointmentAriaSer`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `CheckinUsername`, `ChangeRequest`, `DateAdded`, `ReadStatus`, `ReadBy`, `SessionId`, `LastUpdated`) VALUES
+INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `SourceSystemID`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `CheckinUsername`, `ChangeRequest`, `DateAdded`, `ReadStatus`, `ReadBy`, `SessionId`, `LastUpdated`) VALUES
 
--- marge
-(217542,	174,	NULL,	51,	1,	217542,	0,	1,	'Open',	'Active',	'2023-04-06 22:00:00',	'2023-04-06 22:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-06 10:40:31',	0,	'[]',	'',	'2023-01-12 16:39:17'),
+-- marge, from Medivisit
+(217542,	174,	NULL,	51,	2,	'2024A21342134',	0,	1,	'Open',	'Active',	'2023-04-06 22:00:00',	'2023-04-06 22:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-06 10:40:31',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
--- homer
+-- homer, from Aria
 (219505,	8114,	NULL,	52,	1,	219505,	0,	2,	'Open',	'Active',	'2023-04-25 14:00:00',	'2023-04-25 14:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-08-25 10:22:33',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
--- bart
+-- bart, from Aria
 (209498,	147,	NULL,	53,	1,	209498,	0,	3,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
--- rory
-(209500,	174,	NULL,	59,	1,	209500,	0,	3,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17');
+-- rory, from eRDV
+(209500,	174,	NULL,	59,	5,	'5474351E',	0,	3,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17');
 
 
 UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 2 hour)));
@@ -32,7 +32,7 @@ UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),i
 
 
 -- Laurie data
-INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `AppointmentAriaSer`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `CheckinUsername`, `ChangeRequest`, `DateAdded`, `ReadStatus`, `ReadBy`, `SessionId`, `LastUpdated`) VALUES
+INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `SourceSystemID`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `CheckinUsername`, `ChangeRequest`, `DateAdded`, `ReadStatus`, `ReadBy`, `SessionId`, `LastUpdated`) VALUES
 (52, 27, NULL, 92, 1, 1363385, 1, 17, 'Manually Completed', 'Active', '2014-07-08 09:09:00', '2014-07-08 09:19:00', '2014-07-08 09:10:06', '0000-00-00 00:00:00', 10, '', '', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', 0, '2015-12-11 12:37:41', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '', '2019-02-19 22:25:17'),
 (53, 27, NULL, 92, 1, 1365710, 1, 17, 'Manually Completed', 'Active', '2014-07-15 09:09:00', '2014-07-15 09:19:00', '2014-07-15 09:15:41', '0000-00-00 00:00:00', 10, '', '', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', 0, '2015-12-11 12:37:41', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '', '2019-02-19 22:25:17'),
 (54, 27, NULL, 92, 1, 1368504, 1, 17, 'Manually Completed', 'Active', '2014-07-22 08:08:00', '2014-07-22 08:18:00', '2014-07-22 08:58:09', '0000-00-00 00:00:00', 10, '', '', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', 0, '2015-12-11 12:37:41', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '', '2019-02-19 22:25:17'),

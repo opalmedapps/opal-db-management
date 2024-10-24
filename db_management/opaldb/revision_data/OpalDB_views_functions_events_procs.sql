@@ -959,13 +959,13 @@ Reason: Only keep today and future appointments
 ****************************************************************************************************/
 
 DELETE FROM resourcePending
-WHERE appointmentId IN (SELECT B.AppointmentAriaSer FROM AppointmentPending B
+WHERE appointmentId IN (SELECT B.SourceSystemID FROM AppointmentPending B
 WHERE DATE(B.ScheduledStartTime) < DATE(ADDDATE(NOW(), INTERVAL -30 DAY))
 );
 
 DELETE FROM resourcePending
 WHERE appointmentId IN
-(SELECT B.AppointmentAriaSer FROM AppointmentPending B
+(SELECT B.SourceSystemID FROM AppointmentPending B
 WHERE B.`Status` = 'Deleted'
 );
 
@@ -976,7 +976,7 @@ DELETE FROM AppointmentPending
 WHERE `Status` = 'Deleted';
 
 DELETE FROM resourcePending
-WHERE appointmentId NOT IN (SELECT B.AppointmentAriaSer FROM AppointmentPending B);
+WHERE appointmentId NOT IN (SELECT B.SourceSystemID FROM AppointmentPending B);
 
 END;
 
