@@ -2,7 +2,7 @@
 
 # Code quality
 #
-ruff==0.7.1  # https://docs.astral.sh/ruff
+ruff==0.7.2  # https://docs.astral.sh/ruff
 
 # Testing
 #
