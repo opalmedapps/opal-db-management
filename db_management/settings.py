@@ -44,10 +44,10 @@ DB_HOST = _env('DATABASE_HOST', required=True)
 DB_PORT = int(_env(key='DATABASE_PORT', default='3306'))
 DB_USER = _env('DATABASE_USER')
 DB_PASSWORD = _env('DATABASE_PASSWORD')
-DB_NAME_OPAL = _env('LEGACY_OPAL_DB_NAME')
-DB_NAME_QUESTIONNAIRE = _env('LEGACY_QUESTIONNAIRE_DB_NAME')
-DB_NAME_ORMS = _env('ORMS_DB_NAME')
-DB_NAME_ORMS_LOG = _env('ORMS_LOG_DB_NAME')
+DB_NAME_OPAL = 'OpalDB'
+DB_NAME_QUESTIONNAIRE = 'QuestionnaireDB'
+DB_NAME_ORMS = 'OrmsDatabase'
+DB_NAME_ORMS_LOG = 'OrmsLog'
 
 # SSL Settings
 USE_SSL = _env('USE_SSL', default='0', required=False) == '1'
