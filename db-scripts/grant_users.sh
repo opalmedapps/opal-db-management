@@ -6,7 +6,6 @@ GRANT ALL PRIVILEGES ON \`OpalDB\`.* TO \`$MARIADB_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`test_OpalDB\`.* TO \`$MARIADB_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`test_QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;
-GRANT ALL PRIVILEGES ON \`OpalReportDB\`.* TO \`$MARIADB_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;
 EOF
