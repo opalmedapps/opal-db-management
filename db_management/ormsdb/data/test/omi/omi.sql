@@ -35,12 +35,26 @@ INSERT INTO `MediVisitAppointmentList` (`PatientSerNum`, `ClinicResourcesSerNum`
 (3, 1312, '2023-11-24 18:05:00', '2023-11-24', '18:05:00', 0, 507, '209498', 'Aria', 'Open',	'Active', '2023-11-24 16:01:16', 3, '2023-11-24 16:02:03', '0.0.0.0'),
 (6, 1088, '2022-12-06 15:50:00', '2022-12-06', '15:50:00', 0, 22, '219506', 'Aria', 'Open',	'Active', '2022-12-06 13:17:50', 6, '2022-12-06 13:47:30', '0.0.0.0'),
 (7, 2360, '2022-12-06 13:30:00', '2022-12-06', '13:30:00', 0, 105, '209499', 'Aria', 'Open',	'Active', '2022-12-06 13:24:08', 7, '2022-12-06 13:47:30', '0.0.0.0'),
-(9, 1312, '2022-12-06 13:30:00', '2022-12-06', '13:30:00', 0, 137, '5474351E', 'ERDV', 'Open',	'Active', '2022-12-06 13:24:08', 8, '2022-12-06 13:47:30', '0.0.0.0');
+(9, 1312, '2022-12-06 13:30:00', '2022-12-06', '13:30:00', 0, 137, '5474351E', 'ERDV', 'Completed',	'Active', '2022-12-06 13:24:08', 8, '2022-12-06 13:47:30', '0.0.0.0'),
+(9, 1312, '2022-12-06 13:30:00', '2022-12-06', '13:30:00', 0, 138, '5474352E', 'ERDV', 'Open',	'Active', '2022-12-06 13:24:08', 9, '2022-12-06 13:47:30', '0.0.0.0'),
+(9, 1312, '2022-12-06 13:30:00', '2022-12-06', '13:30:00', 0, 139, '5474353E', 'ERDV', 'Open',	'Active', '2022-12-06 13:24:08', 10, '2022-12-06 13:47:30', '0.0.0.0');
 
 UPDATE MediVisitAppointmentList set
 ScheduledDateTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 2 hour))),
 ScheduledDate=current_date(),
 ScheduledTime=TIME(DATE_ADD(now(),interval 2 hour));
+
+UPDATE MediVisitAppointmentList set
+ScheduledDateTime=DATE_SUB(NOW(), INTERVAL 7 DAY),
+ScheduledDate=DATE_SUB(now(),interval 7 day),
+ScheduledTime=TIME(DATE_SUB(now(),interval 7 day))
+where PatientSerNum=9 and AppointmentSerNum=8;
+
+UPDATE MediVisitAppointmentList set
+ScheduledDateTime=DATE_ADD(NOW(), INTERVAL 7 DAY),
+ScheduledDate=DATE_ADD(now(),interval 7 day),
+ScheduledTime=TIME(DATE_ADD(now(),interval 7 day))
+where PatientSerNum=9 and AppointmentSerNum=10;
 
 -- laurie data
 INSERT INTO `MediVisitAppointmentList` (`PatientSerNum`, `ClinicResourcesSerNum`, `ScheduledDateTime`, `ScheduledDate`, `ScheduledTime`, `AppointmentReminderSent`, `AppointmentCodeId`, `AppointId`, `AppointSys`, `Status`, `MedivisitStatus`, `CreationDate`, `AppointmentSerNum`, `LastUpdated`, `LastUpdatedUserIP`) VALUES
