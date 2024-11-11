@@ -1,5 +1,4 @@
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`) VALUES
-(1, 'admin', '7730a53a1b533a7a0e22a024ab8e21138e064e23a2533ff1769b31d22da10570', 1, 1, 'EN', 0, NOW()),
 (4, 'MIGR6002', '7730a53a1b533a7a0e22a024ab8e21138e064e23a2533ff1769b31d22da10570', 1, 1, 'EN', 0, NOW()),
 (5, 'DOZE6001', '7730a53a1b533a7a0e22a024ab8e21138e064e23a2533ff1769b31d22da10570', 1, 1, 'EN', 0, NOW()),
 (6, 'MOYI6000', '7730a53a1b533a7a0e22a024ab8e21138e064e23a2533ff1769b31d22da10570', 1, 1, 'EN', 0, NOW()),
