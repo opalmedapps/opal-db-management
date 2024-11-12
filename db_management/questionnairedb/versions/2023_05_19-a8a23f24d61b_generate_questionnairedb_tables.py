@@ -1352,7 +1352,7 @@ def upgrade() -> None:
     funcs_sql_content = ''
     funcs_file_path = REVISIONS_DIR.joinpath('QuestionnaireDB_views_functions_events_procs.sql')
     # Read in SQL content from handle
-    with Path(funcs_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as file_handle:
+    with Path(funcs_file_path).open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()
         file_handle.close()
     op.execute(funcs_sql_content)
