@@ -1795,7 +1795,7 @@ class OAUser(Base):
     __tablename__ = 'OAUser'
 
     OAUserSerNum = Column(INTEGER(11), primary_key=True)
-    Username = Column(String(1000), nullable=False)
+    Username = Column(String(1000), nullable=False, unique=True)
     Password = Column(String(1000), nullable=False)
     oaRoleId: Mapped[int] = mapped_column(
         ForeignKey('oaRole.ID'), nullable=False, index=True, server_default=text('1'), comment='Role of the user'
