@@ -269,6 +269,7 @@ class AnswerQuestionnaire(Base):
     status = Column(
         INTEGER(11), nullable=False, server_default=text('0'), comment='0 = New, 1 = In Progress, 2 = Completed'
     )
+    completedDate = Column(DateTime, nullable=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255), nullable=False)
     creationDate = Column(DateTime, nullable=False)

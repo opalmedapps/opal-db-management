@@ -2734,6 +2734,16 @@ SET creationDate = DATE_ADD(now(), INTERVAL -7 DAY),
     lastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
 WHERE questionnaireId=111;
 
+-- For completed questionnaires, set the completed date to the same value at their lastUpdate date (and make sure lastUpdated isn't affected)
+UPDATE answerQuestionnaire aq
+SET aq.completedDate = aq.lastUpdated
+WHERE aq.`status` = 2
+;
+UPDATE answerQuestionnaire aq
+SET aq.lastUpdated = aq.completedDate
+WHERE aq.`status` = 2
+;
+
 INSERT INTO `answerRadioButton` (`ID`, `answerId`, `value`) VALUES
 (1, 5333, 169),
 (2, 5334, 173),
