@@ -1,4 +1,4 @@
-FROM python:3.12.7-alpine3.20 AS build
+FROM python:3.12.8-alpine3.20 AS build
 
 # dependencies for building Python packages
 RUN apk add --no-cache build-base \
@@ -10,7 +10,7 @@ RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
 RUN python -m pip install --no-cache-dir -r /tmp/base.txt
 
-FROM python:3.12.7-alpine3.20
+FROM python:3.12.8-alpine3.20
 
 RUN apk upgrade --no-cache \
   # mysqlclient dependencies
