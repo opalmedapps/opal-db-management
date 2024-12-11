@@ -21,3 +21,13 @@ JOIN patient AS p ON aq.patientId = p.ID
 JOIN OpalDB.Users AS ou ON ou.UserTypeSerNum = p.externalId
 SET aq.respondentUsername = ou.Username
 WHERE aq.Status = 1 OR aq.Status = 2;
+
+-- Initialize completedDate for completed questionnaires
+UPDATE answerQuestionnaire aq
+SET aq.completedDate = aq.lastUpdated
+WHERE aq.`status` = 2
+;
+UPDATE answerQuestionnaire aq
+SET aq.lastUpdated = aq.completedDate
+WHERE aq.`status` = 2
+;

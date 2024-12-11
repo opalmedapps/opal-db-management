@@ -175,6 +175,59 @@ def drop_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
     operations.execute(f'DROP TRIGGER IF EXISTS {operation.target.name}')
 
 
+@Operations.register_operation('create_function', INVOKE_FOR_TARGET)
+@Operations.register_operation('replace_function', REPLACE)
+class CreateFunctionOp(ReversibleOp):
+    """Create function operation."""
+
+    def reverse(self) -> MigrateOperation:
+        """
+        Reverse the create function operation by returning an operation that drops the function.
+
+        Returns:
+            a drop function operation
+        """
+        return DropFunctionOp(self.target)
+
+
+@Operations.register_operation('drop_function', INVOKE_FOR_TARGET)
+class DropFunctionOp(ReversibleOp):
+    """Drop function operation."""
+
+    def reverse(self) -> MigrateOperation:
+        """
+        Reverse the drop function operation by returning an operation that creates the function.
+
+        Returns:
+            a create function operation
+        """
+        return CreateFunctionOp(self.target)
+
+
+@Operations.implementation_for(CreateFunctionOp)
+def create_function(operations: Operations, operation: CreateFunctionOp) -> None:
+    """
+    Execute the create function operation.
+
+    Args:
+        operations: the operations instance
+        operation: the create function operation to execute
+    """
+    operations.execute(f'CREATE FUNCTION {operation.target.name} {operation.target.sql_text}')
+
+
+@Operations.implementation_for(DropFunctionOp)
+def drop_function(operations: Operations, operation: DropFunctionOp) -> None:
+    """
+    Execute the drop function operation.
+
+    Args:
+        operations: the operations instance
+        operation: the drop function operation to execute
+    """
+    operations.execute(f'DROP FUNCTION {operation.target.name}')
+
+
 @Operations.register_operation('create_procedure', INVOKE_FOR_TARGET)
 @Operations.register_operation('replace_procedure', REPLACE)
 class CreateProcedureOp(ReversibleOp):
@@ -213,7 +266,7 @@ def create_procedure(operations: Operations, operation: CreateProcedureOp) -> No
         operations: the operations instance
         operation: the create stored procedure operation to execute
     """
-    operations.execute(f'CREATE FUNCTION {operation.target.name} {operation.target.sql_text}')
+    operations.execute(f'CREATE PROCEDURE {operation.target.name} {operation.target.sql_text}')
 
 
 @Operations.implementation_for(DropProcedureOp)
@@ -225,4 +278,4 @@ def drop_procedure(operations: Operations, operation: DropProcedureOp) -> None:
         operations: the operations instance
         operation: the drop stored procedure operation to execute
     """
-    operations.execute(f'DROP FUNCTION {operation.target.name}')
+    operations.execute(f'DROP PROCEDURE {operation.target.name}')
