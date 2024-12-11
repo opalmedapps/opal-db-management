@@ -1,5 +1,5 @@
 """
-Remove the `getLevel` stored procedure.
+Remove the `getLevel` function.
 
 getLevel was being used to determine a default hospital map for appointments if there was none in the alias.
 However, this is specific to the Cedar's Cancer Centre and doesn't work for other sites and institutions.
@@ -20,7 +20,7 @@ down_revision = 'bc09885fdeec'
 branch_labels = None
 depends_on = None
 
-get_level_procedure = ReplaceableObject(
+get_level_function = ReplaceableObject(
     'getLevel',
     """
     (`in_DateTime` datetime, `in_Description` varchar(255), `in_HospitalMap` int) RETURNS int(11)
@@ -174,9 +174,9 @@ get_level_procedure = ReplaceableObject(
 
 def upgrade() -> None:
     """Upgrade to this migration."""
-    op.drop_procedure(get_level_procedure)  # type: ignore[attr-defined]
+    op.drop_function(get_level_function)  # type: ignore[attr-defined]
 
 
 def downgrade() -> None:
     """Downgrade this migration."""
-    op.create_procedure(get_level_procedure)  # type: ignore[attr-defined]
+    op.create_function(get_level_function)  # type: ignore[attr-defined]
