@@ -6,7 +6,7 @@ ruff==0.8.3  # https://docs.astral.sh/ruff
 
 # Testing
 #
-mypy==1.13.0  # https://github.com/python/mypy
+mypy==1.14.1  # https://github.com/python/mypy
 types-PyMySQL==1.1.0.20241103  # https://pypi.org/project/types-PyMySQL/
 
 pytest==8.3.4  # https://github.com/pytest-dev/pytest
