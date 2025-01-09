@@ -13,7 +13,7 @@
   "pip_requirements": {
     "fileMatch": ["^requirements/.*\\.txt$"]
   },
-  "assignees": ["mschoettle", "Napparific"],
+  "assignees": ["mschoettle"],
   "labels": ["dependencies"],
   // Only rebase existing MRs when the branch is conflicted
   // This avoids getting spammed by updates to existing MRs
