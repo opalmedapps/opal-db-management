@@ -6,6 +6,7 @@ Revises: 1c313a46ee6b
 Create Date: 2024-12-02 22:30:35.708514
 
 """
+
 from pathlib import Path
 
 import sqlalchemy as sa
@@ -26,9 +27,13 @@ REVISIONS_DIR = ROOT_DIR / 'revision_data'
 
 # Paths to stored procedure sql files
 PATH_QUESTIONNAIRE_LIST_OLD = REVISIONS_DIR.joinpath('QuestionnaireDB_2023_05_23-d007634d1fdd_getQuestionnaireList.sql')
-PATH_UPDATE_STATUS_OLD = REVISIONS_DIR.joinpath('QuestionnaireDB_2023_05_23-d007634d1fdd_updateAnswerQuestionnaireStatus.sql')
+PATH_UPDATE_STATUS_OLD = REVISIONS_DIR.joinpath(
+    'QuestionnaireDB_2023_05_23-d007634d1fdd_updateAnswerQuestionnaireStatus.sql'
+)
 PATH_QUESTIONNAIRE_LIST_NEW = REVISIONS_DIR.joinpath('QuestionnaireDB_2024_12_02-06a9f2cd81f9_getQuestionnaireList.sql')
-PATH_UPDATE_STATUS_NEW = REVISIONS_DIR.joinpath('QuestionnaireDB_2024_12_02-06a9f2cd81f9_updateAnswerQuestionnaireStatus.sql')
+PATH_UPDATE_STATUS_NEW = REVISIONS_DIR.joinpath(
+    'QuestionnaireDB_2024_12_02-06a9f2cd81f9_updateAnswerQuestionnaireStatus.sql'
+)
 
 # Populate the completedDate with our best guess based on the lastUpdated value (which was previously used as the "Date Answered" in the app)
 COMPLETED_DATE_MIGRATION_QUERY = """
