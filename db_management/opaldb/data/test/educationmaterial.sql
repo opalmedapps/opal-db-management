@@ -27,10 +27,10 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 (15,	NULL,	979,	56,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
 (16,	NULL,	979,	57,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
 
--- rory: treatment guidelines, fertility preservation, databank info
+-- rory: treatment guidelines, databank info, lung guidelines
 (17,	NULL,	105,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
--- (19,	NULL,	642,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
+(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
+(19,	NULL,	480,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
 
 
 -- Treatment guidelines sent 1 day after diagnosis for all
@@ -78,12 +78,19 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -10 DAY),
 WHERE PatientSerNum = 52
 AND `EducationalMaterialSerNum` IN (7, 8);
 
--- Fred and Rory's extra materials sent 5 days ago
+-- Fred's fertility preservation material sent 5 days ago
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -5 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE PatientSerNum IN (56, 59)
-AND `EducationalMaterialSerNum` IN (9, 19);
+WHERE PatientSerNum IN (56)
+AND `EducationalMaterialSerNum` IN (9);
+
+-- Rory's lung guidelines sent 14 days ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE PatientSerNum IN (59)
+AND `EducationalMaterialSerNum` IN (19);
 
 -- DatabankConsent study sent to all 1 day ago
 UPDATE `EducationalMaterial`
