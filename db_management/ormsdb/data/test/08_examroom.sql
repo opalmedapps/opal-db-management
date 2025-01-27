@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Dumping data for table OrmsDatabase.ExamRoom: ~192 rows (approximately)
 REPLACE INTO `ExamRoom` (`AriaVenueId`, `ClinicHubId`, `ScreenDisplayName`, `VenueEN`, `VenueFR`, `ExamRoomSerNum`, `IntermediateVenueSerNum`, `PositionOrder`) VALUES
 ('A1 ROOM x 37067', 1, 'Clinique RC - Salle A1 / Room A1', 'D RC - Room A1', 'D RC - Salle A1', 1, NULL, NULL),

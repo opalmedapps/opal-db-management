@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 
 -- Dumping data for table OrmsDatabase.ProfileColumns: ~550 rows (approximately)
 REPLACE INTO `ProfileColumns` (`ProfileColumnSer`, `ProfileSer`, `ProfileColumnDefinitionSer`, `Position`, `Active`, `LastUpdated`) VALUES

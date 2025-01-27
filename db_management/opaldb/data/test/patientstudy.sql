@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `patientStudy` (`ID`, `patientId`, `studyId`, `consentStatus`, `readStatus`, `lastUpdated`) VALUES
 (1,	51,	1,	1,	0,	'2023-01-12 16:39:16'),
 (2,	52,	2,	1,	1,	'2023-01-12 16:39:16'),

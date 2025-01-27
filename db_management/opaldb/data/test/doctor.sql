@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `Doctor` (`DoctorSerNum`, `ResourceSerNum`, `SourceDatabaseSerNum`, `DoctorAriaSer`, `FirstName`, `LastName`, `Role`, `Workplace`, `Email`, `Phone`, `Address`, `ProfileImage`, `LastUpdated`, `BIO_EN`, `BIO_FR`) VALUES
 (2,	1,	1,	36,	'Christine',	'Lambert',	'Radiation Oncologist',	'',	'',	5149344400,	'L1, Radiation oncology',	'',	'2019-03-25 23:44:24',	NULL,	NULL),
 (4,	2,	1,	5631,	'Tarek',	'Hijal',	'Radiation Oncologist',	'Department Of Radiation Oncology',	'',	5149344400,	'',	'Dr_Tarek_Hijal.jpg',	'2019-04-15 20:51:16',	NULL,	NULL),

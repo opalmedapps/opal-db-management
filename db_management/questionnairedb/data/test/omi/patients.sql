@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Marge, Homer, Bart, Lisa, Mona, Fred, Pebbles, Wednesday
 REPLACE INTO `patient` (`ID`, `hospitalId`, `externalId`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (1,	-1,	51,	0,	'',	'2024-05-10 12:35:11',	'QUESTIONNAIRE_V2_AUTO_SYNC',	'2024-05-10 08:35:11',	'QUESTIONNAIRE_V2_AUTO_SYNC'),

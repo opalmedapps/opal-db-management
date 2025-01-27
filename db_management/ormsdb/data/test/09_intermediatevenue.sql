@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 REPLACE INTO `IntermediateVenue` (`IntermediateVenueSerNum`, `AriaVenueId`, `ClinicHubId`, `ScreenDisplayName`, `VenueEN`, `VenueFR`) VALUES
 (1, 'DOOR A', 1, 'Porte A / Door A', 'Door A', 'Porte A'),
 (2, 'DOOR B', 1, 'Porte B / Door B', 'Door B', 'Porte B'),

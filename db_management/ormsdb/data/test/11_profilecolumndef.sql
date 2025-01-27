@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Dumping data for table OrmsDatabase.ProfileColumnDefinition: ~18 rows (approximately)
 REPLACE INTO `ProfileColumnDefinition` (`ProfileColumnDefinitionSer`, `ColumnName`, `DisplayName`, `Glyphicon`, `Description`, `LastUpdated`) VALUES
 (1, 'PatientName', 'Patient', 'glyphicon-user', 'The patient name', '2018-08-15 20:18:50'),

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- We add those records here to manually insert `Clinical Notes` documents  for hospital-specific `chusj` demo purposes
 -- ReadBy field can be added to the list separated by comma e.g. [\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]
 -- Bart

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `answer` (`ID`, `questionnaireId`, `sectionId`, `questionId`, `typeId`, `answerSectionId`, `languageId`, `patientId`, `answered`, `skipped`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (281,	11,	11,	823,	2,	55,	-1,	1,	1,	0,	0,	'',	'2016-11-25 18:18:38',	'QUESTIONNAIRE_MIGRATION_2019',	'2023-06-02 14:25:14',	'QUESTIONNAIRE_MIGRATION_2019'),
 (282,	11,	11,	824,	2,	55,	-1,	1,	1,	0,	0,	'',	'2016-11-25 18:18:38',	'QUESTIONNAIRE_MIGRATION_2019',	'2023-06-02 14:25:14',	'QUESTIONNAIRE_MIGRATION_2019'),

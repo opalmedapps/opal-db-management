@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `TestGroupExpression` (`TestGroupExpressionSerNum`, `TestCode`, `ExpressionName`, `DateAdded`, `LastPublished`, `LastUpdatedBy`, `SourceDatabaseSerNum`, `LastUpdated`, `SessionId`) VALUES
 (1, 'LIV', 'LIVER PROFILE (ALP/ALT/BILI TOTAL)', '2022-01-21 21:05:25', NULL, NULL, 4, '2022-01-21 21:05:25', NULL),
 (2, 'LIP2', 'LIPID PROFILE 2 (CHOL/HDL/LDL/TRIG)', '2022-01-21 21:05:25', NULL, NULL, 4, '2022-01-21 21:05:25', NULL),

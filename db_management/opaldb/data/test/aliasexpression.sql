@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSourceAliasId`, `ExpressionName`, `Description`, `LastTransferred`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (8, 2, 1, 'READY FOR CONTOUR', 'READY FOR CONTOUR', '2022-01-21 17:58:01', NULL, '2022-01-21 20:45:28', NULL),
 (9, 2, 3, 'READY FOR MD CONTOUR', 'READY FOR MD CONTOUR', '2022-01-21 17:58:01', NULL, '2022-01-21 20:45:28', NULL),

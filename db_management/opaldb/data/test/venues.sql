@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `Venue` (`VenueSerNum`, `SourceDatabaseSerNum`, `SourceUID`, `VenueId`, `DateAdded`, `LastUpdated`) VALUES
 (1,	2,	8230,	'TX AREA C',	'2017-09-26 13:41:05',	'2017-09-26 21:41:05'),
 (2,	1,	8226,	'S1 WAITING ROOM',	'2017-10-13 11:20:14',	'2017-10-13 19:20:14'),

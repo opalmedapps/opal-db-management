@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
 (1,	'RVH',	'Opal General Hospital 1 (RVH)',	'^[0-9]{7}$'),
 (2,	'MGH',	'Opal General Hospital 2 (MGH)',	'^[0-9]{7}$'),

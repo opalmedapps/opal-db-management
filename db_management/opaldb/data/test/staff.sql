@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `Staff` (`StaffSerNum`, `SourceDatabaseSerNum`, `StaffId`, `FirstName`, `LastName`, `LastUpdated`) VALUES
 (1,	1,	'',	'Interface           ',	'Interface                     ',	'2015-08-07 00:15:56'),
 (2,	1,	'00560004LDR',	'Interface           ',	'File ORU Test                 ',	'2015-08-07 00:15:56'),

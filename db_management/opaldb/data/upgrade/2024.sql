@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Upgrade script to upgrade from the latest version (January 2022) at the MUHC to the new version (TBD in 2023)
 -- Update Patient Dashboard --> Patients set name_en = Patients' name_FR = Patients
 UPDATE `module` SET `name_EN` = 'Patients', `name_FR` = 'Patients' WHERE `name_EN` = 'Patient Dashboard';

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `PatientActionLog` (`PatientActionLogSerNum`, `PatientSerNum`, `Action`, `RefTable`, `RefTableSerNum`, `ActionTime`) VALUES
 (14, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2019-02-07 15:28:53'),
 (15, 92, 'CLICKED', 'EducationalMaterialTOC', 483, '2019-02-07 15:29:00'),

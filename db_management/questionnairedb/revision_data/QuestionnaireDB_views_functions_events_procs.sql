@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Adminer 4.8.1 MySQL 5.5.5-10.6.13-MariaDB-1:10.6.13+maria~ubu2004 dump
 
 SET NAMES utf8;
