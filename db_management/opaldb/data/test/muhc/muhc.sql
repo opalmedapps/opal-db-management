@@ -60,5 +60,4 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 -- We insert staff that are defined in the documents added in the `Document` insert query above to make sure
 -- the doctor referred to in the document exists in the test data
 INSERT INTO `Staff` (`StaffSerNum`, `SourceDatabaseSerNum`, `StaffId`, `FirstName`, `LastName`, `LastUpdated`) VALUES
-(890,	1,	'1300         ',	'John               ',	'Frink                        ',	'2015-08-07 00:15:57');
-
+(890,	1,	'1300',	'John',	'Frink', '2015-08-07 00:15:57');
