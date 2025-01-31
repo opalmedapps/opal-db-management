@@ -239,7 +239,7 @@ gemnasium-python-dependency_scanning:
     PIP_REQUIREMENTS_FILE: "development.txt"
   # the scanner actually installs the dependencies via pip and therefore requires the mysql client to be installed
   before_script:
-    - apk add --no-cache build-base mariadb-dev
+    - apt update && apt install -y libmariadb-dev pkg-config
 
 # Container Scanning
 # https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
