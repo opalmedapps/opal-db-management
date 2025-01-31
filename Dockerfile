@@ -1,4 +1,4 @@
-FROM python:3.11.8-slim-bookworm
+FROM python:3.11.8-slim-bookworm as build
 
 RUN apt-get update \
   && apt-get upgrade \
@@ -10,20 +10,27 @@ RUN apt-get update \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
+# Install pip requirements
+RUN python -m pip install --no-cache-dir --upgrade pip
+COPY ./requirements /tmp/
+RUN python -m pip install --no-cache-dir -r /tmp/development.txt
+
+FROM python:3.11.8-slim-bookworm
+
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
 
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 
-# Install pip requirements
-RUN python -m pip install --upgrade pip
-COPY ./requirements /tmp/
-RUN python -m pip install --no-cache-dir -r /tmp/development.txt
-
+# get Python package lib and bin
+COPY --from=build /usr/local/bin /usr/local/bin
+COPY --from=build /usr/local/lib /usr/local/lib
 COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
 COPY docker/alembic-upgrade.sh /app/alembic-upgrade.sh
+
 WORKDIR /app/
+
 COPY db_management ./db_management
 COPY alembic.ini .
 
