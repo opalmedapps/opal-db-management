@@ -1797,7 +1797,7 @@ class TestControl(Base):
     Group_FR = Column(String(200), nullable=False)
     SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    InterpretabilityFlag = Column(Boolean, nullable=False, server_default=false(), comment='Marker for data if the lab result requires clinician interpretation.')
+    InterpretationRecommended = Column(Boolean, nullable=False, server_default=false(), comment='Clinician interpretation recommended.')
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
