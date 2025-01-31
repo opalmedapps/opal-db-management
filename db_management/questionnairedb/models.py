@@ -60,7 +60,7 @@ class Patient(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     hospitalId = Column(BIGINT(20), nullable=False, index=True)
-    externalId = Column(String(64), nullable=False, index=True)
+    externalId = Column(INTEGER(11), nullable=False, index=True, comment='OpalDB.Patient.PatientSerNum')
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255), nullable=False)
     creationDate = Column(DateTime, nullable=False)
