@@ -248,3 +248,10 @@ include:
   # Dependency Scanning: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Dependency-Scanning.latest.gitlab-ci.yml
   - template: Jobs/Dependency-Scanning.latest.gitlab-ci.yml
+
+# Customizations
+# Dependency Scanning
+# https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
+gemnasium-dependency_scanning:
+  variables:
+    PIP_REQUIREMENTS_FILE: "requirements/development.txt"
