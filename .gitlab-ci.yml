@@ -184,7 +184,7 @@ run migrations:
     - sed -i "s/^DATABASE_ROOT_PASSWORD=.*/DATABASE_ROOT_PASSWORD=$DB_ROOT_PASSWORD/" .env
     - sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$MARIADB_USER/" .env
     - sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DB_PASSWORD/" .env
-    - sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=mariab/" .env
+    - sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=mariadb/" .env
     - cat .env
     # create additional DBs for legacy DB tests (OpalDB & QuestionnaireDB)
     - apt update && apt-get install -y default-mysql-client
