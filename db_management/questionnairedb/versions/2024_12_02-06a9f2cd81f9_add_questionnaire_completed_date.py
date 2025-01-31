@@ -1,14 +1,13 @@
 """
-Add new column completedDate to answerQuestionnaire
+Add new column completedDate to answerQuestionnaire.
 
 Revision ID: 06a9f2cd81f9
 Revises: 1c313a46ee6b
 Create Date: 2024-12-02 22:30:35.708514
 
 """
-from alembic import op
 import sqlalchemy as sa
-
+from alembic import op
 
 # revision identifiers, used by Alembic.
 revision = '06a9f2cd81f9'
