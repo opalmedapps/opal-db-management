@@ -226,6 +226,5 @@ run sql scripts:
   script:
     - !reference [.database_service, script]
     # migrate databases first
-    - ls -la
-    - ./alembic-upgrade.sh
+    - ./docker/alembic-upgrade.sh
     - db_management/reset_data.sh MUHC
