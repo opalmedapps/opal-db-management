@@ -20,8 +20,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # get Python package lib and bin
-COPY --from=build /usr/local/bin /usr/local/bin
-COPY --from=build /usr/local/lib /usr/local/lib
+# COPY --from=build /usr/local/bin /usr/local/bin
+# COPY --from=build /usr/local/lib /usr/local/lib
 COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
 COPY docker/alembic-upgrade.sh /app/alembic-upgrade.sh
 
