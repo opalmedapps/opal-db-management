@@ -1501,6 +1501,7 @@ class PatientHospitalIdentifier(Base):
     Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
+
 class QuestionnaireDBPurpose(Base):
     __tablename__ = 'purpose'
     __table_args__ = {'schema': 'QuestionnaireDB'}

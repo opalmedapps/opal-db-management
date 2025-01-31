@@ -26,3 +26,6 @@ COPY db_management .
 COPY alembic.ini .
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+# TODO: If we want to make the alembic container stay alive instead of closing, we could add "tail" "-f" "/dev/null"
+#       to the arguments in the ENTRYPOINT commands, but apparently that can cause some issues with Linux users:
+#       https://stackoverflow.com/questions/43843079/using-tail-f-dev-null-to-keep-container-up-fails-unexpectedly
