@@ -1,4 +1,4 @@
--- Enable system versioning in all tables for auditing purposes
+-- Disable system versioning in all tables for auditing purposes
 -- Mariadb System Versioning: https://mariadb.com/kb/en/system-versioned-tables/
 ALTER TABLE AppointmentCode DROP SYSTEM VERSIONING;
 ALTER TABLE ClinicHub DROP SYSTEM VERSIONING;
