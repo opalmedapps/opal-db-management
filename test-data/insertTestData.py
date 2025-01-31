@@ -59,6 +59,7 @@ def insert_data(data_files) -> None:
         # Read in SQL content from handle
         with Path(data_file_path, encoding='UTF-8').open(encoding='UTF-8') as handle:  # noqa: WPS110
             data_sql_content += handle.read()
+            print(f'LOG: Read test data sql for {data_file}')
             handle.close()
         # Execute
         with get_connection_cursor(autocommit=True) as cursor:
@@ -68,6 +69,7 @@ def insert_data(data_files) -> None:
                 SET global sql_mode='';
                 """)
             cursor.execute(data_sql_content)
+            print(f'LOG: Succesfully inserted test data sql for {data_file}')
             cursor.execute(query="""
                     SET foreign_key_checks = 1;
                     SET SQL_MODE='ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
