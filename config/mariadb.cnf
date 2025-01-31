@@ -2,4 +2,4 @@
 
 [mariadbd]
 # enable event scheduler since Opal DBs use events to update certain things
-event_scheduler=On
+event_scheduler = On
