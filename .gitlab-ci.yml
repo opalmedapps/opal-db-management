@@ -219,7 +219,6 @@ run sql scripts:
   stage: test
   extends:
     - .database_service
-  needs:
-    - run migrations
   script:
+    - !reference [.database_service, script]
     - db_management/reset_data.sh MUHC
