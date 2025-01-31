@@ -1046,7 +1046,7 @@ class Alert(Base):
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
-    deletedBy = Column(String(128), nullable=False, comment='Username of the person who deleted the record')
+    deletedBy = Column(String(128), nullable=True, comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
     createdBy = Column(String(128), nullable=False, comment='Username of the person who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
