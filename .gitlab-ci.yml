@@ -151,7 +151,7 @@ markdownlint:
     MARIADB_USER: citest
     MARIADB_PASSWORD: $DB_PASSWORD
   services:
-    - mariadb:10.11.7-jammy
+    - mariadb:10.11.8-jammy
   script:
     # set up env file for DB service
     # use sample env file
