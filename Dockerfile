@@ -12,9 +12,16 @@ RUN apt-get update \
 # Install pip requirements
 RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
-RUN python -m pip install --no-cache-dir -r /tmp/development.txt
+RUN python -m pip install --no-cache-dir -r /tmp/base.txt
 
 FROM python:3.11.8-slim-bookworm
+
+RUN apt-get update \
+  # mysqlclient dependencies
+  && apt-get install -y default-libmysqlclient-dev \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
