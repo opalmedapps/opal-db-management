@@ -19,8 +19,8 @@ default:
     - source .venv/bin/activate || true
 
 stages:
-  - Build
-  - Static Analysis
+  - build
+  - static analysis
   - test
 
 setup:
@@ -50,7 +50,7 @@ setup:
       - .cache/pip
 
 build dbv image:
-  stage: Build
+  stage: build
   image: docker:25.0.3
   services:
     - docker:25.0.3-dind
@@ -87,7 +87,7 @@ build dbv image:
       fi
 
 build alembic image:
-  stage: Build
+  stage: build
   image: docker:25.0.3
   services:
     - docker:25.0.3-dind
@@ -120,7 +120,7 @@ build alembic image:
       fi
 
 flake8:
-  stage: Static Analysis
+  stage: static analysis
   extends: .default_before
   needs:
     - setup
@@ -140,7 +140,7 @@ flake8:
       codequality: gl-code-quality-report.json
 
 mypy:
-  stage: Static Analysis
+  stage: static analysis
   extends: .default_before
   needs:
     - setup
@@ -159,7 +159,7 @@ mypy:
       codequality: codequality.json
 
 markdownlint:
-  stage: Static Analysis
+  stage: static analysis
   needs:
     - setup
   image:
@@ -248,6 +248,9 @@ include:
   # Dependency Scanning: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Dependency-Scanning.latest.gitlab-ci.yml
   - template: Jobs/Dependency-Scanning.latest.gitlab-ci.yml
+  # SAST Scanning: https://docs.gitlab.com/ee/user/application_security/sast/
+  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/SAST.latest.gitlab-ci.yml
+  - template: Jobs/SAST.latest.gitlab-ci.yml
 
 # Customizations
 #
