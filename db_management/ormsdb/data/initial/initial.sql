@@ -41,4 +41,3 @@ INSERT INTO `Insurance` (`InsuranceId`, `InsuranceCode`, `InsuranceName`, `Forma
 
 INSERT INTO `BuildType` (`Name`) VALUES
 ('Production');
-
