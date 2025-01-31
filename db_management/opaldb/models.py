@@ -2032,7 +2032,7 @@ class Announcement(Base):
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
