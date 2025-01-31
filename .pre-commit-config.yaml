@@ -8,32 +8,42 @@ repos:
   - id: check-merge-conflict
   - id: check-shebang-scripts-are-executable
   - id: check-json
+    # file contains comments
+    exclude: ^\.vscode/settings.json$
   - id: check-yaml
+    # exclude gitlab-ci.yml because it contains custom tags
+    exclude: ^\.gitlab-ci\.yml$
+  # check yaml only for syntax (some contain unrecognized tags)
+  - id: check-yaml
+    name: check-yaml syntax only
+    args: ["--unsafe"]
+    files: ^\.gitlab-ci\.yml$
   - id: double-quote-string-fixer
   - id: end-of-file-fixer
   - id: trailing-whitespace
-- repo: https://github.com/PyCQA/isort
-  rev: 5.13.2
-  hooks:
-  - id: isort
+
 - repo: https://github.com/DavidAnson/markdownlint-cli2
   rev: v0.14.0
   hooks:
   - id: markdownlint-cli2
-# use local virtual env for flake8 and mypy to reuse the same configuration (and dependencies)
+
+# https://docs.astral.sh/ruff/integrations/#pre-commit
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.6.9
+  hooks:
+    # Run the linter with fixes
+    - id: ruff
+      args: [--fix]
+    # Run the formatter
+    - id: ruff-format
+
 - repo: local
   hooks:
-  - id: flake8
-    name: flake8
-    description: wemake-python-styleguide++ enforcement
-    entry: flake8
-    args: ["--config=setup.cfg"]
-    language: python
-    types: [python]
-  - id: mypy
-    name: mypy
-    description: static type checking
-    entry: mypy
-    args: ["--config-file=setup.cfg"]
-    language: python
-    types: [python]
+    # use local mypy because mirrors-mypy does not use local mypy config
+    - id: mypy
+      name: mypy
+      description: static type checking
+      entry: mypy
+      args: ["--config-file=mypy.ini"]
+      language: python
+      types: [python]

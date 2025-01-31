@@ -1,10 +1,12 @@
-"""add_build_type
+"""
+Add build type.
 
 Revision ID: 7b734eb191ab
 Revises: 24441ebcade3
 Create Date: 2023-08-08 15:43:00.927961
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 

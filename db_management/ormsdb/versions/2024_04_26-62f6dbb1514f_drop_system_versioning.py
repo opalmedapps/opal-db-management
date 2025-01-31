@@ -1,10 +1,12 @@
-"""Disable system versioning for OrmsDatabase.
+"""
+Disable system versioning for OrmsDatabase.
 
 Revision ID: 62f6dbb1514f
 Revises: 7b734eb191ab
 Create Date: 2024-04-26 15:26:14.206735
 
 """
+
 from pathlib import Path
 
 from alembic import op

@@ -6,6 +6,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 class Base(DeclarativeBase):
     pass
 
+
 metadata = Base.metadata
 
 
@@ -31,9 +32,7 @@ class KioskLog(Base):
 
 class SmsLog(Base):
     __tablename__ = 'SmsLog'
-    __table_args__ = (
-        Index('Service', 'Service', 'MessageId', unique=True),
-    )
+    __table_args__ = (Index('Service', 'Service', 'MessageId', unique=True),)
 
     SmsLogSer = Column(INTEGER(11), primary_key=True)
     SmsTimestamp = Column(DateTime, nullable=False, index=True)
@@ -56,7 +55,9 @@ class VirtualWaitingRoomLog(Base):
     Identifier = Column(String(255), nullable=False, server_default=text("''"))
     Type = Column(String(255), nullable=False, server_default=text("''"))
     Message = Column(Text, nullable=False, server_default=text("''"))
-    LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
+    LastUpdated = Column(
+        TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()')
+    )
 
 
 class LoginLog(Base):

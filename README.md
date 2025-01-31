@@ -12,12 +12,12 @@ The databases maintained in this repository include:
 
 The backend database is maintained and managed directly in the backend repository.
 
-## Prerequisites
-
-- Install Docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
-- Have git installed on your local machine
-
 ## Installation
+
+### Prerequisites
+
+- Install Docker on your local machine (it is recommended to install [Docker Desktop](https://www.docker.com/products/docker-desktop))
+- Have git installed on your local machine
 
 ### Step 1: Clone the current repository
 
@@ -32,7 +32,7 @@ The file will hold our database credentials and is ignored by git.
 
 Pay close attention to the following variable:
 
-1. `USE_SSL` - set this to `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on [Running the databases with encrypted connections](#running-the-databases-with-encrypted-connections))
+1. `USE_SSL` - leave this at `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on [Running the databases with encrypted connections](#running-the-databases-with-encrypted-connections))
 
 ### Step 3: Scaffold the project using docker compose
 
@@ -78,6 +78,71 @@ To facilitate rapid resetting of all data, the following script can be called wh
 ```shell
 docker compose run --rm alembic db_management/reset_data.sh <institution>
 ```
+
+## Contributing
+
+First, create a virtual environment and install the dependencies:
+
+```shell
+python3 -m venv --upgrade-deps .venv
+source .venv/bin/activate
+pip install -r requirements/development.txt
+```
+
+This project uses [pre-commit](https://pre-commit.com), install the hooks:
+
+```shell
+pre-commit install
+```
+
+This project provides vscode extension recommendations and settings.
+Please install them for a seamless developer experience.
+
+The tools we use can either be invoked via `pre-commit` or directly.
+For `pre-commit` you can run them all via `pre-commit run --all` or the desired hook via `pre-commit run ruff --all`.
+
+### Linting
+
+[ruff](https://docs.astral.sh/ruff/) is used for linting and formatting.
+To invoke it directly:
+
+```shell
+# linting only
+ruff check
+# lint and autofix
+ruff check --fix
+# format (after fixing)
+ruff format
+```
+
+Ensure that the [ruff vscode extension](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff) is installed to fix and format on save.
+
+### Static Type Checking
+
+[mypy](https://www.mypy-lang.org/) is used for static type checking.
+To invoke it directly:
+
+```shell
+mypy db_management
+```
+
+Ensure that the [mypy vscode extension](https://marketplace.visualstudio.com/items?itemName=ms-python.mypy-type-checker) to get type checking results in the text editor.
+
+### Tests
+
+[pytest](https://pytest.org/) is used to run tests.
+To run all tests, execute:
+
+```shell
+pytest
+```
+
+We use the `pytest` plugin [`pytest-alembic`](https://github.com/schireson/pytest-alembic) to test alembic migrations.
+The tests are also run in the pipeline.
+In addition, an additional job ensures that the test data scripts succeed.
+
+**Important:** The tests are currently run on the same database (not on an additional test database).
+If you run `pytest` locally your databases will end up being downgraded after the test run.
 
 ## Running the databases with encrypted connections
 
@@ -249,21 +314,6 @@ Note: The `--rm` flag is important as it removes this secondary alembic containe
 The model-based paradigm of vanilla SQLAlchemy/Alembic works well for tables but lacks a proper way of version controlling other database entities like views, procedures, and triggers. Our current work around is to define all of these entities with SQL in separate files and bulk create them at the start of the alembic revisions, but this is not ideal for a few reasons. First, if we wanted to support downgrading with these entities, it would mean we have to keep multiple copies of each view/procedure/trigger, one for each 'version' of that entity. Second, alembic migrations are designed to be database agnostic, which will help us in switching to a different database in the future. Using the pymysql connector library to do our manual SQL inserts also increases the overall footprint of the image, and isn't consistent with the general alembic workflow.
 
 If we were using postgres, we could use [alembic_utils](https://github.com/olirice/alembic_utils) which provides a handy way of version-controlling these entities. However, vanilla alembic also has it's own cookbook-concept of [ReplaceableObjects](https://alembic.sqlalchemy.org/en/latest/cookbook.html#replaceable-objects) which we can use for our use-case. In order to create a new instance of a view, procedure, event, or trigger, follow the example set in the `_create_triggers` opaldb version file. It is as simple as creating an empty version file, then declaring a new `ReplaceableObject` with a name and sql text for that entity. Then call the custom operation on the entity and run the alembic upgrade as normal.
-
-### Tests
-
-We use the `pytest` plugin [`pytest-alembic`](https://github.com/schireson/pytest-alembic) to test alembic migrations.
-The tests are run in the pipeline.
-In addition, an additional job ensures that the test data scripts succeed.
-
-**Important:** The tests are currently run on the same database (not on an additional test database).
-If you run `pytest` locally your databases will end up being downgraded after the test run.
-
-To run the tests:
-
-```shell
-pytest
-```
 
 ## Optional: Running DBV (legacy)
 

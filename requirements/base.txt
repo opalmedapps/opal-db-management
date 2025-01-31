@@ -1,7 +1,7 @@
 # SQLAlchemy & Alembic base
 alembic==1.13.3  # https://pypi.org/project/alembic/
 # sqlacodegen==2.3.0.post1  # https://pypi.org/project/sqlacodegen/
-sqlalchemy==2.0.35  # https://pypi.org/project/SQLAlchemy/
+sqlalchemy==2.0.36  # https://pypi.org/project/SQLAlchemy/
 
 # Inserting of data
 pymysql==1.1.1  # https://pypi.org/project/PyMySQL/
@@ -10,4 +10,4 @@ pymysql==1.1.1  # https://pypi.org/project/PyMySQL/
 python-dotenv==1.0.1  # https://pypi.org/project/python-dotenv/
 
 # SQLAlchemy connect engine - mysql dialect: https://docs.sqlalchemy.org/en/20/dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb
-mysqlclient==2.2.4 # https://github.com/PyMySQL/mysqlclient
+mysqlclient==2.2.5 # https://github.com/PyMySQL/mysqlclient

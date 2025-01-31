@@ -18,4 +18,3 @@ INSERT INTO `MediVisitAppointmentList` (`PatientSerNum`, `ClinicResourcesSerNum`
 UPDATE MediVisitAppointmentList set ScheduledDateTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 2 hour)));
 UPDATE MediVisitAppointmentList set ScheduledDate=current_date();
 UPDATE MediVisitAppointmentList set ScheduledTime=TIME(DATE_ADD(now(),interval 2 hour));
-

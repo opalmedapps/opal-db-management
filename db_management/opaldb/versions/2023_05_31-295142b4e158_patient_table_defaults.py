@@ -1,10 +1,12 @@
-"""Updates Patient table defaults and deprecates some fields. Also deprecated one field in Users.
+"""
+Updates Patient table defaults and deprecates some fields. Also deprecated one field in Users.
 
 Revision ID: 295142b4e158
 Revises: 46d686c984cc
 Create Date: 2023-05-31 15:58:12.464986
 
 """
+
 import sqlalchemy as sa
 from alembic import op
 from sqlalchemy.dialects import mysql

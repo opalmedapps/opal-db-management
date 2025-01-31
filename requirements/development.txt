@@ -2,21 +2,15 @@
 
 # Code quality
 #
-flake8==7.1.1  # https://github.com/PyCQA/flake8
-flake8-builtins==2.5.0  # https://github.com/gforcada/flake8-builtins
-isort==5.13.2  # https://github.com/PyCQA/isort
+ruff==0.6.9  # https://docs.astral.sh/ruff
 
 # Testing
 #
-mypy==1.11.2  # https://github.com/python/mypy
+mypy==1.12.1  # https://github.com/python/mypy
 types-PyMySQL==1.1.0.20240524  # https://pypi.org/project/types-PyMySQL/
 
 pytest==8.3.3  # https://github.com/pytest-dev/pytest
 pytest-alembic==0.11.1  # https://github.com/schireson/pytest-alembic
-
-# wemake Python Styleguide
-# see: https://wemake-python-styleguide.readthedocs.io/en/latest/
-wemake-python-styleguide==0.19.2
 
 # Pre-commit
 #

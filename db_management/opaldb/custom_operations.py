@@ -1,4 +1,5 @@
 """Custom operations file for version controlling other SQL entities."""
+
 from typing import Any, Final
 
 from alembic.operations import MigrateOperation, Operations
@@ -8,13 +9,15 @@ REPLACE: Final[str] = 'replace'
 
 
 class ReplaceableObject:
-    """Generic class for holding textual definitions of replaceable entities.
+    """
+    Generic class for holding textual definitions of replaceable entities.
 
     Design copied from Alembic cookbook: https://alembic.sqlalchemy.org/en/latest/cookbook.html#replaceable-objects
     """
 
     def __init__(self, name: str, sql_text: str) -> None:
-        """Initialize with the identifier and textual definition of the entity to be created/replaced/dropped.
+        """
+        Initialize with the identifier and textual definition of the entity to be created/replaced/dropped.
 
         Args:
             name: identifier for the entity
@@ -100,7 +103,8 @@ class ReversibleOp(MigrateOperation):
             drop_old = cls(target).reverse()
             create_new = cls(old_obj)
         else:
-            raise TypeError('replaces or replace_with is required')
+            message = 'replaces or replace_with is required'
+            raise TypeError(message)
 
         operations.invoke(drop_old)
         operations.invoke(create_new)
@@ -115,7 +119,8 @@ class ReversibleOp(MigrateOperation):
             module = script.get_revision(version).module
             return getattr(module, objname)
 
-        raise ValueError('script directory not found')
+        message = 'script directory not found'
+        raise ValueError(message)
 
 
 @Operations.register_operation('create_trigger', INVOKE_FOR_TARGET)
@@ -123,7 +128,8 @@ class CreateTriggerOp(ReversibleOp):
     """Create a Trigger."""
 
     def reverse(self) -> MigrateOperation:
-        """Call the inverse method to reverse the effect of the CreateTrigger operation.
+        """
+        Call the inverse method to reverse the effect of the CreateTrigger operation.
 
         Returns:
             Instance of MigrateOperation
@@ -136,7 +142,8 @@ class DropTriggerOp(ReversibleOp):
     """Drop a Trigger."""
 
     def reverse(self) -> MigrateOperation:
-        """Call the inverse method to reverse the effect of the DropTrigger operation.
+        """
+        Call the inverse method to reverse the effect of the DropTrigger operation.
 
         Returns:
             Instance of MigrateOperation
@@ -146,24 +153,26 @@ class DropTriggerOp(ReversibleOp):
 
 @Operations.implementation_for(CreateTriggerOp)
 def create_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
-    """Public implementation of the CreateTrigger operation.
+    """
+    Public implementation of the CreateTrigger operation.
 
     Args:
         operations: Alembic Operations instance (context in which the migration is being performed)
         operation: CreateTriggerOp instance
     """
-    operations.execute('CREATE TRIGGER IF NOT EXISTS {0} {1}'.format(operation.target.name, operation.target.sql_text))
+    operations.execute(f'CREATE TRIGGER IF NOT EXISTS {operation.target.name} {operation.target.sql_text}')
 
 
 @Operations.implementation_for(DropTriggerOp)
 def drop_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
-    """Public implementation of the DropTrigger operation.
+    """
+    Public implementation of the DropTrigger operation.
 
     Args:
         operations: Alembic Operations instance (context in which the migration is being performed)
         operation: DropTriggerOp instance
     """
-    operations.execute('DROP TRIGGER IF EXISTS {0}'.format(operation.target.name))
+    operations.execute(f'DROP TRIGGER IF EXISTS {operation.target.name}')
 
 
 @Operations.register_operation('create_procedure', INVOKE_FOR_TARGET)
@@ -204,10 +213,7 @@ def create_procedure(operations: Operations, operation: CreateProcedureOp) -> No
         operations: the operations instance
         operation: the create stored procedure operation to execute
     """
-    operations.execute('CREATE FUNCTION {name} {definition}'.format(
-        name=operation.target.name,
-        definition=operation.target.sql_text,
-    ))
+    operations.execute(f'CREATE FUNCTION {operation.target.name} {operation.target.sql_text}')
 
 
 @Operations.implementation_for(DropProcedureOp)
@@ -219,4 +225,4 @@ def drop_procedure(operations: Operations, operation: DropProcedureOp) -> None:
         operations: the operations instance
         operation: the drop stored procedure operation to execute
     """
-    operations.execute('DROP FUNCTION {0}'.format(operation.target.name))
+    operations.execute(f'DROP FUNCTION {operation.target.name}')
