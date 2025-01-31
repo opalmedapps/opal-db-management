@@ -240,6 +240,7 @@ gemnasium-python-dependency_scanning:
     - apt update && apt install -y libmariadb-dev pkg-config
 
 # Container Scanning
+# https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 container_scanning:
   variables:
     CS_IMAGE: $CI_REGISTRY_IMAGE/alembic:$CI_COMMIT_REF_SLUG
