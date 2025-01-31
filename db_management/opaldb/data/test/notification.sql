@@ -3,9 +3,9 @@ INSERT INTO `Notification` (`NotificationSerNum`, `CronLogSerNum`, `PatientSerNu
 -- (1,	NULL,	51,	13,	1,	'2023-03-05 10:13:07',	1,	'[]',	'2023-03-05 17:26:06',	'Edmonton Symptom Assessment System',	'Échelle d\'évaluation des symptômes d\'Edmonton'),
 -- (2,	NULL,	52,	13,	2,	'2023-04-05 10:13:07',	0,	'[]',	'2023-06-05 17:26:06',	'Edmonton Symptom Assessment System',	'Échelle d\'évaluation des symptômes d\'Edmonton'),
 -- (3,	NULL,	53,	13,	3,	'2023-06-24 10:13:07',	0,	'[]',	'2023-06-05 17:26:06',	'Edmonton Symptom Assessment System',	'Échelle d\'évaluation des symptômes d\'Edmonton'),
-(1,	NULL,	51,	7,	1,	'2023-03-05 16:30:13',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'Treatment Guidelines',	'Guides du traitement'),
-(2,	NULL,	52,	7,	2,	'2023-04-15 16:30:13',	0,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'Treatment Guidelines',	'Guides du traitement'),
-(3,	NULL,	53,	7,	3,	'2023-06-25 16:30:13',	0,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'Treatment Guidelines',	'Guides du traitement'),
+(1,	NULL,	51,	7,	1,	'2023-03-01 16:30:13',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'Treatment Guidelines',	'Guides du traitement'),
+(2,	NULL,	52,	7,	2,	'2023-04-02 16:30:13',	0,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'Treatment Guidelines',	'Guides du traitement'),
+(3,	NULL,	53,	7,	3,	'2023-05-03 16:30:13',	0,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'Treatment Guidelines',	'Guides du traitement'),
 
 -- marge: breast recon
 (4,	NULL,	51,	13,	4,	'2023-03-05 22:03:26',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17',	'BREAST-Q Reconstruction Module Preoperative Scales',	'BREAST-Q Reconstruction Module Preoperative Scales'),
