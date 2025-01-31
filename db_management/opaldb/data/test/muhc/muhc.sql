@@ -61,3 +61,4 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 -- the doctor referred to in the document exists in the test data
 INSERT INTO `Staff` (`StaffSerNum`, `SourceDatabaseSerNum`, `StaffId`, `FirstName`, `LastName`, `LastUpdated`) VALUES
 (890,	1,	'1300         ',	'John               ',	'Frink                        ',	'2015-08-07 00:15:57');
+
