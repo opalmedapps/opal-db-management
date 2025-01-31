@@ -1,11 +1,10 @@
-"""This file will insert development data into the databases, to be used after running alembic upgrades."""
+"""This file will insert development data into the databases."""
 import os
 import sys
 from pathlib import Path
 
 import pymysql
-from opaldb.settings import (DB_NAME_OPAL, HOST, OPAL_TEST_DATA_NAME, PASSWORD,
-                             PORT, USER)
+from opaldb.settings import DB_NAME_OPAL, HOST, PASSWORD, PORT, USER
 from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 
@@ -34,7 +33,11 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
             autocommit=autocommit,
         )
     except pymysql.Error as err:
-        sys.exit('Error getting cursor or connection to mariaDB (Database {OPALDB}) {err}'.format(OPALDB=DB_NAME_OPAL, err=err.args[0]))  # noqa: E501
+        sys.exit('Error getting cursor or connection to mariaDB (Database {OPALDB}) {err}'.format(
+            OPALDB=DB_NAME_OPAL,
+            err=err.args[0],
+            ),
+            )
     return conn.cursor()
 
 
@@ -49,7 +52,7 @@ def insert_data(data_files: list) -> None:
         data_sql_content = ''
         data_file_path = os.path.join(DATA_DIR, data_file)
         # Read in SQL content from handle
-        with Path(data_file_path, encoding='UTF-8').open(encoding='UTF-8') as file_handle:  # noqa: WPS110
+        with Path(data_file_path, encoding='UTF-8').open(encoding='UTF-8') as file_handle:
             data_sql_content += file_handle.read()
             print(f'LOG: Read test data sql for {data_file}')
             file_handle.close()
@@ -71,4 +74,4 @@ def insert_data(data_files: list) -> None:
 
 
 if __name__ == '__main__':
-    insert_data([OPAL_TEST_DATA_NAME])
+    insert_data(['OpalDB.sql'])

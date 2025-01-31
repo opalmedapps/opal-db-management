@@ -82,7 +82,7 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
-            # process_revision_directives=process_revision_directives, # noqa: WPS442
+            # process_revision_directives=process_revision_directives,
         )
 
         with context.begin_transaction():
