@@ -27,14 +27,10 @@ def insert_data(data_files: list) -> None:
             file_handle.close()
         # Execute
         with connection_cursor(sql_connection_parameters(DB_NAME_OPAL)) as cursor:
-            cursor.execute(query="""
-                SET foreign_key_checks=0;
-                """)
+            cursor.execute(query='SET foreign_key_checks=0;')
             cursor.execute(data_sql_content)
             print(f'LOG: Succesfully inserted test data sql for {data_file}')
-            cursor.execute(query="""
-                SET foreign_key_checks = 1;
-                """)
+            cursor.execute(query='SET foreign_key_checks=1;')
             cursor.close()
 
 
