@@ -18,9 +18,9 @@ default:
   - source .venv/bin/activate || true
 
 stages:
+  - test
   - Build
   - Static Analysis
-  - test
 
 setup:
   stage: .pre
@@ -119,6 +119,8 @@ build alembic image:
 
 flake8:
   stage: Static Analysis
+  needs:
+    - setup
   script:
     - flake8 --version
     # install plugin to produce code climate report
@@ -136,6 +138,8 @@ flake8:
 
 mypy:
   stage: Static Analysis
+  needs:
+    - setup
   script:
     # install plugin to produce code climate report
     - pip install mypy-gitlab-code-quality
@@ -152,6 +156,8 @@ mypy:
 
 markdownlint:
   stage: Static Analysis
+  needs:
+    - setup
   image:
     name: davidanson/markdownlint-cli2:v0.12.1
     # overwrite default entrypoint (which is a call to markdownlint-cli2)
@@ -192,7 +198,11 @@ run migrations:
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - pytest --version
-    - pytest
+    - pytest --junitxml=report.xml
+  # artifacts:
+  #   when: always
+  #   reports:
+  #     junit: report.xml
 
 # TODO: Add testing service
 # Potential Test libraries with support for alembic migrations:
