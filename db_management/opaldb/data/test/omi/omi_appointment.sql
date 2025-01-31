@@ -10,7 +10,9 @@ INSERT INTO `Appointment` (`AppointmentSerNum`, `AliasExpressionSerNum`, `CronLo
 (209498,	147,	NULL,	53,	1,	209498,	0,	3,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17'),
 
 -- rory, from eRDV
-(209500,	174,	NULL,	59,	5,	'5474351E',	0,	3,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17');
+(209500,	174,	NULL,	59,	5,	'5474351E',	0,	9,	'Completed',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	1,	"[\"mouj1pqpXrYCl994oSm5wtJT3In2\"]",	0,	'2021-06-01 10:46:24',	1,	"['mouj1pqpXrYCl994oSm5wtJT3In2']",	'',	'2023-01-12 16:39:17'),
+(209501,	42,	NULL,	59,	5,	'5474352E',	0,	9,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17'),
+(209502,	37,	NULL,	59,	5,	'5474353E',	0,	9,	'Open',	'Active',	'2023-06-01 17:00:00',	'2023-06-01 17:10:00',	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	10,	'',	'',	0,	'',	0,	'2021-06-01 10:46:24',	0,	'[]',	'',	'2023-01-12 16:39:17');
 
 
 UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 2 hour)));
@@ -24,10 +26,28 @@ UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),i
 UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 6 hour))) where PatientSerNum=53;
 UPDATE Appointment set ScheduledEndTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 7 hour))) where PatientSerNum=53;
 UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 1 minute))) where PatientSerNum=53;
--- Move rory's to later
-UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 6 hour))) where PatientSerNum=59;
-UPDATE Appointment set ScheduledEndTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 7 hour))) where PatientSerNum=59;
-UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 1 minute))) where PatientSerNum=59;
+-- Rory has consult 1 week ago, treatment today, treatment next week
+UPDATE Appointment
+SET ScheduledStartTime = DATE_SUB(NOW(), INTERVAL 7 DAY)
+WHERE PatientSerNum = 59 AND AppointmentSerNum = 209500;
+UPDATE Appointment
+SET ScheduledEndTime = DATE_SUB(NOW(), INTERVAL 7 DAY)
+WHERE PatientSerNum = 59 AND AppointmentSerNum = 209500;
+UPDATE Appointment
+SET DateAdded = DATE_SUB(NOW(), INTERVAL 7 DAY)
+WHERE PatientSerNum = 59 AND AppointmentSerNum = 209500;
+UPDATE Appointment set ScheduledStartTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 3 hour))) where PatientSerNum=59 and AppointmentSerNum=209501;
+UPDATE Appointment set ScheduledEndTime=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 4 hour))) where PatientSerNum=59 and AppointmentSerNum=209501;
+UPDATE Appointment set DateAdded=concat(current_date(),' ',TIME(DATE_ADD(now(),interval 1 minute))) where PatientSerNum=59 and AppointmentSerNum=209501;
+UPDATE Appointment
+SET ScheduledStartTime = DATE_ADD(NOW(), INTERVAL 7 DAY)
+WHERE PatientSerNum = 59 AND AppointmentSerNum = 209502;
+UPDATE Appointment
+SET ScheduledEndTime = DATE_ADD(NOW(), INTERVAL 7 DAY)
+WHERE PatientSerNum = 59 AND AppointmentSerNum = 209502;
+UPDATE Appointment
+SET DateAdded = DATE_ADD(NOW(), INTERVAL 7 DAY)
+WHERE PatientSerNum = 59 AND AppointmentSerNum = 209502;
 
 
 
