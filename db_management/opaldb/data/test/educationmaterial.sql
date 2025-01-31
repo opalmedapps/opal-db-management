@@ -47,6 +47,12 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -2 DAY),
 WHERE PatientSerNum = 53
 AND `EducationalMaterialControlSerNum` = 105;
 
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -6 DAY)
+WHERE PatientSerNum = 57
+AND `EducationalMaterialControlSerNum` = 105;
+
 -- Marge's extra materials sent last week
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
@@ -61,6 +67,13 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -10 DAY),
 WHERE PatientSerNum = 52
 AND `EducationalMaterialSerNum` IN (7, 8);
 
+-- Fred's extra materials sent 5 days ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -5 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -5 DAY)
+WHERE PatientSerNum = 56
+AND `EducationalMaterialSerNum` IN (9);
+
 -- DatabankConsent study sent to all 1 day ago
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -1 DAY),
@@ -73,29 +86,49 @@ WHERE `EducationalMaterialControlSerNum` = 979;
 UPDATE  `EducationalMaterial`
 SET ReadStatus = 1,
     ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE `EducationalMaterialSerNum` IN (1, 4, 5, 6);
+WHERE `EducationalMaterialSerNum` IN (1, 4, 5, 6, 11);
 UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
 WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (1, 4, 5, 6);
+AND RefTableRowSerNum in (1, 4, 5, 6, 11);
 -- Homer and Marge read homer's materials
 UPDATE  `EducationalMaterial`
 SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE `EducationalMaterialSerNum` IN (2, 7, 8);
+    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE `EducationalMaterialSerNum` IN (2, 7, 8, 12);
 UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
 WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (2, 7, 8);
+AND RefTableRowSerNum in (2, 7, 8, 12);
 -- Bart and Marge read his materials
 UPDATE  `EducationalMaterial`
 SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE `EducationalMaterialSerNum` IN (3);
+    ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE `EducationalMaterialSerNum` IN (3, 13);
 UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
 WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (3);
+AND RefTableRowSerNum in (3, 13);
+-- Fred's data read by Fred
+UPDATE  `EducationalMaterial`
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE `EducationalMaterialSerNum` IN (9, 15);
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE NotificationControlSerNum = 7
+AND RefTableRowSerNum in (9, 15);
+-- Pebbles' data read by Fred
+UPDATE  `EducationalMaterial`
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE `EducationalMaterialSerNum` IN (10, 16);
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE NotificationControlSerNum = 7
+AND RefTableRowSerNum in (10, 16);
