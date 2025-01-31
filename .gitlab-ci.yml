@@ -196,6 +196,7 @@ run sql scripts:
     # migrate databases first
     - ./docker/alembic-upgrade.sh
     - db_management/reset_data.sh OMI
+    - db_management/reset_data.sh OHIGPH
 
 # run pipelines for default branch, tags, and all types of merge request pipelines
 # to support merge trains
