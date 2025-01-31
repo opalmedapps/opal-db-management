@@ -256,5 +256,6 @@ INSERT INTO `SecurityQuestion` (`SecurityQuestionSerNum`, `QuestionText_EN`, `Qu
 INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Enabled`) VALUES
 (-1,	'Local',	1);
 
+-- Insert the initial data required to run the cronjob.
 INSERT INTO `Cron` (`CronSerNum`, `NextCronDate`, `RepeatUnits`, `NextCronTime`, `RepeatInterval`, `LastCron`)  VALUES
 ('1', '2023-06-06', 'Minutes', '11:53:06', '3', '2023-06-06 11:53:25');
