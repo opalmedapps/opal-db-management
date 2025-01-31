@@ -4,7 +4,7 @@ RUN apt-get update \
   # dependencies for building Python packages
   && apt-get install -y build-essential \
   # mysqlclient dependencies
-  && apt-get install -y default-libmysqlclient-dev \
+  && apt-get install -y default-libmysqlclient-dev pkg-config \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
@@ -22,6 +22,9 @@ RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
 COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
 WORKDIR /app/
-ADD alembic .
+
+COPY db_management .
+COPY alembic.ini .
+
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

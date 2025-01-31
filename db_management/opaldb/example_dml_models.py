@@ -9,11 +9,14 @@ Note the metadata object for this file must be registered in this
 alembic folder's env.py file for the changes to be seen
 by the autogenerate migration feature.
 """
-# Import the model for which you want to insert data
-from models import Patient
-from settings import OPALDB_ENGINE
+from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+
+# Import the model for which you want to insert data
+from db_management.connection import connection_url
+from db_management.opaldb.models import Patient
+from db_management.settings import DB_NAME_OPAL
 
 DML_Base = declarative_base()
 metadata = DML_Base.metadata
@@ -42,7 +45,7 @@ patients = [
     ),
 ]
 
-session_maker = sessionmaker(bind=OPALDB_ENGINE)
+session_maker = sessionmaker(bind=create_engine(connection_url(DB_NAME_OPAL)))
 
 
 def create_patients() -> None:

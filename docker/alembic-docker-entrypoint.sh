@@ -3,8 +3,8 @@ set -euo pipefail
 
 # Alembic populates database according to version files
 # Note: Due to foreign key constraint OpalDB must be run last
-cd /app/questionnairedb && alembic upgrade head
-cd /app/opaldb && alembic upgrade head
+alembic --name questionnairedb upgrade head
+alembic --name opaldb upgrade head
 
 # Check for test data insertion condition
 if [ "${INSERT_TEST_DATA:-0}" == "1" ]; then
