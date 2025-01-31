@@ -17,10 +17,17 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
         db_name: the name of the database to connect to
         directory: the directory containing SQL scripts
         disable_foreign_key_checks: whether foreign key checks should be disabled during execution, defaults to False
+
+    Raises:
+        SystemExit: If production truncation safety check fails
     """
     for path in directory.glob('*.sql'):
+        # Halt execution if db is Production and action is truncate
+        try:
+            _truncate_production_safety_check(path, db_name)
+        except EnvironmentError as err:
+            raise SystemExit(f'Error encountered during execution: {err}')
         print(f'LOG: Running SQL of file: {path}')
-
         with Path(path).open() as fd:
             sql_queries = fd.read()
 
@@ -56,6 +63,27 @@ def _existing_directory(directory: str) -> Path:
         raise argparse.ArgumentTypeError('the directory does not exist')
 
     return directory_path
+
+
+def _truncate_production_safety_check(path: Path, db_name: str) -> None:
+    """Throw an error and halt execution if a user tries to truncate a Production database.
+
+    Args:
+        path: The path to the sql script being executed
+        db_name: the name of the database to check
+
+    Raises:
+        EnvironmentError: If the current database build type is `Production`
+    """
+    if 'truncate' in str(path):
+        with connection_cursor(sql_connection_parameters(db_name)) as cursor:
+            cursor.execute('SELECT Name FROM BuildType;')
+            build_type = cursor.fetchone()
+            if build_type and build_type[0] == 'Production':
+                raise EnvironmentError(
+                    'Cannot execute truncate file on production databases.'
+                    + ' Check BuildType table value.',
+                )
 
 
 def main(argv: list[str]) -> int:

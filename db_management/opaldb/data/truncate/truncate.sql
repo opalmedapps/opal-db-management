@@ -139,3 +139,4 @@ TRUNCATE TABLE `TxTeamMessageMH`;
 TRUNCATE TABLE `Users`;
 TRUNCATE TABLE `UsersMH`;
 TRUNCATE TABLE `Venue`;
+SET foreign_key_checks = 1;
