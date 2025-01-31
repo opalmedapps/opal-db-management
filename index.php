@@ -4,8 +4,7 @@
 
 <h1>DBV Dashboards</h1>
 
-<p><a href="dbv/dbv_questionnairedb/">Questionnaire DB</a></p>
-<p><a href="dbv/dbv_registerdb/">Register DB</a></p>
+<p><a href="dbv/dbv_opaldb/">OpalDB DB</a></p>
 <p><a href="dbv/dbv_opalreportdb/">Opal Report DB</a></p>
 
 </body>
