@@ -1,4 +1,4 @@
-"""remove_getlevel
+"""Remove the `getLevel` stored procedure.
 
 Revision ID: 07fe49bfe5dd
 Revises: bc09885fdeec
