@@ -1338,7 +1338,7 @@ class AppointmentPendingMH(Base):
     )
 
     AppointmentPendingId = Column(BIGINT(20), primary_key=True, nullable=False, server_default=text('0'))
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, autoincrement=True, index=True)
+    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True, autoincrement=True)
     action = Column(String(128))
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     sourceName = Column(String(128), nullable=False, index=True)
