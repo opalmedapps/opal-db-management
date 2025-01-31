@@ -194,9 +194,9 @@ run migrations:
     - cat .env
     # create additional DBs for legacy DB tests (OpalDB & QuestionnaireDB)
     - apt update && apt-get install -y default-mysql-client
-    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS `QuestionnaireDB` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;"
-    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS `OrmsDatabase` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
-    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS `OrmsLog` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
+    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;"
+    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
+    - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
     # - pytest --version
     # - pytest -v --junitxml=report.xml
     - alembic --name questionnairedb upgrade head
