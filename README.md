@@ -32,7 +32,7 @@ The file will hold our database credentials and is ignored by git.
 
 Pay close attention to the following variable:
 
-1. `USE_SSL` - set this to `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
+1. `USE_SSL` - set this to `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on [Running the databases with encrypted connections](#running-the-databases-with-encrypted-connections))
 
 ### Step 3: Scaffold the project using docker compose
 
@@ -67,42 +67,23 @@ The credentials for logging in can be found in the `.env` file.
 
 You should by now have fully up and running databases that can be easily started and stopped using the Docker Desktop GUI (or via the command-line, whichever you prefer).
 
+### Step 5: Insert test data
+
+In order to facilitate deployments to new institutions and development, we have split test data used by developers from "initial" data used by institutions in production environments.
+These two sets of data can be inserted separately from the CLI.
+Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
+
+To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
+
+```shell
+docker compose run --rm alembic db_management/reset_data.sh <institution>
+```
+
 ## Running the databases with encrypted connections
 
 If a developer chooses they can also enable SSL/TLS to enforce encryption of all DB connections and traffic.
 
-### Generating Self-signed Certificates
-
-To generate the SSL certificates for the database container and the client applications:
-
-1. Open a bash CLI and navigate to the `certs/` directory of this project.
-There should be three files there already, an `openssl-ca.cnf`, an `openssl-server.cnf`, and a `v3.ext`.
-These provide the details for `openssl`` to generate the various certificates required to enable encrypted connections between any client application and the database.
-
-2. Generate the certificate authority (CA) certificate:
-
-    ```shell
-    # Create CA private key
-    openssl genrsa 4096 > ca-key.pem
-    # Create CA public key
-    openssl req -config openssl-ca.cnf -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem
-    ```
-
-3. Generate the server certificate:
-
-    ```shell
-    # Create the server's private key and a certificate request for the CA
-    openssl req -config openssl-server.cnf -newkey rsa:4096 -nodes -keyout server-key.pem -out server-req.pem
-    # let the CA issue a certificate for the server
-    openssl x509 -req -in server-req.pem -days 3600 -CA ca.pem -CAkey ca-key.pem -set_serial 01 -out server-cert.pem -sha256 -extfile v3.ext
-    ```
-
-4. Check the validity of these certs (a message like 'certificate OK' should appear.)
-
-    ```shell
-    openssl verify -CAfile ca.pem server-cert.pem
-    openssl verify -CAfile ca.pem ca.pem
-    ```
+Follow the guide to [generate self-signed certificates](https://opalmedapps.gitlab.io/docs/development/guides/self_signed_certificates/).
 
 ### Configuring the use of TLS
 
@@ -187,19 +168,9 @@ Note: When interacting with `alembic` you need to provide the database you want 
 
 To go to the latest version for the database, simply run `alembic --name <dbname> </dbname>upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
-#### Inserting new test data
+#### Informational only: Inserting new test data
 
-In order to facilitate deployments to new institutions and development, we have split test data used by developers from "initial" data used by institutions in production environments.
-These two sets of data can be inserted separately from the CLI.
-Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
-
-To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
-
-```shell
-docker compose run --rm alembic db_management/reset_data.sh <institution>
-```
-
-**Note:** The description of the ten commands below is left for informational purposes, but these are not required to be run if the reset_data script is called first.
+**Note:** The description of the ten commands below is left for informational purposes, but these are not required to be run if the `reset_data` script is called first (see the [inserting test data](#step-5-insert-test-data) section).
 
 Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real Production databases.
 
