@@ -315,6 +315,7 @@ BEGIN
 			aq.questionnaireId AS questionnaire_id,
 			aq.respondentUsername AS respondent_username,
 			aq.`status` AS status,
+			aq.completedDate AS completed_date,
 			aq.creationDate AS created,
 			aq.lastUpdated AS last_updated,
 			aq.respondentDisplayName AS respondent_display_name,
@@ -1162,7 +1163,14 @@ BEGIN
         -- Also check that the current user owns the questionnaire lock, or claim the lock if it's empty.
         -- Checking and claiming the lock is done in one query to make the operation atomic and prevent a race condition.
         UPDATE `answerQuestionnaire`
-        SET `status` = i_newStatus, `respondentUsername` = i_respondentUsername, `lastUpdated` = CURRENT_TIMESTAMP, `updatedBy` = author_of_update, `respondentDisplayName` = i_respondentDisplayName
+        SET
+          `status` = i_newStatus,
+          -- Only set the questionnaire's completed date if its status is completed; otherwise, leave it as-is
+          `completedDate` = IF(i_newStatus = 2, CURRENT_TIMESTAMP, `completedDate`),
+          `respondentUsername` = i_respondentUsername,
+          `lastUpdated` = CURRENT_TIMESTAMP,
+          `updatedBy` = author_of_update,
+          `respondentDisplayName` = i_respondentDisplayName
         WHERE `ID` = i_answerQuestionnaireId
           AND (
               -- Only succeed if the lock is owned by the current user or is not owned by anyone yet
