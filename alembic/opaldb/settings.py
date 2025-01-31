@@ -23,7 +23,13 @@ OPALDB_ENGINE = create_engine(
         database=DB_NAME_OPAL,
     ),
 )
+# SSL Settings for Deployed Environments
+SSL_CA = os.getenv('SSL_CA')
+SSL_CERT = os.getenv('SSL_CERT')
+SSL_KEY = os.getenv('SSL_KEY')
+USE_SSL = False
 
+# Env validation
 settings_dict = {
     'DB_HOST': DB_HOST,
     'DB_PORT': DB_PORT,
@@ -36,3 +42,10 @@ settings_dict = {
 for label, setting in settings_dict.items():
     if not setting or setting == '':
         raise AttributeError(f'Warning: Environment variable not set {label}')
+
+# SSL Validation
+if all((SSL_CA, SSL_CERT, SSL_KEY)):
+    USE_SSL = True
+    print('LOG: Launching connection with secure transport.')
+else:
+    print('LOG: Launching connection without secure transport configured.')

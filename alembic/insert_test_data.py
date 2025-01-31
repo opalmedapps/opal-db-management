@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 import pymysql
-from opaldb.settings import DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT, DB_USER
+from opaldb.settings import DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT, DB_USER, SSL_CA, SSL_CERT, SSL_KEY, USE_SSL
 from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 
@@ -22,7 +22,7 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
     Returns:
         Cursor for the connection.
     """
-    try:
+    try:  # noqa: WPS229
         conn = pymysql.connect(
             user=DB_USER,
             password=str(DB_PASSWORD),
@@ -31,7 +31,23 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
             database=DB_NAME_OPAL,
             client_flag=CLIENT.MULTI_STATEMENTS,
             autocommit=autocommit,
+            ssl_disabled=True,
         )
+        if USE_SSL:
+            conn = pymysql.connect(
+                user=DB_USER,
+                password=str(DB_PASSWORD),
+                host=DB_HOST,
+                port=DB_PORT,
+                database=DB_NAME_OPAL,
+                client_flag=CLIENT.MULTI_STATEMENTS,
+                autocommit=autocommit,
+                ssl_ca=SSL_CA,
+                ssl_cert=SSL_CERT,
+                ssl_key=SSL_KEY,
+                ssl_disabled=False,
+            )
+
     except pymysql.Error as err:
         sys.exit('Error getting cursor for {OPALDB} {err}'.format(OPALDB=DB_NAME_OPAL, err=err.args[0]))
     return conn.cursor()
