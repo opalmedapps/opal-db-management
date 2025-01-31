@@ -206,3 +206,10 @@ run migrations:
     expire_in: "7 days"
     reports:
       junit: report.xml
+
+run sql scripts:
+  stage: test
+  needs:
+    - run migrations
+  script:
+    - db_management/reset_data.sh
