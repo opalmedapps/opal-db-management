@@ -10,7 +10,6 @@ from pathlib import Path
 
 from alembic import op
 
-
 # revision identifiers, used by Alembic.
 revision = '62f6dbb1514f'
 down_revision = '7b734eb191ab'
@@ -21,8 +20,9 @@ depends_on = None
 ROOT_DIR = Path(__file__).parents[1]
 REVISIONS_DIR = ROOT_DIR / 'revision_data'
 
+
 def upgrade() -> None:
-    ## Disable System Versioning
+    """Drop system versioning from all tables."""
     funcs_sql_content = ''
     funcs_file_path = os.path.join(REVISIONS_DIR, 'OrmsDB_disable_system_versioning.sql')
     # Read in SQL content from handle
@@ -34,7 +34,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    ## Enable System Versioning
+    """Re-enable system verisoning to all tables."""
     funcs_sql_content = ''
     funcs_file_path = os.path.join(REVISIONS_DIR, 'OrmsDB_enable_system_versioning.sql')
     # Read in SQL content from handle
