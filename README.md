@@ -8,8 +8,7 @@ Opal's databases are separated in 4 different repos. The purpose of this project
 
     1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
     2. QuestionnaireDB: https://gitlab.com/opalmedapps/dbv_questionnairedb
-    3. registerdb: https://gitlab.com/opalmedapps/dbv_registerdb
-    4. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
+    3. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
 
 - Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 
@@ -104,8 +103,7 @@ If you open docker-desktop, you should see that you have a app called `opal-data
 
 With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
 
-1. http://localhost:8091/dbv/dbv_registerdb
-2. http://localhost:8091/dbv/dbv_questionnairedb/
+1. http://localhost:8091/dbv/dbv_questionnairedb/
 
 ### Step 6: Test your installation
 

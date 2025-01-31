@@ -1562,8 +1562,8 @@ def upgrade() -> None:
     sa.Column('Trusted', mysql.TINYINT(display_width=1), server_default=sa.text('0'), nullable=False),
     sa.Column('TimeoutTimestamp', sa.TIMESTAMP(), nullable=True),
     sa.Column('LastUpdated', sa.TIMESTAMP(), server_default=sa.text('current_timestamp() ON UPDATE current_timestamp()'), nullable=False),
-    sa.ForeignKeyConstraint(['PatientSerNum'], ['Patient.PatientSerNum'], onupdate='CASCADE'),
-    sa.ForeignKeyConstraint(['SecurityAnswerSerNum'], ['SecurityAnswer.SecurityAnswerSerNum'], onupdate='CASCADE'),
+    sa.ForeignKeyConstraint(columns=['PatientSerNum'], refcolumns=['Patient.PatientSerNum'], name='PatientDeviceIdentifier_ibfk_3' ,onupdate='CASCADE'),
+    sa.ForeignKeyConstraint(columns=['SecurityAnswerSerNum'], refcolumns=['SecurityAnswer.SecurityAnswerSerNum'],name='PatientDeviceIdentifier_ibfk_2', onupdate='CASCADE'),
     sa.PrimaryKeyConstraint('PatientDeviceIdentifierSerNum')
     )
     op.create_index(op.f('ix_PatientDeviceIdentifier_PatientSerNum'), 'PatientDeviceIdentifier', ['PatientSerNum'], unique=False)
