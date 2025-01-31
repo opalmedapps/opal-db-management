@@ -1291,8 +1291,8 @@ class Termsandagreement(Base):
     __table_args__ = {'comment': 'Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.'}
 
     Id = Column(BIGINT(20), primary_key=True)
-    DocumentLink_EN = Column(String(10000), nullable=False)
-    DocumentLink_FR = Column(String(10000), nullable=False)
+    DocumentLink_EN = Column(String(2000), nullable=False)
+    DocumentLink_FR = Column(String(2000), nullable=False)
     PDFLink_EN = Column(MEDIUMTEXT, nullable=False)
     PDFLink_FR = Column(MEDIUMTEXT, nullable=False)
     Version = Column(String(10000), nullable=False)
