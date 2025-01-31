@@ -15,7 +15,7 @@
 #   - performance
 #   - cleanup
 #   - extra
-
+image: python:3.9.16-slim-bullseye
 
 variables:
   TEST_DISABLED: "true"
@@ -28,30 +28,6 @@ variables:
   MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
   # ensure that user has permissions for test DB to be used by pytest
   MARIADB_USER: $MARIADB_USER
-
-
-build:
-  extends: .build
-  before_script:
-  - eval $(ssh-agent -s)
-  - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' | ssh-add -
-  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
-
-  - python --version
-  - which python
-  # install dependencies for mysqlclient
-  - apt update && apt-get install -y build-essential libmariadb-dev
-  # don't fail if venv is not set up yet (during setup)
-  - source .venv/bin/activate || true
-  # set up env file for DB service
-  # use sample env file
-  - cp .env.sample .env
-  - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
-  - sed -i "s/^LEGACY_QUESTIONNAIRE_DB_NAME=.*/LEGACY_QUESTIONNAIRE_DB_NAME=QuestionnaireDB/" .env
-  - sed -i "s/^DOCKER_HOST=.*/DOCKER_HOST=host.docker.internal/" .env
-  - sed -i "s/^MARIADB_ROOT_PASSWORD=.*/MARIADB_ROOT_PASSWORD=$MARIADB_PASSWORD/" .env
-  - sed -i "s/^MARIADB_USER=.*/MARIADB_USER=$MARIADB_USER/" .env
-  - sed -i "s/^MARIADB_PORT=.*/MARIADB_PORT=3307/" .env
 
 setup:
   stage: .pre
@@ -78,6 +54,30 @@ setup:
     # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
     paths:
       - .cache/pip
+
+build:
+  extends: .build
+  before_script:
+  - eval $(ssh-agent -s)
+  - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' | ssh-add -
+  - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
+
+  - python --version
+  - which python
+  # install dependencies for mysqlclient
+  - apt update && apt-get install -y build-essential libmariadb-dev
+  # don't fail if venv is not set up yet (during setup)
+  - source .venv/bin/activate || true
+  # set up env file for DB service
+  # use sample env file
+  - cp .env.sample .env
+  - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
+  - sed -i "s/^LEGACY_QUESTIONNAIRE_DB_NAME=.*/LEGACY_QUESTIONNAIRE_DB_NAME=QuestionnaireDB/" .env
+  - sed -i "s/^DOCKER_HOST=.*/DOCKER_HOST=host.docker.internal/" .env
+  - sed -i "s/^MARIADB_ROOT_PASSWORD=.*/MARIADB_ROOT_PASSWORD=$MARIADB_PASSWORD/" .env
+  - sed -i "s/^MARIADB_USER=.*/MARIADB_USER=$MARIADB_USER/" .env
+  - sed -i "s/^MARIADB_PORT=.*/MARIADB_PORT=3307/" .env
+
 
 flake8:
   stage: test
