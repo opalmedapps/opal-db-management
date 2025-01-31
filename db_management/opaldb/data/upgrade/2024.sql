@@ -101,7 +101,7 @@ UPDATE `NotificationControl`
 SET
 Name_EN='New Reference Material',
 Name_FR='Nouveau document de référence',
-Description_EN='$patientName ($institution): New Reference material',
+Description_EN='$patientName ($institution): New reference material',
 Description_FR='$patientName ($institution): Nouveau document de référence',
 NotificationType='EducationalMaterial'
 WHERE NotificationControlSerNum=7;
