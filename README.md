@@ -186,8 +186,8 @@ Known issues with sqlacodegen:
 
 ### Interacting with the dockerized Alembic container
 
-Not much changes for this, we just have to prefix our regular CLI alembic commands with the standard docker compose exec, plus the name of the container : `docker compose exec alembic`
+Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes, for example:
 
-For example to run the current revisions to the latest:
+`docker compose run alembic sh -c "alembic downgrade -1"`
 
-`docker compose exec alembic alembic upgrade head`
+To downgrade the revisions by one.
