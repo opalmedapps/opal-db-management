@@ -325,8 +325,8 @@ If we were using postgres, we could use [alembic_utils](https://github.com/oliri
 
 ### Tests
 
-We use [`pytest-alembic`](https://github.com/schireson/pytest-alembic) to test alembic migrations.
-The default tests this package provides are run in the pipeline.
+We use the `pytest` plugin [`pytest-alembic`](https://github.com/schireson/pytest-alembic) to test alembic migrations.
+The tests are run in the pipeline.
 In addition, an additional job ensures that the test data scripts succeed.
 
 **Important:** The tests are currently run on the same database (not on an additional test database).
