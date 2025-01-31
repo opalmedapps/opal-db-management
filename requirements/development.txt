@@ -12,7 +12,7 @@ mypy==1.8.0  # https://github.com/python/mypy
 types-PyMySQL==1.1.0.1  # https://pypi.org/project/types-PyMySQL/
 
 pytest==8.0.2  # https://github.com/pytest-dev/pytest
-pytest-alembic==0.10.7  # https://github.com/schireson/pytest-alembic
+pytest-alembic==0.11.0  # https://github.com/schireson/pytest-alembic
 
 # wemake Python Styleguide
 # see: https://wemake-python-styleguide.readthedocs.io/en/latest/
