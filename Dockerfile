@@ -10,7 +10,7 @@ RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
 RUN python -m pip install --no-cache-dir -r /tmp/base.txt
 
-FROM python:3.11.8-slim-bookworm
+FROM python:3.11.8-alpine3.19
 
 RUN apk upgrade --no-cache \
   # mysqlclient dependencies
