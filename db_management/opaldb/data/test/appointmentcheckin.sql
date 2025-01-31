@@ -400,4 +400,7 @@ INSERT INTO `AppointmentCheckin` (`AliasSerNum`, `CheckinPossible`, `CheckinInst
 (459,	0,	'<p>As this is a virtual consultation, you will be contacted by telephone by your healthcare provider. There is no need to check-in.<br/></p>',	'<p>Ceci étant une consultation virtuelle, vous serez contacté(e) par votre professionnel de la santé via téléphone. Il n’y a pas besoin de s’enregistrer.<br/></p>',	'2021-04-28 14:39:09',	62,	'Mhgqf2PCCi',	'2021-04-28 22:39:09'),
 (460,	0,	'<p>As this is a virtual consultation, you will be contacted by telephone by your healthcare provider. There is no need to check-in.<br/></p>',	'<p>Ceci étant une consultation virtuelle, vous serez contacté(e) par votre professionnel de la santé via téléphone. Il n’y a pas besoin de s’enregistrer.<br/></p>',	'2021-04-28 14:59:51',	62,	'Mhgqf2PCCi',	'2021-04-28 22:59:51'),
 (461,	1,	'<p>Your are checked-in. Please have a seat in the waiting room in the Cedars Cancer Centre.<br/></p>',	'<p>Vous êtes enregistré(e). Veuillez vous installer dans la salle d\'attente au Centre du cancer des Cèdres.<br/></p>',	'2021-05-10 14:52:22',	74,	'8CoKPt8Pzo',	'2021-05-10 22:52:22'),
-(462,	1,	'<p>This is a test.</p>',	'<p>C\'est un test.</p>',	'2021-05-27 17:18:22',	63,	'R0rQkPesFe',	'2021-05-28 01:18:22');
+(462,	1,	'<p>This is a test.</p>',	'<p>C\'est un test.</p>',	'2021-05-27 17:18:22',	63,	'R0rQkPesFe',	'2021-05-28 01:18:22'),
+(614, 1, 'EN Text to be determined', 'EN Text to be determined', now(), NULL, NULL, now()),
+(615, 1, 'EN Text to be determined', 'EN Text to be determined', now(), NULL, NULL, now());
+(616, 1, 'EN Text to be determined', 'EN Text to be determined', now(), NULL, NULL, now());
