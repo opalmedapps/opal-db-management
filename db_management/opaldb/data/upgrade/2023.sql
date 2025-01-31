@@ -11,3 +11,6 @@ INSERT INTO `module` (`ID`, `operation`, `name_EN`, `name_FR`, `description_EN`,
 INSERT INTO `oaRoleModule` (`moduleId`, `oaRoleId`, `access`) VALUES
 (24, 36, 3),
 (25, 36, 3);
+
+-- TODO: add pathology aliasing
+-- TODO: add databank consent form
