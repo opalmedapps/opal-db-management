@@ -50,3 +50,5 @@ ALTER TABLE CronLog DROP CronSerNum;
 
 DROP TABLE IF EXISTS Cron;
 
+-- Add missing NotificationType for lab results
+UPDATE `NotificationControl` SET NotificationType = 'NewLabResult' WHERE NotificationTypeSerNum = 9;
