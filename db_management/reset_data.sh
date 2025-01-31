@@ -3,6 +3,7 @@
 # Args:
 #      Institution: muhc or chusj
 
+set -euo pipefail
 
 # Define a log function
 log() {

@@ -1,6 +1,8 @@
 #!/bin/bash
 # Description: This script upgrades the Production data set for the MUHC.
 
+set -euo pipefail
+
 # Define a log function
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1"
