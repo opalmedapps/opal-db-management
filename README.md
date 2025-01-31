@@ -122,7 +122,7 @@ You should by now have fully up and running opal databases that can be easily st
 
 If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To do this, first refer to the [opal docs repository](https://gitlab.com/opalmedapps/docs) for instructions on how to generate self-signed SSL certificates. Place them in the `certs` directory.
 
-In the `.env` file, set `USE_SSL=True` and fill in the `SSL_CA` variable with the path to your certificate authority pem file.
+In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file.
 
 Finally, uncomment the ssl.cnf line in your docker-compose.yml to add these connection parameters to the database. [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for docker to actually use the configs listed there.
 
