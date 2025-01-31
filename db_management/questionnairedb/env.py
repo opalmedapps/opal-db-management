@@ -13,7 +13,6 @@ from db_management.questionnairedb.models import Base
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-print(config.get_section(config.config_ini_section))
 
 config.set_main_option(
     'sqlalchemy.url',
