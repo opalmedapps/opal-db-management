@@ -49,7 +49,8 @@ INSERT INTO `SecurityAnswer` (`SecurityQuestionSerNum`, `PatientSerNum`, `Answer
 
 -- Insert required Alias, AliasExpression, Source, and Doctors first before documents to avoid Foreign Key error
 INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Enabled`) VALUES
-(1,	'Aria',	1);
+(1,	'Aria',	1),
+(2,	'MediVisit',	1);
 INSERT INTO `HospitalMap` (`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`, `MapURL_FR`, `QRMapAlias`, `MapName_EN`, `MapDescription_EN`, `MapName_FR`, `MapDescription_FR`, `DateAdded`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (19,	'https://www.depdocs.com/opal/maps/mapDS1_wait_EN.png',	'https://www.depdocs.com/opal/maps/mapDS1_wait_EN.png',	'https://www.depdocs.com/opal/maps/mapDS1_wait2_FR.png',	'Waiting_Room_DS1',	'Waiting Room D S1 - Cedars Cancer Centre',	'Waiting Room DS1',	'Salle d\'attente DS1 - Centre du cancer des Cèdres',	'Salle d\'attente DS1',	'2018-05-28 15:06:45',	NULL,	'2018-10-30 23:20:14',	'aSuDcvGSg8');
 INSERT INTO `Alias` (`AliasSerNum`, `AliasType`, `AliasUpdate`, `AliasName_FR`, `AliasName_EN`, `AliasDescription_FR`, `AliasDescription_EN`, `EducationalMaterialControlSerNum`, `HospitalMapSerNum`, `SourceDatabaseSerNum`, `ColorTag`, `WaitTimeValidity`, `LastTransferred`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
