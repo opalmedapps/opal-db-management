@@ -554,7 +554,7 @@ class Patient(Base):
     Language = Column(Enum('EN', 'FR', 'SN'), nullable=False)
     SSN = Column(String(16), nullable=False)
     AccessLevel = Column(Enum('1', '2', '3'), nullable=False, server_default=text("'1'"))
-    RegistrationDate = Column(DateTime, nullable=False, server_default=text("'2018-01-01 00:00:00'"))
+    RegistrationDate = Column(DateTime, nullable=False, server_default=text("current_timestamp()"))
     ConsentFormExpirationDate = Column(DateTime)
     BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='to block user on Firebase')
     StatusReasonTxt = Column(Text, nullable=False, server_default=text("''"))

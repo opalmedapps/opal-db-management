@@ -56,9 +56,10 @@ INSERT INTO `module` (`ID`, `operation`, `name_EN`, `name_FR`, `description_EN`,
 (19,	3,	'Trigger (API only / No GUI)',	'Déclencheur (API seulement / pas de GUI)',	'Tool to manage triggers for different conditions',	'Gestion des déclencheurs pour les différentes conditions.',	'jsonTrigger',	'jsonTrigger',	'id',	'fa fa-gavel',	'trigger',	NULL,	0,	0,	1,	2,	0,	0,	1,	19,	'',	'',	'',	'',	'',	''),
 (20,	7,	'Master Lists Management (API only / No GUI)',	'Gestion des listes principales (API seulement / pas de GUI)',	'Manage the master source lists for aliases, diagnoses, and lab results.',	'Gestion des sources des alias, diagnostics et des résultats de laboratoire.',	'',	'',	'',	'fa fa-list-ol',	'master-source/menu',	'{\"1\":{\"name_EN\":\"Master Source Aliases\",\"name_FR\":\"Source principale des alias\",\"description_EN\":\"List of clinical codes for tasks, appointments and documents used by Opal.\",\"description_FR\":\"List des codes cliniques pour les tâches, rendez-vous et documents utilisés par Opal.\",\"iconClass\":\"glyphicon glyphicon-cloud\",\"url\":\"master-source/alias\"},\"2\":{\"name_EN\":\"Master Source Diagnoses\",\"name_FR\":\"Source principale des diagnostics\",\"description_EN\":\"List of diagnostic codes used by Opal.\",\"description_FR\":\"Liste des codes de diagnostic utilisés par Opal.\",\"iconClass\":\"fa fa-stethoscope\",\"url\":\"master-source/diagnosis\"},\"3\":{\"name_EN\":\"Master Source Test Results\",\"name_FR\":\"Source principale des tests de laboratoire\",\"description_EN\":\"List of test results codes used by Opal\",\"description_FR\":\"Liste des codes de tests de laboratoire utilisés par Opal.\",\"iconClass\":\"fa fa-heartbeat\",\"url\":\"master-source/test-result\"}}',	1,	0,	1,	2,	0,	0,	1,	20,	'',	'',	'',	'',	'',	''),
 (21,	7,	'Resources (API only / No GUI)',	'Ressources (API seulement / pas de GUI)',	'Manage the resources for appointments.',	'Gestion des ressources pour les rendez-vous.',	'',	'',	'',	'fa fa-list-ol',	'resource',	NULL,	0,	0,	1,	2,	0,	0,	1,	22,	'',	'',	'',	'',	'',	''),
-(22,	3,	'SMS',	'SMS',	'Manage the sms appointments',	'Gestion des rendez-vous de sms',	'SmsAppointment',	'SmsAppointment',	'SmsAppointmentId',	'glyphicon glyphicon-phone',	'sms',	NULL,	0,	0,	1,	2,	-1,	0,	1,	21,	'',	'',	'',	'',	'',	''),
-(23,	3,	'Patient Administration',	'Administration des patients',	'Manage the patient account information',	'Gérer les informations du compte patient',	'',	'',	'',	'fa fa-user-circle',	'patient-administration',	NULL,	0,	0,	1,	2,	0,	0,	1,	13,	'',	'',	'',	'',	'',	''),
-(24,	3,	'Hospital Settings',	'Paramètres de l\'hôpital',	'Manage hospital settings.',	'Gérer les paramètres de configuration de l\'hôpital',	'',	'',	'',	'fa fa-wrench',	'hospital-settings',	'',	0,	1,	1,	1,	0,	0,	1,	22,	'',	'',	'',	'',	'',	'');
+(22,	3,	'SMS',	'SMS',	'Manage the sms appointments.',	'Gestion des rendez-vous de sms.',	'SmsAppointment',	'SmsAppointment',	'SmsAppointmentId',	'glyphicon glyphicon-phone',	'sms',	NULL,	0,	0,	1,	2,	-1,	0,	1,	21,	'',	'',	'',	'',	'',	''),
+(23,	3,	'Patient Administration',	'Administration des patients',	'Manage the patient account information.',	'Gérer les informations du compte patient.',	'',	'',	'',	'fa fa-user-circle',	'patient-administration',	NULL,	0,	0,	1,	2,	0,	0,	1,	13,	'',	'',	'',	'',	'',	''),
+(24,	3,	'Hospital Settings',	'Paramètres de l\'hôpital',	'Manage hospital settings.',	'Gérer les paramètres de configuration de l\'hôpital.',	'',	'',	'',	'fa fa-wrench',	'hospital-settings',	'',	0,	1,	1,	1,	0,	0,	1,	22,	'',	'',	'',	'',	'',	''),
+(25,	3,	'Clinician Dashboard',	'Tableau de bord du clinicien',	'Clinician Dashboard Tools.',	'Outils du tableau de bord du clinicien.',	'',	'',	'',	'fa fa-user-md',	'clinician',	'',	0,	1,	1,	1,	0,	0,	1,	21,	'',	'',	'',	'',	'',	'');
 
 
 INSERT INTO `publicationSetting` (`ID`, `name_EN`, `name_FR`, `internalName`, `isTrigger`, `isUnique`, `selectAll`, `opalDB`, `opalPK`, `custom`) VALUES
@@ -226,7 +227,8 @@ INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (79,	22,	1,	3),
 (80,	23,	1,	3),
 (81,	24,	1,	3),
-(82,	11,	29,	1);
+(82,	11,	29,	1),
+(83,	25,	1,	3);
 
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (3,	'admin',	'9575c78e5351af3746a845294532e436b3ccfc329ff09c21f2c89d2f6bdffd9f',	1,	1,	'EN',	0,	'2016-03-24 16:29:50',	'2021-10-05 16:51:15'),
