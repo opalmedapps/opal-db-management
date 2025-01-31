@@ -2,6 +2,11 @@
 import os
 from typing import Literal, Optional, overload
 
+import dotenv
+
+# load .env to be able to modify during development
+dotenv.load_dotenv()
+
 
 @overload
 def _env(
