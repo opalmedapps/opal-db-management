@@ -30,7 +30,7 @@ def upgrade() -> None:
     op.alter_column(
         'Patient',
         'PatientId',
-        existing_type=mysql.VARCHAR(length=50),
+        existing_type=sa.VARCHAR(length=50),
         server_default=sa.text("''"),
         comment='Deprecated',
         existing_nullable=False,
@@ -38,7 +38,7 @@ def upgrade() -> None:
     op.alter_column(
         'Patient',
         'PatientId2',
-        existing_type=mysql.VARCHAR(length=50),
+        existing_type=sa.VARCHAR(length=50),
         server_default=sa.text("''"),
         comment='Deprecated',
         existing_nullable=False,
@@ -46,7 +46,7 @@ def upgrade() -> None:
     op.alter_column(
         'Patient',
         'Alias',
-        existing_type=mysql.VARCHAR(length=100),
+        existing_type=sa.VARCHAR(length=100),
         server_default=sa.text("''"),
         existing_nullable=True,
     )
@@ -136,14 +136,14 @@ def downgrade() -> None:
     op.alter_column(
         'Patient',
         'Alias',
-        existing_type=mysql.VARCHAR(length=100),
+        existing_type=sa.VARCHAR(length=100),
         server_default=None,
         existing_nullable=True,
     )
     op.alter_column(
         'Patient',
         'PatientId2',
-        existing_type=mysql.VARCHAR(length=50),
+        existing_type=sa.VARCHAR(length=50),
         server_default=None,
         comment=None,
         existing_comment='Deprecated',
@@ -152,7 +152,7 @@ def downgrade() -> None:
     op.alter_column(
         'Patient',
         'PatientId',
-        existing_type=mysql.VARCHAR(length=50),
+        existing_type=sa.VARCHAR(length=50),
         server_default=None,
         comment=None,
         existing_comment='Deprecated',

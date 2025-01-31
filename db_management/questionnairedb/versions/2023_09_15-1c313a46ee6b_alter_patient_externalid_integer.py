@@ -20,7 +20,7 @@ def upgrade() -> None:
     op.alter_column(
         'patient',
         'externalId',
-        existing_type=mysql.VARCHAR(length=64),
+        existing_type=sa.VARCHAR(length=64),
         type_=mysql.INTEGER(display_width=11),
         comment='OpalDB.Patient.PatientSerNum',
         existing_nullable=False,
@@ -33,7 +33,7 @@ def downgrade() -> None:
         'patient',
         'externalId',
         existing_type=mysql.INTEGER(display_width=11),
-        type_=mysql.VARCHAR(length=64),
+        type_=sa.VARCHAR(length=64),
         comment=None,
         existing_comment='OpalDB.Patient.PatientSerNum',
         existing_nullable=False,

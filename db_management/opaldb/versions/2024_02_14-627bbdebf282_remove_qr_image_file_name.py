@@ -7,7 +7,6 @@ Create Date: 2024-02-14 19:17:15.817308
 """
 import sqlalchemy as sa
 from alembic import op
-from sqlalchemy.dialects import mysql
 
 from db_management.opaldb.custom_operations import ReplaceableObject
 
@@ -99,8 +98,8 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     """Revert QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
-    op.add_column('HospitalMapMH', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
-    op.add_column('HospitalMap', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
+    op.add_column('HospitalMapMH', sa.Column('QRImageFileName', sa.VARCHAR(length=255), nullable=False))
+    op.add_column('HospitalMap', sa.Column('QRImageFileName', sa.VARCHAR(length=255), nullable=False))
     op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
     op.drop_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
     op.drop_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]

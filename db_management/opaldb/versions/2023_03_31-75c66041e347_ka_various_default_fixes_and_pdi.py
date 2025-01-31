@@ -80,7 +80,7 @@ def upgrade() -> None:
     op.alter_column(
         'masterSourceAlias',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_comment='username of who marked the record to be deleted',
         existing_nullable=False,
@@ -109,7 +109,7 @@ def downgrade() -> None:
     op.alter_column(
         'masterSourceAlias',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_comment='username of who marked the record to be deleted',
         existing_nullable=False,
