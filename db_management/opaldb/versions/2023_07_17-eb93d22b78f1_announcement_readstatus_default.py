@@ -18,19 +18,25 @@ depends_on = None
 
 def upgrade() -> None:
     # ### Add default value for the field ReadStatus ###
-    op.alter_column('Announcement', 'ReadStatus',
-               existing_type=mysql.INTEGER(display_width=11),
-               server_default=sa.text('0'),
-               existing_comment='Deprecated',
-               existing_nullable=False)
+    op.alter_column(
+        'Announcement',
+        'ReadStatus',
+        existing_type=mysql.INTEGER(display_width=11),
+        server_default=sa.text('0'),
+        existing_comment='Deprecated',
+        existing_nullable=False,
+    )
     # ### end Alembic commands ###
 
 
 def downgrade() -> None:
     # ### Removed the default value for the field ReasStatus ###
-    op.alter_column('Announcement', 'ReadStatus',
-               existing_type=mysql.INTEGER(display_width=11),
-               server_default=None,
-               existing_comment='Deprecated',
-               existing_nullable=False)
+    op.alter_column(
+        'Announcement',
+        'ReadStatus',
+        existing_type=mysql.INTEGER(display_width=11),
+        server_default=None,
+        existing_comment='Deprecated',
+        existing_nullable=False,
+    )
     # ### end Alembic commands ###
