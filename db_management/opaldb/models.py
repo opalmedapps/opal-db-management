@@ -20,9 +20,7 @@ from sqlalchemy.orm import relationship
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
 Base: DeclarativeMeta = declarative_base()
-
 metadata = Base.metadata
-
 
 t_Admin = Table(
     'Admin', metadata,
@@ -346,6 +344,7 @@ class EducationalMaterialRating(Base):
     EducationalMaterialRatingSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False)
     PatientSerNum = Column(INTEGER(11), nullable=False)
+    Username = Column(String(255), nullable=False, server_default=text("''"), comment='The username of the person who submitted an educational material rating.')
     RatingValue = Column(TINYINT(6), nullable=False)
     SessionId = Column(Text, nullable=False, server_default=text("''"), comment='Deprecated')
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1045,7 +1044,7 @@ class Alert(Base):
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
-    deletedBy = Column(String(128), nullable=False, comment='Username of the person who deleted the record')
+    deletedBy = Column(String(128), nullable=True, comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
     createdBy = Column(String(128), nullable=False, comment='Username of the person who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
@@ -1593,7 +1592,7 @@ class DiagnosisTranslation(Base):
     __tablename__ = 'DiagnosisTranslation'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True)
-    AliasName = Column(String(100), nullable=False)
+    AliasName = Column(String(100), nullable=False, server_default=text("''"))
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     Name_EN = Column(String(2056), nullable=False)
     Name_FR = Column(String(2056), nullable=False)
@@ -1688,7 +1687,7 @@ class NotificationControl(Base):
 class PatientDeviceIdentifier(Base):
     __tablename__ = 'PatientDeviceIdentifier'
     __table_args__ = (
-        Index('patient_device', 'PatientSerNum', 'DeviceId', unique=True),
+        Index('ix_PatientDeviceIdentifier_Unique_Username_DeviceId', 'Username', 'DeviceId', unique=True),
     )
 
     PatientDeviceIdentifierSerNum = Column(INTEGER(11), primary_key=True)
@@ -1800,8 +1799,8 @@ class TestControl(Base):
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
-    URL_EN = Column(String(2000), nullable=False)
-    URL_FR = Column(String(2000), nullable=False)
+    URL_EN = Column(String(2000), nullable=False, server_default=text("''"))
+    URL_FR = Column(String(2000), nullable=False, server_default=text("''"))
     SessionId = Column(String(255))
 
     EducationalMaterialControl = relationship('EducationalMaterialControl')
