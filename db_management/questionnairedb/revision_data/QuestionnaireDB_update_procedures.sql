@@ -1546,6 +1546,8 @@ BEGIN
 
 END;
 
+-- Support checkbox and radio button return values, change type of last_updated from UNIX timestamp to string
+DROP PROCEDURE IF EXISTS `getCompletedQuestionnairesList`;
 CREATE PROCEDURE `getCompletedQuestionnairesList`(
     IN `i_externalPatientId`        VARCHAR(64),
     IN `i_questionnairePurposeId`   BIGINT(20),
