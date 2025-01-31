@@ -200,7 +200,7 @@ markdownlint:
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
 
 
-run migrations:
+pytest:
   stage: test
   extends:
     - .database_service
@@ -219,6 +219,13 @@ run sql scripts:
   stage: test
   extends:
     - .database_service
+  needs:
+    - pytest
   script:
     - !reference [.database_service, script]
+    # migrate databases first
+    - alembic --name questionnairedb upgrade head
+    - alembic --name opaldb upgrade head
+    - alembic --name ormsdb upgrade head
+    - alembic --name ormslogdb upgrade head
     - db_management/reset_data.sh MUHC
