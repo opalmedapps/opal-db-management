@@ -69,8 +69,8 @@ def upgrade() -> None:
         comment='Deprecated',
         existing_nullable=False,
     )
+    op.drop_constraint('PatientDeviceIdentifier_ibfk_3', 'PatientDeviceIdentifier', type_='foreignkey')
     op.drop_constraint('PatientDeviceIdentifier_ibfk_2', 'PatientDeviceIdentifier', type_='foreignkey')
-    op.drop_constraint('PatientDeviceIdentifier_ibfk_1', 'PatientDeviceIdentifier', type_='foreignkey')
     op.alter_column(
         'Resource',
         'ResourceAriaSer',
