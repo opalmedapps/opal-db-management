@@ -1,6 +1,7 @@
 FROM python:3.11.8-slim-bookworm
 
 RUN apt-get update \
+  && apt-get upgrade \
   # dependencies for building Python packages
   && apt-get install -y build-essential \
   # mysqlclient dependencies
