@@ -11,6 +11,13 @@ repos:
     # file contains comments
     exclude: ^\.vscode/settings.json$
   - id: check-yaml
+    # exclude gitlab-ci.yml because it contains custom tags
+    exclude: ^\.gitlab-ci\.yml$
+  # check yaml only for syntax (some contain unrecognized tags)
+  - id: check-yaml
+    name: check-yaml syntax only
+    args: ["--unsafe"]
+    files: ^\.gitlab-ci\.yml$
   - id: double-quote-string-fixer
   - id: end-of-file-fixer
   - id: trailing-whitespace
