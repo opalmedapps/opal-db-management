@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS `module` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
+  `operation` tinyint(1) NOT NULL DEFAULT 7 COMMENT 'List of available operations for the module (R/W/D)',
+  `name_EN` varchar(512) NOT NULL COMMENT 'English name of the module',
+  `name_FR` varchar(512) NOT NULL COMMENT 'French name of the module',
+  `description_EN` varchar(512) NOT NULL COMMENT 'English description of the module',
+  `description_FR` varchar(512) NOT NULL COMMENT 'French description of the module',
+  `tableName` varchar(256) NOT NULL COMMENT 'Table name of the module in the DB',
+  `controlTableName` varchar(256) NOT NULL COMMENT 'Table name for the control table field in the Filters table',
+  `primaryKey` varchar(256) NOT NULL COMMENT 'Primary key of the table name',
+  `iconClass` varchar(512) NOT NULL COMMENT 'Icon classes for html display',
+  `url` varchar(255) NOT NULL COMMENT 'URL of the module. Used to generate the nav menus.',
+  `subModule` longtext DEFAULT NULL COMMENT 'Contains all the submodule info in a JSON format',
+  `subModuleMenu` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'If the module has submodules, can these being displayed in a navigation menu',
+  `core` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'An essential module that can never being deactivated',
+  `active` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Is the module active or not in opalAdmin',
+  `categoryModuleId` bigint(20) DEFAULT NULL COMMENT 'Attach the module to a specific category',
+  `publication` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Is the module is linked to the publication module',
+  `customCode` tinyint(1) NOT NULL DEFAULT 0 COMMENT 'Is the module allows custom codes',
+  `unique` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'To determine if an entry of the specified module can be published multiple times or not',
+  `order` int(3) NOT NULL DEFAULT 999 COMMENT 'Order to display the list of modlues',
+  `sqlPublicationList` longtext NOT NULL COMMENT 'SQL query to list the publications associated to the module',
+  `sqlDetails` longtext NOT NULL COMMENT 'SQL query to list the details of a publication',
+  `sqlPublicationChartLog` longtext NOT NULL COMMENT 'SQL query to list the chart log publications associated to the module',
+  `sqlPublicationListLog` longtext NOT NULL COMMENT 'SQL query to list the detailled logs publications associated to the module',
+  `sqlPublicationMultiple` longtext NOT NULL COMMENT 'When publication is not unique. use this field to list available publication',
+  `sqlPublicationUnique` longtext NOT NULL COMMENT 'When publication is unique. use this field to list available publication',
+  PRIMARY KEY (`ID`),
+  KEY `fk_module_categoryModuleId_categoryModule_ID` (`categoryModuleId`),
+  CONSTRAINT `fk_module_categoryModuleId_categoryModule_ID` FOREIGN KEY (`categoryModuleId`) REFERENCES `categoryModule` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `modulePublicationSetting` (
+  `ID` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `moduleId` bigint(20) NOT NULL COMMENT 'Foreign key from the module table',
+  `publicationSettingId` bigint(20) NOT NULL COMMENT 'Foreign key from the publicationSettings table',
+  PRIMARY KEY (`ID`),
+  KEY `fk_module_ID_modulePublicationSetting_moduleId_idx` (`moduleId`),
+  KEY `fk_pubSetting_ID_modulePubSetting_pubSettingId_idx` (`publicationSettingId`),
+  CONSTRAINT `fk_module_ID_moduleTriggerSetting_moduleId` FOREIGN KEY (`moduleId`) REFERENCES `module` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pubSetting_ID_modulePubSetting_pubSettingId` FOREIGN KEY (`publicationSettingId`) REFERENCES `publicationSetting` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Intersection table between module and publicationSetting to reproduce a N-N relationships between the tables';
