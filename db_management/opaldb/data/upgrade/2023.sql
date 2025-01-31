@@ -75,7 +75,7 @@ UPDATE `NotificationControl` SET Description_EN='$patientName: Successfully chec
 UPDATE `NotificationControl` SET Description_EN='$patientName: New questionnaire received. Please complete it before seeing your health care provider.', Description_FR='$patientName: Nouveau questionnaire reçu. Veuillez le compléter avant votre rendez-vous avec votre professionnel de la santé.' WHERE NotificationControlSerNum=13;
 
 -- Add generic appointment aliases
-INSERT INTO `Alias` (`AliasType`, `AliasUpdate`, `AliasName_FR`, `AliasName_EN`, `AliasDescription_FR`, `AliasDescription_EN`, `EducationalMaterialControlSerNum`, `HospitalMapSerNum`, `SourceDatabaseSerNum`, `ColorTag`, `WaitTimeValidity`) VALUES
+INSERT INTO `Alias` (`AliasType`, `AliasUpdate`, `AliasName_EN`, `AliasName_FR`, `AliasDescription_EN`, `AliasDescription_FR`, `EducationalMaterialControlSerNum`, `HospitalMapSerNum`, `SourceDatabaseSerNum`, `ColorTag`, `WaitTimeValidity`) VALUES
 ('Appointment', 1, 'RVH Appointment', 'Appointment HRV', '<p>TBD</p>', '<p>ADT</p>', NULL, 28, 1, '#757575', 1),
-('Appointment', 1, 'MGH Appointment', 'Appointment HGM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1)
+('Appointment', 1, 'MGH Appointment', 'Appointment HGM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1),
 ('Appointment', 1, 'MCH Appointment', 'Appointment HEM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1);
