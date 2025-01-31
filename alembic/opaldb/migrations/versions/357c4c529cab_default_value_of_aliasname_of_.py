@@ -22,5 +22,5 @@ def upgrade() -> None:
         'DiagnosisTranslation',
         'AliasName',
         existing_type=mysql.VARCHAR(length=100),
-        nullable=True
+        nullable=True,
     )
