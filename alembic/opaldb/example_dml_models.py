@@ -1,28 +1,19 @@
 # coding: utf-8
-"""This example file shows how to insert data with SQLAlchemy models instead of relying on raw SQL This is the preferred method for new data being inserted in the future.
-
-Note the metadata object for this file must be registered in this alembic folder's env.py file for the changes to be seen by the autogenerate migration feature.
 """
-import os
+This example file shows how to insert data with SQLAlchemy models 
+instead of relying on raw SQL This is the preferred method for 
+new data being inserted in the future.
 
-from dotenv import load_dotenv
+Note the metadata object for this file must be registered in this 
+alembic folder's env.py file for the changes to be seen 
+by the autogenerate migration feature.
+"""
 # Import the model for which you want to insert data
 from models import Patient
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Read environment variables for connection
-load_dotenv()
-HOST = os.getenv('DATABASE_HOST')
-USER = os.getenv('DATABASE_USER')
-PASS = os.getenv('DATABASE_PASSWORD')
-DB = os.getenv('LEGACY_OPAL_DB_NAME')
-# Create connection and session
-engine = create_engine(
-    f'mariadb+mariadbconnector://{HOST}:{PASS}@{USER}/{DB}',
-)
-
+from config.settings import OPALDB_ENGINE
 
 DML_Base = declarative_base()
 metadata = DML_Base.metadata
@@ -51,7 +42,7 @@ patients = [
     ),
 ]
 
-session_maker = sessionmaker(bind=engine)
+session_maker = sessionmaker(bind=OPALDB_ENGINE)
 
 
 def create_patients() -> None:

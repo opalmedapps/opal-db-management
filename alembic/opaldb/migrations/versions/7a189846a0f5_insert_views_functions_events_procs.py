@@ -27,7 +27,7 @@ REVISIONS_DIR = ROOT_DIR / 'revision_data'
 # Load db connection environment variables
 load_dotenv()
 HOST = os.getenv('DATABASE_HOST')
-PORT = int(os.getenv(key='DATABASE_PORT', default=3007))
+PORT = int(os.getenv(key='DATABASE_PORT', default=3006))
 USER = os.getenv('DATABASE_USER')
 PASS = os.getenv('DATABASE_PASSWORD', default='root_password')
 DB_NAME_OPAL = os.getenv('LEGACY_OPAL_DB_NAME')
