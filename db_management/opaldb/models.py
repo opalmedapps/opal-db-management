@@ -41,7 +41,7 @@ class AliasExpressionMH(Base):
     masterSourceAliasId = Column(BIGINT(20), nullable=False, index=True, server_default=text('0'))
     ExpressionName = Column(String(250), primary_key=True, nullable=False)
     Description = Column(String(250), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(INTEGER(11), index=True)
     DateAdded = Column(DateTime, nullable=False)
@@ -55,7 +55,7 @@ class AliasExpressionMHLegacy(Base):
     AliasSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     ExpressionName = Column(String(250), primary_key=True, nullable=False)
     Description = Column(String(250), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(INTEGER(11), index=True)
     DateAdded = Column(DateTime, nullable=False)
@@ -67,7 +67,7 @@ class AliasMH(Base):
     __tablename__ = 'AliasMH'
 
     AliasSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    AliasRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    AliasRevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     AliasType = Column(String(25), nullable=False)
     AliasUpdate = Column(INTEGER(11), nullable=False)
     AliasName_FR = Column(String(100), nullable=False)
@@ -96,7 +96,7 @@ class AnnouncementMH(Base):
     __tablename__ = 'AnnouncementMH'
 
     AnnouncementSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    AnnouncementRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    AnnouncementRevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     PostControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -110,7 +110,7 @@ class AppointmentMH(Base):
     __tablename__ = 'AppointmentMH'
 
     AppointmentSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    AppointmentRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    AppointmentRevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     SessionId = Column(Text)
     AliasExpressionSerNum = Column(INTEGER(11), nullable=False, index=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
@@ -170,7 +170,7 @@ class DiagnosisCodeMH(Base):
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), nullable=False, index=True)
     SourceUID = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     DiagnosisCode = Column(String(100), nullable=False)
     Description = Column(String(2056), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
@@ -184,7 +184,7 @@ class DiagnosisCodeMHLegacy(Base):
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), nullable=False, index=True)
     SourceUID = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     DiagnosisCode = Column(String(100), nullable=False)
     Description = Column(String(2056), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
@@ -197,7 +197,7 @@ class DiagnosisMH(Base):
     __tablename__ = 'DiagnosisMH'
 
     DiagnosisSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevisionSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevisionSerNum = Column(INTEGER(11), primary_key=True, autoincrement=True, nullable=False)
     action = Column(String(128), nullable=False)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -217,7 +217,7 @@ class DiagnosisTranslationMH(Base):
     __tablename__ = 'DiagnosisTranslationMH'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), index=True)
     Name_EN = Column(String(2056), nullable=False)
     Name_FR = Column(String(2056), nullable=False)
@@ -252,7 +252,7 @@ class DoctorMH(Base):
     __tablename__ = 'DoctorMH'
 
     DoctorSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    DoctorRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    DoctorRevSerNum = Column(INTEGER(11), primary_key=True,autoincrement=True, nullable=False)
     ResourceSerNum = Column(INTEGER(11), nullable=False)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True)
     DoctorAriaSer = Column(INTEGER(20), nullable=False)
@@ -274,7 +274,7 @@ class DocumentMH(Base):
     __tablename__ = 'DocumentMH'
 
     DocumentSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    DocumentRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    DocumentRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     SessionId = Column(Text)
     PatientSerNum = Column(INTEGER(11), nullable=False)
@@ -314,7 +314,7 @@ class EducationalMaterialMH(Base):
     __tablename__ = 'EducationalMaterialMH'
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    EducationalMaterialRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    EducationalMaterialRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False)
     PatientSerNum = Column(INTEGER(11), nullable=False)
@@ -365,7 +365,7 @@ class EmailControlMH(Base):
     __tablename__ = 'EmailControlMH'
 
     EmailControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     Subject_EN = Column(String(100), nullable=False)
     Subject_FR = Column(String(100), nullable=False)
     Body_EN = Column(Text, nullable=False)
@@ -381,7 +381,7 @@ class EmailLogMH(Base):
     __tablename__ = 'EmailLogMH'
 
     EmailLogSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    EmailLogRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    EmailLogRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False)
     EmailControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -444,7 +444,7 @@ class HospitalMapMH(Base):
     __tablename__ = 'HospitalMapMH'
 
     HospitalMapSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     MapUrl = Column(String(255))
     MapURL_EN = Column(String(512))
     MapURL_FR = Column(String(512))
@@ -474,7 +474,7 @@ class NotificationControlMH(Base):
     __tablename__ = 'NotificationControlMH'
 
     NotificationControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     Name_EN = Column(String(100), nullable=False)
     Name_FR = Column(String(100), nullable=False)
     Description_EN = Column(Text, nullable=False)
@@ -490,7 +490,7 @@ class NotificationMH(Base):
     __tablename__ = 'NotificationMH'
 
     NotificationSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    NotificationRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    NotificationRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     NotificationControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -603,7 +603,7 @@ class PatientMH(Base):
     __tablename__ = 'PatientMH'
 
     PatientSerNum = Column(INTEGER(11), primary_key=True, nullable=False, index=True)
-    PatientRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    PatientRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     SessionId = Column(Text)
     PatientAriaSer = Column(INTEGER(11), nullable=False)
     PatientId = Column(String(50), nullable=False)
@@ -633,7 +633,7 @@ class PatientsForPatientsMH(Base):
     __tablename__ = 'PatientsForPatientsMH'
 
     PatientsForPatientsSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    PatientsForPatientsRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    PatientsForPatientsRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     PostControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -661,7 +661,7 @@ class PatientsForPatientsPersonnelMH(Base):
     __tablename__ = 'PatientsForPatientsPersonnelMH'
 
     PatientsForPatientsPersonnelSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    PatientsForPatientsPersonnelRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    PatientsForPatientsPersonnelRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     FirstName = Column(String(255), nullable=False)
     LastName = Column(INTEGER(11), nullable=False)
     Email = Column(String(100))
@@ -704,7 +704,7 @@ class PostControlMH(Base):
     __tablename__ = 'PostControlMH'
 
     PostControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     PostType = Column(String(100), nullable=False)
     PublishFlag = Column(INTEGER(11), nullable=False, server_default=text('0'))
     PostName_FR = Column(String(100), nullable=False)
@@ -751,7 +751,7 @@ class QuestionnaireControlMH(Base):
     __tablename__ = 'QuestionnaireControlMH'
 
     QuestionnaireControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     QuestionnaireDBSerNum = Column(INTEGER(11), nullable=False)
     QuestionnaireName_EN = Column(String(2056), nullable=False)
     QuestionnaireName_FR = Column(String(2056), nullable=False)
@@ -814,7 +814,7 @@ class QuestionnaireMH(Base):
     __tablename__ = 'QuestionnaireMH'
 
     QuestionnaireSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    QuestionnaireRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    QuestionnaireRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     QuestionnaireControlSerNum = Column(INTEGER(11), nullable=False, index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -880,7 +880,7 @@ class TaskMH(Base):
     __tablename__ = 'TaskMH'
 
     TaskSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    TaskRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    TaskRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     AliasExpressionSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -902,7 +902,7 @@ class TestResultControlMH(Base):
     __tablename__ = 'TestResultControlMH'
 
     TestResultControlSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     Name_EN = Column(String(200), nullable=False)
     Name_FR = Column(String(200), nullable=False)
     Description_EN = Column(Text, nullable=False)
@@ -927,7 +927,7 @@ class TestResultExpressionMH(Base):
 
     TestResultControlSerNum = Column(INTEGER(11), nullable=False, index=True)
     ExpressionName = Column(String(100), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     DateAdded = Column(DateTime, nullable=False)
     ModificationAction = Column(String(25), nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
@@ -939,7 +939,7 @@ class TestResultMH(Base):
     __tablename__ = 'TestResultMH'
 
     TestResultSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    TestResultRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    TestResultRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     TestResultGroupSerNum = Column(INTEGER(11), nullable=False)
     TestResultExpressionSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -978,7 +978,7 @@ class TxTeamMessageMH(Base):
     __tablename__ = 'TxTeamMessageMH'
 
     TxTeamMessageSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    TxTeamMessageRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    TxTeamMessageRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     PostControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -1004,7 +1004,7 @@ class UsersMH(Base):
     __tablename__ = 'UsersMH'
 
     UserSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    UserRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
+    UserRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     SessionId = Column(Text, nullable=False)
     UserType = Column(String(255), nullable=False)
     UserTypeSerNum = Column(INTEGER(11), nullable=False)
@@ -1055,7 +1055,7 @@ class AlertMH(Base):
     __tablename__ = 'alertMH'
 
     alertId = Column(BIGINT(20), primary_key=True, nullable=False, comment='Primary key from alert table')
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, comment='revision ID, combined with ID forms the primary key')
+    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, autoincrement=True, comment='revision ID, combined with ID forms the primary key')
     action = Column(String(128), nullable=False, comment='Action taken')
     contact = Column(MEDIUMTEXT, nullable=False, comment='list of contacts for the alert. JSON format field that contains phone number and email.')
     subject = Column(MEDIUMTEXT, nullable=False, comment='Subject of the alert. Should be plain text, no html.')
@@ -1207,7 +1207,7 @@ class PatientStudyMH(Base):
     __tablename__ = 'patientStudyMH'
 
     patientStudyId = Column(BIGINT(20), primary_key=True, nullable=False)
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True)
+    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True, autoincrement=True)
     action = Column(String(128), nullable=False)
     patientId = Column(INTEGER(11), nullable=False, index=True)
     studyId = Column(BIGINT(20), nullable=False, index=True)
@@ -1268,7 +1268,7 @@ class ResourcePendingMH(Base):
     __tablename__ = 'resourcePendingMH'
 
     resourcePendingId = Column(BIGINT(20), primary_key=True, nullable=False)
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False)
+    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, autoincrement=True)
     action = Column(String(128), nullable=False)
     sourceName = Column(String(128), nullable=False)
     appointmentId = Column(BIGINT(20), nullable=False)
@@ -1338,7 +1338,7 @@ class AppointmentPendingMH(Base):
     )
 
     AppointmentPendingId = Column(BIGINT(20), primary_key=True, nullable=False, server_default=text('0'))
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True)
+    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, autoincrement=True, index=True)
     action = Column(String(128))
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     sourceName = Column(String(128), nullable=False, index=True)
