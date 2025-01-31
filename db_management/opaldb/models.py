@@ -44,7 +44,7 @@ class AliasExpressionMH(Base):
     masterSourceAliasId = Column(BIGINT(20), nullable=False, index=True, server_default=text('0'))
     ExpressionName = Column(String(250), primary_key=True, nullable=False)
     Description = Column(String(250), primary_key=True, nullable=False)
-    RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, index=True, autoincrement=True)
+    RevSerNum = Column(BIGINT(11), primary_key=True, nullable=False, index=True, autoincrement=True)
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy = Column(INTEGER(11), index=True)
     DateAdded = Column(DateTime, nullable=False)
@@ -384,7 +384,7 @@ class EmailLogMH(Base):
     __tablename__ = 'EmailLogMH'
 
     EmailLogSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
-    EmailLogRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
+    EmailLogRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False)
     EmailControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -1058,7 +1058,7 @@ class AlertMH(Base):
     __tablename__ = 'alertMH'
 
     alertId = Column(BIGINT(20), primary_key=True, nullable=False, comment='Primary key from alert table')
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, autoincrement=True, index=True, comment='revision ID, combined with ID forms the primary key')
+    revisionId = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
     action = Column(String(128), nullable=False, comment='Action taken')
     contact = Column(MEDIUMTEXT, nullable=False, comment='list of contacts for the alert. JSON format field that contains phone number and email.')
     subject = Column(MEDIUMTEXT, nullable=False, comment='Subject of the alert. Should be plain text, no html.')
@@ -1210,7 +1210,7 @@ class PatientStudyMH(Base):
     __tablename__ = 'patientStudyMH'
 
     patientStudyId = Column(BIGINT(20), primary_key=True, nullable=False)
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True, autoincrement=True)
+    revisionId = Column(INTEGER(11), primary_key=True, nullable=False, index=True, autoincrement=True)
     action = Column(String(128), nullable=False)
     patientId = Column(INTEGER(11), nullable=False, index=True)
     studyId = Column(BIGINT(20), nullable=False, index=True)
@@ -1271,7 +1271,7 @@ class ResourcePendingMH(Base):
     __tablename__ = 'resourcePendingMH'
 
     resourcePendingId = Column(BIGINT(20), primary_key=True, nullable=False)
-    revisionId = Column(BIGINT(20), primary_key=True, nullable=False, autoincrement=True, index=True)
+    revisionId = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
     action = Column(String(128), nullable=False)
     sourceName = Column(String(128), nullable=False)
     appointmentId = Column(BIGINT(20), nullable=False)
@@ -1798,7 +1798,7 @@ class TestControl(Base):
     Group_FR = Column(String(200), nullable=False)
     SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    InterpretationRecommended = Column(Boolean, nullable=False, server_default=false(), comment='Clinician interpretation recommended.')
+    InterpretationRecommended = Column(Boolean, nullable=False, server_default=text('0'), comment='Clinician interpretation recommended.')
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
