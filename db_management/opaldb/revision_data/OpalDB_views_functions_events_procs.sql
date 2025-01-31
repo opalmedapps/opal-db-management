@@ -943,3 +943,44 @@ DROP TABLE IF EXISTS `v_masterSourceTestResult`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `v_masterSourceTestResult` AS select `TestExpression`.`TestExpressionSerNum` AS `ID`,`TestExpression`.`externalId` AS `externalId`,`TestExpression`.`TestCode` AS `code`,`TestExpression`.`ExpressionName` AS `description`,`TestExpression`.`SourceDatabaseSerNum` AS `source`,`TestExpression`.`deleted` AS `deleted`,`TestExpression`.`deletedBy` AS `deletedBy`,`TestExpression`.`DateAdded` AS `creationDate`,`TestExpression`.`createdBy` AS `createdBy`,`TestExpression`.`LastUpdated` AS `lastUpdated`,`TestExpression`.`updatedBy` AS `updatedBy` from `TestExpression`;
 
 -- 2023-01-13 15:59:28
+
+-- 2023-10-25 QSCCD-1610 Optimize cronjob performance by creating new event to clean appointment tables periodically
+
+CREATE PROCEDURE `proc_AppointmentPendingCleanup`()
+    COMMENT 'This is a temporary cleanup of pending appointment until a new Alias system is created'
+BEGIN
+/****************************************************************************************************
+Purpose: This stored procedure is to remove old appointents in the AppointmentPending and
+resourcePending tables that are older than 30 days. It will also remove any appointment status
+that are "Deleted" and also clean up the resourcePending table that does not have any appointments in
+the AppointmentPending table.
+
+Reason: Only keep today and future appointments
+****************************************************************************************************/
+
+DELETE FROM resourcePending
+WHERE appointmentId IN (SELECT B.AppointmentAriaSer FROM AppointmentPending B
+WHERE DATE(B.ScheduledStartTime) < DATE(ADDDATE(NOW(), INTERVAL -30 DAY))
+);
+
+DELETE FROM resourcePending
+WHERE appointmentId IN
+(SELECT B.AppointmentAriaSer FROM AppointmentPending B
+WHERE B.`Status` = 'Deleted'
+);
+
+DELETE FROM AppointmentPending
+WHERE DATE(ScheduledStartTime) < DATE(ADDDATE(NOW(), INTERVAL -30 DAY));
+
+DELETE FROM AppointmentPending
+WHERE `Status` = 'Deleted';
+
+DELETE FROM resourcePending
+WHERE appointmentId NOT IN (SELECT B.AppointmentAriaSer FROM AppointmentPending B);
+
+END;
+
+CREATE EVENT `evt_Cleanup` ON SCHEDULE EVERY 1 DAY STARTS '2023-10-25 01:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'This is temporary for now' DO BEGIN
+	-- remove old and deleted appointmens
+	call proc_AppointmentPendingCleanup;
+END;
