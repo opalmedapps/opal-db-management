@@ -1,3 +1,5 @@
+# Note to windows users: You must set this file to read-only for docker to use it: https://stackoverflow.com/a/51854668
+
 [mariadbd]
 # enable event scheduler since Opal DBs use events to update certain things
 event_scheduler = On

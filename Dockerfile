@@ -39,6 +39,8 @@ COPY ./config/opalreportdb-config.php ./dbv/dbv_opalreportdb/config.php
 
 # Add the SecureMySQL adapter
 COPY ./config/SecureMySQL.php ./dbv/dbv_questionnairedb/lib/adapters/
+COPY ./config/SecureMySQL.php ./dbv/dbv_registerdb/lib/adapters/
+COPY ./config/SecureMySQL.php ./dbv/dbv_opalreportdb/lib/adapters/
 
 # Copy the index landing page
 COPY ./index.php ./index.php
