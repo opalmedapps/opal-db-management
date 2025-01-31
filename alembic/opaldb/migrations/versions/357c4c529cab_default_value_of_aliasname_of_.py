@@ -18,6 +18,9 @@ depends_on = None
 
 def upgrade() -> None:
     """Alter AliasName in DiagnosisTranslation to have proper default."""
-    op.alter_column('DiagnosisTranslation', 'AliasName',
-               existing_type=mysql.VARCHAR(length=100),
-               nullable=True)
+    op.alter_column(
+        'DiagnosisTranslation',
+        'AliasName',
+        existing_type=mysql.VARCHAR(length=100),
+        nullable=True
+    )
