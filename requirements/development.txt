@@ -2,7 +2,7 @@
 
 # Code quality
 #
-flake8==4.0.1  # https://github.com/PyCQA/flake8
+flake8==6.0.0  # https://github.com/PyCQA/flake8
 
 flake8-builtins==1.5.3  # https://github.com/gforcada/flake8-builtins
 
