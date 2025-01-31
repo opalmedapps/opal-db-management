@@ -1,3 +1,5 @@
+FROM busybox:uclibc as busybox
+
 FROM python:3.11.8-slim-bookworm as build
 
 RUN apt-get update \
@@ -15,7 +17,7 @@ RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
 RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
-FROM python:3.11.8-slim-bookworm
+FROM gcr.io/distroless/python3-debian12:debug
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -23,6 +25,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 
+# https://stackoverflow.com/a/71756170
+COPY --from=busybox /bin/sh /bin/sh
 # get Python package lib and bin
 COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
