@@ -89,3 +89,20 @@ INSERT INTO `oaRole` (`name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDat
 ('Medical Records',	'Dossiers médicaux',	0,	'',	'2024-03-19 09:22:20',	'AGKE6000',	'2024-03-19 09:22:20',	'AGKE6000');
 INSERT INTO `oaRoleModule` (`moduleId`, `oaRoleId`, `access`) VALUES
 (11, LAST_INSERT_ID(), 1);
+
+-- Update Notification texts pertaining to Educational Materials and rename to 'Reference Materials'
+UPDATE `NotificationTypes`
+SET
+NotificationTypeId='ReferenceMaterial',
+NotificationTypeName='Reference Material'
+WHERE NotificationTypeSerNum=5;
+
+UPDATE `NotificationControl`
+SET
+Name_EN='New Reference Material',
+Name_FR='Nouveau matériel référence',
+Description_EN='$patientName ($institution): New Reference material',
+Description_FR='$patientName ($institution): Nouveau matériel référence',
+NotificationType='ReferenceMaterial'
+WHERE NotificationControlSerNum=7;
+
