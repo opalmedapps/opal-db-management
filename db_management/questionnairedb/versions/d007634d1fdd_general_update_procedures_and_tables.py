@@ -9,9 +9,8 @@ import os
 from pathlib import Path
 
 import sqlalchemy as sa
-from sqlalchemy.dialects import mysql
-
 from alembic import op
+from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
 revision = 'd007634d1fdd'
