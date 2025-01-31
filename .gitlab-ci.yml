@@ -234,4 +234,4 @@ gemnasium-python-dependency_scanning:
 # Container Scanning
 container_scanning:
   variables:
-    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE/alembic:$CI_COMMIT_REF_SLUG
+    CS_IMAGE: $CI_REGISTRY_IMAGE/alembic:$CI_COMMIT_REF_SLUG
