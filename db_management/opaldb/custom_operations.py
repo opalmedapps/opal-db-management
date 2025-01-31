@@ -10,15 +10,15 @@ class ReplaceableObject:
     Design copied from Alembic cookbook: https://alembic.sqlalchemy.org/en/latest/cookbook.html#replaceable-objects
     """
 
-    def __init__(self, name: str, sqltext: str = '') -> None:
+    def __init__(self, name: str, sql_text: str) -> None:
         """Initialize with the identifier and textual definition of the entity to be created/replaced/dropped.
 
         Args:
             name: identifier for the entity
-            sqltext: MySQL definition of the base operation
+            sql_text: MySQL definition of the base operation
         """
         self.name = name
-        self.sqltext = sqltext
+        self.sql_text = sql_text
 
 
 class ReversibleOp(MigrateOperation):
@@ -33,19 +33,54 @@ class ReversibleOp(MigrateOperation):
     def reverse(self) -> MigrateOperation:
         raise NotImplementedError()
 
+    @classmethod
+    def _get_object_from_version(cls, operations: Operations, ident: str) -> Any:
+        version, objname = ident.split('.')
+
+        script = operations.get_context().script
+
+        if script:
+            module = script.get_revision(version).module
+            return getattr(module, objname)
+
+        raise ValueError('script directory not found')
+
+    @classmethod
+    def replace(
+        cls,
+        operations: Operations,
+        target: ReplaceableObject,
+        replaces: str | None = None,
+        replace_with: str | None = None,
+    ) -> None:
+
+        if replaces:
+            old_obj = cls._get_object_from_version(operations, replaces)
+            drop_old = cls(old_obj).reverse()
+            create_new = cls(target)
+        elif replace_with:
+            old_obj = cls._get_object_from_version(operations, replace_with)
+            drop_old = cls(target).reverse()
+            create_new = cls(old_obj)
+        else:
+            raise TypeError('replaces or replace_with is required')
+
+        operations.invoke(drop_old)
+        operations.invoke(create_new)
+
 
 @Operations.register_operation('create_trigger')
 class CreateTriggerOp(MigrateOperation):
     """Create a Trigger."""
 
     def __init__(self, replaceable_obj: ReplaceableObject) -> None:
-        """Extract the name and sqltext from the operation object.
+        """Extract the name and sql_text from the operation object.
 
         Args:
-            replaceable_obj: a ReplaceableObject or other class wrapper with name and sqltext fields.
+            replaceable_obj: a ReplaceableObject or other class wrapper with name and sql_text fields.
         """
         self.name = replaceable_obj.name
-        self.sqltext = replaceable_obj.sqltext
+        self.sql_text = replaceable_obj.sql_text
 
     @classmethod
     def create_trigger(cls: Type['CreateTriggerOp'], operations: Operations, replaceable_obj: ReplaceableObject) -> Any:
@@ -67,7 +102,7 @@ class CreateTriggerOp(MigrateOperation):
         Returns:
             Instance of MigrateOperation
         """
-        return DropTriggerOp(self.name, sqltext=self.sqltext)
+        return DropTriggerOp(self.name, sql_text=self.sql_text)
 
 
 @Operations.register_operation('drop_trigger')
@@ -75,13 +110,13 @@ class DropTriggerOp(MigrateOperation):
     """Drop a Trigger."""
 
     def __init__(self, replaceable_obj: ReplaceableObject) -> None:
-        """Extract the name and sqltext from the operation object.
+        """Extract the name and sql_text from the operation object.
 
         Args:
-            replaceable_obj: a ReplaceableObject or other class wrapper with name and sqltext fields.
+            replaceable_obj: a ReplaceableObject or other class wrapper with name and sql_text fields.
         """
         self.name = replaceable_obj.name
-        self.sqltext = replaceable_obj.sqltext
+        self.sql_text = replaceable_obj.sql_text
 
     @classmethod
     def drop_trigger(cls: Type['DropTriggerOp'], operations: Operations, replaceable_obj: ReplaceableObject) -> Any:
@@ -103,7 +138,7 @@ class DropTriggerOp(MigrateOperation):
         Returns:
             Instance of MigrateOperation
         """
-        return CreateTriggerOp(self.name, sqltext=self.sqltext)
+        return CreateTriggerOp(self.name, sql_text=self.sql_text)
 
 
 @Operations.implementation_for(CreateTriggerOp)
@@ -114,7 +149,7 @@ def create_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
         operations: Alembic Operations instance (context in which the migration is being performed)
         operation: CreateTriggerOp instance
     """
-    operations.execute('CREATE TRIGGER {0} {1}'.format(operation.name, operation.sqltext))
+    operations.execute('CREATE TRIGGER {0} {1}'.format(operation.name, operation.sql_text))
 
 
 @Operations.implementation_for(DropTriggerOp)
@@ -129,25 +164,26 @@ def drop_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
 
 
 @Operations.register_operation('create_procedure', 'invoke_for_target')
+@Operations.register_operation('replace_procedure', 'replace')
 class CreateProcedureOp(ReversibleOp):
-    def reverse(self) -> ReversibleOp:
+    def reverse(self) -> MigrateOperation:
         return DropProcedureOp(self.target)
 
 
 @Operations.register_operation('drop_procedure', 'invoke_for_target')
 class DropProcedureOp(ReversibleOp):
-    def reverse(self) -> ReversibleOp:
+    def reverse(self) -> MigrateOperation:
         return CreateProcedureOp(self.target)
 
 
 @Operations.implementation_for(CreateProcedureOp)
 def create_procedure(operations: Operations, operation: ReversibleOp) -> None:
-    operations.execute("CREATE FUNCTION %s %s" % (
-        operation.target.name,
-        operation.target.sqltext,
+    operations.execute('CREATE FUNCTION {name} {definition}'.format(
+        name=operation.target.name,
+        definition=operation.target.sql_text,
     ))
 
 
 @Operations.implementation_for(DropProcedureOp)
 def drop_procedure(operations: Operations, operation: ReversibleOp) -> None:
-    operations.execute("DROP FUNCTION %s" % operation.target.name)
+    operations.execute('DROP FUNCTION {0}'.format(operation.target.name))
