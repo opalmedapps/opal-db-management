@@ -30,7 +30,7 @@ before_script:
   - source .venv/bin/activate || true
   # set up env file for DB service
   # use sample env file
-  - cp .env.sample .env
+  - cp .env-sample .env
   - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
   - sed -i "s/^LEGACY_QUESTIONNAIRE_DB_NAME=.*/LEGACY_QUESTIONNAIRE_DB_NAME=QuestionnaireDB/" .env
   - sed -i "s/^DOCKER_HOST=.*/DOCKER_HOST=host.docker.internal/" .env
