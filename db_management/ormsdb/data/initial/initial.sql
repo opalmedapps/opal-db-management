@@ -1,7 +1,7 @@
 INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
 (1,	'RVH',	'Royal Victoria Hospital',	'^[0-9]{7}$'),
 (2,	'MGH',	'Montreal General Hospital',	'^[0-9]{7}$'),
-(3,	'MCH',	'Montreal Childrens Hospital',	'^[0-9]{7}$');z
+(3,	'MCH',	'Montreal Childrens Hospital',	'^[0-9]{7}$');
 
 INSERT INTO `SpecialityGroup` (`SpecialityGroupId`, `HospitalId`, `SpecialityGroupCode`, `SpecialityGroupName`, `LastUpdated`) VALUES
 (1,	1,	'AAA',	'Test Group',	'2022-05-11 01:18:31'),
