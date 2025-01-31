@@ -31,6 +31,7 @@ default:
   - sed -i "s/^MARIADB_EXTERNAL_PORT=.*/MARIADB_EXTERNAL_PORT=$MARIADB_EXTERNAL_PORT/" .env
 
 stages:
+  - Build
   - Static Analysis
 
 setup:
@@ -57,6 +58,39 @@ setup:
     # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
     paths:
       - .cache/pip
+
+build alembic image:
+  stage: Build
+  image: docker:20.10.24
+  services:
+    - docker:20.10.24-dind
+  variables:
+    # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    # login to CI registry: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#option-1-run-docker-login
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+  script:
+    - export IMAGE_REPOSITORY=$CI_REGISTRY_IMAGE/alembic
+    # create an image tagged with the branch or tag name
+    - export IMAGE_BRANCH=$IMAGE_REPOSITORY:$CI_COMMIT_REF_SLUG
+    # plus for the default branch create a latest and commit tag
+    # the commit tag allows us to get images of previous commits in case of problems
+    - export IMAGE_LATEST=$IMAGE_REPOSITORY:latest
+    - export IMAGE_COMMIT=$IMAGE_REPOSITORY:$CI_COMMIT_SHA
+    # make use of the Docker cache to speed up building
+    # see: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#make-docker-in-docker-builds-faster-with-docker-layer-caching
+    - docker pull $IMAGE_LATEST || true
+    - docker pull $IMAGE_BRANCH || true
+    - docker build --cache-from $IMAGE_BRANCH --cache-from $IMAGE_LATEST --tag $IMAGE_BRANCH --tag $IMAGE_LATEST --tag $IMAGE_COMMIT .
+    - docker push $IMAGE_BRANCH
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        echo "Running on default branch. Pushing latest and commit tags..."
+        docker push $IMAGE_LATEST
+        docker push $IMAGE_COMMIT
+      fi
 
 flake8:
   stage: Static Analysis
