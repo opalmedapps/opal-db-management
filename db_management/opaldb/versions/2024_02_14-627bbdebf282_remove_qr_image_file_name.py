@@ -86,7 +86,7 @@ NEW.SessionId, 'UPDATE');\nEND;\n""")
 
 
 def upgrade() -> None:
-    """Update QRImageFileName column from hostpitalmap and Triggers to remove QRImageFileName instance"""
+    """Update QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
     op.drop_column('HospitalMap', 'QRImageFileName')
     op.drop_column('HospitalMapMH', 'QRImageFileName')
     op.drop_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)
