@@ -160,19 +160,27 @@ Then call the autogenerate:
 
 Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
 
-Finally, to apply your migration: `alembic upgrade head`
+##### Alembic Branches
+
+We make use of the alembic 'branch_labels' feature to separate our development data from the production environment. This works similarly to environment settings in other areas of OHIG development wherein we must specify which environment we want to be working in between 'development' and 'production'. Currently, the development branch contains an extra version file which inserts the test data for development only. Use `alembic history` to see the current list of heads. The `development` and `production` heads share a common down_revision corresponding to the table schema revision. The `production` branch inserts views, functions, events, and procedures only.
+
+To specify a branch, simply prefix the branch label @ head:
+
+Upgrade to development head `alembic upgrade development@head`
+Upgrade to production head `alembic upgrade production@head`
+
+We can also stop at specific points along these branch paths by giving the unique identifier code of the version file you want to stop at, @head.
+
 You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
-For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade a7b`
+For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06@development`
 
 #### Version controlling triggers, events, functions, procedures
 
 Object-oriented version control of these constructs isn't really supported 'natively' in Alembic, but there are workarounds like the one outlined here: https://stackoverflow.com/questions/67247268/how-to-version-control-functions-and-triggers-with-alembic. It still requires writing everything out in SQL though.
 
-Note that when we first implemented Alembic, all of the existing views, triggers, events, functions, and procedures were imported with raq SQL in an initial DB setup migration.
+### [Optional] Generating initial model structure from existing databases
 
-### Generating initial model structure from existing databases
-
-Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run once initially and can be ignored afterwards.
+Note: This step is only necessary when the alembic models.py file is empty. It only needs to be run if there isn't a populated models file for the database in question.
 
 SQLAlchemy has a support library designed to quickly generate SQLAlchemy models, given an existing SQL database and a connection url. This has been extra easy with the initial_model_populate file. In this file we specify the connection string for our dockerized OpalDB connection, and the library handles the rest and populates models.py with the table schema.
 
@@ -190,4 +198,4 @@ Not much changes for this, we just have to prefix our regular CLI alembic comman
 
 For example to run the current revisions to the latest:
 
-`docker compose exec alembic alembic upgrade head`
+`docker compose exec alembic alembic upgrade development@head`
