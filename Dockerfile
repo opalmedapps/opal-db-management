@@ -1,23 +1,13 @@
-FROM busybox:uclibc as busybox
+FROM cgr.dev/chainguard/python:latest-dev as build
 
-FROM python:3.11.8-slim-bookworm as build
-
-RUN apt-get update \
-  && apt-get upgrade \
-  # dependencies for building Python packages
-  && apt-get install -y build-essential \
-  # mysqlclient dependencies
-  && apt-get install -y default-libmysqlclient-dev pkg-config \
-  # cleaning up unused files
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache build-base mariadb-dev
 
 # Install pip requirements
 RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
 RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
-FROM gcr.io/distroless/python3-debian12:debug
+FROM cgr.dev/chainguard/python:latest
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -25,8 +15,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED 1
 
-# https://stackoverflow.com/a/71756170
-COPY --from=busybox /bin/sh /bin/sh
 # get Python package lib and bin
 COPY --from=build /usr/local/bin /usr/local/bin
 COPY --from=build /usr/local/lib /usr/local/lib
