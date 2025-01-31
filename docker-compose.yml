@@ -64,4 +64,4 @@ services:
       #       If the error is encountered, simply re-start the containers a second time and alembic will work.
     env_file:
       - .env
-    #command: /app/alembic-upgrade.sh  # Upgrade legacy dbs with alembic
+    command: /app/alembic-upgrade.sh  # Upgrade legacy dbs with alembic
