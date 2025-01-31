@@ -162,6 +162,8 @@ Note: Alembic commands must be run from the directory corresponding to the datab
 
 ##### Alembic Branches
 
+Docs: https://alembic.sqlalchemy.org/en/latest/branches.html
+
 We make use of the alembic 'branch_labels' feature to separate our development data from the production environment. This works similarly to environment settings in other areas of OHIG development wherein we must specify which environment we want to be working in between 'development' and 'production'. Currently, the development branch contains an extra version file which inserts the test data for development only. Use `alembic history` to see the current list of heads. The `development` and `production` heads share a common down_revision corresponding to the table schema revision. The `production` branch inserts views, functions, events, and procedures only.
 
 To specify a branch, simply prefix the branch label @ head:
