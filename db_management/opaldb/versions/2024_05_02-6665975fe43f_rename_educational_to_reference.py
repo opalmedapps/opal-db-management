@@ -71,15 +71,8 @@ def upgrade() -> None:
     )
     op.create_table_comment(
         'EducationalMaterialPackageContent',
-        '{0}{1}{2}'.format(
-            'Directory of each material that is contained in an educational material package.',
-            ' No foreign keys to facilitate order changes.',
-            'All Educational names to be changed to ReferenceMaterial when migrated to Django.',
-        ),
-        existing_comment='{0}{1}'.format(
-            'Directory of each material that is contained in an educational material package.',
-            ' No foreign keys to facilitate order changes.',
-        ),
+        'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes. All Educational names to be changed to ReferenceMaterial when migrated to Django.',  # noqa: E501
+        existing_comment='Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes.',  # noqa: E501
         schema=None,
     )
     op.create_table_comment(
@@ -162,15 +155,8 @@ def downgrade() -> None:
     )
     op.create_table_comment(
         'EducationalMaterialPackageContent',
-        '{0}{1}'.format(
-            'Directory of each material that is contained in an educational material package.',
-            ' No foreign keys to facilitate order changes.',
-        ),
-        existing_comment='{0}{1}{2}'.format(
-            'Directory of each material that is contained in an educational material package.',
-            ' No foreign keys to facilitate order changes.',
-            'All Educational names to be changed to ReferenceMaterial when migrated to Django.',
-        ),
+        'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes.',  # noqa: E501
+        existing_comment='Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes. All Educational names to be changed to ReferenceMaterial when migrated to Django.',  # noqa: E501
         schema=None,
     )
     op.drop_table_comment(
