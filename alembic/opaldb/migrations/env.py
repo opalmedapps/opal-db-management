@@ -13,7 +13,6 @@ from alembic import context
 config = context.config
 
 # Reset sqlalchemy target url using .env vars
-ssl_args = {'ssl_ca': SSL_CA, 'ssl_cert': SSL_CERT, 'ssl_key': SSL_KEY}
 if USE_SSL:
     config.set_main_option(
         'sqlalchemy.url',
