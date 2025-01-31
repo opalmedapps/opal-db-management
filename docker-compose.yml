@@ -64,14 +64,4 @@ services:
       #       If the error is encountered, simply re-start the containers a second time and alembic will work.
     env_file:
       - .env
-    command: |
-      bash -c "
-      echo 'Upgrading QuestionnaireDB...' &&
-      alembic --name questionnairedb upgrade head &&
-      echo 'Upgrading OpalDB...' &&
-      alembic --name opaldb upgrade head &&
-      echo 'Upgrading ormsDB...' &&
-      alembic --name ormsdb upgrade head &&
-      echo 'Upgrading ormslogDB...' &&
-      alembic --name ormslogdb upgrade head
-      "
+    command: /app/alembic-upgrade.sh  # Upgrade legacy dbs with alembic
