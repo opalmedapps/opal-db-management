@@ -14,11 +14,12 @@ log "Beginning test data reset."
 # Check for the institution argument
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 <institution>"
-    echo "Valid arguments: muhc, chusj"
+    echo "Valid institutions: muhc, chusj, MUHC, CHUSJ"
     exit 1
 fi
 
-institution=$1
+# Convert the provided institution to lowercase for easier directory-based script call
+institution=$(echo "$1" | tr '[:upper:]' '[:lower:]')
 
 # Validate the institution
 if [[ "$institution" != "muhc" && "$institution" != "chusj" ]]; then
