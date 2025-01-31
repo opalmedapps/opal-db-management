@@ -81,7 +81,7 @@ This launches the regular containers without Alembic, now we can run the regular
 
 1. http://localhost:8091/dbv/dbv_questionnairedb/
 
-With this step complete we can proceed as normal. Stop the containers then continue to Step 4 and run them again as normal; alembic will populate OpalDB and insert test data.
+With this step complete we can proceed as normal. Stop the containers then continue to Step 4 and run them again as normal; alembic will populate OpalDB and insert test data. This instruction can be removed once QuestionnaireDB is added to our alembic version control; at that point the instructions to build your db docker will return to normal.
 
 ### Step 4
 
