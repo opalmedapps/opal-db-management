@@ -1,12 +1,12 @@
 #!/bin/bash
 
-MYSQL_PWD=$MARIADB_ROOT_PASSWORD mysql -uroot -hlocalhost << EOF
-GRANT ALL PRIVILEGES ON \`OpalDB\`.* TO \`$MARIADB_USER\`@\`%\`;
-GRANT ALL PRIVILEGES ON \`test_OpalDB\`.* TO \`$MARIADB_USER\`@\`%\`;
-GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;
-GRANT ALL PRIVILEGES ON \`test_QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;
-GRANT ALL PRIVILEGES ON \`registerdb\`.* TO \`$MARIADB_USER\`@\`%\`;
-GRANT ALL PRIVILEGES ON \`OpalReportDB\`.* TO \`$MARIADB_USER\`@\`%\`;
+MYSQL_PWD=$DATABASE_ROOT_PASSWORD mysql -uroot -hlocalhost << EOF
+GRANT ALL PRIVILEGES ON \`OpalDB\`.* TO \`$DATABASE_USER\`@\`%\`;
+GRANT ALL PRIVILEGES ON \`test_OpalDB\`.* TO \`$DATABASE_USER\`@\`%\`;
+GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$DATABASE_USER\`@\`%\`;
+GRANT ALL PRIVILEGES ON \`test_QuestionnaireDB\`.* TO \`$DATABASE_USER\`@\`%\`;
+GRANT ALL PRIVILEGES ON \`registerdb\`.* TO \`$DATABASE_USER\`@\`%\`;
+GRANT ALL PRIVILEGES ON \`OpalReportDB\`.* TO \`$DATABASE_USER\`@\`%\`;
 CREATE USER \`$MARIADB_GUEST_USER\`@\`%\` IDENTIFIED BY '$MARIADB_GUEST_PASSWORD';
 GRANT SELECT ON \`OpalDB\`.* TO \`$MARIADB_GUEST_USER\`@\`%\`;
 EOF

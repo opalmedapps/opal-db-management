@@ -26,12 +26,12 @@ ROOT_DIR = Path(__file__).parents[1]
 REVISIONS_DIR = ROOT_DIR / 'revision_data'
 # Load db connection environment variables
 load_dotenv()
-HOST = os.getenv('DOCKER_HOST')
-PORT = int(os.getenv(key='MARIADB_PORT', default=3007))
-USER = os.getenv('MARIADB_USER')
-PASS = os.getenv('MARIADB_PASSWORD', default='root_password')
-OPALDB = os.getenv('LEGACY_OPAL_DB_NAME')
-QSTDB = os.getenv('LEGACY_QUESTIONNAIRE_DB_NAME')
+HOST = os.getenv('DATABASE_HOST')
+PORT = int(os.getenv(key='DATABASE_PORT', default=3007))
+USER = os.getenv('DATABASE_USER')
+PASS = os.getenv('DATABASE_PASSWORD', default='root_password')
+DB_NAME_OPAL = os.getenv('LEGACY_OPAL_DB_NAME')
+DB_NAME_QUESTIONNAIRE = os.getenv('LEGACY_QUESTIONNAIRE_DB_NAME')
 
 
 def get_connection_cursor(autocommit: bool) -> Cursor:
@@ -49,13 +49,13 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
             password=PASS,
             host=HOST,
             port=PORT,
-            database=OPALDB,
+            database=DB_NAME_OPAL,
             client_flag=CLIENT.MULTI_STATEMENTS,
             autocommit=autocommit,
         )
         return conn.cursor()
     except pymysql.Error as err:
-        print('Error getting cursor or connection to mariaDB (Database {OPALDB}) {err}'.format(OPALDB=OPALDB, err=err.args[0]))  # noqa: WPS421
+        print('Error getting cursor or connection to mariaDB (Database {OPALDB}) {err}'.format(OPALDB=DB_NAME_OPAL, err=err.args[0]))  # noqa: WPS421
         sys.exit(1)
 
 
@@ -99,11 +99,11 @@ def downgrade() -> None:
 
     with get_connection_cursor(autocommit=True) as cursor:
         cursor.execute(query=f"""
-        DROP DATABASE {OPALDB};
+        DROP DATABASE {DB_NAME_OPAL};
 
-        CREATE DATABASE IF NOT EXISTS {OPALDB} /*!40100 DEFAULT CHARACTER SET latin1 */;
-        USE {OPALDB};
-        GRANT ALL PRIVILEGES ON {OPALDB}.* TO {USER}@`%`;
+        CREATE DATABASE IF NOT EXISTS {DB_NAME_OPAL} /*!40100 DEFAULT CHARACTER SET latin1 */;
+        USE {DB_NAME_OPAL};
+        GRANT ALL PRIVILEGES ON {DB_NAME_OPAL}.* TO {USER}@`%`;
 
         """)
 

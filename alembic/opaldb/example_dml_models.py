@@ -14,9 +14,9 @@ from sqlalchemy.orm import sessionmaker
 
 # Read environment variables for connection
 load_dotenv()
-HOST = os.getenv('DOCKER_HOST')
-USER = os.getenv('MARIADB_USER')
-PASS = os.getenv('MARIADB_PASSWORD')
+HOST = os.getenv('DATABASE_HOST')
+USER = os.getenv('DATABASE_USER')
+PASS = os.getenv('DATABASE_PASSWORD')
 DB = os.getenv('LEGACY_OPAL_DB_NAME')
 # Create connection and session
 engine = create_engine(

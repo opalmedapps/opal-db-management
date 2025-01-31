@@ -1,15 +1,28 @@
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
+import os
 from logging.config import fileConfig
 from typing import Any
 
 from models import Base
 from sqlalchemy import engine_from_config, pool
+from dotenv import load_dotenv
 
 from alembic import context
+
+load_dotenv()
+HOST = os.getenv('DATABASE_HOST')
+PORT = int(os.getenv(key='DATABASE_PORT', default=3007))
+USER = os.getenv('DATABASE_USER')
+PASS = os.getenv('DATABASE_PASSWORD')
+DB_NAME_OPAL = os.getenv('LEGACY_OPAL_DB_NAME')
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+# Reset sqlalchemy target url using .env vars
+config.set_main_option('sqlalchemy.url', 'mariadb+mariadbconnector://{user}:{password}@{host}:{port}/{database}'.format(user=USER, password=PASS, host=HOST, port=PORT, database=DB_NAME_OPAL))
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -84,6 +97,8 @@ def run_migrations_online() -> None:
 
 
 if context.is_offline_mode():
+    print('offline')
     run_migrations_offline()
 else:
+    print('online')
     run_migrations_online()

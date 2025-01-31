@@ -34,10 +34,10 @@ def generate_models(host: str, user: str, password: str, database: str, outfile:
 if __name__ == '__main__':
     # Read environment variables
     load_dotenv()
-    HOST = os.getenv('DOCKER_HOST')
-    PORT = os.getenv('MARIADB_PORT')
-    USER = os.getenv('MARIADB_USER')
-    PASS = os.getenv('MARIADB_PASSWORD')
+    HOST = os.getenv('DATABASE_HOST')
+    PORT = os.getenv('DATABASE_PORT')
+    USER = os.getenv('DATABASE_USER')
+    PASS = os.getenv('DATABASE_PASSWORD')
     DB = os.getenv('LEGACY_OPAL_DB_NAME')
     host_port = '{h}:{p}'.format(h=HOST, p=PORT)
     # Generate models for OpalDB
