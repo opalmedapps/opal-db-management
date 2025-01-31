@@ -65,10 +65,6 @@ TRIGGER_LIST: Final = (
         sqltext="""AFTER UPDATE ON `Appointment` FOR EACH ROW BEGIN\n INSERT INTO `AppointmentMH`(`AppointmentSerNum`, `AppointmentRevSerNum`,`SessionId`, `AliasExpressionSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `AppointmentAriaSer`, `PrioritySerNum`, `DiagnosisSerNum`, `Status`, `State`, `ScheduledStartTime`, `ScheduledEndTime`, `ActualStartDate`, `ActualEndDate`, `Location`, `RoomLocation_EN`, `RoomLocation_FR`, `Checkin`, `DateAdded`, `ReadStatus`, `LastUpdated`,  `ModificationAction`) VALUES (NEW.AppointmentSerNum,NULL,NEW.SessionId,NEW.AliasExpressionSerNum, NEW.CronLogSerNum, NEW.PatientSerNum,NEW.SourceDatabaseSerNum,NEW.AppointmentAriaSer,NEW.PrioritySerNum, NEW.DiagnosisSerNum, NEW.Status, NEW.State, NEW.ScheduledStartTime,NEW.ScheduledEndTime, NEW.ActualStartDate, NEW.ActualEndDate, NEW.Location, NEW.RoomLocation_EN, NEW.RoomLocation_FR, NEW.Checkin, NEW.DateAdded,NEW.ReadStatus,NOW(), 'UPDATE');\nEND;\n"""),
 
     ReplaceableObject(
-        name='`delete_task_trigger`',
-        sqltext="""AFTER DELETE ON `Task` FOR EACH ROW BEGIN\nINSERT INTO `TaskMH`(`TaskSerNum`, `CronLogSerNum`, `PatientSerNum`, `AliasExpressionSerNum`, `SourceDatabaseSerNum`, `TaskAriaSer`, `Status`, `State`, `PrioritySerNum`, `DiagnosisSerNum`, `DueDateTime`, `CreationDate`, `CompletionDate`, `DateAdded`, `LastUpdated`, `ModificationAction`) VALUES (OLD.TaskSerNum, OLD.CronLogSerNum, OLD.PatientSerNum,OLD.AliasExpressionSerNum,OLD.SourceDatabaseSerNum,OLD.TaskAriaSer, OLD.Status, OLD.State, OLD.PrioritySerNum, OLD.DiagnosisSerNum, OLD.DueDateTime, OLD.CreationDate, OLD.CompletionDate, OLD.DateAdded,NULL, 'DELETE');\nEND;\n"""),
-
-    ReplaceableObject(
         name='`diagnosis_code_delete_trigger`',
         sqltext="""AFTER DELETE ON `DiagnosisCode` FOR EACH ROW BEGIN\n   INSERT INTO `DiagnosisCodeMH`(`DiagnosisTranslationSerNum`,`SourceUID`, `DiagnosisCode`, `Description`, `LastUpdatedBy`, `SessionId`, `ModificationAction`, `DateAdded`) VALUES (OLD.DiagnosisTranslationSerNum, OLD.SourceUID, OLD.DiagnosisCode, OLD.Description, OLD.LastUpdatedBy, OLD.SessionId, 'DELETE', NOW());\nEND;\n"""),
 
@@ -141,18 +137,6 @@ TRIGGER_LIST: Final = (
         sqltext="""AFTER UPDATE ON `EducationalMaterial` FOR EACH ROW BEGIN\nINSERT INTO `EducationalMaterialMH`(`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ModificationAction`) VALUES (NEW.EducationalMaterialSerNum, NEW.CronLogSerNum, NEW.EducationalMaterialControlSerNum, NEW.PatientSerNum, NOW(), NEW.ReadStatus, 'UPDATE');\nEND;\n"""),
 
     ReplaceableObject(
-        name='`email_delete_trigger`',
-        sqltext="""AFTER DELETE ON `EmailLog` FOR EACH ROW BEGIN\nINSERT INTO `EmailLogMH`(`EmailLogSerNum`, `CronLogSerNum`, `PatientSerNum`, `EmailControlSerNum`, `Status`, `DateAdded`, `ModificationAction`) VALUES (OLD.EmailLogSerNum, OLD.CronLogSerNum, OLD.PatientSerNum, OLD.EmailControlSerNum, OLD.Status, NOW(), 'DELETE');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`email_insert_trigger`',
-        sqltext="""AFTER INSERT ON `EmailLog` FOR EACH ROW BEGIN\nINSERT INTO `EmailLogMH`(`EmailLogSerNum`, `CronLogSerNum`, `PatientSerNum`, `EmailControlSerNum`, `Status`, `DateAdded`, `ModificationAction`) VALUES (NEW.EmailLogSerNum, NEW.CronLogSerNum, NEW.PatientSerNum, NEW.EmailControlSerNum, NEW.Status, NOW(), 'INSERT');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`email_update_trigger`',
-        sqltext="""AFTER UPDATE ON `EmailLog` FOR EACH ROW BEGIN\nINSERT INTO `EmailLogMH`(`EmailLogSerNum`, `CronLogSerNum`, `PatientSerNum`, `EmailControlSerNum`, `Status`, `DateAdded`, `ModificationAction`) VALUES (NEW.EmailLogSerNum, NEW.CronLogSerNum, NEW.PatientSerNum, NEW.EmailControlSerNum, NEW.Status, NOW(), 'UPDATE');\nEND;\n"""),
-
-    ReplaceableObject(
         name='`filter_delete_trigger`',
         sqltext="""AFTER DELETE ON `Filters` FOR EACH ROW BEGIN\n   INSERT INTO `FiltersMH`(`FilterSerNum`,`ControlTable`, `ControlTableSerNum`, `FilterType`, `FilterId`, `LastUpdatedBy`, `SessionId`, `ModificationAction`, `DateAdded`) VALUES (OLD.FilterSerNum, OLD.ControlTable, OLD.ControlTableSerNum, OLD.FilterType, OLD.FilterId, OLD.LastUpdatedBy, OLD.SessionId, 'DELETE', NOW());\nEND;\n"""),
 
@@ -171,10 +155,6 @@ TRIGGER_LIST: Final = (
     ReplaceableObject(
         name='`hospitalmap_update_trigger`',
         sqltext="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n   INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`, `MapURL_FR`, `QRMapAlias`, `QRImageFileName`, `MapName_EN`, `MapDescription_EN`, `MapName_FR`, `MapDescription_FR`, `DateAdded`, `LastUpdatedBy`, `SessionId`, `ModificationAction`) VALUES (NEW.HospitalMapSerNum, NEW.MapUrl, NEW.MapURL_EN, NEW.MapURL_FR,  NEW.QRMapAlias, NEW.QRImageFileName, NEW.MapName_EN, NEW.MapDescription_EN, NEW.MapName_FR, NEW.MapDescription_FR, NOW(), NEW.LastUpdatedBy, NEW.SessionId, 'UPDATE');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`insert_task_trigger`',
-        sqltext="""AFTER INSERT ON `Task` FOR EACH ROW BEGIN\nINSERT INTO `TaskMH`(`TaskSerNum`,`CronLogSerNum`, `PatientSerNum`, `AliasExpressionSerNum`, `PrioritySerNum`, `DiagnosisSerNum`, `SourceDatabaseSerNum`, `TaskAriaSer`, `Status` , `State`, `DueDateTime`, `DateAdded`, `CreationDate`, `CompletionDate`, `LastUpdated`, `ModificationAction`) VALUES (NEW.TaskSerNum,NEW.CronLogSerNum, NEW.PatientSerNum,NEW.AliasExpressionSerNum, NEW.PrioritySerNum, NEW.DiagnosisSerNum, NEW.SourceDatabaseSerNum, NEW.TaskAriaSer, NEW.Status, NEW.State, NEW.DueDateTime, NEW.CreationDate, NEW.CompletionDate, NEW.DateAdded,NULL, 'INSERT');\nEND;\n"""),
 
     ReplaceableObject(
         name='`legacy_questionnaire_delete_trigger`',
@@ -215,18 +195,6 @@ TRIGGER_LIST: Final = (
     ReplaceableObject(
         name='`PatientLocation_after_insert`',
         sqltext="""AFTER INSERT ON `PatientLocation` FOR EACH ROW BEGIN\n	if (new.CheckedInFlag = 1) then\n		update Appointment set Checkin = 1 where AppointmentSerNum = new.AppointmentSerNum;\n	end if;\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`patients_for_patients_delete_trigger`',
-        sqltext="""AFTER DELETE ON `PatientsForPatients` FOR EACH ROW BEGIN\nINSERT INTO `PatientsForPatientsMH`(`PatientsForPatientsSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ModificationAction`) VALUES (OLD.PatientsForPatientsSerNum, OLD.CronLogSerNum, OLD.PatientSerNum, OLD.PostControlSerNum, NOW(), OLD.ReadStatus, 'DELETE');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`patients_for_patients_insert_trigger`',
-        sqltext="""AFTER INSERT ON `PatientsForPatients` FOR EACH ROW BEGIN\n	INSERT INTO `PatientsForPatientsMH`(`PatientsForPatientsSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ModificationAction`)\n	VALUES (NEW.PatientsForPatientsSerNum, NEW.CronLogSerNum, NEW.PatientSerNum, NEW.PostControlSerNum, NOW(), NEW.ReadStatus, 'INSERT');\n\n\n	INSERT INTO `Notification` (`CronLogSerNum`, `PatientSerNum`, `NotificationControlSerNum`, `RefTableRowSerNum`, `DateAdded`, `ReadStatus`, `RefTableRowTitle_EN`, `RefTableRowTitle_FR`)\n	SELECT NEW.CronLogSerNum, NEW.PatientSerNum, ntc.NotificationControlSerNum, NEW.PatientsForPatientsSerNum, NOW(), 0,\n				getRefTableRowTitle(NEW.PostControlSerNum, 'POST', 'EN') EN, getRefTableRowTitle(NEW.PostControlSerNum, 'POST', 'FR') FR\n	FROM NotificationControl ntc\n	WHERE ntc.NotificationType = 'PatientsForPatients';\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`patients_for_patients_update_trigger`',
-        sqltext="""AFTER UPDATE ON `PatientsForPatients` FOR EACH ROW BEGIN\nINSERT INTO `PatientsForPatientsMH`(`PatientsForPatientsSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ModificationAction`) VALUES (NEW.PatientsForPatientsSerNum, NEW.CronLogSerNum, NEW.PatientSerNum, NEW.PostControlSerNum, NOW(), NEW.ReadStatus, 'UPDATE');\nEND;\n"""),
 
     ReplaceableObject(
         name='`patient_delete_trigger`',
@@ -277,10 +245,6 @@ TRIGGER_LIST: Final = (
         sqltext="""AFTER UPDATE ON `TxTeamMessage` FOR EACH ROW BEGIN\nINSERT INTO `TxTeamMessageMH`(`TxTeamMessageSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ModificationAction`)  VALUES (NEW.TxTeamMessageSerNum,NEW.PatientSerNum, NEW.PostControlSerNum, NOW(), NEW.ReadStatus, 'UPDATE');\nEND;\n"""),
 
     ReplaceableObject(
-        name='`update_task_trigger`',
-        sqltext="""AFTER UPDATE ON `Task` FOR EACH ROW BEGIN\nINSERT INTO `TaskMH`(`TaskSerNum`, `CronLogSerNum`, `PatientSerNum`, `AliasExpressionSerNum`, `SourceDatabaseSerNum`, `TaskAriaSer`, `Status`, `State`, `PrioritySerNum`, `DiagnosisSerNum`, `DueDateTime`, `CreationDate`, `CompletionDate`, `DateAdded`, `LastUpdated`, `ModificationAction`) VALUES (NEW.TaskSerNum, NEW.CronLogSerNum, NEW.PatientSerNum,NEW.AliasExpressionSerNum,NEW.SourceDatabaseSerNum,NEW.TaskAriaSer, NEW.Status, NEW.State, NEW.PrioritySerNum, NEW.DiagnosisSerNum, NEW.DueDateTime, NEW.CreationDate, NEW.CompletionDate, NEW.DateAdded,NULL, 'UPDATE');\nEND;\n"""),
-
-    ReplaceableObject(
         name='`users_delete_trigger`',
         sqltext="""AFTER DELETE ON `Users` FOR EACH ROW BEGIN\nINSERT INTO `UsersMH` (`UserSerNum`, `UserRevSerNum`,`SessionId`, `UserType`, `UserTypeSerNum`, `Username`, `Password`,`LastUpdated`, `ModificationAction`)\nVALUES (OLD.UserSerNum, NULL,OLD.SessionId,OLD.UserType, OLD.UserTypeSerNum, OLD.Username,OLD.Password, NOW(), 'DELETE');\nEND;\n"""),
 
@@ -291,28 +255,4 @@ TRIGGER_LIST: Final = (
     ReplaceableObject(
         name='`users_update_trigger`',
         sqltext="""AFTER UPDATE ON `Users` FOR EACH ROW BEGIN\nINSERT INTO `UsersMH` (`UserSerNum`, `UserRevSerNum`,`SessionId`, `UserType`, `UserTypeSerNum`, `Username`, `Password`,`LastUpdated`, `ModificationAction`)\nVALUES (NEW.UserSerNum, NULL,NEW.SessionId,NEW.UserType, NEW.UserTypeSerNum, NEW.Username,NEW.Password, NOW(), 'UPDATE');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`test_result_control_delete_trigger`',
-        sqltext="""AFTER DELETE ON `TestResultControl` FOR EACH ROW BEGIN\n   INSERT INTO `TestResultControlMH`(`TestResultControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `Group_EN`, `Group_FR`, `SourceDatabaseSerNum`, `EducationalMaterialControlSerNum`, `PublishFlag`, `DateAdded`, `LastPublished`, `LastUpdatedBy`, `URL_EN`, `URL_FR`, `SessionId`, `ModificationAction`) VALUES (OLD.TestResultControlSerNum, OLD.Name_EN, OLD.Name_FR, OLD.Description_EN, OLD.Description_FR, OLD.Group_EN, OLD.Group_FR, OLD.SourceDatabaseSerNum, OLD.EducationalMaterialControlSerNum, OLD.PublishFlag, NOW(), OLD.LastPublished, OLD.LastUpdatedBy, OLD.URL_EN, OLD.URL_FR, OLD.SessionId, 'DELETE');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`test_result_control_insert_trigger`',
-        sqltext="""AFTER INSERT ON `TestResultControl` FOR EACH ROW BEGIN\n   INSERT INTO `TestResultControlMH`(`TestResultControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `Group_EN`, `Group_FR`, `SourceDatabaseSerNum`, `EducationalMaterialControlSerNum`, `PublishFlag`, `DateAdded`, `LastPublished`, `LastUpdatedBy`, `URL_EN`, `URL_FR`, `SessionId`, `ModificationAction`) VALUES (NEW.TestResultControlSerNum, NEW.Name_EN, NEW.Name_FR, NEW.Description_EN, NEW.Description_FR, NEW.Group_EN, NEW.Group_FR, NEW.SourceDatabaseSerNum, NEW.EducationalMaterialControlSerNum, NEW.PublishFlag, NOW(), NEW.LastPublished, NEW.LastUpdatedBy, NEW.URL_EN, NEW.URL_FR, NEW.SessionId, 'INSERT');\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`test_result_control_update_trigger`',
-        sqltext="""AFTER UPDATE ON `TestResultControl` FOR EACH ROW BEGIN\nif NEW.LastPublished <=> OLD.LastPublished THEN\n   INSERT INTO `TestResultControlMH`(`TestResultControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `Group_EN`, `Group_FR`, `SourceDatabaseSerNum`, `EducationalMaterialControlSerNum`, `PublishFlag`, `DateAdded`, `LastPublished`, `LastUpdatedBy`, `URL_EN`, `URL_FR`, `SessionId`, `ModificationAction`) VALUES (NEW.TestResultControlSerNum, NEW.Name_EN, NEW.Name_FR, NEW.Description_EN, NEW.Description_FR, NEW.Group_EN, NEW.Group_FR, NEW.SourceDatabaseSerNum, NEW.EducationalMaterialControlSerNum, NEW.PublishFlag, NOW(), NEW.LastPublished, NEW.LastUpdatedBy, NEW.URL_EN, NEW.URL_FR, NEW.SessionId, 'UPDATE');\nEND IF;\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`test_result_expression_delete_trigger`',
-        sqltext="""AFTER DELETE ON `TestResultExpression` FOR EACH ROW BEGIN\n   INSERT INTO `TestResultExpressionMH`(`TestResultControlSerNum`,`ExpressionName`,`LastPublished`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (OLD.TestResultControlSerNum, OLD.ExpressionName, OLD.LastPublished, OLD.LastUpdatedBy, OLD.SessionId, 'DELETE', NOW());\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`test_result_expression_insert_trigger`',
-        sqltext="""AFTER INSERT ON `TestResultExpression` FOR EACH ROW BEGIN\n   INSERT INTO `TestResultExpressionMH`(`TestResultControlSerNum`,`ExpressionName`,`LastPublished`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (NEW.TestResultControlSerNum, NEW.ExpressionName, NEW.LastPublished, NEW.LastUpdatedBy, NEW.SessionId, 'INSERT', NOW());\nEND;\n"""),
-
-    ReplaceableObject(
-        name='`test_result_expression_update_trigger`',
-        sqltext="""AFTER UPDATE ON `TestResultExpression` FOR EACH ROW BEGIN\nif NEW.LastPublished <=> OLD.LastPublished THEN\n   INSERT INTO `TestResultExpressionMH`(`TestResultControlSerNum`,`ExpressionName`,`LastPublished`, `LastUpdatedBy`, `SessionId`, ModificationAction, DateAdded) VALUES (NEW.TestResultControlSerNum, NEW.ExpressionName, NEW.LastPublished, NEW.LastUpdatedBy, NEW.SessionId, 'UPDATE', NOW());\nEND IF;\nEND;\n"""),
 )
