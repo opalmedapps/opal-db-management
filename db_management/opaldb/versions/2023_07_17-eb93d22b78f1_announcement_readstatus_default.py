@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """ Add default value for the field ReadStatus."""
+    """Add default value for the field ReadStatus."""
     op.alter_column(
         'Announcement',
         'ReadStatus',
@@ -29,7 +29,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """ Removed the default value for the field ReasStatus."""
+    """Remove the default value for the field ReasStatus."""
     op.alter_column(
         'Announcement',
         'ReadStatus',
