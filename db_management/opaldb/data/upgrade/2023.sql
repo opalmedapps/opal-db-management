@@ -52,3 +52,7 @@ DROP TABLE IF EXISTS Cron;
 
 -- Add missing NotificationType for lab results
 UPDATE `NotificationControl` SET NotificationType = 'NewLabResult' WHERE NotificationTypeSerNum = 9;
+
+ALTER TABLE oaRole MODIFY COLUMN deletedBy VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE oaRole MODIFY COLUMN createdBy VARCHAR(255) NOT NULL DEFAULT '';
+ALTER TABLE oaRole MODIFY COLUMN updatedBy VARCHAR(255) NOT NULL DEFAULT '';
