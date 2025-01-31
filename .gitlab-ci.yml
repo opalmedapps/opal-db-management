@@ -8,7 +8,7 @@ variables:
   MARIADB_USER: $MARIADB_USER
 
 default:
-  image: python:3.10.12-slim-bullseye
+  image: python:3.10.13-slim-bullseye
   before_script:
   - uname -a
   - python --version
