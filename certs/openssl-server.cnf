@@ -1,0 +1,19 @@
+[ ca ]
+default_ca	= CA_default		# The default ca section
+
+[ CA_default ]
+copy_extensions = copy
+
+[ req ]
+default_bits        = 4096
+prompt              = no
+distinguished_name  = req_distinguished_name
+default_md          = sha256
+
+[ req_distinguished_name ]
+C  = CA
+ST = QC
+L  = Montreal
+O  = Opal Med Apps CA
+CN = db
+emailAddress = muhc.app.mobile@gmail.com
