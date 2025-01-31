@@ -5,7 +5,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image: python:3.11.10-alpine3.19
+  image: python:3.11.10-alpine3.20
 
 .default_before:
   before_script:
@@ -90,6 +90,7 @@ pre-commit:
   needs:
     - setup
   script:
+    - apk add --no-cache git
     - SKIP=ruff,mypy,markdownlint pre-commit run --all-files
 
 ruff:
