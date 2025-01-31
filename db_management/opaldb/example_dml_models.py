@@ -10,8 +10,7 @@ alembic folder's env.py file for the changes to be seen
 by the autogenerate migration feature.
 """
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Import the model for which you want to insert data
 from db_management.connection import connection_url

@@ -17,8 +17,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import DeclarativeMeta, declarative_base, relationship
 from sqlalchemy.sql import false
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
@@ -500,7 +499,7 @@ class NotificationMH(Base):
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     NotificationControlSerNum = Column(INTEGER(11), nullable=False, index=True)
-    RefTableRowSerNum = Column(INTEGER(11), nullable=False, index=True)
+    RefTableRowSerNum = Column(BIGINT(11), nullable=False, index=True)
     ReadStatus = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     ModificationAction = Column(String(25), nullable=False)
@@ -746,7 +745,7 @@ class PushNotification(Base):
     PatientDeviceIdentifierSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     NotificationControlSerNum = Column(INTEGER(11), nullable=False, index=True)
-    RefTableRowSerNum = Column(INTEGER(11), nullable=False, index=True)
+    RefTableRowSerNum = Column(BIGINT(11), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     SendStatus = Column(String(3), nullable=False)
     SendLog = Column(Text, nullable=False)
@@ -1050,7 +1049,7 @@ class Alert(Base):
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
-    deletedBy = Column(String(128), nullable=True, comment='Username of the person who deleted the record')
+    deletedBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
     createdBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
@@ -1291,8 +1290,8 @@ class Termsandagreement(Base):
     __table_args__ = {'comment': 'Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.'}
 
     Id = Column(BIGINT(20), primary_key=True)
-    DocumentLink_EN = Column(String(10000), nullable=False)
-    DocumentLink_FR = Column(String(10000), nullable=False)
+    DocumentLink_EN = Column(String(2000), nullable=False)
+    DocumentLink_FR = Column(String(2000), nullable=False)
     PDFLink_EN = Column(MEDIUMTEXT, nullable=False)
     PDFLink_FR = Column(MEDIUMTEXT, nullable=False)
     Version = Column(String(10000), nullable=False)
