@@ -24,7 +24,7 @@ def upgrade() -> None:
         'Patient',
         sa.Column(
             'OpalUUID',
-            sa.String(length=36, collation='latin1_swedish_ci'),
+            sa.String(length=37, collation='latin1_swedish_ci'),
             server_default=sa.text("''"),
             nullable=False,
             comment='UUID provided only for Opal patients, and received from Opal',

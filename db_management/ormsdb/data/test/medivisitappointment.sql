@@ -1,0 +1,2 @@
+INSERT INTO `MediVisitAppointmentList` (`PatientSerNum`, `ClinicResourcesSerNum`, `ScheduledDateTime`, `ScheduledDate`, `ScheduledTime`, `AppointmentReminderSent`, `AppointmentCodeId`, `AppointId`, `AppointSys`, `Status`, `MedivisitStatus`, `CreationDate`, `AppointmentSerNum`, `LastUpdated`, `LastUpdatedUserIP`) VALUES
+(1,	1,	'2023-10-31 18:09:00',	'2023-10-31',	'18:09:00',	0,	1,	'Aria',	'1',	'Open',	'Active',	'2023-10-30 00:00:00',	1,	'2023-11-14 10:32:36',	NULL);
