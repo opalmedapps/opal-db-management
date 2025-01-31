@@ -26,6 +26,7 @@ class SQLConnectionParameters(object):
     autocommit: bool
     ssl_disabled: bool = True
     ssl_ca: Optional[str] = None
+    ssl_verify_cert: bool = True
     ssl_verify_identity: bool = True
 
 
@@ -47,7 +48,7 @@ def sql_connection_parameters(db_name: str) -> SQLConnectionParameters:
         database=db_name,
         client_flag=CLIENT.MULTI_STATEMENTS,
         autocommit=True,
-        ssl_disabled=settings.USE_SSL,
+        ssl_disabled=not settings.USE_SSL,
         ssl_ca=settings.SSL_CA,
     )
 
