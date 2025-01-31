@@ -2124,7 +2124,7 @@ class PatientTestResult(Base):
     TestValue = Column(String(255), nullable=False)
     UnitDescription = Column(String(40), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
+    ReadStatus = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 

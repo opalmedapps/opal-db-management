@@ -20,6 +20,14 @@ depends_on = None
 def upgrade() -> None:
     """Alter existing columns in Questionnaire, QuestionnaireControl, and TxTeamMessages to have proper defaults."""
     op.alter_column(
+        'PatientTestResult',
+        'ReadStatus',
+        existing_type=mysql.INTEGER(display_width=11),
+        server_default=sa.text('0'),
+        existing_comment='Deprecated',
+        existing_nullable=False,
+    )
+    op.alter_column(
         'Questionnaire',
         'DateAdded',
         existing_type=mysql.DATETIME(),
@@ -105,5 +113,13 @@ def downgrade() -> None:
         'DateAdded',
         existing_type=mysql.DATETIME(),
         server_default=None,
+        existing_nullable=False,
+    )
+    op.alter_column(
+        'PatientTestResult',
+        'ReadStatus',
+        existing_type=mysql.INTEGER(display_width=11),
+        server_default=None,
+        existing_comment='Deprecated',
         existing_nullable=False,
     )
