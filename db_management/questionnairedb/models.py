@@ -1,7 +1,6 @@
 from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Table, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import DeclarativeMeta, declarative_base, relationship
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
 Base: DeclarativeMeta = declarative_base()
