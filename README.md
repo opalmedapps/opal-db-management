@@ -71,6 +71,20 @@ docker compose up
 
 **Hint:** append `-d` to run in detached mode and not keep it in the foreground.
 
+**Note:** There is a known bug wherein the alembic container can crash on the very first setup of a database. This can happen when the db container hasn't had enough time to actually create the databases before alembic runs and tries to connect to them. If this occurs you can simply re-run `docker compose up` and the second time alembic won't crash. Alternatively, you could choose to run the three containers in proper order to guarantee no errors will occur:
+
+```shell
+docker compose up -d dbv
+```
+
+```shell
+docker compose up -d adminer
+```
+
+```shell
+docker compose up -d alembic
+```
+
 If you open docker-desktop, you should see that you have a app called `opal-database` running with 3 container.
 > For more information about Docker compose view the [official Docker documentation](https://docs.docker.com/compose/)
 
