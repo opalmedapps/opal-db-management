@@ -123,3 +123,15 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 (28, NULL, 92, 1, '437600000000000367346364', 99, 305, '2018-01-29 14:04:22', 757, '2018-01-23 13:48:00', '', 'Y', '', '877866.pdf', '877866.pdf', 757, '2018-01-29 14:04:32', 'T', 'Transfer successful', 1, '', '2018-01-29 17:20:44', '["a51fba18-3810-4808-9238-4d0e487785c8"]' ,'2018-01-29 17:25:27'),
 (29, NULL, 92, 1, '437600000000000367349966', 93, 306, '2019-05-10 09:25:47', 756, '2019-05-10 09:23:29', '', 'Y', '', '1008120.pdf', '1008120.pdf', 756, '2019-05-10 09:25:49', 'T', 'Transfer successful', 1, '', '2019-05-10 09:26:50', '["a51fba18-3810-4808-9238-4d0e487785c8"]' ,'2019-05-10 09:35:10'),
 (30, NULL, 92, 1, '4376000000000003673410068', 99, 305, '2019-05-17 10:41:16', 784, '2019-05-16 10:59:26', '', 'Y', '', '1009942.pdf', '1009942.pdf', 784, '2019-05-16 11:24:40', 'T', 'Transfer successful', 1, '', '2019-05-17 10:41:55', '["a51fba18-3810-4808-9238-4d0e487785c8"]' ,'2019-05-17 11:57:44');
+
+-- fake pathology for laurie
+INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
+(31,	NULL,	92,	1,	'4376000000000003673410069',	8408,	890,	'2023-04-12 10:26:00',	890,	'2023-04-19 10:26:00',	'',	'Y',	'',	'laurie_pathology.pdf',	'laurie_pathology.pdf',	890,	'2023-04-19 10:27:00',	'T',	'Transfer successful',	'',	'2023-04-20 10:27:00',	1,	'["a51fba18-3810-4808-9238-4d0e487785c8"]',	'2023-04-20 10:27:00');
+UPDATE `Document`
+SET
+`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -2205 DAY),
+`DateOfService` = DATE_ADD(now(), INTERVAL -2205 DAY),
+`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -2205 DAY),
+`DateAdded` = DATE_ADD(now(), INTERVAL -2205 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -2205 DAY)
+WHERE PatientSerNum = 92 AND DocumentSerNum = 31;
