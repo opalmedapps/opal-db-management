@@ -765,7 +765,7 @@ class QuestionnaireControlMH(Base):
     SessionId = Column(String(255))
 
 
-class DefinitionTable(Base):
+class QuestionnaireDBDefinitionTable(Base):
     __tablename__ = 'definitionTable'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -773,7 +773,7 @@ class DefinitionTable(Base):
     name = Column(String(255), nullable=False)
 
 
-class Dictionary(Base):
+class QuestionnaireDBDictionary(Base):
     __tablename__ = 'dictionary'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -1502,7 +1502,7 @@ class PatientHospitalIdentifier(Base):
     Patient = relationship('Patient')
 
 
-class Purpose(Base):
+class QuestionnaireDBPurpose(Base):
     __tablename__ = 'purpose'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -1514,7 +1514,7 @@ class Purpose(Base):
     dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
 
 
-class Respondent(Base):
+class QuestionnaireDBRespondent(Base):
     __tablename__ = 'respondent'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -2239,6 +2239,9 @@ class CronControlPostTreatmentTeamMessage(Base):
 
 
 class Study(Base):
+    """
+    This table contains a foreign key to QuestionnaireDB.questionnaire
+    """
     __tablename__ = 'study'
 
     ID = Column(BIGINT(20), primary_key=True, unique=True, comment='Primary key. Auto-increment.')
@@ -2313,6 +2316,9 @@ class PatientStudy(Base):
 
 
 class QuestionnaireStudy(Base):
+    """
+    This table contains a foreign key to QuestionnaireDB.questionnaire
+    """
     __tablename__ = 'questionnaireStudy'
 
     ID = Column(BIGINT(20), primary_key=True)

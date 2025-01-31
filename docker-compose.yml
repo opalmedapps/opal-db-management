@@ -29,7 +29,6 @@ services:
       - ${PHP_PORT}:8080
     volumes:
       # maintain current revision of DBVs across DBV updates
-      - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
       - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
     env_file:
@@ -59,5 +58,9 @@ services:
       - ./db_management:/app/db_management
     depends_on:
       - db
+      # TODO: Enable a health check on db container before alembic runs to fix
+      #       "Can't connect to MySQL server on 'db' (115)" error thrown by alembic.
+      #       This error occurs when alembic tries to run before db is finished creating the dbs.
+      #       If the error is encountered, simply re-start the containers a second time and alembic will work.
     env_file:
       - .env

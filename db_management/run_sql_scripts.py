@@ -10,6 +10,9 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
     """
     Run all SQL scripts of the given directory on the database.
 
+    Due to the circular foreign key requirements between QuestionnaireDB.language and
+    QuestionnaireDB.dictionary, the default for QuestionnaireDB is to disable foreign key checks.
+
     Args:
         db_name: the name of the database to connect to
         directory: the directory containing SQL scripts
@@ -22,7 +25,7 @@ def run_sql_scripts(db_name: str, directory: Path, disable_foreign_key_checks: b
             sql_queries = fd.read()
 
         with connection_cursor(sql_connection_parameters(db_name)) as cursor:
-            if disable_foreign_key_checks:
+            if disable_foreign_key_checks or db_name == 'QuestionnaireDB':
                 cursor.execute(query='SET foreign_key_checks=0')
 
             cursor.execute(sql_queries)
@@ -45,7 +48,7 @@ def main(argv: list[str]) -> int:
         'db_name',
         metavar='db-name',
         help='the name of the database to connect to and run SQL commands for',
-        choices=['OpalDB'],
+        choices=['OpalDB', 'QuestionnaireDB'],
         type=str,
     )
     parser.add_argument('sql_dir', metavar='sql-dir', help='the directory that contains SQL files', type=Path)

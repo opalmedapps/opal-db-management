@@ -4,11 +4,10 @@ Opal's databases are separated in 4 different repos. The purpose of this project
 
 ## Prerequisites
 
-- You need to have access to the 4 following repositories:
+- You need to have access to the 2 following repositories:
 
     1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
-    2. QuestionnaireDB: https://gitlab.com/opalmedapps/dbv_questionnairedb
-    3. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
+    2. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
 
 - Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 
@@ -30,6 +29,11 @@ git clone https://gitlab.com/opalmedapps/db-docker.git
 ### Step 2: Create a local `.env` file
 
 Create a `.env` file at the root of the project and copy the content of `.env-sample` to it. The file will hold our database credentials and is ignored by git. You can add any other variables you want to keep locally.
+
+Pay close attention to the following variables:
+
+1. `SSH_KEY_PATH` - set this as the absolute path to the SSH private key
+2. `USE_SSL` - set this to '0' unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
 
 ### Step 3: Build the PHP Docker images
 
@@ -54,22 +58,6 @@ docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuse
 > 3. Use the --no-cache argument, which will bypass all the Docker cache system.
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
-#### Step 3.5 Temporary Workflow for Alembic with OpalDB Only
-
-Given that OpalDB has tables with direct relationships to QuestionnaireDB tables, we must run the QuestionnaireDB revisions before running the alembic container to populate OpalDB, otherwise SQLAlchemy will throw errors. This is only a temporary workaround until we have added QuestionnaireDB to alembic.
-
-Launch everything except the `alembic` service:
-
-```shell
-docker compose up --scale alembic=0
-```
-
-Now run the regular revision for QuestionnaireDB:
-
-1. http://localhost:8091/dbv/dbv_questionnairedb/
-
-With this step complete we can proceed as normal. Stop the containers then continue to Step 4 and run them again as normal; alembic will populate OpalDB and insert test data. This instruction can be removed once QuestionnaireDB is added to our alembic version control; at that point the instructions to build your db docker will return to normal.
-
 ### Step 4
 
 **Scaffold the project using docker compose**
@@ -83,14 +71,28 @@ docker compose up
 
 **Hint:** append `-d` to run in detached mode and not keep it in the foreground.
 
+**Note:** There is a known bug wherein the alembic container can crash on the very first setup of a database. This can happen when the db container hasn't had enough time to actually create the databases before alembic runs and tries to connect to them. If this occurs you can simply re-run `docker compose up` and the second time alembic won't crash. Alternatively, you could choose to run the three containers in proper order to guarantee no errors will occur:
+
+```shell
+docker compose up -d dbv
+```
+
+```shell
+docker compose up -d adminer
+```
+
+```shell
+docker compose up -d alembic
+```
+
 If you open docker-desktop, you should see that you have a app called `opal-database` running with 3 container.
 > For more information about Docker compose view the [official Docker documentation](https://docs.docker.com/compose/)
 
 ### Step 5: Run the databases revisions
 
-With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
+For the time being, the OpalReportDB is maintained with dbv. All other databases are contained within the alembic code. Run dbv to populate the report db:
 
-1. http://localhost:8091/dbv/dbv_questionnairedb/
+1. http://localhost:8091/dbv/dbv_opalreportdb
 
 Please scroll down to the `Inserting new test data` section to see how we insert data into OpalDB.
 
@@ -188,19 +190,17 @@ class Patient(Base):
     LastLoginDate = Column("last_login_date", DateTime)
 ```
 
-Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. For example, `alembic --name opaldb current`.
+With the db container still running, open a separate bash CLI and run the autogenerate feature of alembic from a new alembic container. You will need to specify the name of the database in which you want to generate the migration, for example for OpalDB:
 
 Call the autogenerate command:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic --name opaldb revision --autogenerate -m 'Add last login date column to Patient model'"
+docker compose run --rm alembic alembic --name opaldb revision --autogenerate -m 'add_last_login_to_patient'
 ```
 
-This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration.
-Make sure to check the contents of these functions to ensure nothing additional was added.
-Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create a selection of QuestionnaireDB tables which are required in the OpalDB models file due to foreign key constraints between them.
-You'll need to remove these changes manually.
-The migration file will look something like this after you have cleaned it up:
+Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. In the example above we are specifying that the autogenerate feature should target OpalDB.
+
+This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration. Always double check the contents of the autogenerated file to ensure it is correct according to your specifications. Also be sure to pause the db-containers and re-run them with `docker compose up` to see your new migration successfully run. The migration file will look something like this after you have cleaned it up:
 
 ```python
 from alembic import op
@@ -217,7 +217,8 @@ It's important to generate migrations in this way (by first modifying `models.py
 If migrations were written from scratch (without using `models.py`), the models file would fall behind the up-to-date state of the database,
 and any future use of the autogenerate feature would cause Alembic to try to undo all of the manually-generated revisions.
 
-Note: Alembic commands must be run from the directory corresponding to the database to which you want to make changes.
+Alembic inserts the version identifier tag of the latest migration file into the `alembic_version` table in the database to keep track of the database state. Be sure not to manually delete or otherwise edit that table.
+Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. For example, `alembic --name opaldb current`.
 
 To go to the latest version for the database, simply run `alembic --name <dbname> </dbname>upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
@@ -237,32 +238,32 @@ Insert test data to OpalDB:
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
 ```
 
-The same commands can be used for QuestionnaireDB, just replace the database name in the first argument given to the `run_sql_scripts` module.
+The same commands can be used for inserting data to QuestionnaireDB, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data. So to complete your initial and test data insertions:
 
-Note the `--disable-foreign-key-checks` flag is required because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
+```
 
-#### Version controlling triggers, events, functions, procedures
+and
 
-Object-oriented version control of these constructs isn't really supported 'natively' in Alembic, but there are workarounds like the one outlined here: https://stackoverflow.com/questions/67247268/how-to-version-control-functions-and-triggers-with-alembic. It still requires writing everything out in SQL though.
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/
+```
+
+Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed. Foreign key checks are disabled by default for QuestionnaireDB due to a circular foreign key dependency between `language` and `dictionary`.
 
 ### Interacting with the dockerized Alembic container
 
-Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes, for example:
+Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes.
 
 ```shell
-docker compose run --rm alembic sh -c "alembic --name <dbname> downgrade -1"
+docker compose run --rm alembic alembic --name <dbname> downgrade -1
 ```
 
-To downgrade the revisions by one.
-
-We use the same process for any alembic-related revision work. For example to generate a new revision in the container:
+We use the same process for any alembic-related revision work. For example to generate a new revision in OpalDB:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic --name <dbname> revision --autogenerate -m 'Useful_description_of_change'"
-```
-
-```shell
-docker compose run --rm alembic
+docker compose run --rm alembic alembic --name <dbname> revision --autogenerate -m 'Useful_description_of_change'
 ```
 
 Note: The `--rm` flag is important as it removes this secondary alembic container generated by the compose command. If you omit the remove flag these alembic containers will pile up in your docker and potentially slow things down.

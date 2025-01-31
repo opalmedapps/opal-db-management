@@ -6,16 +6,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from db_management import connection, settings
-from db_management.opaldb import models
-
-IGNORE_TABLE_NAMES = (
-    models.QuestionnaireDBDefinitionTable.__tablename__,
-    models.QuestionnaireDBDictionary.__tablename__,
-    models.QuestionnaireDBLanguage.__tablename__,
-    models.QuestionnaireDBPurpose.__tablename__,
-    models.QuestionnaireDBQuestionnaire.__tablename__,
-    models.QuestionnaireDBRespondent.__tablename__,
-)
+from db_management.questionnairedb.models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -23,7 +14,7 @@ config = context.config
 
 config.set_main_option(
     'sqlalchemy.url',
-    connection.connection_url(settings.DB_NAME_OPAL),
+    connection.connection_url(settings.DB_NAME_QUESTIONNAIRE),
 )
 
 # Interpret the config file for Python logging.
@@ -32,23 +23,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 
-target_metadata = [models.Base.metadata]
-
-
-def include_object(object: Any, name: Any, type_: Any, reflected: Any, compare_to: Any) -> bool:
-    """Overwrite the base alembic settings to ignore specific schema objects.
-
-    Args:
-        object: A SchemaItem object such as Table, Column, Index, etc
-        name: Object name
-        type_: Object type
-        reflected: if the given object was produced based on table reflection
-        compare_to: the object being compared against, if available
-
-    Returns:
-        boolean include object or not in autogenerate
-    """
-    return name not in IGNORE_TABLE_NAMES
+target_metadata = [Base.metadata]
 
 
 def run_migrations_offline() -> None:
@@ -69,7 +44,6 @@ def run_migrations_offline() -> None:
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={'paramstyle': 'named'},
-        include_object=include_object,
     )
 
     with context.begin_transaction():
@@ -115,7 +89,6 @@ def run_migrations_online() -> None:
             # https://stackoverflow.com/questions/12409724/no-changes-detected-in-alembic-autogeneration-of-migrations-with-flask-sqlalchem
             compare_type=True,              # Detect changes in col type with autogenerate
             compare_server_default=True,    # Detect changes in col defaults with autogenerate
-            include_object=include_object,
         )
 
         with context.begin_transaction():
