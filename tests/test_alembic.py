@@ -4,12 +4,17 @@ opaldb = create_alembic_fixture({'script_location': 'db_management/opaldb'})
 questionnairedb = create_alembic_fixture({'script_location': 'db_management/questionnairedb'})
 
 
+# QuestionnaireDB needs to be tested first due to the foreign key constraint from OpalDB to QuestionnaireDB
 def test_questionnairedb_single_head_revision(questionnairedb):
     tests.test_single_head_revision(questionnairedb)
 
 
 def test_questionnairedb_upgrade(questionnairedb):
     tests.test_upgrade(questionnairedb)
+
+
+def test_questionnairedb_model_definitions_match_ddl(questionnairedb):
+    tests.test_model_definitions_match_ddl(questionnairedb)
 
 
 def test_opaldb_single_head_revision(opaldb):
