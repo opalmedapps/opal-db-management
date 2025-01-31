@@ -1,7 +1,7 @@
 """Add default value for alert deletedBy
 
 Revision ID: 7ebe01c0c5e0
-Revises: bcf300b3df7b
+Revises: f231a7f6f6ca
 Create Date: 2023-05-19 16:57:01.636308
 
 """
