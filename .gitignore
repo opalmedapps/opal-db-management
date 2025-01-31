@@ -1,6 +1,6 @@
 revisions/
 certs/*
-!certs/openssl-client.cnf
+!certs/openssl-ca.cnf
 !certs/openssl-server.cnf
 !certs/v3.ext
 

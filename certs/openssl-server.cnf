@@ -1,9 +1,3 @@
-[ ca ]
-default_ca	= CA_default		# The default ca section
-
-[ CA_default ]
-copy_extensions = copy
-
 [ req ]
 default_bits        = 4096
 prompt              = no

@@ -122,14 +122,14 @@ You should by now have fully up and running opal databases that can be easily st
 
 If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To generate the SSL certificates for the database container and the client applications:
 
-1. Open a bash CLI and navigate to the `certs/` directory of your db-docker. There should be three files there already, an `openssl-client.cnf`, an `openssl-server.cnf`, and a `v3.ext`. These provide the details for openssl to generate the various certificates required to enable encrypted connections between any client application container and the database container.
+1. Open a bash CLI and navigate to the `certs/` directory of your db-docker. There should be three files there already, an `openssl-ca.cnf`, an `openssl-server.cnf`, and a `v3.ext`. These provide the details for openssl to generate the various certificates required to enable encrypted connections between any client application container and the database container.
 2. Generate the certificate authority (CA) certificate:
 
     ```shell
     # Create CA private key
     openssl genrsa 4096 > ca-key.pem
     # Create CA public key
-    openssl req -config openssl-client.cnf -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem
+    openssl req -config openssl-ca.cnf -new -x509 -nodes -days 3600 -key ca-key.pem -out ca.pem
     ```
 
 3. Generate the server certificate:
