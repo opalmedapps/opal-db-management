@@ -148,6 +148,8 @@ extend-select = [
     "N815",
     # allow variable mixed case in global scope
     "N816",
+    # ignore mutable class attributes error for __table_args__
+    "RUF012",
 ]
 "**/revision_data/*" = [
     # allow long lines

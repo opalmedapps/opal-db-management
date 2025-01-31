@@ -1,7 +1,5 @@
 """Base ORM models file for OpalDB."""
 
-from types import MappingProxyType
-
 from sqlalchemy import (
     TIMESTAMP,
     Boolean,
@@ -332,9 +330,9 @@ class DocumentMH(Base):
 
 class EducationalMaterialCategory(Base):
     __tablename__ = 'EducationalMaterialCategory'
-    __table_args__ = MappingProxyType({
+    __table_args__ = {
         'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.  Category refers to the purpose of the Educational Material.'
-    })
+    }
 
     ID = Column(
         BIGINT(20), primary_key=True, comment='Primary key. Auto-increment. Purpose of the Educational Material.'
@@ -367,9 +365,7 @@ class EducationalMaterialCategory(Base):
 
 class EducationalMaterialMH(Base):
     __tablename__ = 'EducationalMaterialMH'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     EducationalMaterialRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
@@ -386,9 +382,9 @@ class EducationalMaterialMH(Base):
 
 class EducationalMaterialPackageContent(Base):
     __tablename__ = 'EducationalMaterialPackageContent'
-    __table_args__ = MappingProxyType({
+    __table_args__ = {
         'comment': 'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes. All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    }
 
     EducationalMaterialPackageContentSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(
@@ -408,9 +404,7 @@ class EducationalMaterialPackageContent(Base):
 
 class EducationalMaterialRating(Base):
     __tablename__ = 'EducationalMaterialRating'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialRatingSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False)
@@ -430,9 +424,7 @@ class EducationalMaterialRating(Base):
 
 class EducationalMaterialTOC(Base):
     __tablename__ = 'EducationalMaterialTOC'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialTOCSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -904,7 +896,7 @@ class QuestionnaireControlMH(Base):
 
 class QuestionnaireDBDefinitionTable(Base):
     __tablename__ = 'definitionTable'
-    __table_args__ = MappingProxyType({'schema': 'QuestionnaireDB'})
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
     name = Column(String(255), nullable=False)
@@ -912,7 +904,7 @@ class QuestionnaireDBDefinitionTable(Base):
 
 class QuestionnaireDBDictionary(Base):
     __tablename__ = 'dictionary'
-    __table_args__ = MappingProxyType({'schema': 'QuestionnaireDB'})
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
     tableId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
@@ -934,7 +926,7 @@ class QuestionnaireDBDictionary(Base):
 
 class QuestionnaireDBLanguage(Base):
     __tablename__ = 'language'
-    __table_args__ = MappingProxyType({'schema': 'QuestionnaireDB'})
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
     isoLang = Column(String(2), nullable=False)
@@ -1196,9 +1188,9 @@ class Venue(Base):
 
 class Accesslevel(Base):
     __tablename__ = 'accesslevel'
-    __table_args__ = MappingProxyType({
+    __table_args__ = {
         'comment': 'Table to store level of access in opal application. There are two levels 1- Need to Know and 2-All. '
-    })
+    }
 
     Id = Column(BIGINT(20), primary_key=True)
     AccessLevelName_EN = Column(String(200), nullable=False)
@@ -1322,9 +1314,7 @@ class CategoryModule(Base):
 
 class CronControlEducationalMaterial(Base):
     __tablename__ = 'cronControlEducationalMaterial'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlEducationalMaterialControlSerNum = Column(
@@ -1348,9 +1338,7 @@ class CronControlEducationalMaterial(Base):
 
 class CronControlPatientEducationalMaterial(Base):
     __tablename__ = 'cronControlPatient_EducationalMaterial'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(
@@ -1390,7 +1378,7 @@ class CustomPushNotificationLog(Base):
 
 class Language(Base):
     __tablename__ = 'language'
-    __table_args__ = MappingProxyType({'comment': 'Table to store language list.'})
+    __table_args__ = {'comment': 'Table to store language list.'}
 
     Id = Column(BIGINT(20), primary_key=True)
     Prefix = Column(String(100), nullable=False)
@@ -1523,7 +1511,7 @@ class PatientStudyMH(Base):
 
 class PublicationSetting(Base):
     __tablename__ = 'publicationSetting'
-    __table_args__ = MappingProxyType({'comment': 'This table list all the different settings a publication can have.'})
+    __table_args__ = {'comment': 'This table list all the different settings a publication can have.'}
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key')
     name_EN = Column(String(512), nullable=False, comment='English name of the setting')
@@ -1618,9 +1606,9 @@ class ResourcePendingMH(Base):
 
 class Termsandagreement(Base):
     __tablename__ = 'termsandagreement'
-    __table_args__ = MappingProxyType({
+    __table_args__ = {
         'comment': 'Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.'
-    })
+    }
 
     Id = Column(BIGINT(20), primary_key=True)
     DocumentLink_EN = Column(String(2000), nullable=False)
@@ -1750,9 +1738,7 @@ class Diagnosi(Base):
 
 class EducationalMaterialControl(Base):
     __tablename__ = 'EducationalMaterialControl'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
     EducationalMaterialType_EN = Column(String(100), nullable=False)
@@ -1832,9 +1818,7 @@ class OAUser(Base):
 
 class PatientActionLog(Base):
     __tablename__ = 'PatientActionLog'
-    __table_args__ = MappingProxyType({
-        'comment': 'Log of the actions a user takes in the app (clicking, scrolling to bottom, etc.)'
-    })
+    __table_args__ = {'comment': 'Log of the actions a user takes in the app (clicking, scrolling to bottom, etc.)'}
 
     PatientActionLogSerNum = Column(BIGINT(11), primary_key=True)
     PatientSerNum: Mapped[int] = mapped_column(
@@ -1900,7 +1884,7 @@ class PatientHospitalIdentifier(Base):
 
 class QuestionnaireDBPurpose(Base):
     __tablename__ = 'purpose'
-    __table_args__ = MappingProxyType({'schema': 'QuestionnaireDB'})
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
     title: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
@@ -1914,7 +1898,7 @@ class QuestionnaireDBPurpose(Base):
 
 class QuestionnaireDBRespondent(Base):
     __tablename__ = 'respondent'
-    __table_args__ = MappingProxyType({'schema': 'QuestionnaireDB'})
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
     title: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
@@ -2077,9 +2061,7 @@ class DiagnosisTranslation(Base):
 
 class EducationalMaterial(Base):
     __tablename__ = 'EducationalMaterial'
-    __table_args__ = MappingProxyType({
-        'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'
-    })
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True)
     CronLogSerNum: Mapped[int] = mapped_column(
@@ -2256,7 +2238,7 @@ class QuestionnaireControl(Base):
 
 class QuestionnaireDBQuestionnaire(Base):
     __tablename__ = 'questionnaire'
-    __table_args__ = MappingProxyType({'schema': 'QuestionnaireDB'})
+    __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
@@ -2615,9 +2597,9 @@ class CronControlPatientTreatmentTeamMessage(Base):
 
 class ModulePublicationSetting(Base):
     __tablename__ = 'modulePublicationSetting'
-    __table_args__ = MappingProxyType({
+    __table_args__ = {
         'comment': 'Intersection table between module and publicationSetting to reproduce a N-N relationships between the tables'
-    })
+    }
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key')
     moduleId: Mapped[int] = mapped_column(

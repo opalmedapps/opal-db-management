@@ -8,6 +8,8 @@ repos:
   - id: check-merge-conflict
   - id: check-shebang-scripts-are-executable
   - id: check-json
+    # file contains comments
+    exclude: ^\.vscode/settings.json$
   - id: check-yaml
   - id: double-quote-string-fixer
   - id: end-of-file-fixer
