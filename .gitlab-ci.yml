@@ -230,3 +230,8 @@ gemnasium-python-dependency_scanning:
   # the scanner actually installs the dependencies via pip and therefore requires the mysql client to be installed
   before_script:
     - apt update && apt install -y libmariadb-dev pkg-config
+
+# Container Scanning
+container_scanning:
+  variables:
+    CS_DEFAULT_BRANCH_IMAGE: $CI_REGISTRY_IMAGE/alembic:$CI_COMMIT_REF_SLUG
