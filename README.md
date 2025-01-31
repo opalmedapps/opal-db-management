@@ -224,9 +224,19 @@ Insert test data to OpalDB:
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
 ```
 
-The same commands can be used for QuestionnaireDB, just replace the database name in the first argument given to the `run_sql_scripts` module.
+The same commands can be used for inserting data to QuestionnaireDB, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data. So to complete your initial and test data insertions:
 
-Note the `--disable-foreign-key-checks` flag is required because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
+```
+
+and
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/
+```
+
+Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed. Foreign key checks are disabled by default for QuestionnaireDB due to a circular foreign key dependency between `language` and `dictionary`.
 
 ### Interacting with the dockerized Alembic container
 
