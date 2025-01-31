@@ -18,6 +18,12 @@ services:
       - TZ=EST5EDT
   dbv:
     container_name: dbv-apps
+    build:
+      context: .
+      ssh: 
+        # require the SSH_KEY_PATH varialbe to be set and not empty
+        # see: https://docs.docker.com/compose/environment-variables/#substitute-environment-variables-in-compose-files
+        - ssh_key=${SSH_KEY_PATH:?err}
     image: opalmedapps/dbv:latest
     depends_on:
       - db
