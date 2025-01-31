@@ -101,7 +101,7 @@ def main(argv: list[str]) -> int:
         'db_name',
         metavar='db-name',
         help='the name of the database to connect to and run SQL commands for',
-        choices=['OpalDB', 'QuestionnaireDB', 'orms'],
+        choices=['OpalDB', 'QuestionnaireDB', 'OrmsDatabase', 'OrmsLog'],
         type=str,
     )
     parser.add_argument(
