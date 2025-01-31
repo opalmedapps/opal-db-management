@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `AppointmentCheckin` (`AliasSerNum`, `CheckinPossible`, `CheckinInstruction_EN`, `CheckinInstruction_FR`, `DateAdded`, `LastUpdatedBy`, `SessionId`, `LastUpdated`) VALUES
 (6, 1, '<p>You are checked-in. Please have a seat in the waiting room in the Cedars Cancer Centre.<br/></p>', '<p> Vous êtes enregistré(e). Veuillez vous installer dans la salle d\'attente au Centre du cancer des Cèdres. </p>', '2023-12-13 08:12:48', 74, 'jl4s7btgVx', '2023-12-13 08:12:48'),
 (7, 1, '<p>You are checked-in. Please have a seat in the waiting room in the Cedars Cancer Centre.</p>', '<p> Vous êtes enregistré(e). Veuillez vous installer dans la salle d\'attente au Centre du cancer des Cèdres.</p>', '2023-12-13 08:13:28', 74, 'jl4s7btgVx', '2023-12-13 08:13:28'),(8, 1, '<p>You are checked-in. Please have a seat in the waiting room in the Cedars Cancer Centre.<br/></p>', '<p>Vous êtes enregistré(e). Veuillez vous installer dans la salle d\'attente au Centre du cancer Cèdres.<br/></p>', '2018-05-24 16:00:38', 7, '4RgL9bEl2o', '2018-10-23 16:58:45'),(9, 1, '<p>You are checked-in. Please have a seat in the waiting room in the Cedars Cancer Centre.</p>', '<p> Vous êtes enregistré(e). Veuillez vous installer dans la salle d\'attente au Centre du cancer des Cèdres.</p>', '2023-12-13 08:12:02', 74, 'jl4s7btgVx', '2023-12-13 08:12:02'),

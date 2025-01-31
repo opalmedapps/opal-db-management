@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Laurie data
 INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES
 (592402, 5, 61, 59, '', 1, '2019-05-23 06:49:00', '2019-05-23 08:59:27', 0.4, 4.4, '0.40-4.40', 0.7, '0.70', 'mIU/L', '2022-01-21 21:25:59', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2022-01-21 21:25:59', '2019-05-23 08:59:27'),

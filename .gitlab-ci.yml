@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 # see: https://docs.gitlab.com/ee/ci/caching/#cache-python-dependencies
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
@@ -210,6 +214,9 @@ run sql scripts:
 # to support merge trains
 # see: https://gitlab.com/gitlab-org/gitlab/-/issues/13159#note_373865588
 include:
+  - project: 'opalmedapps/engineering/ci-templates'
+    # Add reuse job
+    file: '/templates/jobs/Reuse.gitlab-ci.yml'
   - component: $CI_SERVER_FQDN/opalmedapps/engineering/ci-templates/check-thirdparty-notice@main
     inputs:
       pip-requirements-files: requirements/base.txt

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `EducationalMaterialPackageContent` (`EducationalMaterialPackageContentSerNum`, `EducationalMaterialControlSerNum`, `OrderNum`, `ParentSerNum`, `DateAdded`, `AddedBy`, `LastUpdated`, `LastUpdatedBy`) VALUES
 (1,	476,	1,	585,	'2018-12-10 16:10:12',	NULL,	'2018-12-11 02:10:12',	NULL),
 (2,	477,	2,	585,	'2018-12-10 16:10:12',	NULL,	'2018-12-11 02:10:12',	NULL),

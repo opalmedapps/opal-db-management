@@ -1,3 +1,6 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `question` VALUES
 (16, -1, 116, 117, 118, 4, 1, -1, 0, 0, 1, 0, 0, '', '2019-11-05 19:04:14', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-07 16:30:57', 'jvyas', 1),

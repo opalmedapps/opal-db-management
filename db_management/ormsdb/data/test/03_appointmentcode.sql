@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 REPLACE INTO `AppointmentCode` (`AppointmentCodeId`, `AppointmentCode`, `SpecialityGroupId`, `DisplayName`, `SourceSystem`, `Active`, `LastModified`) VALUES
 (1, '2APP', 1, NULL, 'MEDIVISIT', 1, '2022-01-22 02:34:21'),
 (2, '2APP-GRP-A', 1, NULL, 'MEDIVISIT', 1, '2022-01-22 02:34:21'),

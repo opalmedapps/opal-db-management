@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 REPLACE INTO `DiagnosisChapter` (`DiagnosisChapterId`, `Chapter`, `Description`) VALUES
 (1, 'I', 'Certain infectious and parasitic diseases'),
 (2, 'II', 'Neoplasms'),

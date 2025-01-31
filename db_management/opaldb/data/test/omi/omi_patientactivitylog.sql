@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `PatientActivityLog` (`ActivitySerNum`, `Request`, `Parameters`, `TargetPatientId`, `Username`, `DeviceId`, `SessionId`, `DateTime`, `LastUpdated`, `AppVersion`) VALUES
 (22, 'Login', '', 92, 'a51fba18-3810-4808-9238-4d0e487785c8', 'c3de28b21d1679b9', '', '2016-04-25 10:12:56', '2016-04-25 10:12:56', ''),
 (23, 'Logout', '', 92, 'a51fba18-3810-4808-9238-4d0e487785c8', 'c3de28b21d1679b9', '', '2016-04-25 22:15:27', '2016-04-25 22:15:27', ''),

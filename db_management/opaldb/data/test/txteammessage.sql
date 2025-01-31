@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `TxTeamMessage` (`TxTeamMessageSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (1,	NULL,	51,	13,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (2,	NULL,	52,	13,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),

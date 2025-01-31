@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES
 (6085,	9,	4,	51,	'H',	NULL,	'2023-01-04 20:59:00',	'2023-01-04 21:43:33',	0.9,	1.1,	'0.90-1.10',	4.8,	'4.80',	'',	'2023-01-05 10:37:27',	0,	'[]',	'2023-01-05 15:37:27',  '2023-01-04 21:43:33'),
 (6086,	9,	5,	51,	'H',	NULL,	'2023-01-04 20:59:00',	'2023-01-04 21:43:33',	11.9,	14.7,	'11.9-14.7',	44.6,	'44.6',	's',	'2023-01-05 10:37:27',	0,	'[]',	'2023-01-05 15:37:27',  '2023-01-04 21:43:33'),

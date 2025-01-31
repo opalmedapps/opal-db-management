@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `masterSourceDiagnosis` (`ID`, `externalId`, `code`, `description`, `source`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (8,	'Aria-43482',	'C49.9',	'Ewing sarcoma',	1,	1,	'MIGRATION_MASTER_SOURCE_2021',	'2020-02-18 19:20:18',	'MIGRATION_MASTER_SOURCE_2021',	'2021-12-13 16:29:35',	'MIGRATION_MASTER_SOURCE_2021'),
 (9,	'Aria-38375',	'D05.7',	'Other carcinoma in situ of breast (LEFT)',	1,	1,	'MIGRATION_MASTER_SOURCE_2021',	'2021-08-27 13:59:13',	'MIGRATION_MASTER_SOURCE_2021',	'2021-12-13 16:29:35',	'MIGRATION_MASTER_SOURCE_2021'),

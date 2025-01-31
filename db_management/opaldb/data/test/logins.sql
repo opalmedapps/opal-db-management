@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`) VALUES
 (4, 'MIGR6002', '7730a53a1b533a7a0e22a024ab8e21138e064e23a2533ff1769b31d22da10570', 1, 1, 'EN', 0, NOW()),
 (5, 'DOZE6001', '7730a53a1b533a7a0e22a024ab8e21138e064e23a2533ff1769b31d22da10570', 1, 1, 'EN', 0, NOW()),
