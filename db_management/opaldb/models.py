@@ -414,9 +414,9 @@ class Filter(Base):
     DateAdded = Column(DateTime, nullable=False)
     LastUpdatedBy = Column(INTEGER(11))
     SessionId = Column(String(255))
-    ScheduledTimeOffset = Column(INTEGER(11), server_default=text('0'), nullable=False)
+    ScheduledTimeOffset = Column(INTEGER(11), server_default=text('0'))
     ScheduledTimeUnit = Column(Enum('minutes', 'hours', 'days', 'weeks', 'months'), nullable=True)
-    ScheduledTimeDirection = Column(Enum('before', 'after'), nullable=False, server_default=text('after'))
+    ScheduledTimeDirection = Column(Enum('before', 'after'), server_default=text('after'))
 
 
 t_FiltersMH = Table(
