@@ -1,6 +1,4 @@
 exclude: '^(\.vscode/launch\.json|manage\.py)'
-default_language_version:
-  node: "22.10.0"
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -28,6 +26,7 @@ repos:
   rev: v0.14.0
   hooks:
   - id: markdownlint-cli2
+    language_version: system
 
 # https://docs.astral.sh/ruff/integrations/#pre-commit
 - repo: https://github.com/astral-sh/ruff-pre-commit
