@@ -21,7 +21,9 @@ def generate_models(host: str, user: str, password: str, database: str, outfile:
         database: DB name
         outfile: Name of file to store database model
     """
-    engine = create_engine(f'mariadb+mariadbconnector://{user}:{password}@{host}/{database}')
+    engine = create_engine(
+        f'mariadb+mariadbconnector://{user}:{password}@{host}/{database}',
+    )
     metadata = MetaData(bind=engine)
     metadata.reflect()
     outfile = io.open(outfile, 'w', encoding='utf-8') if outfile else sys.stdout

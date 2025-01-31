@@ -19,7 +19,9 @@ USER = os.getenv('MARIADB_USER')
 PASS = os.getenv('MARIADB_PASSWORD')
 DB = os.getenv('LEGACY_OPAL_DB_NAME')
 # Create connection and session
-engine = create_engine(f'mariadb+mariadbconnector://{HOST}:{PASS}@{USER}/{DB}')
+engine = create_engine(
+    f'mariadb+mariadbconnector://{HOST}:{PASS}@{USER}/{DB}',
+)
 
 
 DML_Base = declarative_base()
@@ -36,7 +38,7 @@ patients = [
         LastName='Patient',
         Sex='Male',
         DateOfBirth='1996-07-06',
-        Age=26,
+        Age=26,  # noqa: WPS432
         Email='example@email.com',
         TelNum='1234567890',
         EnableSMS=1,

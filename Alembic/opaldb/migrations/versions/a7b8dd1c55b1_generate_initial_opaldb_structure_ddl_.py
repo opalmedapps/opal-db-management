@@ -49,7 +49,7 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
     Returns:
         Cursor for the connection.
     """
-    try:
+    try:  # noqa: WPS229
         conn = pymysql.connect(
             user=USER,
             password=PASS,
@@ -82,7 +82,7 @@ def upgrade() -> None:
             if rev_file.endswith('.sql'):
                 rev_file_path = os.path.join(rev_folder, rev_file)
 
-                with Path(rev_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as handle:
+                with Path(rev_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as handle:  # noqa: WPS110
                     sql_content += handle.read()
                     handle.close()
         with get_connection_cursor(autocommit=True) as cursor:
