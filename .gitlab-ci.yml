@@ -198,7 +198,7 @@ run migrations:
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - MYSQL_PWD=$DB_ROOT_PASSWORD mysql -uroot -hmariadb -e "GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
     - pytest --version
-    - pytest --junitxml=report.xml
+    - pytest -v --junitxml=report.xml
   # artifacts:
   #   when: always
   #   reports:
