@@ -4,14 +4,14 @@ import sys
 from pathlib import Path
 
 import pymysql
+from opaldb.settings import (DB_NAME_OPAL, HOST, OPAL_TEST_DATA_NAME, PASSWORD,
+                             PORT, USER)
 from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 
-from config.settings import DB_NAME_OPAL, HOST, OPAL_TEST_DATA_NAME, PASSWORD, PORT, USER  # noqa: E501
-
 # Find root and revision data paths
 ROOT_DIR = Path(__file__).parents[1]
-DATA_DIR = ROOT_DIR / 'test-data/sql'
+DATA_DIR = ROOT_DIR / 'alembic/test-data/sql'
 
 
 def get_connection_cursor(autocommit: bool) -> Cursor:

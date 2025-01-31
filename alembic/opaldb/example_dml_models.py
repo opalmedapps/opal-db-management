@@ -10,10 +10,9 @@ by the autogenerate migration feature.
 """
 # Import the model for which you want to insert data
 from models import Patient
+from settings import OPALDB_ENGINE
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-
-from config.settings import OPALDB_ENGINE
 
 DML_Base = declarative_base()
 metadata = DML_Base.metadata

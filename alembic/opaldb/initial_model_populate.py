@@ -3,10 +3,9 @@ import io
 import sys
 from typing import Any
 
+from settings import OPALDB_ENGINE
 from sqlacodegen.codegen import CodeGenerator
 from sqlalchemy import MetaData
-
-from config.settings import OPALDB_ENGINE
 
 
 def generate_models(outfile: Any = None) -> None:

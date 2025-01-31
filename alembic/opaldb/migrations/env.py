@@ -1,20 +1,13 @@
+#!/usr/bin/env python3
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
-import os
 from logging.config import fileConfig
 from typing import Any
 
 from models import Base
+from settings import DB_NAME_OPAL, HOST, PASSWORD, PORT, USER
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
-from config.settings import DB_NAME_OPAL, HOST, PASSWORD, PORT, USER
-
-# load_dotenv()
-# HOST = os.getenv('DATABASE_HOST')
-# PORT = int(os.getenv(key='DATABASE_PORT', default=3006))
-# USER = os.getenv('DATABASE_USER')
-# PASS = os.getenv('DATABASE_PASSWORD')
-# DB_NAME_OPAL = os.getenv('LEGACY_OPAL_DB_NAME')
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
