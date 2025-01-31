@@ -115,6 +115,7 @@ https://docs.sqlalchemy.org/en/14/
 
 An understanding of both is required to manage database revisions in this repository.
 
+
 ### Alembic commands
 
 First assure your db-docker container is built and running so that Alembic can see and connect to it with the connection engine. When we make changes to the ORM (in models.py) and run alembic auto migrations, alembic will compare the state of the current database to it's "translation" in the ORM and produce a migration file to express the difference.
@@ -160,21 +161,21 @@ Then call the autogenerate:
 
 Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
 
-##### Alembic Branches
-
-Docs: https://alembic.sqlalchemy.org/en/latest/branches.html
+<!-- Docs: https://alembic.sqlalchemy.org/en/latest/branches.html
 
 We make use of the alembic 'branch_labels' feature to separate our development data from the production environment. This works similarly to environment settings in other areas of OHIG development wherein we must specify which environment we want to be working in between 'development' and 'production'. Currently, the development branch contains an extra version file which inserts the test data for development only. Use `alembic history` to see the current list of heads. The `development` and `production` heads share a common down_revision corresponding to the table schema revision. The `production` branch inserts views, functions, events, and procedures only.
 
 To specify a branch, simply prefix the branch label @ head:
 
 Upgrade to development head `alembic upgrade development@head`
-Upgrade to production head `alembic upgrade production@head`
+Upgrade to production head `alembic upgrade production@head` -->
 
-We can also stop at specific points along these branch paths by giving the unique identifier code of the version file you want to stop at, @head.
+<!-- We can also stop at specific points along these branch paths by giving the unique identifier code of the version file you want to stop at, @head. -->
+
+To go to the latest version for the database, simply run `alembic upgrade head`
 
 You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
-For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06@development`
+For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06`
 
 #### Version controlling triggers, events, functions, procedures
 
@@ -200,4 +201,4 @@ Not much changes for this, we just have to prefix our regular CLI alembic comman
 
 For example to run the current revisions to the latest:
 
-`docker compose exec alembic alembic upgrade development@head`
+`docker compose exec alembic alembic upgrade head`

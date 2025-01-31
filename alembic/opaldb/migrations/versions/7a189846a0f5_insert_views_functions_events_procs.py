@@ -1,8 +1,8 @@
-"""insert-dev-data-and-functions
+"""insert-views-functions-events-procs
 
-Revision ID: d063c80646e3
-Revises: 57fa2868e7bb
-Create Date: 2023-01-12 11:44:39.186864
+Revision ID: 7a189846a0f5
+Revises: 85a1cf55990c
+Create Date: 2023-02-01 10:41:21.466828
 
 """
 import os
@@ -15,10 +15,11 @@ from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 
 # revision identifiers, used by Alembic.
-revision = 'd063c80646e3'
-down_revision = '57fa2868e7bb'
-branch_labels = ('development')
+revision = '7a189846a0f5'
+down_revision = '85a1cf55990c'
+branch_labels = None
 depends_on = None
+
 
 # Find root and revision data paths
 ROOT_DIR = Path(__file__).parents[1]
@@ -59,7 +60,7 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
 
 
 def upgrade() -> None:
-    """Insert development data, functions, events, etc for OpalDB."""
+    """Insert functions, events, etc for OpalDB."""
     with get_connection_cursor(autocommit=True) as cursor:
         cursor.execute(query="""
             SET foreign_key_checks=0;
@@ -67,24 +68,15 @@ def upgrade() -> None:
             SET global sql_mode='';
             """)
 
-    # Locations for opaldb dev data and opaldb functions/views/events etc
-    data_sql_content = ''
     funcs_sql_content = ''
-    data_file_path = os.path.join(REVISIONS_DIR, 'OpalDB_dev_data.sql')
-    funcs_file_path = os.path.join(REVISIONS_DIR, 'OpalDB_views_functions_events.sql')
+    funcs_file_path = os.path.join(REVISIONS_DIR, 'OpalDB_views_functions_events_procs.sql')
     # Read in SQL content from handle
-    with Path(data_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as handle:  # noqa: WPS110
-        data_sql_content += handle.read()
-        handle.close()
     with Path(funcs_file_path, encoding='ISO-8859-1').open(encoding='ISO-8859-1') as handle:  # noqa: WPS110
         funcs_sql_content += handle.read()
         handle.close()
     # Execute
     with get_connection_cursor(autocommit=True) as cursor:
         cursor.execute(funcs_sql_content)
-        cursor.close()
-    with get_connection_cursor(autocommit=True) as cursor:
-        cursor.execute(data_sql_content)
         cursor.close()
 
     with get_connection_cursor(autocommit=True) as cursor:
@@ -122,3 +114,4 @@ def downgrade() -> None:
                 SET GLOBAL SQL_MODE = 'ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
             """)
         cursor.close()
+
