@@ -245,18 +245,16 @@ Known issues with sqlacodegen:
 
 ### Interacting with the dockerized Alembic container
 
-Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes, for example:
+Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes. Note that the working directory configured in `alembic.Dockerfile` is `/app/`. This means that we need to specify which database folder we want to be generating the change for, so we must add a change directory command everr time we run the stand alone alembic container instance. To move QuestionnaireDB down by one revision:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic downgrade -1"
+docker compose run --rm alembic sh -c "cd /app/questionnairedb && alembic downgrade -1"
 ```
 
-To downgrade the revisions by one.
-
-We use the same process for any alembic-related revision work. For example to generate a new revision in the container:
+We use the same process for any alembic-related revision work. For example to generate a new revision in OpalDB:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Useful_description_of_change'"
+docker compose run --rm alembic sh -c "cd /app/opaldb && alembic revision --autogenerate -m 'add_column_to_opaldb_patient'"
 ```
 
 To re-insert test data, after setting `INSERT_TEST_DATA=1` in your .env file:
