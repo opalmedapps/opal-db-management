@@ -179,7 +179,7 @@ class Questionnaire(Base):
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     updatedBy = Column(String(255), nullable=False)
-    legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
+    legacyName = Column(String(255), nullable=False, server_default=text("''"), comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
 
     dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Questionnaire.instruction == Dictionary.contentId')
