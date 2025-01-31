@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 REPLACE INTO `ClinicResources` (`ClinicResourcesSerNum`, `ResourceCode`, `ResourceName`, `SpecialityGroupId`, `SourceSystem`, `LastModified`, `Active`) VALUES
 (901, '2-Apr', 'Dr. A. G. Aprikian - URO', 1, 'MEDIVISIT', '2022-01-22 07:34:22', 1),
 (902, 'ALCI-CRC', 'Dr. T. Alcindor - CRC Onc', 1, 'MEDIVISIT', '2022-01-22 07:34:22', 1),

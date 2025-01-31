@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `QuestionnaireControl` (`QuestionnaireControlSerNum`, `QuestionnaireDBSerNum`, `QuestionnaireName_EN`, `QuestionnaireName_FR`, `Intro_EN`, `Intro_FR`, `PublishFlag`, `DateAdded`, `LastPublished`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (3,	11,	'Patient Satisfaction Questionnaire',	'Questionnaire de satisfaction des patients',	'<p>Please share your ideas and opinions about the Opal app.</p>',	'<p>Veuillez nous indiquez vos idées et votre opinion à propros de l\'appli Opal.</p>',	0,	'2016-06-20 00:00:00',	'2019-11-28 10:06:21',	24,	'2023-06-27 15:28:04',	'lvjgMZBUhV'),
 (4,	12,	'Edmonton Symptom Assessment System',	'Échelle d\'évaluation des symptômes d\'Edmonton',	'<p><span style=\"font-size: 14px;float: none;\">Patients sometimes report that they have the following symptoms or problems. Please indicate the extent to which you have experienced these symptoms or problems during the past week.</span><!--EndFragment--><br/><br/></p>',	'<p><span style=\"font-size: 14px;float: none;\">Les patients signalent parfois qu\'ils présentent les symptômes suivants. Veuillez indiquer la sévérité des symptômes que vous avez ressentis lors de la dernière semaine.</span><!--EndFragment--><br/><br/></p>',	1,	'2016-10-21 17:18:54',	'2019-11-07 09:52:37',	8,	'2020-06-26 22:11:14',	'EiwU8WxqgF'),

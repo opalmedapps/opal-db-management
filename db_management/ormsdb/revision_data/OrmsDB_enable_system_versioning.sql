@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Enable system versioning in all tables for auditing purposes
 -- Mariadb System Versioning: https://mariadb.com/kb/en/system-versioned-tables/
 ALTER TABLE AppointmentCode ADD SYSTEM VERSIONING;

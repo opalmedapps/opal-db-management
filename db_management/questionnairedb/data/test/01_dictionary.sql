@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `dictionary` VALUES
 (19, 27, 1, 10, 'Test88', 1, 'dbourdua', '2019-11-05 19:04:14', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-08 14:43:55', 'dbourdua'),
 (20, 27, 2, 10, 'Test88', 1, 'dbourdua', '2019-11-05 19:04:14', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-08 14:43:55', 'dbourdua'),

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Insert the initial data required to start a project.
 INSERT INTO `accesslevel` (`Id`, `AccessLevelName_EN`, `AccessLevelName_FR`) VALUES
 (1,	'Need to Know',	'Accès minimum'),

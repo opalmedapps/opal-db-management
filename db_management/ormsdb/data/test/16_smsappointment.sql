@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `SmsAppointment` (`SmsAppointmentId`, `ClinicResourcesSerNum`, `AppointmentCodeId`, `SpecialityGroupId`, `SourceSystem`, `Type`, `Active`, `LastUpdated`) VALUES
 (1, 1312, 516, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43'),
 (2, 1744, 624, 1, 'Aria', 'GENERAL', 1, '2024-05-16 07:40:43'),

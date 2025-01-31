@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Documents: Pathology && Clinical Notes
 -- Filestore must have these pdfs inserted separately (and readable by the listener) for the chart Clinical Reports section to function properly
 

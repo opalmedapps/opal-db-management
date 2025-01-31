@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `EducationalMaterialControl` (`EducationalMaterialControlSerNum`, `EducationalMaterialType_EN`, `EducationalMaterialType_FR`, `EducationalMaterialCategoryId`, `PublishFlag`, `Name_EN`, `Name_FR`, `URL_EN`, `URL_FR`, `URLType_EN`, `URLType_FR`, `ShareURL_EN`, `ShareURL_FR`, `PhaseInTreatmentSerNum`, `ParentFlag`, `DateAdded`, `LastUpdatedBy`, `LastPublished`, `LastUpdated`, `deleted`, `SessionId`) VALUES
 (373,	'Test Results',	'Résultats de Test de laboratoire',	1,	0,	'White Blood Cell Count',	'Numération des Globules Blancs',	'https://labtestsonline.org/tests/white-blood-cell-count-wbc',	'http://www.labtestsonline.fr/tests/num-ration-des-globules-blancs.html',	'website',	'website',	'',	'',	2,	1,	'2018-01-08 15:09:58',	NULL,	'2018-01-08 15:09:58',	'2018-06-19 21:12:17',	0,	NULL),
 (424,	'Test Results',	'Résultats de Test de laboratoire',	1,	0,	'Red Blood Cell Count',	'Numération des Globules Rouges',	'https://labtestsonline.org/tests/red-blood-cell-count-rbc',	'http://www.labtestsonline.fr/tests/num-ration-des-globules-rouges.html?tab=3',	'website',	'website',	'',	'',	2,	1,	'2018-01-29 14:55:22',	NULL,	'2018-01-29 14:55:22',	'2018-06-19 21:15:35',	0,	NULL),

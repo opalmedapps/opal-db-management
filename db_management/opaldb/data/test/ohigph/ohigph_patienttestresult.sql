@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Lisa Urinalysis Nephrology.
 INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037304, 16, 9, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, '-', NULL, 'Limpide', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
 INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037305, 16, 10, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, '-', NULL, 'Jaune Pâle', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');

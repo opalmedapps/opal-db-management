@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `FrequencyEvents` (`ControlTable`, `ControlTableSerNum`, `MetaKey`, `MetaValue`, `CustomFlag`, `DateAdded`, `LastUpdated`) VALUES
 ('LegacyQuestionnaireControl',	3,	'repeat_day|lqc_3',	'1',	1,	'2020-02-27 10:28:28',	'2020-02-27 20:28:28'),
 ('LegacyQuestionnaireControl',	3,	'repeat_end',	'1582779600',	0,	'2020-02-27 10:28:28',	'2020-02-27 20:28:28'),

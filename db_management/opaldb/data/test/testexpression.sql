@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `TestExpression` (`TestExpressionSerNum`, `TestControlSerNum`, `TestCode`, `ExpressionName`, `DateAdded`, `LastPublished`, `LastUpdatedBy`, `SourceDatabaseSerNum`, `LastUpdated`, `SessionId`, `externalId`, `deleted`, `deletedBy`, `createdBy`, `updatedBy`) VALUES
 (1,	689,	'FOSM',	'OSMOLALITY BODY FLUID',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	74,	4,	'2023-01-12 16:39:14',	'oxVMfRzm2K',	'-1',	0,	'',	'cronjob',	'cronjob'),
 (2,	992,	'TPHS',	'TROPONIN I HIGH SENSITIVITY',	'0000-00-00 00:00:00',	'2000-01-01 00:00:00',	62,	4,	'2023-01-12 16:39:14',	'plTK8QGjYr',	'-1',	0,	'',	'cronjob',	'cronjob'),

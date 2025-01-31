@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 from sqlalchemy import TIMESTAMP, Column, DateTime, Enum, Index, String, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column

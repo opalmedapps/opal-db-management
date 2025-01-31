@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `PatientLocation` (`PatientLocationSerNum`, `SourceDatabaseSerNum`, `SourceUID`, `AppointmentSerNum`, `RevCount`, `CheckedInFlag`, `ArrivalDateTime`, `VenueSerNum`, `DateAdded`, `LastUpdated`) VALUES
 (22310,	1,	688846,	75337,	67,	1,	'2020-07-22 07:48:50',	163,	'2020-07-02 23:13:41',	'2020-07-22 18:16:45'),
 (22539,	1,	691187,	81231,	10,	1,	'2020-07-22 10:22:42',	21,	'2020-07-22 10:28:52',	'2020-07-22 18:28:52'),

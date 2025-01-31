@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 REPLACE INTO `SmsMessage` (`SmsMessageId`, `SpecialityGroupId`, `Type`, `Event`, `Language`, `Message`, `LastUpdated`) VALUES
 (1, 1, 'GENERAL', 'REGISTRATION', 'English', 'MUHC - Cedars Cancer Centre: Registration for SMS messages is confirmed. To unsubscribe, please inform reception. Please check-in via SMS upon arrival to the hospital. More details at: https://tinyurl.com/y6qj53lx', '2022-01-22 07:34:26'),
 (2, 1, 'GENERAL', 'REGISTRATION', 'French', 'CUSM - Centre du cancer des Cèdres: l\'inscription pour les notifications par SMS est confirmée. Pour vous désabonner, veuillez en informer la réception. Veuillez-vous enregistrer via SMS à votre arrivée à l\'hôpital. Plus de détails à: https://tinyurl.com/5n8dm6dv', '2023-04-19 17:40:14'),

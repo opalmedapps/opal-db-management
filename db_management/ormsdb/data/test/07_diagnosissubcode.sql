@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 -- Dumping data for table OrmsDatabase.DiagnosisSubcode: ~10,448 rows (approximately)
 REPLACE INTO `DiagnosisSubcode` (`DiagnosisSubcodeId`, `DiagnosisCodeId`, `Subcode`, `Description`) VALUES
 (1, 1, 'A00.0', 'Cholera due to Vibrio cholerae 01, biovar cholerae'),

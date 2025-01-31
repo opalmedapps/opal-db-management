@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `Resource` (`ResourceSerNum`, `SourceDatabaseSerNum`, `ResourceAriaSer`, `ResourceCode`, `ResourceName`, `ResourceType`, `LastUpdated`) VALUES
 (1,	1,	36,	'',	'Christine Lambert, MD (92307)',	'Doctor',	'2018-03-26 21:25:02'),
 (2,	1,	5631,	'',	'Tarek Hijal, MD (08221)',	'Doctor',	'2016-05-13 00:02:24'),

@@ -1,3 +1,7 @@
+-- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+--
+-- SPDX-License-Identifier: AGPL-3.0-or-later
+
 INSERT INTO `HospitalMap` (`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`, `MapURL_FR`, `QRMapAlias`, `MapName_EN`, `MapDescription_EN`, `MapName_FR`, `MapDescription_FR`, `DateAdded`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (9,	    'https://muhc.ca/sites/default/files/m-Cancer/Plan-du-site_505-ko.jpg',	'https://muhc.ca/sites/default/files/m-Cancer/Plan-du-site_505-ko.jpg',	'https://muhc.ca/sites/default/files/m-Cancer/Plan-du-site_505-ko.jpg',	'DRC-Entrance-ODC',	'ODC',	'The ODC as seen from the main entrance of the Cancer Centre',	'ODC',	'L\'ODC vu de l\'entrée principale du Centre du Cancer',	'0000-00-00 00:00:00',	NULL,	'2020-06-24 22:35:56',	'OU2rmeYWv3'),
 (19,	'https://www.depdocs.com/opal/maps/mapDS1_wait_EN.png',	'https://www.depdocs.com/opal/maps/mapDS1_wait_EN.png',	'https://www.depdocs.com/opal/maps/mapDS1_wait2_FR.png',	'Waiting_Room_DS1',	'Waiting Room D S1 - Cedars Cancer Centre',	'Waiting Room DS1',	'Salle d\'attente DS1 - Centre du cancer des Cèdres',	'Salle d\'attente DS1',	'2018-05-28 15:06:45',	NULL,	'2018-10-30 23:20:14',	'aSuDcvGSg8'),
