@@ -23,6 +23,6 @@ SET `CreationDate` = DATE_ADD(now(), INTERVAL -3 DAY),
 WHERE `PatientSerNum` = 53;
 -- Rory
 UPDATE `Diagnosis`
-SET `CreationDate` = DATE_ADD(now(), INTERVAL -14 DAY),
-    `LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
+SET `CreationDate` = DATE_ADD(now(), INTERVAL -12 DAY),
+    `LastUpdated` = DATE_ADD(now(), INTERVAL -12 DAY)
 WHERE `PatientSerNum` = 59;
