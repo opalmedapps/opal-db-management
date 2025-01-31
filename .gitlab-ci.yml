@@ -5,7 +5,7 @@ variables:
   PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 default:
-  image: python:3.11.8-slim-bookworm
+  image: python:3.11.9-slim-bookworm
 
 .default_before:
   before_script:
@@ -112,7 +112,7 @@ mypy:
     - pip install mypy-gitlab-code-quality
     - mypy --version
     # export output and don't fail if there are errors
-    - mypy opal/ --no-error-summary > mypy-out.txt || true
+    - mypy db_management/ --no-error-summary > mypy-out.txt || true
     - PYTHONHASHSEED=0 mypy-gitlab-code-quality < mypy-out.txt > codequality.json
      # fail if JSON file does not contain empty array
     - cat codequality.json | grep -q "\[\]"
@@ -126,7 +126,7 @@ markdownlint:
   needs:
     - setup
   image:
-    name: davidanson/markdownlint-cli2:v0.12.1
+    name: davidanson/markdownlint-cli2:v0.13.0
     # overwrite default entrypoint (which is a call to markdownlint-cli2)
     entrypoint: [""]
   before_script:

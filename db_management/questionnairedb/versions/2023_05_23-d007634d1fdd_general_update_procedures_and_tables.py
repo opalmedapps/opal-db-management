@@ -29,7 +29,7 @@ def upgrade() -> None:
     op.alter_column(
         'answer',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
@@ -56,56 +56,56 @@ def upgrade() -> None:
     op.alter_column(
         'language',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'library',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'question',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'questionFeedback',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'questionRating',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaire',
         'logo',
-        existing_type=mysql.VARCHAR(length=512),
+        existing_type=sa.VARCHAR(length=512),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaire',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaire',
         'legacyName',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
         comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.',  # noqa: E501
@@ -113,28 +113,28 @@ def upgrade() -> None:
     op.alter_column(
         'questionnaireFeedback',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaireRating',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'section',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'tag',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
@@ -148,7 +148,7 @@ def upgrade() -> None:
     op.alter_column(
         'templateQuestion',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
@@ -169,7 +169,7 @@ def downgrade() -> None:
     op.alter_column(
         'templateQuestion',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
@@ -183,35 +183,35 @@ def downgrade() -> None:
     op.alter_column(
         'tag',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'section',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaireRating',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaireFeedback',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaire',
         'legacyName',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
         comment="""This field is mandatory to make the app works during the migration process.
@@ -221,49 +221,49 @@ def downgrade() -> None:
     op.alter_column(
         'questionnaire',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'questionnaire',
         'logo',
-        existing_type=mysql.VARCHAR(length=512),
+        existing_type=sa.VARCHAR(length=512),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'questionRating',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'questionFeedback',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'question',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'library',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'language',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )
@@ -272,7 +272,7 @@ def downgrade() -> None:
     op.alter_column(
         'answer',
         'deletedBy',
-        existing_type=mysql.VARCHAR(length=255),
+        existing_type=sa.VARCHAR(length=255),
         server_default=None,
         existing_nullable=False,
     )

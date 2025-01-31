@@ -7,7 +7,6 @@ Create Date: 2023-05-25 13:27:29.218739
 """
 import sqlalchemy as sa
 from alembic import op
-from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
 revision = '46d686c984cc'
@@ -21,21 +20,21 @@ def upgrade() -> None:
     op.alter_column(
         'DiagnosisTranslation',
         'AliasName',
-        existing_type=mysql.VARCHAR(length=100),
+        existing_type=sa.VARCHAR(length=100),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'TestControl',
         'URL_EN',
-        existing_type=mysql.VARCHAR(length=2000),
+        existing_type=sa.VARCHAR(length=2000),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
     op.alter_column(
         'TestControl',
         'URL_FR',
-        existing_type=mysql.VARCHAR(length=2000),
+        existing_type=sa.VARCHAR(length=2000),
         server_default=sa.text("''"),
         existing_nullable=False,
     )
@@ -46,21 +45,21 @@ def downgrade() -> None:
     op.alter_column(
         'TestControl',
         'URL_FR',
-        existing_type=mysql.VARCHAR(length=2000),
+        existing_type=sa.VARCHAR(length=2000),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'TestControl',
         'URL_EN',
-        existing_type=mysql.VARCHAR(length=2000),
+        existing_type=sa.VARCHAR(length=2000),
         server_default=None,
         existing_nullable=False,
     )
     op.alter_column(
         'DiagnosisTranslation',
         'AliasName',
-        existing_type=mysql.VARCHAR(length=100),
+        existing_type=sa.VARCHAR(length=100),
         server_default=None,
         existing_nullable=False,
     )
