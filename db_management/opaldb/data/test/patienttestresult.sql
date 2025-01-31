@@ -8,9 +8,6 @@ INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpression
 (6889,	7,	101,	52,	'H',	NULL,	'2023-03-04 04:37:00',	'2023-03-04 05:37:00',	6,	45,	'6-45',	189,	'189',	'U/L',	'2023-01-05 11:25:46',	0,	'[]',	'2023-01-05 16:25:46',  '2023-03-04 05:37:00'),
 (6890,	7,	102,	52,	'H',	NULL,	'2023-03-04 04:37:00',	'2023-03-04 05:37:00',	56,	120,	'56-120',	493,	'493',	'U/L',	'2023-01-05 11:25:46',	0,	'[]',	'2023-01-05 16:25:46',  '2023-03-04 05:37:00'),
 (6891,	68,	8,	52,	'',	NULL,	'2023-03-04 05:37:00',	'2023-03-04 05:37:00',	133,	143,	'133-143',	136,	'136',	'mmol/L',	'2023-01-05 11:30:12',	0,	'[]',	'2023-01-05 16:30:12',  '2023-03-04 05:37:00'),
-(6892,	43,	326,	53,	'H',	NULL,	'2023-05-04 05:37:00',	'2023-05-04 05:37:00',	3.9,	11,	'3.9-11.0',	16.1,	'16.1',	'mmol/L',	'2023-01-05 11:39:00',	0,	'[]',	'2023-01-05 16:39:00',  '2023-05-04 05:37:00'),
-(6893,	69,	85,	53,	'L',	NULL,	'2023-05-04 05:37:00',	'2023-05-04 05:37:00',	0.75,	1.05,	'0.75-1.05',	0.74,	'0.74',	'mmol/L',	'2023-01-05 11:45:53',	0,	'[]',	'2023-01-05 16:45:53', '2023-05-04 05:37:00'),
-(6894,	70,	84,	53,	'L',	NULL,	'2023-05-04 05:37:00',	'2023-05-04 05:37:00',	0.8,	1.45,	'0.80-1.45',	0.68,	'0.68',	'mmol/L',	'2023-01-05 12:36:34',	0,	'[]',	'2023-01-05 17:36:34',  '2023-05-04 05:37:00'),
 (6895,	70,	84,	51,	'L',	NULL,	'2023-05-05 10:00:00',	'2023-05-05 10:00:00',	0.8,	1.45,	'0.80-1.45',	0.68,	'0.68',	'mmol/L',	'2023-01-05 12:43:31',	0,	'[]',	'2023-01-05 17:43:31',  '2023-05-05 10:00:00');
 
 
@@ -93,3 +90,74 @@ INSERT INTO `PatientTestResult` VALUES (4000031, 4, 78, 58, '', 14, '2023-10-15 
 INSERT INTO `PatientTestResult` VALUES (4000032, 4, 81, 58, 'H', 15, '2023-10-15 07:54:00', '2023-10-15 08:43:08', 0, 0.5, '0.00-0.50', 1, '1.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
 INSERT INTO `PatientTestResult` VALUES (4000033, 4, 82, 58, 'H', 16, '2023-10-15 07:54:00', '2023-10-15 08:43:08', 0, 0.22, '0.00-0.22', 1, '1.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
 INSERT INTO `PatientTestResult` VALUES (4000034, 4, 83, 58, '', 17, '2023-10-15 07:54:00', '2023-10-15 08:43:08', NULL, NULL, '', 5, '5.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
+
+-- Lisa Urinalysis Nephrology. TODO: Create separate OHIGPH/OMI Test result folders?
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037304, 480, 9, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, '-', NULL, 'Limpide', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037305, 480, 10, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, '-', NULL, 'Jaune Pâle', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037306, 480, 11, 54, 'L', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', 1.015, 1.025, '1.015-1.025', 1.005, '1.005', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037307, 480, 12, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037308, 480, 13, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Approx.25', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037309, 480, 14, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', 'mmol/L', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037310, 480, 15, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', 'mmol/L', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037311, 480, 16, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037312, 480, 17, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037313, 480, 18, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, '-', NULL, '<=5.0', '', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037314, 480, 19, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', 'g/L', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037315, 480, 20, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:33', NULL, NULL, 'Négatif-', NULL, 'Négatif', 'umol/L', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:33');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037316, 480, 21, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:34', NULL, NULL, '3-5-', NULL, 'Non observé', '/HPF', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:34');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037317, 480, 22, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:34', NULL, NULL, '3-5-', NULL, 'Non observé', '/HPF', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:34');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037318, 480, 23, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:34', NULL, NULL, '-', NULL, 'Non observé', '/HPF', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:34');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037319, 480, 24, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:34', NULL, NULL, 'Non observé-', NULL, 'Non observé', '/HPF', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:34');
+INSERT INTO `PatientTestResult` (`PatientTestResultSerNum`, `TestGroupExpressionSerNum`, `TestExpressionSerNum`, `PatientSerNum`, `AbnormalFlag`, `SequenceNum`, `CollectedDateTime`, `ResultDateTime`, `NormalRangeMin`, `NormalRangeMax`, `NormalRange`, `TestValueNumeric`, `TestValue`, `UnitDescription`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`, `AvailableAt`) VALUES (7037320, 480, 25, 54, '', NULL, '2024-05-10 08:01:00', '2024-05-10 09:55:34', NULL, NULL, '-', NULL, 'Non observé', '/HPF', '2024-05-10 10:24:27', 0, '[]', '2024-05-10 10:24:28', '2024-05-10 09:55:34');
+
+
+-- Mark all initial PatientTestResults as read
+-- Marge's data read by Marge
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE PatientSerNum = 51
+;
+
+-- Homer's data read by Homer and Marge
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE PatientSerNum = 52
+;
+
+-- Bart's data read by Bart
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3"]'
+WHERE PatientSerNum = 53
+;
+
+-- Fred's data read by Fred
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE PatientSerNum = 56
+;
+
+-- Pebbles' data read by Fred
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE PatientSerNum = 57
+;
+
+-- Wednesday's data read by no one (no relationships in Django)
+
+-- Lisas data read by Marge and received 12 days ago
+UPDATE PatientTestResult
+SET
+CollectedDateTime = DATE_ADD(now(), INTERVAL -12 DAY),
+ResultDateTime = DATE_ADD(now(), INTERVAL -12 DAY),
+DateAdded = DATE_ADD(now(), INTERVAL -12 DAY),
+LastUpdated = DATE_ADD(now(), INTERVAL -12 DAY),
+AvailableAt = DATE_ADD(now(), INTERVAL -12 DAY),
+ReadStatus = 1,
+ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE PatientSerNum = 54
+;
