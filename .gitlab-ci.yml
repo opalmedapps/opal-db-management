@@ -56,7 +56,7 @@ build:
 stages:
   - Static Analysis
   - Checks
-  - Build
+  - build
 
 setup:
   stage: .pre
