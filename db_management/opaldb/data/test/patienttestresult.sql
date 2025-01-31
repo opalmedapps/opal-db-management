@@ -93,3 +93,41 @@ INSERT INTO `PatientTestResult` VALUES (4000031, 4, 78, 58, '', 14, '2023-10-15 
 INSERT INTO `PatientTestResult` VALUES (4000032, 4, 81, 58, 'H', 15, '2023-10-15 07:54:00', '2023-10-15 08:43:08', 0, 0.5, '0.00-0.50', 1, '1.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
 INSERT INTO `PatientTestResult` VALUES (4000033, 4, 82, 58, 'H', 16, '2023-10-15 07:54:00', '2023-10-15 08:43:08', 0, 0.22, '0.00-0.22', 1, '1.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
 INSERT INTO `PatientTestResult` VALUES (4000034, 4, 83, 58, '', 17, '2023-10-15 07:54:00', '2023-10-15 08:43:08', NULL, NULL, '', 5, '5.00', '10^9/L', '2023-10-21 08:43:08', 0, '[]', '2023-10-21 08:43:08', '2023-10-15 08:43:08');
+
+-- Mark all initial PatientTestResults as read
+-- Marge's data read by Marge
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE PatientSerNum = 51
+;
+
+-- Homer's data read by Homer and Marge
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
+WHERE PatientSerNum = 52
+;
+
+-- Bart's data read by Bart
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3"]'
+WHERE PatientSerNum = 53
+;
+
+-- Fred's data read by Fred
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE PatientSerNum = 56
+;
+
+-- Pebbles' data read by Fred
+UPDATE PatientTestResult
+SET ReadStatus = 1,
+    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
+WHERE PatientSerNum = 57
+;
+
+-- Wednesday's data read by no one (no relationships in Django)
