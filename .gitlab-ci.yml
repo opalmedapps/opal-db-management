@@ -1,4 +1,3 @@
-# set up
 # see: https://docs.gitlab.com/ee/ci/caching/#cache-python-dependencies
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
@@ -7,15 +6,17 @@ variables:
 
 default:
   image: python:3.11.8-slim-bookworm
+
+.default_before:
   before_script:
-  - uname -a
-  - python --version
-  - which python
-  # install dependencies for mysqlclient
-  - apt update && apt-get install -y build-essential libmariadb-dev pkg-config
-  # don't fail if venv is not set up yet (during setup)
-  - python -m venv .venv
-  - source .venv/bin/activate || true
+    - uname -a
+    - python --version
+    - which python
+    # install dependencies for mysqlclient
+    - apt update && apt-get install -y build-essential libmariadb-dev pkg-config
+    # don't fail if venv is not set up yet (during setup)
+    - python -m venv .venv
+    - source .venv/bin/activate || true
 
 stages:
   - Build
@@ -24,6 +25,7 @@ stages:
 
 setup:
   stage: .pre
+  extends: .default_before
   script:
     - python -m venv .venv
     - source .venv/bin/activate
@@ -46,43 +48,6 @@ setup:
     # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
     paths:
       - .cache/pip
-
-build dbv image:
-  stage: Build
-  image: docker:25.0.3
-  services:
-    - docker:25.0.3-dind
-  variables:
-    # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-    # SSH key mount requires buildkit
-    DOCKER_BUILDKIT: 1
-  before_script:
-    # login to CI registry: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#option-1-run-docker-login
-    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
-    # base64 decode private key
-    - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' > /root/.deploy_key
-  script:
-    - export IMAGE_REPOSITORY=$CI_REGISTRY_IMAGE/dbv
-    # create an image tagged with the branch or tag name
-    - export IMAGE_BRANCH=$IMAGE_REPOSITORY:$CI_COMMIT_REF_SLUG
-    # plus for the default branch create a latest and commit tag
-    # the commit tag allows us to get images of previous commits in case of problems
-    - export IMAGE_LATEST=$IMAGE_REPOSITORY:latest
-    - export IMAGE_COMMIT=$IMAGE_REPOSITORY:$CI_COMMIT_SHA
-    # make use of the Docker cache to speed up building
-    # see: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#make-docker-in-docker-builds-faster-with-docker-layer-caching
-    - docker pull $IMAGE_LATEST || true
-    - docker pull $IMAGE_BRANCH || true
-    - docker build --ssh ssh_key=/root/.deploy_key --cache-from $IMAGE_BRANCH --cache-from $IMAGE_LATEST --tag $IMAGE_BRANCH --tag $IMAGE_LATEST --tag $IMAGE_COMMIT .
-    - docker push $IMAGE_BRANCH
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        echo "Running on default branch. Pushing latest and commit tags..."
-        docker push $IMAGE_LATEST
-        docker push $IMAGE_COMMIT
-      fi
 
 build alembic image:
   stage: Build
@@ -108,7 +73,7 @@ build alembic image:
     # see: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#make-docker-in-docker-builds-faster-with-docker-layer-caching
     - docker pull $IMAGE_LATEST || true
     - docker pull $IMAGE_BRANCH || true
-    - docker build --cache-from $IMAGE_BRANCH --cache-from $IMAGE_LATEST --tag $IMAGE_BRANCH --tag $IMAGE_LATEST --tag $IMAGE_COMMIT -f alembic.Dockerfile .
+    - docker build --cache-from $IMAGE_BRANCH --cache-from $IMAGE_LATEST --tag $IMAGE_BRANCH --tag $IMAGE_LATEST --tag $IMAGE_COMMIT .
     - docker push $IMAGE_BRANCH
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
@@ -119,6 +84,7 @@ build alembic image:
 
 flake8:
   stage: Static Analysis
+  extends: .default_before
   needs:
     - setup
   script:
@@ -138,6 +104,7 @@ flake8:
 
 mypy:
   stage: Static Analysis
+  extends: .default_before
   needs:
     - setup
   script:
@@ -176,6 +143,7 @@ markdownlint:
 .database_service:
   needs:
     - job: setup
+  extends: .default_before
   variables:
     MARIADB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
     # ensure that user has permissions for test DB to be used by pytest
@@ -228,3 +196,15 @@ run sql scripts:
     # migrate databases first
     - ./docker/alembic-upgrade.sh
     - db_management/reset_data.sh MUHC
+
+# run pipelines for default branch, tags, and all types of merge request pipelines
+# to support merge trains
+# see: https://gitlab.com/gitlab-org/gitlab/-/issues/13159#note_373865588
+include:
+  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+  - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
+  # use latest template versions to run security scanning jobs also in merge request pipelines:
+  # https://docs.gitlab.com/ee/user/application_security/index.html#use-security-scanning-tools-with-merge-request-pipelines
+  # Secret Detection: https://docs.gitlab.com/ee/user/application_security/secret_detection/
+  # See: https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Secret-Detection.latest.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.latest.gitlab-ci.yml

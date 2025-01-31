@@ -1,47 +1,32 @@
-# Install PHP and apache docker image
-FROM php:8.3.1-apache-bookworm
+FROM python:3.11.8-slim-bookworm
 
-# Install required packages and apache modules.
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y git openssh-client \
-    && a2enmod headers \
-    && a2enmod rewrite \
-    && docker-php-ext-install pdo pdo_mysql \
-    && rm -rf /var/lib/apt/lists/*
+  # dependencies for building Python packages
+  && apt-get install -y build-essential \
+  # mysqlclient dependencies
+  && apt-get install -y default-libmysqlclient-dev pkg-config \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
-# Change default port to 8080 to allow non-root user to bind port
-# Binding port 80 on CentOS seems to be forbidden for non-root users
-RUN sed -ri -e 's!Listen 80!Listen 8080!g' /etc/apache2/ports.conf
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE 1
 
-# Initialize default branch name variable that can assign when building the images.
-ARG OPALDBV_BRANCH="development"
-ARG OPAL_REPORT_BRANCH="development"
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /var/www/html
+# Install pip requirements
+RUN python -m pip install --upgrade pip
+COPY ./requirements /tmp/
+RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
-# Create the ssh folder and add GitLab to known hosts
-RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker/alembic-upgrade.sh /app/alembic-upgrade.sh
+WORKDIR /app/
+COPY db_management ./db_management
+COPY alembic.ini .
 
-# Support busting the cache to force cloning the repos (without this the git clone commands will be cached)
-ARG CACHEBUST=1
-
-# Clone the 3 dbv's repos needed using the branch name variable (default or passed as arguments)
-RUN --mount=type=ssh,id=ssh_key git clone --branch $OPALDBV_BRANCH git@gitlab.com:opalmedapps/dbv_opaldb.git ./dbv/dbv_opaldb \
-        && git clone --branch $OPAL_REPORT_BRANCH git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_opalreportdb
-
-# Copy configuration file
-COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
-COPY ./config/opalreportdb-config.php ./dbv/dbv_opalreportdb/config.php
-
-# Add the SecureMySQL adapter
-COPY ./config/SecureMySQL.php ./dbv/dbv_opaldb/lib/adapters/
-COPY ./config/SecureMySQL.php ./dbv/dbv_opalreportdb/lib/adapters/
-
-# Copy the index landing page
-COPY ./index.php ./index.php
-
-RUN chown -R www-data:www-data .
-USER www-data
-
-EXPOSE 8080
+ENTRYPOINT ["/docker-entrypoint.sh"]
+# TODO: If we want to make the alembic container stay alive instead of closing, we could add "tail" "-f" "/dev/null"
+#       to the arguments in the ENTRYPOINT commands, but apparently that can cause some issues with Linux users:
+#       https://stackoverflow.com/questions/43843079/using-tail-f-dev-null-to-keep-container-up-fails-unexpectedly
