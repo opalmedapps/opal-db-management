@@ -14,7 +14,7 @@ RUN apt-get update \
 ARG OPALDBV_BRANCH="development"
 ARG REGISTERDBV_BRANCH="development"
 ARG QUESTIONNAIREDBV_BRANCH="development"
-ARG RPT="development"
+ARG RPT_BRANCH="development"
 
 # Create the ssh folder and add GitLab to known hosts
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
@@ -24,7 +24,7 @@ ARG CACHEBUST=1
 RUN --mount=type=ssh,id=ssh_key git clone --branch $OPALDBV_BRANCH git@gitlab.com:opalmedapps/dbv_opaldb.git ./dbv/dbv_opaldb
 RUN --mount=type=ssh,id=ssh_key git clone --branch $REGISTERDBV_BRANCH git@gitlab.com:opalmedapps/dbv_registerdb.git ./dbv/dbv_registerdb
 RUN --mount=type=ssh,id=ssh_key git clone --branch $QUESTIONNAIREDBV_BRANCH git@gitlab.com:opalmedapps/dbv_questionnairedb.git ./dbv/dbv_questionnairedb
-RUN --mount=type=ssh,id=ssh_key git clone --branch $RPT git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_rptdb
+RUN --mount=type=ssh,id=ssh_key git clone --branch $RPT_BRANCH git@gitlab.com:opalmedapps/dbv_opalrpt.git ./dbv/dbv_rptdb
 
 # Copy configuration file 
 COPY ./config/opaldb-config.php ./dbv/dbv_opaldb/config.php
