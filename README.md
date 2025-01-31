@@ -15,6 +15,8 @@ Opal's databases are separated in 3 different repos. The purpose of this project
 - Generate an SSH key to login to GitLab (if you haven't yet).
     - https://docs.gitlab.com/ee/ssh/index.html#generate-an-ssh-key-pair
 
+> **Note:** This SSH key cannot have a passphrase. It is recommended to create a dedicated deploy key so your actual SSH key that you usually use can have a passphrase.
+
 - Have git installed on your local machine
 
 ## Installation
@@ -37,7 +39,8 @@ We need to build an image of the PHP setup to be able to clone the 3 dbv repos a
 docker build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
 
-> Note: The `CACHEBUST` build argument is required in order for the Docker builder to not use the cached `git clone` commands and ensure that the latest version from the cloned DBV repositories are retrieved.
+> **Note:** This feature requires *Buildkit*. If it is not enabled by default you can follow the official instructions to [enable Buildkit builds](https://docs.docker.com/develop/develop-images/build_enhancements/#to-enable-buildkit-builds).
+> **Note:** The `CACHEBUST` build argument is required in order for the Docker builder to not use the cached `git clone` commands and ensure that the latest version from the cloned DBV repositories are retrieved.
 > The `$(date +%s)` argument might not work on Windows systems. You can either;
 > 1- Run this command in the Windows Subsystem for Linux (WSL2).
 > 2- Remove `$(date +%s)` and manually write a unique value.
