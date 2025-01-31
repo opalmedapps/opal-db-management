@@ -7,7 +7,6 @@ services:
     volumes:
       - ./db-scripts:/docker-entrypoint-initdb.d
       - ./config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
-      - ./logs:/var/log/mysql
     environment:
       - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
       - MARIADB_USER=${DATABASE_USER}

@@ -3,19 +3,3 @@
 [mariadbd]
 # enable event scheduler since Opal DBs use events to update certain things
 event_scheduler=On
-# Enable the MariaDB audit logger plugin
-# https://severalnines.com/blog/tips-and-trick-using-audit-logging-mariadb/
-plugin_load_add=server_audit # load plugin
-server_audit=FORCE_PLUS_PERMANENT  # do not allow users to uninstall plugin
-server_audit_file_path=/var/log/mysql/mariadb-audit.log # path to the audit log
-server_audit_logging=ON  # enable audit logging
-# Log all events
-# To exclude SELECT statements, use QUERY_DML_NO_SELECT in place of QUERY_DML
-server_audit_events=CONNECT,QUERY_DDL,QUERY_DML,QUERY_DCL,TABLE
-# Disable logging for monitor user to reduce useless audits
-# server_audit_excl_users='user'
-# Setup automatic log file rotations to reduce single log file size
-server_audit_output_type=FILE
-server_audit_file_rotate_now=ON # Enable log rotations and compress oldest file past the maximum rotation number
-server_audit_file_rotate_size=1000000 # 1 MB maximum size for log file before rotating to new one
-server_audit_file_rotations=30 # Maximum of 30 rotated audit log files before deleting the oldest

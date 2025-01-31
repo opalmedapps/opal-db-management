@@ -23,7 +23,7 @@ REVISIONS_DIR = ROOT_DIR / 'revision_data'
 def upgrade() -> None:
     """Drop system versioning from all tables."""
     funcs_sql_content = ''
-    funcs_file_path = Path(REVISIONS_DIR).joinpath('OrmsDB_disable_system_versioning.sql')
+    funcs_file_path = REVISIONS_DIR.joinpath('OrmsDB_disable_system_versioning.sql')
     # Read in SQL content from handle
     with Path(funcs_file_path).open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()
@@ -34,7 +34,7 @@ def upgrade() -> None:
 def downgrade() -> None:
     """Re-enable system verisoning to all tables."""
     funcs_sql_content = ''
-    funcs_file_path = Path(REVISIONS_DIR).joinpath('OrmsDB_enable_system_versioning.sql')
+    funcs_file_path = REVISIONS_DIR.joinpath('OrmsDB_enable_system_versioning.sql')
     # Read in SQL content from handle
     with Path(funcs_file_path).open(encoding='ISO-8859-1') as file_handle:
         funcs_sql_content += file_handle.read()
