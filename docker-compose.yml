@@ -5,7 +5,7 @@ services:
     container_name: opal-dbs
     image: mariadb:10.6.12-focal
     ports:
-      - ${MARIADB_PORT}:3306
+      - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
       - ./db-scripts:/docker-entrypoint-initdb.d
       - ./config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
@@ -35,12 +35,8 @@ services:
       - ./revisions/questionnairedb:/var/www/html/dbv/dbv_questionnairedb/data/meta
       - ./revisions/registerdb:/var/www/html/dbv/dbv_registerdb/data/meta
       - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
-    environment:
-      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
-      - MARIADB_USER=${MARIADB_USER}
-      - MARIADB_PASSWORD=${MARIADB_PASSWORD}
-      - MARIADB_PORT=${MARIADB_PORT}
-      - PHP_PORT=${PHP_PORT}
+    env_file:
+      - .env
   
   adminer:
     container_name: adminer
