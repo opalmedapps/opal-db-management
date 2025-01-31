@@ -218,10 +218,10 @@ pytest:
 run sql scripts:
   stage: test
   extends:
-    # ensure the artifacts from setup are available
-    - setup
     - .database_service
   needs:
+    # ensure the artifacts from setup are available
+    - setup
     - pytest
   script:
     - !reference [.database_service, script]
