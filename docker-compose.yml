@@ -15,6 +15,7 @@ services:
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
       - MARIADB_GUEST_USER=${MARIADB_GUEST_USER}
       - MARIADB_GUEST_PASSWORD=${MARIADB_GUEST_PASSWORD}
+      - TZ=EST5EDT
   dbv:
     container_name: dbv-apps
     image: opalmedapps/dbv:latest

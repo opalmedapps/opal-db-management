@@ -7,6 +7,7 @@
 <p><a href="http://localhost:<?php echo getenv("PHP_PORT") ?>/dbv/dbv_opaldb/">OpalDB</a></p>
 <p><a href="http://localhost:<?php echo getenv("PHP_PORT") ?>/dbv/dbv_questionnairedb/">QuestionnaireDB</a></p>
 <p><a href="http://localhost:<?php echo getenv("PHP_PORT") ?>/dbv/dbv_registerdb/">registerdb</a></p>
+<p><a href="http://localhost:<?php echo getenv("PHP_PORT") ?>/dbv/dbv_rptdb/">RPT</a></p>
 
 </body>
 </html>
