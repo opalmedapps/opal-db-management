@@ -1,8 +1,8 @@
 -- OPAL MEDICAL INSTITUTION
 
 INSERT INTO `Hospital_Identifier_Type` (`Hospital_Identifier_Type_Id`, `Code`, `ADT_Web_Service_Code`, `Description_EN`, `Description_FR`) VALUES
-(1,	'RVH',	'MR_PCS',	'Opal General Hospital 1 (RVH)',	'Hôpital général Opal 1 (RVH)'),
-(2,	'MGH',	'MG_PCS',	'Opal General Hospital 2 (MGH)',	'Hôpital général Opal 2 (MGH)'),
+(1,	'RVH',	'MR_PCS',	'Opal General Hospital 1 (RVH)',	'Hôpital général Opal 1 (HRV)'),
+(2,	'MGH',	'MG_PCS',	'Opal General Hospital 2 (MGH)',	'Hôpital général Opal 2 (HGM)'),
 (3,	'MCH',	'MC_ADT',	"Opal Children\'s Hospital",	"L\'Hôpital Opal pour enfants"),
 (4,	'LAC',	'LC_ADT',	'Opal General Hospital 3 (LAC)',	'Hôpital général Opal 3 (LAC)'),
 (5,	'CRE',	'CR_ADT',	'Opal General Hospital 4 (CRE)',	'Hôpital général Opal 4 (CRE)');
