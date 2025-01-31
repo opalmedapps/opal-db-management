@@ -1,9 +1,10 @@
 from sqlalchemy import TIMESTAMP, Column, DateTime, Enum, Index, String, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER
-from sqlalchemy.orm import DeclarativeMeta, declarative_base
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-# see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
-Base: DeclarativeMeta = declarative_base()
+
+class Base(DeclarativeBase):
+    pass
 
 metadata = Base.metadata
 
@@ -38,7 +39,7 @@ class SmsLog(Base):
     SmsTimestamp = Column(DateTime, nullable=False, index=True)
     ProcessedTimestamp = Column(DateTime, nullable=False, index=True, server_default=text('current_timestamp()'))
     Result = Column(Text, nullable=False, server_default=text("''"))
-    Action = Column(Enum('SENT', 'RECEIVED'), nullable=False)
+    Action: Mapped[str] = mapped_column(Enum('SENT', 'RECEIVED'), nullable=False)
     Service = Column(String(50), nullable=False, server_default=text("''"))
     MessageId = Column(String(50), nullable=False, server_default=text("''"))
     ServicePhoneNumber = Column(String(50), nullable=False, server_default=text("''"))

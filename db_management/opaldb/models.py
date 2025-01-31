@@ -1,4 +1,3 @@
-# type: ignore
 """Base ORM models file for OpalDB."""
 from sqlalchemy import (
     TIMESTAMP,
@@ -17,11 +16,13 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
-from sqlalchemy.orm import DeclarativeMeta, declarative_base, relationship
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.sql import false
 
-# see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
-Base: DeclarativeMeta = declarative_base()
+
+class Base(DeclarativeBase):
+    pass
+
 metadata = Base.metadata
 
 t_Admin = Table(
@@ -90,7 +91,7 @@ class AliasMH(Base):
 class AllowableExtension(Base):
     __tablename__ = 'AllowableExtension'
 
-    Type = Column(Enum('video', 'website', 'pdf', 'image'), primary_key=True, nullable=False)
+    Type: Mapped[Enum] = mapped_column(Enum('video', 'website', 'pdf', 'image'), primary_key=True, nullable=False)
     Name = Column(String(50), primary_key=True, nullable=False)
 
 
@@ -414,8 +415,8 @@ class Filter(Base):
     LastUpdatedBy = Column(INTEGER(11))
     SessionId = Column(String(255))
     ScheduledTimeOffset = Column(INTEGER(11), server_default=text('0'), nullable=False)
-    ScheduledTimeUnit = Column(Enum('minutes', 'hours', 'days', 'weeks', 'months'), nullable=True)
-    ScheduledTimeDirection = Column(Enum('before', 'after'), server_default=text("'after'"), nullable=False)
+    ScheduledTimeUnit: Mapped[Enum] = mapped_column(Enum('minutes', 'hours', 'days', 'weeks', 'months'), nullable=True)
+    ScheduledTimeDirection: Mapped[Enum] = mapped_column(Enum('before', 'after'), server_default=text("'after'"), nullable=False)
 
 
 t_FiltersMH = Table(
@@ -552,10 +553,10 @@ class Patient(Base):
     TelNum = Column(BIGINT(11), server_default=text('0'))
     EnableSMS = Column(TINYINT(4), nullable=False, server_default=text('0'))
     Email = Column(String(50), nullable=False)
-    Language = Column(Enum('EN', 'FR', 'SN'), nullable=False)
+    Language: Mapped[Enum] = mapped_column(Enum('EN', 'FR', 'SN'), nullable=False)
     SSN = Column(String(16), nullable=False)
-    AccessLevel = Column(Enum('1', '2', '3'), nullable=False, server_default=text("'1'"))
-    RegistrationDate = Column(DateTime, nullable=False, server_default=text("current_timestamp()"))
+    AccessLevel: Mapped[Enum] = mapped_column(Enum('1', '2', '3'), nullable=False, server_default=text("'1'"))
+    RegistrationDate = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     ConsentFormExpirationDate = Column(DateTime)
     BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='to block user on Firebase')
     StatusReasonTxt = Column(Text, nullable=False, server_default=text("''"))
@@ -567,10 +568,10 @@ class Patient(Base):
     TermsAndAgreementSignDateTime = Column(DateTime)
 
 
-class PatientControl(Patient):
+class PatientControl(Base):
     __tablename__ = 'PatientControl'
 
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), primary_key=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), primary_key=True, index=True)
     PatientUpdate = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     PC_LastUpdated = Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -621,9 +622,9 @@ class PatientMH(Base):
     TelNum = Column(BIGINT(11))
     EnableSMS = Column(TINYINT(4), nullable=False)
     Email = Column(String(50), nullable=False)
-    Language = Column(Enum('EN', 'FR', 'SN'), nullable=False)
+    Language: Mapped[Enum] = mapped_column(Enum('EN', 'FR', 'SN'), nullable=False)
     SSN = Column(Text, nullable=False)
-    AccessLevel = Column(Enum('1', '2', '3'), nullable=False)
+    AccessLevel: Mapped[Enum] = mapped_column(Enum('1', '2', '3'), nullable=False)
     RegistrationDate = Column(DateTime, nullable=False)
     ConsentFormExpirationDate = Column(DateTime)
     BlockedStatus = Column(TINYINT(4), nullable=False, server_default=text('0'))
@@ -782,8 +783,8 @@ class QuestionnaireDBDictionary(Base):
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
-    tableId = Column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
-    languageId = Column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
+    tableId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.definitionTable.ID'), nullable=False, index=True)
+    languageId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.language.ID'), nullable=False, index=True)
     contentId = Column(BIGINT(20), nullable=False, index=True)
     content = Column(MEDIUMTEXT, nullable=False)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
@@ -803,7 +804,7 @@ class QuestionnaireDBLanguage(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     isoLang = Column(String(2), nullable=False)
-    name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    name: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
@@ -1306,7 +1307,7 @@ class AppointmentPending(Base):
     )
 
     ID = Column(BIGINT(20), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     sourceName = Column(String(255), nullable=False, index=True)
     appointmentTypeCode = Column(String(250), nullable=False, comment='Appointment Type Code')
     appointmentTypeDescription = Column(String(250), nullable=False, comment='Appointment Type Description')
@@ -1344,7 +1345,7 @@ class AppointmentPendingMH(Base):
     AppointmentPendingId = Column(BIGINT(20), primary_key=True, nullable=False, server_default=text('0'))
     revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True, autoincrement=True)
     action = Column(String(128))
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     sourceName = Column(String(128), nullable=False, index=True)
     appointmentTypeCode = Column(String(250), nullable=False, comment='Appointment Type Code')
     appointmentTypeDescription = Column(String(250), nullable=False, comment='Appointment Type Description')
@@ -1377,7 +1378,7 @@ class CronLog(Base):
     __tablename__ = 'CronLog'
 
     CronLogSerNum = Column(INTEGER(11), primary_key=True)
-    CronSerNum = Column(ForeignKey('Cron.CronSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronSerNum: Mapped[int] = mapped_column(ForeignKey('Cron.CronSerNum', onupdate='CASCADE'), nullable=False, index=True)
     CronStatus = Column(String(25), nullable=False)
     CronDateTime = Column(DateTime, nullable=False)
 
@@ -1388,7 +1389,7 @@ class Diagnosi(Base):
     __tablename__ = 'Diagnosis'
 
     DiagnosisSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisAriaSer = Column(String(32), nullable=False, index=True)
     DiagnosisCode = Column(String(50), nullable=False, index=True)
@@ -1410,7 +1411,7 @@ class EducationalMaterialControl(Base):
     EducationalMaterialControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
     EducationalMaterialType_EN = Column(String(100), nullable=False)
     EducationalMaterialType_FR = Column(String(100), nullable=False)
-    EducationalMaterialCategoryId = Column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table.')
+    EducationalMaterialCategoryId: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table.')
     PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     Name_EN = Column(String(200), nullable=False)
     Name_FR = Column(VARCHAR(200), nullable=False)
@@ -1436,7 +1437,7 @@ class Feedback(Base):
     __tablename__ = 'Feedback'
 
     FeedbackSerNum = Column(INTEGER(11), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     FeedbackContent = Column(String(255))
     AppRating = Column(TINYINT(4), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
@@ -1452,9 +1453,9 @@ class OAUser(Base):
     OAUserSerNum = Column(INTEGER(11), primary_key=True)
     Username = Column(String(1000), nullable=False)
     Password = Column(String(1000), nullable=False)
-    oaRoleId = Column(ForeignKey('oaRole.ID'), nullable=False, index=True, server_default=text('1'), comment='Role of the user')
+    oaRoleId: Mapped[int] = mapped_column(ForeignKey('oaRole.ID'), nullable=False, index=True, server_default=text('1'), comment='Role of the user')
     type = Column(TINYINT(1), nullable=False, server_default=text('1'), comment="Type of user. 1 = 'human' user. 2 = 'system' user")
-    Language = Column(Enum('EN', 'FR'), nullable=False, server_default=text("'EN'"))
+    Language: Mapped[Enum] = mapped_column(Enum('EN', 'FR'), nullable=False, server_default=text("'EN'"))
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     DateAdded = Column(DateTime, nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1467,7 +1468,7 @@ class PatientActionLog(Base):
     __table_args__ = {'comment': 'Log of the actions a user takes in the app (clicking, scrolling to bottom, etc.)'}
 
     PatientActionLogSerNum = Column(BIGINT(11), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     Action = Column(String(125), nullable=False, server_default=text("''"), comment='Action the user took.')
     RefTable = Column(String(125), nullable=False, index=True, server_default=text("''"), comment='Table containing the item that was acted upon.')
     RefTableSerNum = Column(INTEGER(11), nullable=False, comment='SerNum identifying the item in RefTable.')
@@ -1480,8 +1481,8 @@ class PatientDoctor(Base):
     __tablename__ = 'PatientDoctor'
 
     PatientDoctorSerNum = Column(INTEGER(11), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    DoctorSerNum = Column(ForeignKey('Doctor.DoctorSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    DoctorSerNum: Mapped[int] = mapped_column(ForeignKey('Doctor.DoctorSerNum', onupdate='CASCADE'), nullable=False, index=True)
     OncologistFlag = Column(INTEGER(11), nullable=False, index=True)
     PrimaryFlag = Column(INTEGER(11), nullable=False, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1497,8 +1498,8 @@ class PatientHospitalIdentifier(Base):
     )
 
     Patient_Hospital_Identifier_Id = Column(INTEGER(11), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
-    Hospital_Identifier_Type_Code = Column(ForeignKey('Hospital_Identifier_Type.Code'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
+    Hospital_Identifier_Type_Code: Mapped[int] = mapped_column(ForeignKey('Hospital_Identifier_Type.Code'), nullable=False, index=True)
     MRN = Column(String(20), nullable=False, index=True)
     Is_Active = Column(TINYINT(1), nullable=False, server_default=text('1'))
 
@@ -1511,8 +1512,8 @@ class QuestionnaireDBPurpose(Base):
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
-    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    title: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
     dictionary = relationship('Dictionary', primaryjoin='Purpose.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
@@ -1523,8 +1524,8 @@ class QuestionnaireDBRespondent(Base):
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
     ID = Column(BIGINT(20), primary_key=True)
-    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    title: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
 
     dictionary = relationship('Dictionary', primaryjoin='Respondent.description == Dictionary.contentId')
     dictionary1 = relationship('Dictionary', primaryjoin='Respondent.title == Dictionary.contentId')
@@ -1537,8 +1538,8 @@ class SecurityAnswer(Base):
     )
 
     SecurityAnswerSerNum = Column(INTEGER(11), primary_key=True)
-    SecurityQuestionSerNum = Column(ForeignKey('SecurityQuestion.SecurityQuestionSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    SecurityQuestionSerNum: Mapped[int] = mapped_column(ForeignKey('SecurityQuestion.SecurityQuestionSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     AnswerText = Column(String(2056), nullable=False)
     CreationDate = Column(DateTime, nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1551,7 +1552,7 @@ class StatusAlias(Base):
     __tablename__ = 'StatusAlias'
 
     StatusAliasSerNum = Column(INTEGER(11), primary_key=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     Name = Column(String(30), nullable=False)
     Expression = Column(String(45), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
@@ -1578,7 +1579,7 @@ class Module(Base):
     subModuleMenu = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='If the module has submodules, can these being displayed in a navigation menu')
     core = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='An essential module that can never being deactivated')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module active or not in opalAdmin')
-    categoryModuleId = Column(ForeignKey('categoryModule.ID'), index=True, comment='Attach the module to a specific category')
+    categoryModuleId: Mapped[int] = mapped_column(ForeignKey('categoryModule.ID'), nullable=True, index=True, comment='Attach the module to a specific category')
     publication = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module is linked to the publication module')
     customCode = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module allows custom codes')
     unique = Column(TINYINT(1), nullable=False, server_default=text('1'), comment='To determine if an entry of the specified module can be published multiple times or not')
@@ -1598,14 +1599,14 @@ class DiagnosisTranslation(Base):
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True)
     AliasName = Column(String(100), nullable=False, server_default=text("''"))
-    EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     Name_EN = Column(String(2056), nullable=False)
     Name_FR = Column(String(2056), nullable=False)
     Description_EN = Column(String(2056), nullable=False)
     Description_FR = Column(String(2056), nullable=False)
     DiagnosisCode = Column(String(100), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -1617,9 +1618,9 @@ class EducationalMaterial(Base):
     __tablename__ = 'EducationalMaterial'
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
@@ -1638,9 +1639,9 @@ class EmailControl(Base):
     Subject_FR = Column(String(100), nullable=False)
     Body_EN = Column(Text, nullable=False)
     Body_FR = Column(Text, nullable=False)
-    EmailTypeSerNum = Column(ForeignKey('EmailType.EmailTypeSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    EmailTypeSerNum: Mapped[int] = mapped_column(ForeignKey('EmailType.EmailTypeSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -1661,7 +1662,7 @@ class HospitalMap(Base):
     MapName_FR = Column(String(255))
     MapDescription_FR = Column(String(255))
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -1677,9 +1678,9 @@ class NotificationControl(Base):
     Description_EN = Column(Text, nullable=False)
     Description_FR = Column(Text, nullable=False)
     NotificationType = Column(String(100), nullable=False)
-    NotificationTypeSerNum = Column(ForeignKey('NotificationTypes.NotificationTypeSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    NotificationTypeSerNum: Mapped[int] = mapped_column(ForeignKey('NotificationTypes.NotificationTypeSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastPublished = Column(DateTime, nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
@@ -1723,7 +1724,7 @@ class PostControl(Base):
     Disabled = Column(TINYINT(1), nullable=False, server_default=text('0'))
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     SessionId = Column(String(255))
@@ -1743,7 +1744,7 @@ class QuestionnaireControl(Base):
     PublishFlag = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -1756,13 +1757,13 @@ class QuestionnaireDBQuestionnaire(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
-    purposeId = Column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text('1'))
-    respondentId = Column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text('1'))
-    title = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    nickname = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    purposeId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.purpose.ID'), nullable=False, index=True, server_default=text('1'))
+    respondentId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.respondent.ID'), nullable=False, index=True, server_default=text('1'))
+    title: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    nickname: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     category = Column(INTEGER(11), nullable=False, server_default=text('-1'))
-    description = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
-    instruction = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    description: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
+    instruction: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     final = Column(TINYINT(4), nullable=False, server_default=text('0'))
     version = Column(INTEGER(11), nullable=False, server_default=text('1'))
     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
@@ -1796,13 +1797,13 @@ class TestControl(Base):
     Description_FR = Column(Text, nullable=False)
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
-    EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     InterpretationRecommended = Column(Boolean, nullable=False, server_default=text('0'), comment='Clinician interpretation recommended.')
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     URL_EN = Column(String(2000), nullable=False, server_default=text("''"))
     URL_FR = Column(String(2000), nullable=False, server_default=text("''"))
@@ -1825,8 +1826,8 @@ class TestExpression(Base):
     ExpressionName = Column(String(100), nullable=False)
     DateAdded = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     LastPublished = Column(DateTime)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('4'))
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('4'))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
     externalId = Column(String(512), nullable=False, server_default=text("'-1'"))
@@ -1850,8 +1851,8 @@ class TestGroupExpression(Base):
     ExpressionName = Column(String(100), nullable=False)
     DateAdded = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     LastPublished = Column(DateTime)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('4'))
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('4'))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -1863,11 +1864,11 @@ class TestResult(Base):
     __tablename__ = 'TestResult'
 
     TestResultSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
     TestResultGroupSerNum = Column(INTEGER(11), nullable=False, index=True)
     TestResultControlSerNum = Column(INTEGER(11), nullable=False, index=True)
     TestResultExpressionSerNum = Column(INTEGER(11), nullable=False, index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True)
     TestResultAriaSer = Column(String(100), nullable=False, index=True)
     ComponentName = Column(String(30), nullable=False)
@@ -1899,12 +1900,12 @@ class TestResultControl(Base):
     Description_FR = Column(Text, nullable=False)
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
-    EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     URL_EN = Column(String(2000), nullable=False)
     URL_FR = Column(String(2000), nullable=False)
@@ -1919,7 +1920,7 @@ class CronControlPatient(Base):
     __tablename__ = 'cronControlPatient'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
+    cronControlPatientSerNum: Mapped[int] = mapped_column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
     cronType = Column(String(100), nullable=False, index=True, comment='Field refers to what cron controller is using this transfer flag. eg TxTeamMessage, Document, Announcement, etc. Mandatory')
     transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
@@ -1932,7 +1933,7 @@ class CronControlPatientAnnouncement(Base):
     __tablename__ = 'cronControlPatient_Announcement'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
+    cronControlPatientSerNum: Mapped[int] = mapped_column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
     transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1944,7 +1945,7 @@ class CronControlPatientLegacyQuestionnaire(Base):
     __tablename__ = 'cronControlPatient_LegacyQuestionnaire'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
+    cronControlPatientSerNum: Mapped[int] = mapped_column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
     transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1956,7 +1957,7 @@ class CronControlPatientTreatmentTeamMessage(Base):
     __tablename__ = 'cronControlPatient_TreatmentTeamMessage'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlPatientSerNum = Column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
+    cronControlPatientSerNum: Mapped[int] = mapped_column(ForeignKey('PatientControl.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
     transferFlag = Column(SMALLINT(6), nullable=False, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1969,8 +1970,8 @@ class ModulePublicationSetting(Base):
     __table_args__ = {'comment': 'Intersection table between module and publicationSetting to reproduce a N-N relationships between the tables'}
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key')
-    moduleId = Column(ForeignKey('module.ID'), nullable=False, index=True, comment='Foreign key from the module table')
-    publicationSettingId = Column(ForeignKey('publicationSetting.ID'), nullable=False, index=True, comment='Foreign key from the publicationSettings table')
+    moduleId: Mapped[int] = mapped_column(ForeignKey('module.ID'), nullable=False, index=True, comment='Foreign key from the module table')
+    publicationSettingId: Mapped[int] = mapped_column(ForeignKey('publicationSetting.ID'), nullable=False, index=True, comment='Foreign key from the publicationSettings table')
 
     module = relationship('Module')
     publicationSetting = relationship('PublicationSetting')
@@ -1980,8 +1981,8 @@ class OaRoleModule(Base):
     __tablename__ = 'oaRoleModule'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment')
-    moduleId = Column(ForeignKey('module.ID'), nullable=False, index=True, comment='Module ID')
-    oaRoleId = Column(ForeignKey('oaRole.ID'), nullable=False, index=True, comment='OA Role ID')
+    moduleId: Mapped[int] = mapped_column(ForeignKey('module.ID'), nullable=False, index=True, comment='Module ID')
+    oaRoleId: Mapped[int] = mapped_column(ForeignKey('oaRole.ID'), nullable=False, index=True, comment='OA Role ID')
     access = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Access level level (0-7) for this role on this module')
 
     module = relationship('Module')
@@ -1998,13 +1999,13 @@ class Alias(Base):
     AliasName_EN = Column(String(100), nullable=False)
     AliasDescription_FR = Column(Text, nullable=False)
     AliasDescription_EN = Column(Text, nullable=False)
-    EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
-    HospitalMapSerNum = Column(ForeignKey('HospitalMap.HospitalMapSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    HospitalMapSerNum: Mapped[int] = mapped_column(ForeignKey('HospitalMap.HospitalMapSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     ColorTag = Column(String(25), nullable=False, server_default=text("'#777777'"))
     WaitTimeValidity = Column(TINYINT(4), nullable=False, server_default=text('1'), comment='This field exist in DEV. Usage is unknow')
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -2013,15 +2014,15 @@ class Alias(Base):
     OAUser = relationship('OAUser')
 
 
-class AppointmentCheckin(Alias):
+class AppointmentCheckin(Base):
     __tablename__ = 'AppointmentCheckin'
 
-    AliasSerNum = Column(ForeignKey('Alias.AliasSerNum', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, index=True)
+    AliasSerNum: Mapped[int] = mapped_column(ForeignKey('Alias.AliasSerNum', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, index=True)
     CheckinPossible = Column(TINYINT(4), nullable=False)
     CheckinInstruction_EN = Column(Text, nullable=False)
     CheckinInstruction_FR = Column(Text, nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    AC_LastUpdatedBy = Column('LastUpdatedBy', ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    AC_LastUpdatedBy: Mapped[int] = mapped_column('LastUpdatedBy', ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     AC_SessionId = Column('SessionId', String(255))
     AC_LastUpdated = Column('LastUpdated', TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
@@ -2032,9 +2033,9 @@ class Announcement(Base):
     __tablename__ = 'Announcement'
 
     AnnouncementSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PostControlSerNum: Mapped[int] = mapped_column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
@@ -2052,13 +2053,13 @@ class DiagnosisCode(Base):
     )
 
     DiagnosisCodeSerNum = Column(INTEGER(11), primary_key=True)
-    DiagnosisTranslationSerNum = Column(ForeignKey('DiagnosisTranslation.DiagnosisTranslationSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    DiagnosisTranslationSerNum: Mapped[int] = mapped_column(ForeignKey('DiagnosisTranslation.DiagnosisTranslationSerNum', onupdate='CASCADE'), nullable=False, index=True)
     SourceUID = Column(BIGINT(20), nullable=False, server_default=text('0'))
-    Source = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum'), nullable=False, index=True, server_default=text('-1'))
+    Source: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum'), nullable=False, index=True, server_default=text('-1'))
     DiagnosisCode = Column(String(100), nullable=False, index=True)
     Description = Column(String(2056), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(INTEGER(11))
 
@@ -2071,9 +2072,9 @@ class EmailLog(Base):
     __tablename__ = 'EmailLog'
 
     EmailLogSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    EmailControlSerNum = Column(ForeignKey('EmailControl.EmailControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    EmailControlSerNum: Mapped[int] = mapped_column(ForeignKey('EmailControl.EmailControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     Status = Column(String(5), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -2087,9 +2088,9 @@ class Notification(Base):
     __tablename__ = 'Notification'
 
     NotificationSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    NotificationControlSerNum = Column(ForeignKey('NotificationControl.NotificationControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    NotificationControlSerNum: Mapped[int] = mapped_column(ForeignKey('NotificationControl.NotificationControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     RefTableRowSerNum = Column(INTEGER(11), nullable=False, index=True)
     DateAdded = Column(DateTime)
     ReadStatus = Column(INTEGER(11), nullable=False, comment='Deprecated')
@@ -2110,9 +2111,9 @@ class PatientTestResult(Base):
     )
 
     PatientTestResultSerNum = Column(BIGINT(11), primary_key=True)
-    TestGroupExpressionSerNum = Column(ForeignKey('TestGroupExpression.TestGroupExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    TestExpressionSerNum = Column(ForeignKey('TestExpression.TestExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    TestGroupExpressionSerNum: Mapped[int] = mapped_column(ForeignKey('TestGroupExpression.TestGroupExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    TestExpressionSerNum: Mapped[int] = mapped_column(ForeignKey('TestExpression.TestExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     AbnormalFlag = Column(String(10))
     SequenceNum = Column(INTEGER(11), comment='Order of Lab Tests in which they should be displayed')
     CollectedDateTime = Column(DateTime, nullable=False)
@@ -2138,9 +2139,9 @@ class PatientsForPatient(Base):
     __tablename__ = 'PatientsForPatients'
 
     PatientsForPatientsSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PostControlSerNum: Mapped[int] = mapped_column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, server_default=text('0'))
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -2154,9 +2155,9 @@ class Questionnaire(Base):
     __tablename__ = 'Questionnaire'
 
     QuestionnaireSerNum = Column(BIGINT(20), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    QuestionnaireControlSerNum = Column(ForeignKey('QuestionnaireControl.QuestionnaireControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    QuestionnaireControlSerNum: Mapped[int] = mapped_column(ForeignKey('QuestionnaireControl.QuestionnaireControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False, server_default=text('current_timestamp()'))
     PatientQuestionnaireDBSerNum = Column(INTEGER(11), index=True)
     CompletedFlag = Column(TINYINT(4), nullable=False, server_default=text('0'))
@@ -2173,7 +2174,7 @@ class TestResultAdditionalLink(Base):
     __tablename__ = 'TestResultAdditionalLinks'
 
     TestResultAdditionalLinksSerNum = Column(INTEGER(11), primary_key=True)
-    TestResultControlSerNum = Column(ForeignKey('TestResultControl.TestResultControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    TestResultControlSerNum: Mapped[int] = mapped_column(ForeignKey('TestResultControl.TestResultControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     Name_EN = Column(String(1028), nullable=False)
     Name_FR = Column(String(1028), nullable=False)
     URL_EN = Column(String(2056), nullable=False)
@@ -2188,11 +2189,11 @@ class TestResultExpression(Base):
     __tablename__ = 'TestResultExpression'
 
     TestResultExpressionSerNum = Column(INTEGER(11), primary_key=True)
-    TestResultControlSerNum = Column(ForeignKey('TestResultControl.TestResultControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    TestResultControlSerNum: Mapped[int] = mapped_column(ForeignKey('TestResultControl.TestResultControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     ExpressionName = Column(String(100), nullable=False, unique=True)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -2204,9 +2205,9 @@ class TxTeamMessage(Base):
     __tablename__ = 'TxTeamMessage'
 
     TxTeamMessageSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    PostControlSerNum = Column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PostControlSerNum: Mapped[int] = mapped_column(ForeignKey('PostControl.PostControlSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     ReadStatus = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='Deprecated')
     ReadBy = Column(LONGTEXT, nullable=False, server_default=text("'[]'"))
@@ -2221,7 +2222,7 @@ class CronControlPostAnnouncement(Base):
     __tablename__ = 'cronControlPost_Announcement'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlPostSerNum = Column(ForeignKey('PostControl.PostControlSerNum'), nullable=False, index=True, comment='Foreign key with PostControlSerNum from PostControl. Mandatory.')
+    cronControlPostSerNum: Mapped[int] = mapped_column(ForeignKey('PostControl.PostControlSerNum'), nullable=False, index=True, comment='Foreign key with PostControlSerNum from PostControl. Mandatory.')
     publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that has been published from opalAdmin.')
     lastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last publish date.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -2234,7 +2235,7 @@ class CronControlPostTreatmentTeamMessage(Base):
     __tablename__ = 'cronControlPost_TreatmentTeamMessage'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlPostSerNum = Column(ForeignKey('PostControl.PostControlSerNum'), nullable=False, index=True, comment='Foreign key with PostControlSerNum from PostControl. Mandatory.')
+    cronControlPostSerNum: Mapped[int] = mapped_column(ForeignKey('PostControl.PostControlSerNum'), nullable=False, index=True, comment='Foreign key with PostControlSerNum from PostControl. Mandatory.')
     publishFlag = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that has been published from opalAdmin.')
     lastPublished = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last publish date.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -2250,7 +2251,7 @@ class Study(Base):
     __tablename__ = 'study'
 
     ID = Column(BIGINT(20), primary_key=True, unique=True, comment='Primary key. Auto-increment.')
-    consentQuestionnaireId = Column(ForeignKey('QuestionnaireDB.questionnaire.ID'), index=True, comment='QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.')
+    consentQuestionnaireId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.questionnaire.ID'), nullable=True, index=True, comment='QuestionnaireDB questionnaire ID of the consent form for this study. Foreign key field. Mandatory.')
     code = Column(String(64), comment='Study ID entered by the user. Mandatory.')
     title_EN = Column(String(256), comment='English title of the study. Mandatory.')
     title_FR = Column(String(256), comment='French title of the study. Mandatory.')
@@ -2278,12 +2279,12 @@ class AliasExpression(Base):
     )
 
     AliasExpressionSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    AliasSerNum = Column(ForeignKey('Alias.AliasSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('0'))
-    masterSourceAliasId = Column(ForeignKey('masterSourceAlias.ID'), unique=True)
+    AliasSerNum: Mapped[int] = mapped_column(ForeignKey('Alias.AliasSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('0'))
+    masterSourceAliasId: Mapped[int] = mapped_column(ForeignKey('masterSourceAlias.ID'), nullable=True, unique=True)
     ExpressionName = Column(String(250), nullable=False)
     Description = Column(String(250), nullable=False, comment='Resource Description')
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
-    LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
+    LastUpdatedBy: Mapped[int] = mapped_column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
     SessionId = Column(String(255))
 
@@ -2296,7 +2297,7 @@ class CronControlAlias(Base):
     __tablename__ = 'cronControlAlias'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
-    cronControlAliasSerNum = Column(ForeignKey('Alias.AliasSerNum'), nullable=False, index=True, comment='Foreign key with AliasSerNum from Alias. Mandatory.')
+    cronControlAliasSerNum: Mapped[int] = mapped_column(ForeignKey('Alias.AliasSerNum'), nullable=False, index=True, comment='Foreign key with AliasSerNum from Alias. Mandatory.')
     cronType = Column(String(100), nullable=False, index=True, comment='Field refers to what cron controller is using this transfer flag. eg TxTeamMessages, Document, Announcement, etc. Mandatory')
     aliasUpdate = Column(SMALLINT(6), nullable=False, index=True, server_default=text('0'), comment='Marker for data that needs to be read on next cron.')
     lastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"), comment='Last transfer date. Updated after any given cron job finishes.')
@@ -2310,8 +2311,8 @@ class PatientStudy(Base):
     __tablename__ = 'patientStudy'
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary Key. Auto-increment.')
-    patientId = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum in Patient table')
-    studyId = Column(ForeignKey('study.ID'), nullable=False, index=True, comment='Foreign key with Id in study table.')
+    patientId: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum in Patient table')
+    studyId: Mapped[int] = mapped_column(ForeignKey('study.ID'), nullable=False, index=True, comment='Foreign key with Id in study table.')
     consentStatus = Column(INTEGER(11), nullable=False, comment='Patient consent status for this study. 1 = invited; 2 = opalConsented; 3 = otherConsented; 4 = declined. Mandatory.')
     readStatus = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='Patient read status for this consent form.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -2327,8 +2328,8 @@ class QuestionnaireStudy(Base):
     __tablename__ = 'questionnaireStudy'
 
     ID = Column(BIGINT(20), primary_key=True)
-    studyId = Column(ForeignKey('study.ID'), nullable=False, index=True)
-    questionnaireId = Column(ForeignKey('QuestionnaireDB.questionnaire.ID'), nullable=False, index=True)
+    studyId: Mapped[int] = mapped_column(ForeignKey('study.ID'), nullable=False, index=True)
+    questionnaireId: Mapped[int] = mapped_column(ForeignKey('QuestionnaireDB.questionnaire.ID'), nullable=False, index=True)
 
     questionnaire = relationship('Questionnaire')
     study = relationship('Study')
@@ -2338,10 +2339,10 @@ class Appointment(Base):
     __tablename__ = 'Appointment'
 
     AppointmentSerNum = Column(INTEGER(11), primary_key=True, index=True)
-    AliasExpressionSerNum = Column(ForeignKey('AliasExpression.AliasExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    AliasExpressionSerNum: Mapped[int] = mapped_column(ForeignKey('AliasExpression.AliasExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
     CronLogSerNum = Column(INTEGER(11), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
     AppointmentAriaSer = Column(INTEGER(11), nullable=False, index=True)
     PrioritySerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -2372,11 +2373,11 @@ class Document(Base):
     __tablename__ = 'Document'
 
     DocumentSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
     DocumentId = Column(String(100), nullable=False)
-    AliasExpressionSerNum = Column(ForeignKey('AliasExpression.AliasExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    AliasExpressionSerNum: Mapped[int] = mapped_column(ForeignKey('AliasExpression.AliasExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
     ApprovedBySerNum = Column(INTEGER(11), nullable=False, index=True)
     ApprovedTimeStamp = Column(DateTime, nullable=False)
     AuthoredBySerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -2406,12 +2407,12 @@ class Task(Base):
     __tablename__ = 'Task'
 
     TaskSerNum = Column(INTEGER(11), primary_key=True)
-    CronLogSerNum = Column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), index=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
-    AliasExpressionSerNum = Column(ForeignKey('AliasExpression.AliasExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
+    PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    AliasExpressionSerNum: Mapped[int] = mapped_column(ForeignKey('AliasExpression.AliasExpressionSerNum', onupdate='CASCADE'), nullable=False, index=True)
     PrioritySerNum = Column(INTEGER(11), nullable=False, index=True)
     DiagnosisSerNum = Column(INTEGER(11), nullable=False, index=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
     TaskAriaSer = Column(INTEGER(11), nullable=False, index=True)
     Status = Column(String(100), nullable=False)
     State = Column(String(25), nullable=False)
@@ -2431,9 +2432,9 @@ class PatientLocation(Base):
     __tablename__ = 'PatientLocation'
 
     PatientLocationSerNum = Column(INTEGER(11), primary_key=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
     SourceUID = Column(INTEGER(11), nullable=False, index=True)
-    AppointmentSerNum = Column(ForeignKey('Appointment.AppointmentSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    AppointmentSerNum: Mapped[int] = mapped_column(ForeignKey('Appointment.AppointmentSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     RevCount = Column(INTEGER(11), nullable=False, index=True)
     CheckedInFlag = Column(TINYINT(4), nullable=False, index=True)
     ArrivalDateTime = Column(DateTime, nullable=False)
@@ -2449,9 +2450,9 @@ class PatientLocationMH(Base):
     __tablename__ = 'PatientLocationMH'
 
     PatientLocationMHSerNum = Column(INTEGER(11), primary_key=True)
-    SourceDatabaseSerNum = Column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True)
     SourceUID = Column(INTEGER(11), nullable=False, index=True)
-    AppointmentSerNum = Column(ForeignKey('Appointment.AppointmentSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    AppointmentSerNum: Mapped[int] = mapped_column(ForeignKey('Appointment.AppointmentSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     RevCount = Column(INTEGER(11), nullable=False, index=True)
     CheckedInFlag = Column(TINYINT(4), nullable=False, index=True)
     ArrivalDateTime = Column(DateTime, nullable=False)
@@ -2469,7 +2470,7 @@ class ResourceAppointment(Base):
 
     ResourceAppointmentSerNum = Column(INTEGER(11), primary_key=True)
     ResourceSerNum = Column(INTEGER(11), nullable=False, index=True)
-    AppointmentSerNum = Column(ForeignKey('Appointment.AppointmentSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    AppointmentSerNum: Mapped[int] = mapped_column(ForeignKey('Appointment.AppointmentSerNum', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     ExclusiveFlag = Column(String(11), nullable=False)
     PrimaryFlag = Column(String(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)

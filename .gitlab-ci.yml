@@ -112,7 +112,7 @@ mypy:
     - pip install mypy-gitlab-code-quality
     - mypy --version
     # export output and don't fail if there are errors
-    - mypy opal/ --no-error-summary > mypy-out.txt || true
+    - mypy db_management/ --no-error-summary > mypy-out.txt || true
     - PYTHONHASHSEED=0 mypy-gitlab-code-quality < mypy-out.txt > codequality.json
      # fail if JSON file does not contain empty array
     - cat codequality.json | grep -q "\[\]"
@@ -195,7 +195,7 @@ run sql scripts:
     - !reference [.database_service, script]
     # migrate databases first
     - ./docker/alembic-upgrade.sh
-    - db_management/reset_data.sh MUHC
+    - db_management/reset_data.sh OMI
 
 # run pipelines for default branch, tags, and all types of merge request pipelines
 # to support merge trains
