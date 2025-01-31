@@ -24,6 +24,10 @@ variables:
   CI_APPLICATION_TAG: "$CI_COMMIT_SHA"
   CI_APPLICATION_REPOSITORY: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG/$CI_JOB_NAME"
   AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS: "--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
+  # Alembic Specific
+  MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+  # ensure that user has permissions for test DB to be used by pytest
+  MARIADB_USER: $MARIADB_USER
 
 
 build:
@@ -32,16 +36,70 @@ build:
   - eval $(ssh-agent -s)
   - echo $SSH_PRIVATE_KEY | base64 -d | tr -d '\r' | ssh-add -
   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_AUTH_SOCK"
-  # - eval echo $AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
-  # - echo $($AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS)
-  # - args="$(eval echo $foo)"
-  # - build_args=$AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS
-#   ## Create the SSH directory and give it the right permissions
-#   ##
-#   - AUTO_DEVOPS_BUILD_IMAGE_EXTRA_ARGS="--build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$$SSH_AUTH_SOCK"
-  # - image_tagged="$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
-  # - image_latest="$CI_APPLICATION_REPOSITORY:latest"
-  # - docker buildx build --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=$SSH_PRIVATE_KEY2 --tag $image_tagged --tag $image_latest .
+
+  - python --version
+  - which python
+  # install dependencies for mysqlclient
+  - apt update && apt-get install -y build-essential libmariadb-dev
+  # don't fail if venv is not set up yet (during setup)
+  - source .venv/bin/activate || true
+  # set up env file for DB service
+  # use sample env file
+  - cp .env.sample .env
+  - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
+  - sed -i "s/^LEGACY_QUESTIONNAIRE_DB_NAME=.*/LEGACY_QUESTIONNAIRE_DB_NAME=QuestionnaireDB/" .env
+  - sed -i "s/^DOCKER_HOST=.*/DOCKER_HOST=host.docker.internal/" .env
+  - sed -i "s/^MARIADB_ROOT_PASSWORD=.*/MARIADB_ROOT_PASSWORD=$MARIADB_PASSWORD/" .env
+  - sed -i "s/^MARIADB_USER=.*/MARIADB_USER=$MARIADB_USER/" .env
+  - sed -i "s/^MARIADB_PORT=.*/MARIADB_PORT=3307/" .env
+
+stages:
+  - Static Analysis
+  - Checks
+  - Build
+
+setup:
+  stage: .pre
+  script:
+    - apt update && apt-get install -y git
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r requirements/development.txt
+  artifacts:
+    # pin artifacts to the branch
+    # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
+    name: $CI_COMMIT_REF_SLUG
+    expire_in: 1 week
+    paths:
+      - .venv
+  # Pip's cache doesn't store the python packages
+  # https://pip.pypa.io/en/stable/reference/pip_install/#caching
+  #
+  # If you want to also cache the installed packages, you have to install
+  # them in a virtualenv and cache it as well.
+  cache:
+    # pin artifacts to the branch
+    # see: https://docs.gitlab.com/ee/ci/pipelines/job_artifacts.html#use-cicd-variables-to-define-the-artifacts-name
+    paths:
+      - .cache/pip
+
+flake8:
+  stage: Static Analysis
+  script:
+    - flake8 --version
+    # install plugin to produce code climate report
+    - pip install flake8-gl-codeclimate
+    # don't fail if there are errors so the result can also be printed to the console for logs
+    # fix relative file paths so GitLab is happy and shows the violations properly
+    # see: https://github.com/awelzel/flake8-gl-codeclimate/issues/14
+    - flake8 --format gl-codeclimate | python -c "import sys; import json; lines = [line.replace('./', '') for line in sys.stdin]; print(json.dumps(json.loads('\n'.join(lines)), indent='\t'));" > gl-code-quality-report.json || true
+    # fail if JSON file does not contain empty array
+    - cat gl-code-quality-report.json | grep -q "\[\]"
+  artifacts:
+    when: always
+    reports:
+      codequality: gl-code-quality-report.json
 
 # services:
 #   - docker:20.10.16-dind
@@ -64,41 +122,25 @@ clone:
     - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
   rules:
     - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
-    # - if: '$CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
-# clone:
-#   stage: build
-#   image: docker
+
+
+# ritest:
+#   stage: deploy
+#   tags:
+#     - ri-dev
+#   image: ubuntu:latest
 #   before_script:
-#     - docker version
+#     - uname -a
 #   script:
-#     ## Create the SSH directory and give it the right permissions
-#     ##
+#     - whoami
+#     - apt update && apt install -y openssh-client
+#     # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
 #     - mkdir -p ~/.ssh
 #     - chmod 700 ~/.ssh
-#     - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
-#     - echo $SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_ed25519
-#     - chmod 0600 ~/.ssh/id_ed25519
-#     - ls -la ~/.ssh
-#     # - git clone git@gitlab.com:opalmedapps/dbv_opaldb.git
-#     - DOCKER_BUILDKIT=1 docker build --ssh ssh_key=/root/.ssh/id_ed25519 .
-
-ritest:
-  stage: deploy
-  tags:
-    - ri-dev
-  image: ubuntu:latest
-  before_script:
-    - uname -a
-  script:
-    - whoami
-    - apt update && apt install -y openssh-client
-    # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
-    - ssh opalsupt@lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
-  rules:
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+#     - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
+#     - ssh opalsupt@lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
 include:
   - template: Auto-DevOps.gitlab-ci.yml
