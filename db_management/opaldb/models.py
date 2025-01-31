@@ -17,8 +17,7 @@ from sqlalchemy import (
     text,
 )
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
-from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import DeclarativeMeta, declarative_base, relationship
 from sqlalchemy.sql import false
 
 # see: https://github.com/python/mypy/issues/2477#issuecomment-703142484
@@ -455,7 +454,6 @@ class HospitalMapMH(Base):
     MapURL_EN = Column(String(512))
     MapURL_FR = Column(String(512))
     QRMapAlias = Column(String(255))
-    QRImageFileName = Column(String(255), nullable=False)
     MapName_EN = Column(String(255))
     MapDescription_EN = Column(String(255))
     MapName_FR = Column(String(255))
@@ -500,7 +498,7 @@ class NotificationMH(Base):
     CronLogSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     NotificationControlSerNum = Column(INTEGER(11), nullable=False, index=True)
-    RefTableRowSerNum = Column(INTEGER(11), nullable=False, index=True)
+    RefTableRowSerNum = Column(BIGINT(11), nullable=False, index=True)
     ReadStatus = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     ModificationAction = Column(String(25), nullable=False)
@@ -746,7 +744,7 @@ class PushNotification(Base):
     PatientDeviceIdentifierSerNum = Column(INTEGER(11), index=True)
     PatientSerNum = Column(INTEGER(11), nullable=False, index=True)
     NotificationControlSerNum = Column(INTEGER(11), nullable=False, index=True)
-    RefTableRowSerNum = Column(INTEGER(11), nullable=False, index=True)
+    RefTableRowSerNum = Column(BIGINT(11), nullable=False, index=True)
     DateAdded = Column(DateTime, nullable=False)
     SendStatus = Column(String(3), nullable=False)
     SendLog = Column(Text, nullable=False)
@@ -791,9 +789,9 @@ class QuestionnaireDBDictionary(Base):
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255))
     creationDate = Column(DateTime, nullable=False)
-    createdBy = Column(String(255), nullable=False)
+    createdBy = Column(String(255), nullable=False, server_default=text("''"))
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
-    updatedBy = Column(String(255), nullable=False)
+    updatedBy = Column(String(255), nullable=False, server_default=text("''"))
 
     language = relationship('Language', primaryjoin='Dictionary.languageId == Language.ID')
     definitionTable = relationship('DefinitionTable')
@@ -807,11 +805,11 @@ class QuestionnaireDBLanguage(Base):
     isoLang = Column(String(2), nullable=False)
     name = Column(ForeignKey('QuestionnaireDB.dictionary.contentId'), nullable=False, index=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
-    createdBy = Column(String(255), nullable=False)
+    createdBy = Column(String(255), nullable=False, server_default=text("''"))
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
-    updatedBy = Column(String(255), nullable=False)
+    updatedBy = Column(String(255), nullable=False, server_default=text("''"))
 
     dictionary = relationship('Dictionary', primaryjoin='Language.name == Dictionary.contentId')
 
@@ -1050,11 +1048,11 @@ class Alert(Base):
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
-    deletedBy = Column(String(128), nullable=True, comment='Username of the person who deleted the record')
+    deletedBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
-    createdBy = Column(String(128), nullable=False, comment='Username of the person who created the record')
+    createdBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
-    updatedBy = Column(String(128), nullable=False, comment='Username of the person who updated the record')
+    updatedBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who updated the record')
 
 
 class AlertMH(Base):
@@ -1069,11 +1067,11 @@ class AlertMH(Base):
     trigger = Column(MEDIUMTEXT, nullable=False, comment='List of conditions to trigger the alert. JSON format.')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the alert active (equals to 0) or not (equals to 1). By default, inactive.')
     deleted = Column(TINYINT(1), nullable=False, server_default=text('0'), comment=' 0 = not deleted, 1 = deleted')
-    deletedBy = Column(String(128), nullable=False, comment='Username of the person who deleted the record')
+    deletedBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who deleted the record')
     creationDate = Column(DateTime, nullable=False, comment='Date and time of creation of the record')
-    createdBy = Column(String(128), nullable=False, comment='Username of the person who created the record')
+    createdBy = Column(String(128), nullable=False, server_default=text("''"), comment='Username of the person who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Date and time of last update of the record')
-    updatedBy = Column(String(128), nullable=False, index=True, comment='Username of the person who updated the record')
+    updatedBy = Column(String(128), nullable=False, server_default=text("''"), index=True, comment='Username of the person who updated the record')
 
 
 class Audit(Base):
@@ -1170,9 +1168,9 @@ class MasterSourceAlias(Base):
     deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
     deletedBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
-    createdBy = Column(String(255), nullable=False, comment='username of who created the record')
+    createdBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
-    updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
+    updatedBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who updated the record')
 
 
 class MasterSourceDiagnosi(Base):
@@ -1188,11 +1186,11 @@ class MasterSourceDiagnosi(Base):
     description = Column(String(256), nullable=False, comment='Description of the diagnostic')
     source = Column(INTEGER(3), nullable=False, server_default=text('-1'), comment='-1 = no source type, 1 = Aria')
     deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
-    deletedBy = Column(String(255), nullable=False, comment='username of who marked the record to be deleted')
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
-    createdBy = Column(String(255), nullable=False, comment='username of who created the record')
+    createdBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
-    updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
+    updatedBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who updated the record')
 
 
 class OaRole(Base):
@@ -1202,11 +1200,11 @@ class OaRole(Base):
     name_EN = Column(String(64), nullable=False, comment='English name of the role')
     name_FR = Column(String(64), nullable=False, comment='French name of the role')
     deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
-    deletedBy = Column(String(255), nullable=False, comment='username of who marked the record to be deleted')
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
-    createdBy = Column(String(255), nullable=False, comment='username of who created the record')
+    createdBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
-    updatedBy = Column(String(255), nullable=False, comment='username of who updated the record')
+    updatedBy = Column(String(255), nullable=False, server_default=text("''"), comment='username of who updated the record')
 
 
 class PatientStudyMH(Base):
@@ -1291,8 +1289,8 @@ class Termsandagreement(Base):
     __table_args__ = {'comment': 'Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.'}
 
     Id = Column(BIGINT(20), primary_key=True)
-    DocumentLink_EN = Column(String(10000), nullable=False)
-    DocumentLink_FR = Column(String(10000), nullable=False)
+    DocumentLink_EN = Column(String(2000), nullable=False)
+    DocumentLink_FR = Column(String(2000), nullable=False)
     PDFLink_EN = Column(MEDIUMTEXT, nullable=False)
     PDFLink_FR = Column(MEDIUMTEXT, nullable=False)
     Version = Column(String(10000), nullable=False)
@@ -1658,7 +1656,6 @@ class HospitalMap(Base):
     MapURL_EN = Column(String(512))
     MapURL_FR = Column(String(512))
     QRMapAlias = Column(String(255))
-    QRImageFileName = Column(String(255), nullable=False)
     MapName_EN = Column(String(255))
     MapDescription_EN = Column(String(255))
     MapName_FR = Column(String(255))
@@ -1774,11 +1771,11 @@ class QuestionnaireDBQuestionnaire(Base):
     visualization = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = regular view of the answers, 1 = graph')
     logo = Column(String(512), nullable=False)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
-    createdBy = Column(String(255), nullable=False)
+    createdBy = Column(String(255), nullable=False, server_default=text("''"))
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
-    updatedBy = Column(String(255), nullable=False)
+    updatedBy = Column(String(255), nullable=False, server_default=text("''"))
     legacyName = Column(String(255), nullable=False, comment='This field is mandatory to make the app works during the migration process. This field must be removed once the migration of the legacy questionnaire will be done, the triggers stopped and the app changed to use the correct standards.')
 
     dictionary = relationship('Dictionary', primaryjoin='Questionnaire.description == Dictionary.contentId')
@@ -2120,6 +2117,7 @@ class PatientTestResult(Base):
     SequenceNum = Column(INTEGER(11), comment='Order of Lab Tests in which they should be displayed')
     CollectedDateTime = Column(DateTime, nullable=False)
     ResultDateTime = Column(DateTime, nullable=False)
+    AvailableAt = Column(DateTime, nullable=False)
     NormalRangeMin = Column(Float)
     NormalRangeMax = Column(Float)
     NormalRange = Column(String(30), nullable=False, server_default=text("''"))

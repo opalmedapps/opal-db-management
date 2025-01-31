@@ -117,7 +117,8 @@ INSERT INTO `NotificationTypes` (`NotificationTypeSerNum`, `NotificationTypeId`,
 (15,	'CheckInNotification',	'CheckInNotification',	'2017-11-07 17:41:49',	'2017-11-08 03:41:51'),
 (16,	'CheckInError',	'Check In Error',	'2018-03-27 10:21:16',	'2018-03-27 18:21:16'),
 (17,	'AppointmentCancelled',	'Cancelled Appointment',	'2018-03-27 10:26:20',	'2018-03-27 18:26:20'),
-(18,	'AppointmentNew',	'New Appointment',	'2023-01-12 11:39:14',	'2023-01-12 16:39:14');
+(18,	'AppointmentNew',	'New Appointment',	'2023-01-12 11:39:14',	'2023-01-12 16:39:14'),
+(19,	'AppointmentReminder',	'Appointment Reminder',	'2023-11-27 11:39:14',	'2023-11-27 16:39:14');
 
 
 INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `NotificationType`, `NotificationTypeSerNum`, `DateAdded`, `LastUpdatedBy`, `LastPublished`, `LastUpdated`, `SessionId`) VALUES
@@ -133,9 +134,10 @@ INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name
 (12,	'Appointment(s) Check-in',	'Enregistrement de mon rendez-vous',	'$patientName: Successfully checked in for your appointment(s) at $getDateTime. You will receive another notification when you are called in to your appointment(s).',	'$patientName: Enregistrement réussi à votre/vos rendez-vous de $getDateTime. Vous recevrez une autre notification lorsque vous serez appelé(e) à votre/vos rendez-vous.',	'CheckInNotification',	15,	'2017-11-07 17:43:27',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	'K0YKH6ugHm'),
 (13,	'New Questionnaire',	'Nouveau questionnaire',	'$patientName: New questionnaire received. Please complete it before seeing your health care provider.',	'$patientName: Nouveau questionnaire reçu. Veuillez le compléter avant votre rendez-vous avec votre professionnel de la santé.',	'LegacyQuestionnaire',	14,	'2017-11-07 17:44:52',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	'EYl0ROULBM'),
 (14,	'Error Checking In',	'Erreur lors de l\'enregistrement',	'$patientName: Couldn\'t check into one or more appointments. Please go to the reception.',	'$patientName: Enregistrement impossible à un ou plusieurs rendez-vous. Veuillez vous rendre à la réception.',	'CheckInError',	16,	'2017-11-24 11:59:45',	NULL,	'2017-11-24 11:59:45',	'2023-01-12 16:39:16',	'hg2nFkFxHJ'),
-(15,	'New Lab Result',	'Nouveau résultat de laboratoire',	'$patientName: New lab test result',	'$patientName: Nouveau résultat de test de laboratoire',	'',	9,	'2018-06-08 09:09:14',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	'XddBb7PBiK'),
+(15,	'New Lab Result',	'Nouveau résultat de laboratoire',	'$patientName: New lab test result',	'$patientName: Nouveau résultat de test de laboratoire',	'NewLabResult',	9,	'2018-06-08 09:09:14',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	'XddBb7PBiK'),
 (16,	'Appointment Cancelled',	'Rendez-vous annulé',	'$patientName: Appointment on $oldAppointmentDateEN at $oldAppointmentTimeEN has been cancelled.',	'$patientName: Rendez-vous du $oldAppointmentDateFR à $oldAppointmentTimeFR a été annulé.',	'AppointmentCancelled',	17,	'2023-01-12 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	NULL),
-(17,	'New Appointment',	'Nouveau rendez-vous',	'$patientName: New appointment on $newAppointmentDateEN at $newAppointmentTimeEN',	'$patientName: Nouveau rendez-vous le $newAppointmentDateFR à $newAppointmentTimeFR',	'AppointmentNew',	18,	'2023-01-12 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	NULL);
+(17,	'New Appointment',	'Nouveau rendez-vous',	'$patientName: New appointment on $newAppointmentDateEN at $newAppointmentTimeEN',	'$patientName: Nouveau rendez-vous le $newAppointmentDateFR à $newAppointmentTimeFR',	'AppointmentNew',	18,	'2023-01-12 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-01-12 16:39:16',	NULL),
+(18,	'Appointment Reminder',	'Rappel de rendez-vous',	'$patientName: Reminder for an appointment at the $hospitalEN: $appointmentAliasEN on $appointmentDate at $appointmentTime',	'$patientName: Rappel pour un rendez-vous au $hospitalFR : $appointmentAliasFR le $appointmentDate à $appointmentTime',	'AppointmentReminder',	19,	'2023-11-27 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-11-27 16:39:16',	NULL);
 
 
 INSERT INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES

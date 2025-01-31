@@ -139,4 +139,6 @@ INSERT INTO `questionnaire` VALUES (242, 62, 2, 1, 10753, 10755, -1, 10754, 1075
 INSERT INTO `questionnaire` VALUES (243, 62, 1, 1, 10771, 10773, -1, 10772, 10774, 1, 1, -1, 0, 1, 0, '', 1, 'FAMA6017', '2021-08-27 12:13:10', 'FAMA6017', '2021-08-27 16:22:54', 'FAMA6017', '');
 -- databank consent form
 INSERT INTO `questionnaire` (`ID`, `OAUserId`, `purposeId`, `respondentId`, `title`, `nickname`, `category`, `description`, `instruction`, `final`, `version`, `parentId`, `private`, `optionalFeedback`, `visualization`, `logo`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `legacyName`) VALUES
-(247,	13,	4,	1,	20048,	20050,	-1,	20049,	20051,	1,	1,	-1,	0,	1,	0,	'',	0,	'',	'2023-09-22 10:39:05',	'AGKE6000',	'2023-09-22 14:39:27',	'AGKE6000',	'');
+(247,	13,	4,	1,	20048,	20050,	-1,	20049,	20051,	1,	1,	-1,	0,	1,	0,	'',	0,	'',	'2023-09-22 10:39:05',	'AGKE6000',	'2023-09-22 14:39:27',	'AGKE6000',	''),
+-- finalized eConsent
+(248,	13,	4,	1,	20077,	20079,	-1,	20078,	20080,	1,	1,	-1,	0,	1,	0,	'',	0,	'',	'2023-12-20 13:52:15',	'AGKE6000',	'2023-12-20 13:52:28',	'AGKE6000',	'');
