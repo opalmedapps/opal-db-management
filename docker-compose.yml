@@ -12,27 +12,6 @@ services:
       - MARIADB_USER=${DATABASE_USER}
       - MARIADB_PASSWORD=${DATABASE_PASSWORD}
       - TZ=EST5EDT
-  dbv:
-    container_name: dbv-apps
-    build:
-      context: .
-      ssh:
-        # require the SSH_KEY_PATH varialbe to be set and not empty
-        # see: https://docs.docker.com/compose/environment-variables/#substitute-environment-variables-in-compose-files
-        - ssh_key=${SSH_KEY_PATH:?err}
-    image: opalmedapps/dbv:latest
-    depends_on:
-      - db
-    ports:
-      - ${PHP_PORT}:8080
-    volumes:
-      # maintain current revision of DBVs across DBV updates
-      - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
-      - ./revisions/opalreportdb:/var/www/html/dbv/dbv_opalreportdb/data/meta
-    env_file:
-      - .env
-    environment:
-      - TZ=EST5EDT
 
   adminer:
     container_name: adminer
@@ -49,7 +28,6 @@ services:
     image: opalmedapps/alembic:latest
     build:
       context: .
-      dockerfile: alembic.Dockerfile
     volumes:
       - ./certs:/certs
       - ./alembic.ini:/app/alembic.ini
