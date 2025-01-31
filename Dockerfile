@@ -1,6 +1,10 @@
 FROM cgr.dev/chainguard/python:latest-dev as build
 
+USER root
+
 RUN apk add --no-cache build-base mariadb-dev
+
+USER nonroot
 
 # Install pip requirements
 RUN python -m pip install --no-cache-dir --upgrade pip
