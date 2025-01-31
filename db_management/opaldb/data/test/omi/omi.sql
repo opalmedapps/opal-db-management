@@ -1,8 +1,11 @@
+-- OPAL MEDICAL INSTITUTION
+
 INSERT INTO `Hospital_Identifier_Type` (`Hospital_Identifier_Type_Id`, `Code`, `ADT_Web_Service_Code`, `Description_EN`, `Description_FR`) VALUES
-(1,	'RVH',	'MR_PCS',	'Royal Victoria Hospital',	'Hôpital Royal Victoria'),
-(2,	'MGH',	'MG_PCS',	'Montreal General Hospital',	'Hôpital Général de Montréal'),
-(3,	'MCH',	'MC_ADT',	"Montreal Children's Hospital",	'Hôpital de Montréal pour enfants'),
-(4,	'LAC',	'LC_ADT',	'Lachine Hospital',	'Hôpital de Lachine');
+(1,	'RVH',	'MR_PCS',	'Opal General Hospital 1 (RVH)',	'Hôpital général Opal 1 (RVH)'),
+(2,	'MGH',	'MG_PCS',	'Opal General Hospital 2 (MGH)',	'Hôpital général Opal 2 (MGH)'),
+(3,	'MCH',	'MC_ADT',	"Opal Children\'s Hospital",	"L\'Hôpital Opal pour enfants"),
+(4,	'LAC',	'LC_ADT',	'Opal General Hospital 3 (LAC)',	'Hôpital général Opal 3 (LAC)'),
+(5,	'CRE',	'CR_ADT',	'Opal General Hospital 4 (CRE)',	'Hôpital général Opal 4 (CRE)');
 
 INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
 (51,	0,	'',	'',	'Marge',	'Simpson',	'marge_test',	NULL,	'Female',	'1986-10-01 00:00:00',	0,	15144758941,	0,	'marge@opalmedapps.ca',	'EN',	'SIMM86600199',	'3',	DATE_ADD(NOW(), INTERVAL -2 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -2 MONTH)),
@@ -78,7 +81,7 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (8,	NULL,	51,	1,	'56190000000000039165514',	8408,	890,	'2023-06-01 12:36:00',	890,	'2023-06-08 12:35:00',	'',	'Y',	'',	'marge_1986Oct01_pathology_2.pdf',	'marge_1986Oct01_pathology_2.pdf',	890,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');
 
--- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `muhc` demo purposes
+-- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `omi` demo purposes
 -- Bart
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (9,	NULL,	53,	1,	'56190000000000039165515',	99,	891,	'2023-06-01 12:36:00',	891,	'2023-06-08 12:35:00',	'',	'Y',	'',	'bart_2009Feb23_note_mch.pdf',	'bart_2009Feb23_note_mch.pdf',	891,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');

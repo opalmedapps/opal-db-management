@@ -1,9 +1,9 @@
 INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
-(1,	'RVH',	'Royal Victoria Hospital',	'^[0-9]{7}$'),
-(2,	'MGH',	'Montreal General Hospital',	'^[0-9]{7}$'),
-(3,	'MCH',	'Montreal Childrens Hospital',	'^[0-9]{7}$'),
-(4,	'LAC', 'Lachine Hospital', '^[0-9]{7}$'),
-(5,	'CRE', 'Cree Board of Health and Social Services of James Bay', '^[0-9]{7}$');
+(1,	'RVH',	'Opal General Hospital 1 (RVH)',	'^[0-9]{7}$'),
+(2,	'MGH',	'Opal General Hospital 2 (MGH)',	'^[0-9]{7}$'),
+(3,	'MCH',	'Opal Children\'s Hospital',	'^[0-9]{7}$'),
+(4,	'LAC', 'Opal General Hospital 3 (LAC)', '^[0-9]{7}$'),
+(5,	'CRE', 'Opal General Hospital 4 (CRE)', '^[0-9]{7}$');
 
 REPLACE INTO `SpecialityGroup` (`SpecialityGroupId`, `HospitalId`, `SpecialityGroupCode`, `SpecialityGroupName`, `LastUpdated`) VALUES
 (1, 1, 'CCC', 'Cedars Cancer Centre', '2022-01-22 02:34:21'),

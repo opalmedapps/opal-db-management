@@ -1,5 +1,7 @@
+-- OHIG PEDIATRIC INSTITUTION
+
 INSERT INTO `Hospital_Identifier_Type` (`Hospital_Identifier_Type_Id`, `Code`, `ADT_Web_Service_Code`, `Description_EN`, `Description_FR`) VALUES
-(1,	'CHUSJ',	'CHUSJ',	'CHU Sainte-Justine',	'CHU Sainte-Justine');
+(1,	'CHUSJ',	'CHUSJ',	'OHIG Pediatric Hospital',	'Hôpital Pédiatrique OHIG');
 
 INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
 (51,	0,	'',	'',	'Marge',	'Simpson',	'marge_test',	NULL,	'Unknown',	'0000-00-00 00:00:00',	0,	15144758941,	0,	'marge@opalmedapps.ca',	'EN',	'',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	0,	'',	'0000-00-00 00:00:00',	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
