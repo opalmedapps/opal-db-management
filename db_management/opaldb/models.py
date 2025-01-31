@@ -1252,7 +1252,7 @@ class ResourcePending(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     sourceName = Column(String(128), nullable=False)
-    appointmentId = Column(BIGINT(20), nullable=False)
+    appointmentId = Column(String(100), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
     level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     creationDate = Column(DateTime, nullable=False)
@@ -1266,7 +1266,7 @@ class ResourcePendingError(Base):
 
     ID = Column(BIGINT(20), primary_key=True)
     sourceName = Column(String(128), nullable=False)
-    appointmentId = Column(BIGINT(20), nullable=False)
+    appointmentId = Column(String(100), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
     level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     error = Column(MEDIUMTEXT, nullable=False)
@@ -1283,7 +1283,7 @@ class ResourcePendingMH(Base):
     revisionId = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
     action = Column(String(128), nullable=False)
     sourceName = Column(String(128), nullable=False)
-    appointmentId = Column(BIGINT(20), nullable=False)
+    appointmentId = Column(String(100), nullable=False)
     resources = Column(MEDIUMTEXT, nullable=False)
     level = Column(TINYINT(4), nullable=False, server_default=text('1'))
     creationDate = Column(DateTime, nullable=False)

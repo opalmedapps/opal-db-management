@@ -127,6 +127,27 @@ def upgrade() -> None:
         'AppointmentPendingMH',
         'AppointmentAriaSer',
     )
+    op.alter_column(
+        'resourcePending',
+        'appointmentId',
+        existing_type=mysql.BIGINT(display_width=20),
+        type_=sa.String(length=100),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        'resourcePendingError',
+        'appointmentId',
+        existing_type=mysql.BIGINT(display_width=20),
+        type_=sa.String(length=100),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        'resourcePendingMH',
+        'appointmentId',
+        existing_type=mysql.BIGINT(display_width=20),
+        type_=sa.String(length=100),
+        existing_nullable=False,
+    )
 
 
 def downgrade() -> None:
@@ -242,4 +263,25 @@ def downgrade() -> None:
     op.drop_column(
         'Appointment',
         'SourceSystemID',
+    )
+    op.alter_column(
+        'resourcePendingMH',
+        'appointmentId',
+        existing_type=sa.String(length=100),
+        type_=mysql.BIGINT(display_width=20),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        'resourcePendingError',
+        'appointmentId',
+        existing_type=sa.String(length=100),
+        type_=mysql.BIGINT(display_width=20),
+        existing_nullable=False,
+    )
+    op.alter_column(
+        'resourcePending',
+        'appointmentId',
+        existing_type=sa.String(length=100),
+        type_=mysql.BIGINT(display_width=20),
+        existing_nullable=False,
     )
