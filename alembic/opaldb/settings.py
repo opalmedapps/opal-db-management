@@ -25,7 +25,6 @@ OPALDB_ENGINE = create_engine(
     ),
 )
 # SSL Settings for Deployed Environments
-SSL_CA = os.getenv('SSL_CA')
 USE_SSL = os.getenv('USE_SSL')
 
 # Env validation
@@ -42,12 +41,6 @@ for label, setting in settings_dict.items():
     if not setting or setting == '':
         raise AttributeError(f'Warning: Environment variable not set {label}')
 
-# SSL Validation
-if USE_SSL == '1':
-    print('LOG: Launching connection with secure transport.')
-else:
-    print('LOG: Launching connection without secure transport configured.')
-
 # PyMySQL connection parameters for SSL and non-SSL (used to insert test data and functions/views/events)
 # test data: alembic/insert_test_data.py
 # views/funcs: alembic/opaldb/migrations/versions/7a189846a0f5_insert_views_functions_events_procs.py
@@ -61,8 +54,14 @@ PYMYSQL_CONNECT_PARAMS = {  # noqa: WPS407
     'autocommit': True,
     'ssl_disabled': True,
 }
-if USE_SSL:
+
+# SSL Validation
+if USE_SSL == '1':
+    SSL_CA = os.getenv('SSL_CA')
     PYMYSQL_CONNECT_PARAMS.update({
         'ssl_disabled': False,
         'ssl_ca': SSL_CA,
     })
+    print('LOG: Launching connection with secure transport.')
+else:
+    print('LOG: Launching connection without secure transport configured.')
