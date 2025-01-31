@@ -101,3 +101,5 @@ Description_FR='$patientName ($institution): Nouveau document de référence',
 NotificationType='EducationalMaterial'
 WHERE NotificationControlSerNum=7;
 
+-- Alembic and muhc prod out of sync for PatientDeviceIdentifier.attempt, missing default and non nullable
+ALTER TABLE `PatientDeviceIdentifier` MODIFY COLUMN `Attempt` INT NOT NULL DEFAULT 0;
