@@ -11,6 +11,7 @@ from db_management.questionnairedb.models import Base
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+print(config.get_section(config.config_ini_section))
 
 config.set_main_option(
     'sqlalchemy.url',
@@ -77,7 +78,7 @@ def run_migrations_online() -> None:
 
     """
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        config.get_section(config.config_ini_section, {}),
         prefix='sqlalchemy.',
         poolclass=pool.NullPool,
     )

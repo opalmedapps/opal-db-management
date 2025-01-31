@@ -1,4 +1,3 @@
-# type: ignore
 """Adds missing autoincrements to OpalDB.
 
 Note that autoincrements are not supported by alembic revision autogenerate
