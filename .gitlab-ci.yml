@@ -7,7 +7,7 @@ variables:
 default:
   image: python:3.11.8-slim-bookworm
 
-.python_before:
+.default_before:
   before_script:
     - uname -a
     - python --version
