@@ -14,7 +14,7 @@ INSERT INTO `EducationalMaterialControl` (`EducationalMaterialControlSerNum`, `E
 INSERT INTO `DiagnosisTranslation` (`DiagnosisTranslationSerNum`, `AliasName`, `EducationalMaterialControlSerNum`, `Name_EN`, `Name_FR`, `Description_EN`, `Description_FR`, `DiagnosisCode`, `DateAdded`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (1129,	'',	208,	'Breast cancer',	'Cancer du sein',	'<p>description</p>',	'description',	'',	'2018-01-12 14:24:21',	NULL,	'2021-08-27 21:59:13',	'aUipO1XEdi'),
 (1130,	'',	404,	'Prostate cancer',	'Cancer de la prostate',	'description',	'description',	'',	'2018-01-12 14:25:42',	NULL,	'2018-03-27 18:00:39',	NULL),
-(1131,	'',	NULL,	'Lung cancer',	'Cancer du poumons',	'description',	'description',	'',	'2018-01-12 14:29:58',	NULL,	'2018-01-13 00:29:58',	NULL),
+(1131,	'',	NULL,	'Lung cancer',	'Cancer du poumon',	'description',	'description',	'',	'2018-01-12 14:29:58',	NULL,	'2018-01-13 00:29:58',	NULL),
 (1132,	'',	NULL,	'Metastases - Bone',	'Métastases - Os',	'description',	'description',	'',	'2018-01-12 14:32:41',	NULL,	'2018-01-13 00:32:41',	NULL),
 (1133,	'',	NULL,	'Metastases - Respiratory',	'Métastases - Respiratoire',	'description',	'description',	'',	'2018-01-12 14:34:08',	NULL,	'2018-01-13 00:34:08',	NULL),
 (1134,	'',	NULL,	'Metastases - Brain',	'Métastases - Cerveau',	'description',	'description',	'',	'2018-01-12 14:35:22',	NULL,	'2018-01-13 00:35:22',	NULL),
