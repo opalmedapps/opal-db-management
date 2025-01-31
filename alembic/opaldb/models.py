@@ -1598,7 +1598,7 @@ class DiagnosisTranslation(Base):
     __tablename__ = 'DiagnosisTranslation'
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True)
-    AliasName = Column(String(100), nullable=False)
+    AliasName = Column(String(100), nullable=True)
     EducationalMaterialControlSerNum = Column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     Name_EN = Column(String(2056), nullable=False)
     Name_FR = Column(String(2056), nullable=False)
