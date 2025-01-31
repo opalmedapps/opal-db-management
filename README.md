@@ -4,8 +4,8 @@ Opal currently has several different databases for the various services it provi
 
 1. OpalDB (Legacy)
 2. QuestionnaireDB (Legacy)
-3. orms
-4. ormsLog
+3. OrmsDatabase (Legacy)
+4. OrmsLog (Legacy)
 5. OpalReportDB
 
 The Django database is maintained and managed directly in the Django repository, but it does reside on the same server as the above databases. That server can either be brought up by developers in their local environments using the db container from this repository, or by a database administrator in an institution environment.
@@ -257,7 +257,7 @@ docker compose run --rm alembic python -m db_management.run_sql_scripts Question
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts orms db_management/ormsdb/data/truncate/
+docker compose run --rm alembic python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/truncate/
 ```
 
 Insert initial data to OpalDB:
@@ -280,7 +280,7 @@ Insert test data to OpalDB:
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
 ```
 
-The same commands can be used for inserting data to QuestionnaireDB and the orms databases, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data. So to complete your initial and test data insertions:
+The same commands can be used for inserting data to QuestionnaireDB and the OrmsDatabase databases, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data. So to complete your initial and test data insertions:
 
 ```shell
 docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
@@ -291,11 +291,11 @@ docker compose run --rm alembic python -m db_management.run_sql_scripts Question
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts orms db_management/ormsdb/data/initial/
+docker compose run --rm alembic python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/initial/
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts orms db_management/ormsdb/data/test/
+docker compose run --rm alembic python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/
 ```
 
 Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
