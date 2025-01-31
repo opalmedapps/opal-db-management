@@ -1,4 +1,6 @@
 exclude: '^(\.vscode/launch\.json|manage\.py)'
+default_language_version:
+  node: "22.10.0"
 
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
