@@ -546,6 +546,6 @@ INSERT INTO `AppointmentCheckin` (`AliasSerNum`, `CheckinPossible`, `CheckinInst
 (611, 0, '<p>Check-in via Opal is not possible for this appointment. Please go to room C 03.7158, take a number, and then have a seat in the waiting room.<br/></p>', '<p>L\'enregistrement pour ce rendez-vous n\'est pas possible via Opal. Veuillez vous diriger à la salle C 03.7158, prendre un numéro et vous asseoir dans la salle d\'attente.<br/></p>', '2023-03-08 23:41:38', 62, 'JJX95ff3AR', '2023-03-08 23:41:38'),
 (612, 0, '<p>Check-in via Opal is not possible for this appointment. Please go to room C 03.7158, take a number, and then have a seat in the waiting room.<br/></p>', '<p>L\'enregistrement pour ce rendez-vous n\'est pas possible via Opal. Veuillez vous diriger à la salle C 03.7158, prendre un numéro et vous asseoir dans la salle d\'attente.<br/></p>', '2023-03-09 00:02:39', 62, 'JJX95ff3AR', '2023-03-09 00:02:39'),
 (613, 0, '<p>Check-in via Opal is not possible for this appointment. Please go to room C 03.7158, take a number, and then have a seat in the waiting room.<br/></p>', '<p>L\'enregistrement pour ce rendez-vous n\'est pas possible via Opal. Veuillez vous diriger à la salle C 03.7158, prendre un numéro et vous asseoir dans la salle d\'attente.<br/></p>', '2023-03-09 00:06:32', 62, 'JJX95ff3AR', '2023-03-09 00:06:32'),
-(614, 1, 'EN Text to be determined', 'EN Text to be determined', now(), NULL, NULL, now()),
-(615, 1, 'EN Text to be determined', 'EN Text to be determined', now(), NULL, NULL, now());
-(616, 1, 'EN Text to be determined', 'EN Text to be determined', now(), NULL, NULL, now());
+(614, 1, 'EN Text to be determined', 'FR Text to be determined', now(), NULL, NULL, now()),
+(615, 1, 'EN Text to be determined', 'FR Text to be determined', now(), NULL, NULL, now()),
+(616, 1, 'EN Text to be determined', 'FR Text to be determined', now(), NULL, NULL, now());
