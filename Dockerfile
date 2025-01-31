@@ -9,7 +9,7 @@ USER nonroot
 # Install pip requirements
 RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
-RUN python -m pip install --no-cache-dir -r /tmp/development.txt
+# RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
 FROM cgr.dev/chainguard/python:latest
 
