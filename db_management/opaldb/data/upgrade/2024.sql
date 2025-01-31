@@ -93,16 +93,16 @@ INSERT INTO `oaRoleModule` (`moduleId`, `oaRoleId`, `access`) VALUES
 -- Update Notification texts pertaining to Educational Materials and rename to 'Reference Materials'
 UPDATE `NotificationTypes`
 SET
-NotificationTypeId='ReferenceMaterial',
+NotificationTypeId='EducationalMaterial',
 NotificationTypeName='Reference Material'
 WHERE NotificationTypeSerNum=5;
 
 UPDATE `NotificationControl`
 SET
 Name_EN='New Reference Material',
-Name_FR='Nouveau matériel référence',
+Name_FR='Nouveau document de référence',
 Description_EN='$patientName ($institution): New Reference material',
-Description_FR='$patientName ($institution): Nouveau matériel référence',
-NotificationType='ReferenceMaterial'
+Description_FR='$patientName ($institution): Nouveau document de référence',
+NotificationType='EducationalMaterial'
 WHERE NotificationControlSerNum=7;
 
