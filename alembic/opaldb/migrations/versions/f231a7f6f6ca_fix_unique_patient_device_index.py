@@ -14,6 +14,21 @@ branch_labels = None
 depends_on = None
 
 
+# Ensure that the username values for legacy rows in the PatientDeviceIdentifier table have been populated.
+# This is necessary for rows that used PatientSerNum, before the Username column was added.
+username_migration_query = """
+    UPDATE PatientDeviceIdentifier pdi
+    SET pdi.Username = IFNULL((
+        SELECT Username FROM Users u
+        WHERE u.UserTypeSerNum = pdi.PatientSerNum
+            AND u.UserType = 'Patient'
+    ), '')
+    WHERE pdi.Username = ''
+        AND pdi.PatientSerNum IS NOT NULL
+    ;
+"""
+
+
 def sanitization_query(unique_field_first: str, unique_field_second: str) -> str:
     """
     Delete all rows that would violate constraint uniqueness, based on the two provided fields.
@@ -58,6 +73,9 @@ def sanitization_query(unique_field_first: str, unique_field_second: str) -> str
 
 def upgrade() -> None:
     """Fix PatientDeviceIdentifier unique index with the right fields since replacing PatientSerNum by Username."""
+    # Ensure the username fields have been populated for legacy rows
+    op.execute(username_migration_query)
+
     # Sanitize data before creating the new unique index to prevent uniqueness conflicts
     op.execute(sanitization_query('Username', 'DeviceId'))
 
