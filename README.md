@@ -169,17 +169,19 @@ class Patient(Base):
     LastLoginDate = Column("last_login_date", DateTime)
 ```
 
-Then call the autogenerate:
+Then, change directory to the folder representing the database you want to modify (e.g. `./alembic/opaldb`).
+From there, call the autogenerate command:
 
 ```shell
-alembic revision --autogenerate -m "Add last login date column to Patient model"
+docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Add last login date column to Patient model'"
 ```
 
  In general, we should be consistent about our choice of method because if we choose option 1 for several revisions, the models file will have fallen behind the up-to-date state of the database, and a future use of the autogenerate feature will cause alembic to try to un-do all of the manually-generated revisions.
+Because of this, option 2 is preferred.
 
 Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
 
-To go to the latest version for the database, simply run `alembic upgrade head`
+To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above).
 You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
 For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06`
 
@@ -220,7 +222,7 @@ To downgrade the revisions by one.
 We use the same process for any alembic-related revision work. For example to generate a new revision in the container:
 
 ```shell
-docker compose run --rm alembic sh -c "alembic revision --autogenerate -m "Useful_description_of_change""
+docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Useful_description_of_change'"
 ```
 
 To re-insert test data, after setting `INSERT_TEST_DATA=1` in your .env file:
