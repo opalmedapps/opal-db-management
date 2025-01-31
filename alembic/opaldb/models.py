@@ -831,7 +831,7 @@ class Resource(Base):
 
     ResourceSerNum = Column(INTEGER(11), primary_key=True, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True)
-    ResourceAriaSer = Column(INTEGER(11), nullable=False, index=True)
+    ResourceAriaSer = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     ResourceCode = Column(String(128), nullable=False)
     ResourceName = Column(String(255), nullable=False)
     ResourceType = Column(String(1000), nullable=False)
@@ -1163,7 +1163,7 @@ class MasterSourceAlias(Base):
     type = Column(INTEGER(3), nullable=False, server_default=text('-1'), comment='-1 = no type, 1 = Task, 2 = Appointment, 3 = Document')
     source = Column(INTEGER(3), nullable=False, server_default=text('-1'), comment='-1 = no source type, 1 = Aria, 2 = Medivisit')
     deleted = Column(INTEGER(1), nullable=False, server_default=text('0'), comment='has the data being deleted or not')
-    deletedBy = Column(String(255), nullable=False, comment='username of who marked the record to be deleted')
+    deletedBy = Column(String(255), nullable=False, server_default=text(''), comment='username of who marked the record to be deleted')
     creationDate = Column(DateTime, nullable=False, comment='Date of creation of the record')
     createdBy = Column(String(255), nullable=False, comment='username of who created the record')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'), comment='Last time the record was updated')
@@ -1338,7 +1338,7 @@ class AppointmentPendingMH(Base):
         Index('UniqueAppointment', 'sourceName', 'AppointmentAriaSer'),
     )
 
-    AppointmentPendingId = Column(BIGINT(20), primary_key=True, nullable=False)
+    AppointmentPendingId = Column(BIGINT(20), primary_key=True, nullable=False, server_default=text('0'))
     revisionId = Column(BIGINT(20), primary_key=True, nullable=False, index=True)
     action = Column(String(128))
     PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
@@ -1696,21 +1696,19 @@ class PatientDeviceIdentifier(Base):
     )
 
     PatientDeviceIdentifierSerNum = Column(INTEGER(11), primary_key=True)
-    PatientSerNum = Column(ForeignKey('Patient.PatientSerNum', onupdate='CASCADE'), nullable=False, index=True)
+    PatientSerNum = Column(INTEGER(11), nullable=False, server_default=text('0'), index=True, comment='Deprecated')
+    Username = Column(String(255), nullable=False, server_default=text(''))
     DeviceId = Column(String(255), nullable=False)
     appVersion = Column(String(16), nullable=False, comment='Version of Opal App installed on patient device. Eg 1.10.9. Optional.')
     RegistrationId = Column(String(256), nullable=False)
     DeviceType = Column(TINYINT(4), nullable=False, comment='0 = iOS, 1 = Android, 3 = browser')
     SessionId = Column(Text, nullable=False)
-    SecurityAnswerSerNum = Column(ForeignKey('SecurityAnswer.SecurityAnswerSerNum', onupdate='CASCADE'), index=True)
+    SecurityAnswerSerNum = Column(INTEGER(11), nullable=True,  index=True)
+    SecurityAnswer = Column(String(256), nullable=False, server_default=text(''))
     Attempt = Column(INTEGER(11), nullable=False, server_default=text('0'))
     Trusted = Column(TINYINT(1), nullable=False, server_default=text('0'))
     TimeoutTimestamp = Column(TIMESTAMP)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
-
-    Patient = relationship('Patient')
-    SecurityAnswer = relationship('SecurityAnswer')
-
 
 class PostControl(Base):
     __tablename__ = 'PostControl'
@@ -1995,7 +1993,7 @@ class Alias(Base):
 
     AliasSerNum = Column(INTEGER(11), primary_key=True, index=True)
     AliasType = Column(String(25), nullable=False, index=True)
-    AliasUpdate = Column(INTEGER(11), nullable=False, index=True)
+    AliasUpdate = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     AliasName_FR = Column(String(100), nullable=False)
     AliasName_EN = Column(String(100), nullable=False)
     AliasDescription_FR = Column(Text, nullable=False)
@@ -2311,7 +2309,7 @@ class PatientStudy(Base):
     patientId = Column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True, comment='Foreign key with PatientSerNum in Patient table')
     studyId = Column(ForeignKey('study.ID'), nullable=False, index=True, comment='Foreign key with Id in study table.')
     consentStatus = Column(INTEGER(11), nullable=False, comment='Patient consent status for this study. 1 = invited; 2 = opalConsented; 3 = otherConsented; 4 = declined. Mandatory.')
-    readStatus = Column(INTEGER(11), nullable=False, comment='Patient read status for this consent form.')
+    readStatus = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='Patient read status for this consent form.')
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
 
     Patient = relationship('Patient')

@@ -88,6 +88,9 @@ def run_migrations_online() -> None:
         context.configure(
             connection=connection,
             target_metadata=target_metadata,
+            # https://stackoverflow.com/questions/12409724/no-changes-detected-in-alembic-autogeneration-of-migrations-with-flask-sqlalchem
+            compare_type=True,              # Detect changes in col type with autogenerate
+            compare_server_default=True,    # Detect changes in col defaults with autogenerate
         )
 
         with context.begin_transaction():

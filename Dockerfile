@@ -16,7 +16,7 @@ RUN sed -ri -e 's!Listen 80!Listen 8080!g' /etc/apache2/ports.conf
 
 # Initialize default branch name variable that can assign when building the images.
 ARG REGISTERDBV_BRANCH="development"
-ARG QUESTIONNAIREDBV_BRANCH="development"
+ARG QUESTIONNAIREDBV_BRANCH="KA.various-bug-fixes"
 ARG OPAL_REPORT_BRANCH="development"
 
 # Create the ssh folder and add GitLab to known hosts
