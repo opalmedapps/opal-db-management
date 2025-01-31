@@ -195,6 +195,7 @@ run sql scripts:
     - !reference [.database_service, script]
     # migrate databases first
     - ./docker/alembic-upgrade.sh
+    # Full refresh for both OMI and OHIGPH datasets to ensure no broken data links/inconsistencies
     - db_management/reset_data.sh OMI
     - db_management/reset_data.sh OHIGPH
 
