@@ -34,7 +34,7 @@ Create a `.env` file at the root of the project and copy the content of `.env-sa
 
 ### Step 3: Build the PHP Docker images
 
-We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.run the following command at the root of the repository (due to missing support in `docker-compose` this step is separated currently):
+We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.
 
 ```shell
 docker compose build --build-arg CACHEBUST=$(date +%s)
@@ -63,9 +63,8 @@ docker compose build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(
 There are 4 possible arguments, all default to `development`:
 
 1. OPALDBV_BRANCH="development"
-2. REGISTERDBV_BRANCH="development"
-3. QUESTIONNAIREDBV_BRANCH="development"
-4. OPAL_REPORT_BRANCH="development"
+2. QUESTIONNAIREDBV_BRANCH="development"
+3. OPAL_REPORT_BRANCH="development"
 
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
@@ -120,7 +119,11 @@ You should by now have fully up and running opal databases that can be easily st
 
 ## Running the databases with encrypted connections
 
-If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To generate the SSL certificates for the database container and the client applications:
+If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic.
+
+### Generating Self-signed Certificates
+
+To generate the SSL certificates for the database container and the client applications:
 
 1. Open a bash CLI and navigate to the `certs/` directory of your db-docker. There should be three files there already, an `openssl-ca.cnf`, an `openssl-server.cnf`, and a `v3.ext`. These provide the details for openssl to generate the various certificates required to enable encrypted connections between any client application container and the database container.
 2. Generate the certificate authority (CA) certificate:
@@ -148,9 +151,21 @@ If a dev chooses they can also build the containers in this repo with SSL enable
     openssl verify -CAfile ca.pem ca.pem
     ```
 
-5. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (`/certs/ca.pem`).
+### Configuring the use of SSL/TLS
 
-6. Finally, uncomment two lines in your docker-compose.yml: In the `adminer` section uncomment the `./config/adminer-login-ssl.php` volume specification which will enable adminer to connect over SSL. Also uncomment the `./config/ssl.cnf` volume specification in the `db` section to enable the server-side SSL settings. [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for docker to actually use the configs listed there.
+To enable SSL/TLS in MariaDB and all application containers:
+
+1. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (e.g., `/certs/ca.pem`).
+
+2. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
+
+    ```shell
+    cp docker-compose.ssl.yml docker-compose.override.yml
+    ```
+
+    You can verify that it is applied by running `docker compose config`.
+
+    **Note:** [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for Docker to actually use the configs listed there.
 
 ## Alembic Database Revisions Management
 
@@ -172,7 +187,7 @@ To make a change to the database schema, we express our changes in the models fi
 and let the ORM determine how to translate those model changes into DDL.
 Alembic provides an autogenerate feature to automatically translate the difference between the previous revision
 and the current state of the models.
-In models.py we would edit the Patient model as follows:
+In models.py we could edit the Patient model as follows to add a new `LastLoginDate` field, for example:
 
 ```python
 class Patient(Base):
@@ -186,6 +201,8 @@ class Patient(Base):
     LastLoginDate = Column("last_login_date", DateTime)
 ```
 
+Set `INSERT_TEST_DATA=0` in your `.env` file to avoid getting a duplicate insertion error.
+
 Then, change directory to the folder representing the database you want to modify (e.g. `./alembic/opaldb`).
 From there, call the autogenerate command:
 
@@ -195,9 +212,9 @@ docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Add l
 
 This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration.
 Make sure to check the contents of these functions to ensure nothing additional was added.
-Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create QuestionnaireDB.
+Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create a selection of QuestionnaireDB tables which are required in the OpalDB models file due to foreign key constraints between them.
 You'll need to remove these changes manually.
-The migration file will look something like this:
+The migration file will look something like this after you have cleaned it up:
 
 ```python
 from alembic import op
@@ -216,9 +233,7 @@ and any future use of the autogenerate feature would cause Alembic to try to und
 
 Note: Alembic commands must be run from the directory corresponding to the database to which you want to make changes.
 
-To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above).
-You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
-For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06`
+To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
 #### Inserting new test data
 

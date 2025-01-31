@@ -4,6 +4,8 @@ certs/*
 !certs/openssl-server.cnf
 !certs/v3.ext
 
+docker-compose.override.yml
+
 .DS_Store
 .idea/
 # Environment settings
