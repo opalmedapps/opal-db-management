@@ -50,4 +50,3 @@ def downgrade() -> None:
         type_=mysql.BIGINT(display_width=20),
         existing_nullable=True,
     )
-
