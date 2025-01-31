@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 # Description: This script resets the test data insertions for OpalDB, QuestionnaireDB, and orms.
 # Args:
 #      Institution: omi or ohigph
 
+# option pipefail available on alpine sh
+# shellcheck disable=SC3040
 set -euo pipefail
 
 # Define a log function
