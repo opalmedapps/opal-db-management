@@ -1805,8 +1805,8 @@ class TestControl(Base):
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
     LastUpdatedBy = Column(ForeignKey('OAUser.OAUserSerNum', ondelete='SET NULL', onupdate='CASCADE'), index=True)
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
-    URL_EN = Column(String(2000), nullable=False)
-    URL_FR = Column(String(2000), nullable=False)
+    URL_EN = Column(String(2000), nullable=False, server_default=text("''"))
+    URL_FR = Column(String(2000), nullable=False, server_default=text("''"))
     SessionId = Column(String(255))
 
     EducationalMaterialControl = relationship('EducationalMaterialControl')
