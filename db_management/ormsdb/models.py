@@ -24,7 +24,7 @@ metadata = Base.metadata
 
 t_BuildType = Table(
     'BuildType', metadata,
-    Column('Name', String(30), nullable=False, server_default=text('Production'),)
+    Column('Name', String(30), nullable=False)
 )
 
 class Cron(Base):
