@@ -26,6 +26,7 @@ services:
       - MARIADB_USER=${MARIADB_USER}
       - MARIADB_PASSWORD=${MARIADB_PASSWORD}
       - MARIADB_PORT=${MARIADB_PORT}
+      - PHP_PORT=${PHP_PORT}
   
   adminer:
     container_name: adminer
