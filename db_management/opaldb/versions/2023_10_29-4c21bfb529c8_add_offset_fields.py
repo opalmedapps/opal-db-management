@@ -47,4 +47,3 @@ def downgrade() -> None:
     op.drop_column('Filters', 'ScheduledTimeDirection')
     op.drop_column('Filters', 'ScheduledTimeUnit')
     op.drop_column('Filters', 'ScheduledTimeOffset')
-    # ### end Alembic commands ###
