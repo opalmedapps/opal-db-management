@@ -210,7 +210,6 @@ include:
   - component: $CI_SERVER_FQDN/opalmedapps/engineering/ci-templates/check-thirdparty-notice@main
     inputs:
       pip-requirements-files: requirements/base.txt
-      package-file: opal/static/thirdparty/package.json
 
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Workflows/MergeRequest-Pipelines.gitlab-ci.yml
   - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
