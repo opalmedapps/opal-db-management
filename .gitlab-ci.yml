@@ -130,7 +130,7 @@ markdownlint:
   needs:
     - setup
   image:
-    name: davidanson/markdownlint-cli2:v0.16.0
+    name: davidanson/markdownlint-cli2:v0.17.0
     # overwrite default entrypoint (which is a call to markdownlint-cli2)
     entrypoint: [""]
   before_script:
