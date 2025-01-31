@@ -32,7 +32,7 @@ The file will hold our database credentials and is ignored by git.
 
 Pay close attention to the following variable:
 
-1. `USE_SSL` - set this to `0`` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
+1. `USE_SSL` - set this to `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on Running the databases with encrypted connections)
 
 ### Step 3: Scaffold the project using docker compose
 
