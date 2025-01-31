@@ -234,13 +234,29 @@ To go to the latest version for the database, simply run `alembic --name <dbname
 
 #### Inserting new test data
 
-In order to facilitate deployments to new institutions and development, we have split test data used by developers from 'initial' data used by institutions in production environments. These two sets of data can be inserted separately from the CLI. Note that, generally speaking, initial data should be considered the 'base' dataset upon which test data can optionally be added.
+In order to facilitate deployments to new institutions and development, we have split test data used by developers from "initial" data used by institutions in production environments.
+These two sets of data can be inserted separately from the CLI.
+Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
+
+Optional: To remove data in all tables with the exception of the `alembic_version` run the following command:
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/
+```
 
 Insert initial data to OpalDB:
 
 ```shell
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/initial/
 ```
+
+Insert data specific to the institution (patients, hospital sites etc.):
+
+```shell
+docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/muhc/
+```
+
+Note: Replace `muhc` with `chusj` to insert data for Sainte-Justine.
 
 Insert test data to OpalDB:
 
@@ -266,9 +282,10 @@ docker compose run --rm alembic python -m db_management.run_sql_scripts orms db_
 docker compose run --rm alembic python -m db_management.run_sql_scripts orms db_management/ormsdb/data/test/
 ```
 
-Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed. Foreign key checks are disabled by default for QuestionnaireDB due to a circular foreign key dependency between `language` and `dictionary`.
+Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
+Foreign key checks are disabled by default for QuestionnaireDB due to a circular foreign key dependency between `language` and `dictionary`.
 
-### Interacting with the dockerized Alembic container
+### Interacting with the Alembic container
 
 Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes.
 
