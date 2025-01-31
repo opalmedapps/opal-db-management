@@ -28,6 +28,8 @@ variables:
   MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
   # ensure that user has permissions for test DB to be used by pytest
   MARIADB_USER: $MARIADB_USER
+  # alter pip's cache directory to be inside the project directory: https://docs.gitlab.com/ee/ci/caching/#cache-python-dependencies
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
 
 setup:
   stage: .pre
