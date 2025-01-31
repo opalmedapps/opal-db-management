@@ -1,7 +1,7 @@
 """Add Username column to EducationalMaterialRating table
 
 Revision ID: 83ccbdfcf3b5
-Revises: 9f32d05833a5
+Revises: bcf300b3df7b
 Create Date: 2023-05-10 14:17:33.996075
 
 """
