@@ -23,6 +23,7 @@ REVISIONS_DIR = ROOT_DIR / 'revision_data'
 
 CONNECTION_PARAMETERS = sql_connection_parameters(DB_NAME_OPAL)
 
+
 def upgrade() -> None:
     """Insert functions, events, etc for OpalDB."""
     with connection_cursor(CONNECTION_PARAMETERS) as cursor:
