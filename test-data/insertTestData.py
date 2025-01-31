@@ -7,7 +7,7 @@ import pymysql
 from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 
-from config.settings import DB_NAME_OPAL, HOST, PASSWORD, PORT, USER, OPAL_TEST_DATA_NAME
+from config.settings import DB_NAME_OPAL, HOST, OPAL_TEST_DATA_NAME, PASSWORD, PORT, USER  # noqa: E501
 
 # Find root and revision data paths
 ROOT_DIR = Path(__file__).parents[1]
