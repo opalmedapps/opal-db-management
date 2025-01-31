@@ -17,10 +17,20 @@ depends_on = None
 def upgrade() -> None:
     """Alter the appointment sernum column in patient location table."""
     op.drop_index('ix_PatientLocationMH_AppointmentSerNum', table_name='PatientLocationMH')
-    op.create_index(op.f('ix_PatientLocationMH_AppointmentSerNum'), 'PatientLocationMH', ['AppointmentSerNum'], unique=True)
+    op.create_index(
+        op.f('ix_PatientLocationMH_AppointmentSerNum'),
+        'PatientLocationMH',
+        ['AppointmentSerNum'],
+        unique=True,
+    )
 
 
 def downgrade() -> None:
     """Drop the column change."""
     op.drop_index(op.f('ix_PatientLocationMH_AppointmentSerNum'), table_name='PatientLocationMH')
-    op.create_index('ix_PatientLocationMH_AppointmentSerNum', 'PatientLocationMH', ['AppointmentSerNum'], unique=False)
+    op.create_index(
+        'ix_PatientLocationMH_AppointmentSerNum',
+        'PatientLocationMH',
+        ['AppointmentSerNum'],
+        unique=False,
+    )
