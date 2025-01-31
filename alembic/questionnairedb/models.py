@@ -1,6 +1,6 @@
 # type: ignore
 # coding: utf-8
-from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Text, Time, text
+from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -42,7 +42,7 @@ class Language(Base):
     isoLang = Column(String(2), nullable=False)
     name = Column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -74,7 +74,7 @@ class Library(Base):
     order = Column(INTEGER(11), nullable=False, server_default=text('1'))
     private = Column(TINYINT(4), nullable=False, server_default=text('0'))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -111,7 +111,7 @@ class Tag(Base):
     ID = Column(BIGINT(20), primary_key=True)
     tag = Column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -168,9 +168,9 @@ class Questionnaire(Base):
     private = Column(TINYINT(4), nullable=False, server_default=text('0'))
     optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text('1'))
     visualization = Column(TINYINT(4), nullable=False, server_default=text('0'), comment='0 = regular view of the answers, 1 = graph')
-    logo = Column(String(512), nullable=False)
+    logo = Column(String(512), nullable=False, server_default=text("''"))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -203,12 +203,12 @@ class TemplateQuestion(Base):
     OAUserId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
     name = Column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     typeId = Column(ForeignKey('type.ID'), nullable=False, index=True)
-    version = Column(INTEGER(11), nullable=False)
+    version = Column(INTEGER(11), nullable=False, server_default=text('0'))
     parentId = Column(BIGINT(20), nullable=False, index=True, server_default=text('-1'))
     polarity = Column(TINYINT(4), nullable=False, server_default=text('0'))
     private = Column(TINYINT(4), nullable=False, server_default=text('0'))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -218,12 +218,15 @@ class TemplateQuestion(Base):
     type = relationship('Type')
 
 
+
 class AnswerQuestionnaire(Base):
     __tablename__ = 'answerQuestionnaire'
 
     ID = Column(BIGINT(20), primary_key=True)
     questionnaireId = Column(ForeignKey('questionnaire.ID'), nullable=False, index=True)
     patientId = Column(ForeignKey('patient.ID'), nullable=False, index=True)
+    respondentUsername = Column(String(255), nullable=False, server_default=text("''"), comment='Firebase username of the user who answered (or is answering) the questionnaire')
+    respondentDisplayName = Column(String(255), nullable=False, server_default=text("''"), comment='First name and last name of the respondent for display purposes.')
     status = Column(INTEGER(11), nullable=False, server_default=text('0'), comment='0 = New, 1 = In Progress, 2 = Completed')
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
     deletedBy = Column(String(255), nullable=False)
@@ -252,7 +255,7 @@ class Question(Base):
     final = Column(TINYINT(4), nullable=False, server_default=text('0'))
     optionalFeedback = Column(TINYINT(4), nullable=False, server_default=text('0'))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -275,7 +278,7 @@ class QuestionnaireFeedback(Base):
     patientId = Column(ForeignKey('patient.ID'), nullable=False, index=True)
     feedback = Column(Text, nullable=False)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -296,7 +299,7 @@ class QuestionnaireRating(Base):
     rating = Column(INTEGER(11), nullable=False, server_default=text('0'))
     comment = Column(Text, nullable=False)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -316,7 +319,7 @@ class Section(Base):
     instruction = Column(ForeignKey('dictionary.contentId'), nullable=False, index=True)
     order = Column(INTEGER(11), nullable=False, server_default=text('1'))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -411,7 +414,6 @@ class AnswerSection(Base):
     answerQuestionnaire = relationship('AnswerQuestionnaire')
     section = relationship('Section')
 
-
 class Checkbox(Base):
     __tablename__ = 'checkbox'
 
@@ -463,7 +465,7 @@ class QuestionFeedback(Base):
     patientId = Column(ForeignKey('patient.ID'), nullable=False, index=True)
     feedback = Column(Text, nullable=False)
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -484,7 +486,7 @@ class QuestionRating(Base):
     rating = Column(INTEGER(11), nullable=False, server_default=text('0'))
     comment = Column(Text, nullable=False)
     deleted = Column(TINYINT(4), nullable=False, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -534,6 +536,7 @@ class Slider(Base):
     question = relationship('Question')
 
 
+
 class TagQuestion(Base):
     __tablename__ = 'tagQuestion'
 
@@ -573,7 +576,6 @@ class TemplateQuestionLabelOption(Base):
 
     dictionary = relationship('Dictionary')
     templateQuestionLabel = relationship('TemplateQuestionLabel')
-
 
 class TemplateQuestionRadioButtonOption(Base):
     __tablename__ = 'templateQuestionRadioButtonOption'
@@ -631,7 +633,7 @@ class Answer(Base):
     answered = Column(TINYINT(4), nullable=False, server_default=text('0'))
     skipped = Column(TINYINT(4), nullable=False, server_default=text('0'))
     deleted = Column(TINYINT(4), nullable=False, index=True, server_default=text('0'))
-    deletedBy = Column(String(255), nullable=False)
+    deletedBy = Column(String(255), nullable=False, server_default=text("''"))
     creationDate = Column(DateTime, nullable=False)
     createdBy = Column(String(255), nullable=False)
     lastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -657,6 +659,7 @@ class CheckboxOption(Base):
 
     dictionary = relationship('Dictionary')
     checkbox = relationship('Checkbox')
+
 
 
 class LabelOption(Base):
