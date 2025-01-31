@@ -2,17 +2,27 @@ version: '3'
 
 services:
   db:
+    container_name: opal-dbs
     image: mariadb:10.6.4-focal
     ports:
       - 3306:3306
     volumes:
-      - $PWD/db:/docker-entrypoint-initdb.d
+      - $PWD/db-scripts:/docker-entrypoint-initdb.d
     environment:
       - MARIADB_ROOT_PASSWORD=super-duper-secret-password
       - MARIADB_USER=opal
       - MARIADB_PASSWORD=super-duper-more-secretive-password
-
+  
+  php-apache-environment:
+    container_name: dbv-apps
+    image: opaldatabases:latest
+    depends_on:
+      - db
+    ports:
+      - 8000:80
+  
   adminer:
+    container_name: admiter
     image: adminer:4.8.1-standalone
     depends_on:
       - db
