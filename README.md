@@ -69,6 +69,20 @@ There are 4 possible arguments, all default to `development`:
 
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
+#### Step 3.5 Temporary Workflow for Alembic with OpalDB Only
+
+Given that OpalDB has tables with direct relationships to QuestionnaireDB tables, we must run the QuestionnaireDB revisions before running the alembic container to populate OpalDB, otherwise SQLAlchemy will throw errors. This is only a temporary workaround until we have added QuestionnaireDB to alembic.
+
+```shell
+docker compose up --scale alembic=0
+```
+
+This launches the regular containers without Alembic, now we can run the regular revision for QuestionnaireDB:
+
+1. http://localhost:8091/dbv/dbv_questionnairedb/
+
+With this step complete we can proceed as normal. Stop the containers then continue to Step 4 and run them again as normal; alembic will populate OpalDB and insert test data.
+
 ### Step 4
 
 **Scaffold the project using docker compose**
