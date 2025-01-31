@@ -1,13 +1,9 @@
-FROM python:3.11.8-slim-bookworm as build
+FROM python:3.11.8-alpine3.19 as build
 
-RUN apt-get update \
-  # dependencies for building Python packages
-  && apt-get install -y build-essential \
+# dependencies for building Python packages
+RUN apk add --no-cache build-base \
   # mysqlclient dependencies
-  && apt-get install -y default-libmysqlclient-dev pkg-config \
-  # cleaning up unused files
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
+  && apk add --no-cache mariadb-dev
 
 # Install pip requirements
 RUN python -m pip install --no-cache-dir --upgrade pip
@@ -16,12 +12,11 @@ RUN python -m pip install --no-cache-dir -r /tmp/base.txt
 
 FROM python:3.11.8-slim-bookworm
 
-RUN apt-get update \
+RUN apk upgrade --no-cache \
   # mysqlclient dependencies
-  && apt-get install -y default-libmysqlclient-dev \
-  # cleaning up unused files
-  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
+  && apk add --no-cache mariadb-dev \
+  # bash for arrays in shell scripts
+  && apk add --no-cache bash
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
