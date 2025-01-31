@@ -226,8 +226,5 @@ run sql scripts:
   script:
     - !reference [.database_service, script]
     # migrate databases first
-    - alembic --name questionnairedb upgrade head
-    - alembic --name opaldb upgrade head
-    - alembic --name ormsdb upgrade head
-    - alembic --name ormslogdb upgrade head
+    - alembic-upgrade.sh
     - db_management/reset_data.sh MUHC
