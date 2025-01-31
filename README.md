@@ -142,20 +142,11 @@ First assure your db-docker container is built and running so that Alembic can s
 
 The models file contains schema for every table in the database. It's organized alphabetically-ish but you'd be wise to just use Ctrl-F to find your model.
 
-Note we have two options for creating revisions - we can generate a blank revision file with `alembic revision -m "Add column to Patient model"`, then use alembic syntax to express our change. This first option would skip the ORM defined in models.py. In the revision file, we can add the following lines to the `upgrade()` and `downgrade()` functions:
-
-```python
-from alembic import op
-import sqlalchemy as sa
-
-def upgrade():
-    op.add_column('patient', sa.Column('last_login_date', sa.DateTime))
-
-def downgrade():
-    op.drop_column('patient', 'last_login_date')
-```
-
-Option two is to express our changes in the ORM, then use alembic's autogenerate feature to automatically translate the difference between the previous revision and the current state of the models. In models.py we would edit the Patient model as follows:
+To make a change to the database schema, we express our changes in the models file
+and let the ORM determine how to translate those model changes into DDL.
+Alembic provides an autogenerate feature to automatically translate the difference between the previous revision
+and the current state of the models.
+In models.py we would edit the Patient model as follows:
 
 ```python
 class Patient(Base):
@@ -176,10 +167,28 @@ From there, call the autogenerate command:
 docker compose run --rm alembic sh -c "alembic revision --autogenerate -m 'Add last login date column to Patient model'"
 ```
 
- In general, we should be consistent about our choice of method because if we choose option 1 for several revisions, the models file will have fallen behind the up-to-date state of the database, and a future use of the autogenerate feature will cause alembic to try to un-do all of the manually-generated revisions.
-Because of this, option 2 is preferred.
+This will result in a migration file containing `upgrade` and `downgrade` functions used respectively to apply or revert the migration.
+Make sure to check the contents of these functions to ensure nothing additional was added.
+Note that before QuestionnaireDB is added to Alembic, Alembic will try to add migration changes to create QuestionnaireDB.
+You'll need to remove these changes manually.
+The migration file will look something like this:
 
-Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
+```python
+from alembic import op
+import sqlalchemy as sa
+
+def upgrade():
+    op.add_column('Patient', sa.Column('last_login_date', sa.DateTime))
+
+def downgrade():
+    op.drop_column('Patient', 'last_login_date')
+```
+
+It's important to generate migrations in this way (by first modifying `models.py` and then running `autogenerate`).
+If migrations were written from scratch (without using `models.py`), the models file would fall behind the up-to-date state of the database,
+and any future use of the autogenerate feature would cause Alembic to try to undo all of the manually-generated revisions.
+
+Note: Alembic commands must be run from the directory corresponding to the database to which you want to make changes.
 
 To go to the latest version for the database, simply run `alembic upgrade head` (prefixing the command with `docker compose run --rm...` as shown above).
 You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
