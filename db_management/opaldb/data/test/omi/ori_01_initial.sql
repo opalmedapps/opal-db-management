@@ -19,33 +19,3 @@ INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `Pa
 
 INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
 (5,	'Patient',	56,	'ZYHAjhNy6hhr4tOW8nFaVEeKngt1',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59');
-
--- Documents: Pathology && Clinical Notes
--- Filestore must have these pdfs inserted separately (and readable by the listener) for the chart Clinical Reports section to function properly
-
--- Fred Pathology
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(12,	NULL,	56,	1,	'56190000000000039165518',	8408,	890,	'2023-11-03 12:35:00',	890,	'2023-11-03 12:35:00',	'',	'Y',	'',	'fred_2023Nov03_pathology_rvh.pdf',	'fred_2023Nov03_pathology_rvh.pdf',	890,	'2023-11-03 14:35:00',	'T',	'Transfer successful',	'',	'2023-11-03 14:35:00',	0,	'[]',	'2023-11-03 14:35:00');
--- Pebbles Pathology
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(13,	NULL,	57,	1,	'56190000000000039165519',	8408,	890,	'2023-10-29 12:35:00',	890,	'2023-10-29 12:35:00',	'',	'Y',	'',	'pebbles_2023Oct29_pathology_mch.pdf',	'pebbles_2023Oct29_pathology_mch.pdf',	890,	'2023-10-29 14:35:00',	'T',	'Transfer successful',	'',	'2023-10-29 14:35:00',	0,	'[]',	'2023-10-29 14:35:00');
-
--- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `omi` demo purposes
--- Pebbles Note
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(14,	NULL,	57,	1,	'56190000000000039165520',	99,	891,	'2023-10-14 12:36:00',	891,	'2023-10-14 12:36:00',	'',	'Y',	'',	'pebbles_2023Oct14_note_mch.pdf',	'pebbles_2023Oct14_note_mch.pdf',	891,	'2023-10-14 15:36:00',	'T',	'Transfer successful',	'',	'2023-10-14 15:36:00',	0,	'[]',	'2023-10-14 15:36:00');
--- Fred Note
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(15,	NULL,	56,	1,	'56190000000000039165521',	99,	892,	'2023-10-21 12:35:00',	892,	'2023-10-21 12:35:00',	'',	'Y',	'',	'fred_2023Oct21_note_rvh.pdf',	'fred_2023Oct21_note_rvh.pdf',	892,	'2023-10-21 15:35:00',	'T',	'Transfer successful',	'',	'2023-10-21 15:35:00',	0,	'[]',	'2023-10-21 15:35:00');
-
--- Wednesday Pathology
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(16,	NULL,	57,	1,	'56190000000000039165520',	8408,	890,	'2024-02-19 12:35:00',	890,	'2024-02-19 12:35:00',	'',	'Y',	'',	'wednesday_2024Feb19_pathology_rvh.pdf',	'wednesday_2024Feb19_pathology_rvh.pdf',	890,	'2024-02-19 14:35:00',	'T',	'Transfer successful',	'',	'2024-02-19 14:35:00',	0,	'[]',	'2024-02-19 14:35:00');
-
-
-UPDATE `Document`
-SET `CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -4 DAY),
-    `DateAdded` = DATE_ADD(now(), INTERVAL -3 DAY),
-    `LastUpdated` = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE `PatientSerNum` NOT IN (51,52,53)
-;

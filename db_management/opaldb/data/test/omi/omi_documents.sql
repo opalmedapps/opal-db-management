@@ -28,8 +28,6 @@ WHERE PatientSerNum = 52;
 -- Marge
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (7,	NULL,	51,	1,	'56190000000000039165513',	8408,	890,	'2021-11-28 11:52:00',	890,	'2021-12-05 11:52:00',	'',	'Y',	'',	'marge_1986Oct01_pathology_1.pdf',	'marge_1986Oct01_pathology_1.pdf',	890,	'2021-12-05 11:53:00',	'T',	'Transfer successful',	'',	'2021-12-06 11:53:00',	0,	'[]',	'2021-12-06 11:53:00');
-INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(8,	NULL,	51,	1,	'56190000000000039165514',	8408,	890,	'2023-04-12 10:26:00',	890,	'2023-04-19 10:26:00',	'',	'Y',	'',	'marge_1986Oct01_pathology_2.pdf',	'marge_1986Oct01_pathology_2.pdf',	890,	'2023-04-19 10:27:00',	'T',	'Transfer successful',	'',	'2023-04-20 10:27:00',	0,	'[]',	'2023-04-20 10:27:00');
 UPDATE `Document`
 SET
 `ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -2 DAY),
@@ -37,7 +35,19 @@ SET
 `CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -2 DAY),
 `DateAdded` = DATE_ADD(now(), INTERVAL -2 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -2 DAY)
-WHERE PatientSerNum = 51;
+WHERE PatientSerNum = 51 AND DocumentSerNum = 7;
+
+INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
+(8,	NULL,	51,	1,	'56190000000000039165514',	8408,	890,	'2023-04-12 10:26:00',	890,	'2023-04-19 10:26:00',	'',	'Y',	'',	'marge_1986Oct01_pathology_2.pdf',	'marge_1986Oct01_pathology_2.pdf',	890,	'2023-04-19 10:27:00',	'T',	'Transfer successful',	'',	'2023-04-20 10:27:00',	0,	'[]',	'2023-04-20 10:27:00');
+UPDATE `Document`
+SET
+`ApprovedTimeStamp` = DATE_ADD(now(), INTERVAL -12 DAY),
+`DateOfService` = DATE_ADD(now(), INTERVAL -12 DAY),
+`CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -12 DAY),
+`DateAdded` = DATE_ADD(now(), INTERVAL -12 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -12 DAY)
+WHERE PatientSerNum = 51 AND DocumentSerNum = 8;
+
 
 
 -- We add those records here to manually insert `Clinical Notes` documents for hospital-specific `omi` demo purposes
