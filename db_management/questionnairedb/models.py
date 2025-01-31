@@ -1,5 +1,3 @@
-from types import MappingProxyType
-
 from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Table, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
@@ -154,9 +152,9 @@ class Type(Base):
 
 class LegacyType(Base):
     __tablename__ = 'legacyType'
-    __table_args__ = MappingProxyType({
+    __table_args__ = {
         'comment': 'This table is a direct replication from the legacy table QuestionType in questionnaireDB. It is required for the time of the migration. When the migration will be over and the triggers will stop, this table needs to be deleted.'
-    })
+    }
 
     ID = Column(BIGINT(20), primary_key=True)
     legacyName = Column(String(255), nullable=False)
