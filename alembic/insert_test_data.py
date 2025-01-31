@@ -4,8 +4,7 @@ import sys
 from pathlib import Path
 
 import pymysql
-from opaldb.settings import (DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT,
-                             DB_USER)
+from opaldb.settings import DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT, DB_USER
 from pymysql.constants import CLIENT
 from pymysql.cursors import Cursor
 

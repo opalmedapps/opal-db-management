@@ -6,11 +6,42 @@
     // Allow to receive patch updates for PHP and MariaDB while waiting with upgrading to the next minor version
     ":separatePatchReleases",
   ],
+  "pip_requirements": {
+    "fileMatch": ["^requirements/.*\\.txt$"]
+  },
   "assignees": ["mschoettle", "david.gagne"],
   "labels": ["dependencies"],
+  // Only rebase existing MRs when the branch is conflicted
+  // This avoids getting spammed by updates to existing MRs
+  // We need to rebase branches to fast-forward merge anyway
+  //
+  // https://docs.renovatebot.com/configuration-options/#rebasewhen
+  "rebaseWhen": "conflicted",
   // enable updates for pre-commit
   // see: https://docs.renovatebot.com/modules/manager/pre-commit/
   "pre-commit": {
     "enabled": true
-  }
+  },
+  "packageRules": [
+    // Change commit type to build for Docker-related updates
+    {
+      "matchDatasources": ["docker", "docker-compose"],
+      "semanticCommitType": "build"
+    },
+    // Group flake8-related updates
+    {
+      "matchPackagePatterns": ["flake8"],
+      "groupName": "flake8 packages"
+    },
+    // Group all mypy stub updates together
+    {
+      "matchPackagePatterns": ["-stubs$", "^types-"],
+      "groupName": "mypy type stubs"
+    },
+    // Allow to receive patch updates while waiting with upgrading to the next minor version
+    {
+      "matchPackagePatterns": ["python", "mariadb"],
+      "separateMinorPatch": true
+    },
+  ]
 }

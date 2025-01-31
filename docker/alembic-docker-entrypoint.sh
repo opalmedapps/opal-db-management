@@ -5,10 +5,10 @@ set -euo pipefail
 cd opaldb && alembic upgrade head
 
 # Check for test data insertion condition
-if [ -z "${INSERT_TEST_DATA:-}" ]; then
-  echo "Omit test data insertion"
-else
+if [ "${INSERT_TEST_DATA:-0}" == "1" ]; then
   cd /app && python insert_test_data.py
+else
+  echo "Omit test data insertion"
 fi
 
 exec "$@"

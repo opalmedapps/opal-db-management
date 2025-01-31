@@ -57,7 +57,6 @@ Purpose: This will override the original location of the appointment by figuring
 	The morning shift is AM until 13:00 which is considered PM.
 
 	NOTE: This is temporary for now due to the fact of the hard coding of the database and hospital maps. Need to design this to be more dynamic.
-
 Parameters:
 	in_DateTime = date and time of the appointment
 
@@ -70,7 +69,6 @@ Parameters:
 
 Update: 2021-09-21 YM
 	Removed the connection to ORMS database because we are now using APIs
-
 */
 
 	-- Declare variables
@@ -79,7 +77,6 @@ Update: 2021-09-21 YM
 	Declare wsDayOfWeek, wsBloodTest, wsDS_Area VarChar(3);
 	Declare wsAMFM, wsReturnLevel VarChar(3);
 	Declare wsReturnHospitalMap Int;
-
 	-- Store the parameters
 	set wsDateTime = in_DateTime;
 	set wsDescription = in_Description;
@@ -151,7 +148,6 @@ Update: 2021-09-21 YM
 		*/
 		-- If no location found, return N/A
 		set wsReturnLevel = (IfNull(wsReturnLevel, 'N/A'));
-
 	end if;
 
 
@@ -205,7 +201,6 @@ BEGIN
 	Declare wsLanguage varchar(2);
 	Declare wsRefTableRowSerNum int;
 	Declare wsNotificationRequestType varchar(50);
-
 	Declare wsLanguage_EN, wsLanguage_FR varchar(2000);
 
 	set wsReturn = '';
@@ -267,7 +262,6 @@ BEGIN
 		from 	EducationalMaterial E, EducationalMaterialControl EC
 		where E.EducationalMaterialControlSerNum = EC.EducationalMaterialControlSerNum
 			and E.EducationalMaterialSerNum = wsRefTableRowSerNum;
-
 	end if;
 
 /*
@@ -300,7 +294,6 @@ BEGIN
 	Declare wsReturn, wsType, wsDescription VarChar(255);
 	Declare wsAppointmentSerNum BigInt;
 	Declare wsLoopCount, wsCount int;
-
 	set wsType = in_Type;
 	set wsAppointmentSerNum = in_AppointmentSerNum;
 
@@ -376,13 +369,11 @@ BEGIN
 		and TranslationCurrent = wsText
 		and RefTableRecNo = wsRecNo
 	Limit 1;
-
 	if (wsCount = 0) then
 		set wsReturn = wsText;
 	else
 		set wsReturn = wsReturnText;
 	end if;
-
 	Return wsReturn;
 
 END;
@@ -419,7 +410,6 @@ if (wsramqNumber <> '') then
 		INSERT INTO Patient
 			(FirstName,LastName,Sex,DateOfBirth,Age,TelNum,EnableSMS,SSN)
 		VALUES (wsfirstName, wslastName, wssex, wsDOB, TIMESTAMPDIFF(year, wsDOB, now()), wshomePhoneNumber, 0, wsramqNumber);
-
 		set wsPatientSerNum = (select ifnull((select PatientSerNum from Patient where (SSN = wsramqNumber) limit 1), -1) as PatientSerNum);
 	else
 		update Patient set FirstName = wsfirstName, LastName = wslastName, Sex=wssex , DateOfBirth=wsDOB, Age = TIMESTAMPDIFF(year, wsDOB, now()), TelNum=wshomePhoneNumber, SSN=wsramqNumber
@@ -564,7 +554,6 @@ CREATE PROCEDURE `getQuestionnaireResults`(
 	IN `in_QuestionnaireSerNum` INT
 )
 Generate_Report : BEGIN
-
 	-- Declare variables
 	Declare wsQuestionnaireSerNum Int;
 

@@ -1,10 +1,22 @@
 # type: ignore
 """Base ORM models file for OpalDB."""
 # coding: utf-8
-from sqlalchemy import (TIMESTAMP, Column, Date, DateTime, Enum, Float,
-                        ForeignKey, Index, String, Table, Text, Time, text)
-from sqlalchemy.dialects.mysql import (BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT,
-                                       SMALLINT, TINYINT, VARCHAR)
+from sqlalchemy import (
+    TIMESTAMP,
+    Column,
+    Date,
+    DateTime,
+    Enum,
+    Float,
+    ForeignKey,
+    Index,
+    String,
+    Table,
+    Text,
+    Time,
+    text,
+)
+from sqlalchemy.dialects.mysql import BIGINT, INTEGER, LONGTEXT, MEDIUMTEXT, SMALLINT, TINYINT, VARCHAR
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
