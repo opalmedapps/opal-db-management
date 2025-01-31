@@ -1,4 +1,3 @@
-# set up
 # see: https://docs.gitlab.com/ee/ci/caching/#cache-python-dependencies
 # Change pip's cache directory to be inside the project directory since we can
 # only cache local items.
@@ -7,15 +6,17 @@ variables:
 
 default:
   image: python:3.11.8-slim-bookworm
+
+.python_before:
   before_script:
-  - uname -a
-  - python --version
-  - which python
-  # install dependencies for mysqlclient
-  - apt update && apt-get install -y build-essential libmariadb-dev pkg-config
-  # don't fail if venv is not set up yet (during setup)
-  - python -m venv .venv
-  - source .venv/bin/activate || true
+    - uname -a
+    - python --version
+    - which python
+    # install dependencies for mysqlclient
+    - apt update && apt-get install -y build-essential libmariadb-dev pkg-config
+    # don't fail if venv is not set up yet (during setup)
+    - python -m venv .venv
+    - source .venv/bin/activate || true
 
 stages:
   - Build
@@ -24,6 +25,7 @@ stages:
 
 setup:
   stage: .pre
+  extends: .default_before
   script:
     - python -m venv .venv
     - source .venv/bin/activate
@@ -119,6 +121,7 @@ build alembic image:
 
 flake8:
   stage: Static Analysis
+  extends: .default_before
   needs:
     - setup
   script:
@@ -138,6 +141,7 @@ flake8:
 
 mypy:
   stage: Static Analysis
+  extends: .default_before
   needs:
     - setup
   script:
@@ -176,6 +180,7 @@ markdownlint:
 .database_service:
   needs:
     - job: setup
+  extends: .default_before
   variables:
     MARIADB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
     # ensure that user has permissions for test DB to be used by pytest
@@ -228,3 +233,15 @@ run sql scripts:
     # migrate databases first
     - ./docker/alembic-upgrade.sh
     - db_management/reset_data.sh MUHC
+
+# run pipelines for default branch, tags, and all types of merge request pipelines
+# to support merge trains
+# see: https://gitlab.com/gitlab-org/gitlab/-/issues/13159#note_373865588
+include:
+  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Workflows/MergeRequest-Pipelines.gitlab-ci.yml
+  - template: 'Workflows/MergeRequest-Pipelines.gitlab-ci.yml'
+  # use latest template versions to run security scanning jobs also in merge request pipelines:
+  # https://docs.gitlab.com/ee/user/application_security/index.html#use-security-scanning-tools-with-merge-request-pipelines
+  # Secret Detection: https://docs.gitlab.com/ee/user/application_security/secret_detection/
+  # See: https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Secret-Detection.latest.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.latest.gitlab-ci.yml
