@@ -38,7 +38,7 @@ VALUES (NEW.HospitalMapSerNum, NEW.MapUrl, NEW.MapURL_EN, NEW.MapURL_FR, NEW.QRM
 NEW.MapName_EN, NEW.MapDescription_EN, NEW.MapName_FR, NEW.MapDescription_FR, NOW(),
 NEW.LastUpdatedBy, NEW.SessionId, 'INSERT');\nEND;\n""")
 
-UPDATED_HOSPITALMAP_UPDATE_TRIGGER =  ReplaceableObject(
+UPDATED_HOSPITALMAP_UPDATE_TRIGGER = ReplaceableObject(
     name='`hospitalmap_update_trigger`',
     sqltext="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`, `MapURL_EN`,
@@ -72,7 +72,7 @@ NEW.QRMapAlias, NEW.QRImageFileName, NEW.MapName_EN, NEW.MapDescription_EN,
 NEW.MapName_FR, NEW.MapDescription_FR, NOW(), NEW.LastUpdatedBy,
 NEW.SessionId, 'INSERT');\nEND;\n""")
 
-OLD_HOSPITALMAP_UPDATE_TRIGGER =  ReplaceableObject(
+OLD_HOSPITALMAP_UPDATE_TRIGGER = ReplaceableObject(
     name='`hospitalmap_update_trigger`',
     sqltext="""AFTER UPDATE ON `HospitalMap` FOR EACH ROW BEGIN\n
 INSERT INTO `HospitalMapMH`(`HospitalMapSerNum`, `MapUrl`,
