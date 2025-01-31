@@ -1,4 +1,5 @@
 SET foreign_key_checks = 0;
+TRUNCATE TABLE `BuildType`;
 TRUNCATE TABLE `type`;
 TRUNCATE TABLE `answerTime`;
 TRUNCATE TABLE `questionnaireFeedback`;

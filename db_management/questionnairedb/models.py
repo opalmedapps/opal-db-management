@@ -1,4 +1,4 @@
-from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Text, text
+from sqlalchemy import TIMESTAMP, Column, DateTime, Float, ForeignKey, String, Table, Text, text
 from sqlalchemy.dialects.mysql import BIGINT, INTEGER, MEDIUMTEXT, TINYINT
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import relationship
@@ -8,6 +8,10 @@ Base: DeclarativeMeta = declarative_base()
 
 metadata = Base.metadata
 
+t_BuildType = Table(
+    'BuildType', metadata,
+    Column('Name', String(30), nullable=False)
+)
 
 class DefinitionTable(Base):
     __tablename__ = 'definitionTable'

@@ -29,6 +29,7 @@ ALTER TABLE `PatientInsuranceIdentifier` DROP SYSTEM VERSIONING;
 ALTER TABLE `Hospital` DROP SYSTEM VERSIONING;
 
 -- Truncate
+TRUNCATE TABLE `BuildType`;
 TRUNCATE TABLE `DiagnosisChapter`;
 TRUNCATE TABLE `ExamRoom`;
 TRUNCATE TABLE `Profile`;

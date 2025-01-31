@@ -238,7 +238,7 @@ In order to facilitate deployments to new institutions and development, we have 
 These two sets of data can be inserted separately from the CLI.
 Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
 
-Optional: To remove data in all tables with the exception of the `alembic_version` run the following command:
+Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real Production databases.
 
 ```shell
 docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/
