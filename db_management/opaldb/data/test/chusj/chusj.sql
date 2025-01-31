@@ -27,7 +27,7 @@ INSERT INTO `SecurityAnswer` (`SecurityQuestionSerNum`, `PatientSerNum`, `Answer
 (2,	53,	'f3b49c229cc474b3334dd4a3bbe827a866cbf6d6775cde7a5c42da24b4f15db8c0e564c4ff20754841c2baa9dafffc2caa02341010456157b1de9b927f24a1e6',	'2018-11-08 12:38:23',	'2019-01-11 02:45:19'),
 (5,	53,	'a7dbabba9a0371fbdb92724a5ca66401e02069089b1f3a100374e61f934fe9e959215ae0327de2bc064a9dfc351c4d64ef89bd47e95be0198a1f466c3518cc1d',	'2018-11-08 12:38:47',	'2019-01-11 02:45:32');
 
--- We add those records here to manually insert documents for hospital-specific `muhc` demo purposes `Pathology`
+-- We add those records here to manually insert `Clinical Notes` documents  for hospital-specific `chusj` demo purposes
 -- Bart
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (5,	NULL,	53,	1,	'56190000000000039165511',	99,	890,	'2023-06-01 12:36:00',	890,	'2023-06-08 12:35:00',	'',	'Y',	'',	'bart_2009Feb23_note.pdf',	'bart_2009Feb23_note.pdf',	890,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	1,	'[\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]',	'2023-01-12 16:39:17');
