@@ -4,7 +4,7 @@ RUN apt-get update \
   # dependencies for building Python packages
   && apt-get install -y build-essential \
   # mysqlclient dependencies
-  && apt-get install -y default-libmysqlclient-dev \
+  && apt-get install -y default-libmysqlclient-dev pkg-config \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*

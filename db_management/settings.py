@@ -2,9 +2,6 @@
 import os
 from typing import Literal, Optional, overload
 
-from pymysql.constants import CLIENT
-from sqlalchemy import create_engine
-
 
 @overload
 def _env(
@@ -45,44 +42,7 @@ DB_PASSWORD = _env('DATABASE_PASSWORD')
 DB_NAME_OPAL = _env('LEGACY_OPAL_DB_NAME')
 DB_NAME_QUESTIONNAIRE = _env('LEGACY_QUESTIONNAIRE_DB_NAME')
 
-# SQLAlchemy-->OpalDB Engine
-OPALDB_ENGINE = create_engine(
-    'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'.format(
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT,
-        database=DB_NAME_OPAL,
-    ),
-)
 
 # SSL Settings
 USE_SSL = _env('USE_SSL', default='0', required=False) == '1'
 SSL_CA = _env('SSL_CA', required=False)
-
-
-# PyMySQL connection parameters for SSL and non-SSL (used to insert test data and functions/views/events)
-# test data: alembic/insert_test_data.py
-# views/funcs: alembic/opaldb/migrations/versions/7a189846a0f5_insert_views_functions_events_procs.py
-PYMYSQL_CONNECT_PARAMS = {  # noqa: WPS407
-    'user': DB_USER,
-    'password': str(DB_PASSWORD),
-    'host': DB_HOST,
-    'port': DB_PORT,
-    'database': DB_NAME_OPAL,
-    'client_flag': CLIENT.MULTI_STATEMENTS,
-    'autocommit': True,
-    'ssl_disabled': True,
-}
-
-# SSL Validation
-if USE_SSL:
-    SSL_CA = os.getenv('SSL_CA')
-    PYMYSQL_CONNECT_PARAMS.update({
-        'ssl_disabled': False,
-        'ssl_ca': SSL_CA,
-        'ssl_verify_identity': True,
-    })
-    print('LOG: Launching connection with secure transport.')
-else:
-    print('LOG: Launching connection without secure transport configured.')

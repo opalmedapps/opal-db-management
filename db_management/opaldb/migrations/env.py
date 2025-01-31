@@ -7,31 +7,15 @@ from sqlalchemy import engine_from_config, pool
 
 
 from db_management.opaldb.models import Base
-from db_management import settings
+from db_management import connection, settings
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-# Reset sqlalchemy target url using .env vars
-connection_params = {
-    'user': settings.DB_USER,
-    'password': str(settings.DB_PASSWORD),
-    'host': settings.DB_HOST,
-    'port': settings.DB_PORT,
-    'database': settings.DB_NAME_OPAL,
-}
-connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
-# Add ssl settings if using SSL connection to db
-if settings.USE_SSL:
-    connection_params.update({
-        'ssl_ca': settings.SSL_CA,
-    })
-    connection_url += '?ssl_ca={ssl_ca}'  # noqa: WPS336
-
 config.set_main_option(
     'sqlalchemy.url',
-    connection_url.format(**connection_params),
+    connection.connection_url(settings.DB_NAME_OPAL),
 )
 
 # Interpret the config file for Python logging.
