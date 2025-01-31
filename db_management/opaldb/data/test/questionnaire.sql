@@ -1,8 +1,8 @@
 INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
--- all get: esas
-(1,	NULL,	4,	51,	'2000-01-01 00:00:00',	184,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(2,	NULL,	4,	52,	'2000-01-01 00:00:00',	190,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(3,	NULL,	4,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+-- all get: esas-r
+(1,	NULL,	42,	51,	'2000-01-01 00:00:00',	184,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(2,	NULL,	42,	52,	'2000-01-01 00:00:00',	190,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+(3,	NULL,	42,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
 -- marge: breast, preop completed
 (4,	NULL,	155,	51,	'2000-01-01 00:00:00',	5354,	1,	NULL,	'',	'2000-01-01 00:00:00'),
@@ -11,10 +11,7 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 -- homer: QOL head and neck
 (6,	NULL,	108,	52,	'2000-01-01 00:00:00',	3457,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
--- bart: bowel function
-(7,	NULL,	24,	53,	'2000-01-01 00:00:00',	840,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- all get databank consent questionnaire
+-- all get databank consent questionnaire except lisa
 (8,	85504,	157,	51,	'2000-01-01 00:00:00',	5359,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 (9,	85504,	157,	52,	'2000-01-01 00:00:00',	5360,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 (10,	85504,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00'),
@@ -23,20 +20,23 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 (13,	85504,	157,	57,	'2000-01-01 00:00:00',	5364,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 
 -- fred: GAD7
-(14,	85504,	50,	56,	'2000-01-01 00:00:00',	5365,	0,	NULL,	'',	'2000-01-01 00:00:00');
+(14,	85504,	50,	56,	'2000-01-01 00:00:00',	5365,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+
+-- add an esas for lisa
+(15,	NULL,	42,	54,	'2000-01-01 00:00:00',	208,	0,	NULL,	'',	'2000-01-01 00:00:00');
 
 -- Update all Questionnaire dates to make the data more similar to a live environment
 
--- ESAS sent 3 days ago
+-- ESAS-r sent today
 UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -3 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE QuestionnaireControlSerNum = 4;
+SET DateAdded = now(),
+    LastUpdated = now()
+WHERE QuestionnaireControlSerNum = 42;
 UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -3 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -3 DAY)
+SET DateAdded = now(),
+    LastUpdated = now()
 WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum in (1, 2, 3);
+AND RefTableRowSerNum in (1, 2, 3, 15);
 
 -- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
 UPDATE Questionnaire
@@ -70,17 +70,6 @@ SET DateAdded = DATE_ADD(now(), INTERVAL -1 DAY),
     LastUpdated = DATE_ADD(now(), INTERVAL -1 DAY)
 WHERE NotificationControlSerNum = 13
 AND RefTableRowSerNum = 6;
-
--- Bowel function sent 5 days ago
-UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -5 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE QuestionnaireControlSerNum = 24;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -5 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum = 7;
 
 -- Databank Consent sent 2 days ago
 UPDATE Questionnaire

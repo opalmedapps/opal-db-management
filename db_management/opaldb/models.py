@@ -77,7 +77,7 @@ class AliasMH(Base):
     AliasName_EN = Column(String(100), nullable=False)
     AliasDescription_FR = Column(Text, nullable=False)
     AliasDescription_EN = Column(Text, nullable=False)
-    EducationalMaterialControlSerNum = Column(INTEGER(11), index=True)
+    EducationalMaterialControlSerNum = Column(INTEGER(11), index=True, comment='To be changed to ReferenceMaterialControlSerNum when migrated to Django.')
     HospitalMapSerNum = Column(INTEGER(11))
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     ColorTag = Column(String(25), nullable=False, server_default=text("'#777777'"))
@@ -221,7 +221,7 @@ class DiagnosisTranslationMH(Base):
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     RevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
-    EducationalMaterialControlSerNum = Column(INTEGER(11), index=True)
+    EducationalMaterialControlSerNum = Column(INTEGER(11), index=True, comment='To be changed to ReferenceMaterialControlSerNum when migrated to Django.')
     Name_EN = Column(String(2056), nullable=False)
     Name_FR = Column(String(2056), nullable=False)
     Description_EN = Column(String(2056), nullable=False)
@@ -305,8 +305,9 @@ class DocumentMH(Base):
 
 class EducationalMaterialCategory(Base):
     __tablename__ = 'EducationalMaterialCategory'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.  Category refers to the purpose of the Educational Material.'}
 
-    ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
+    ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment. Purpose of the Educational Material.')
     title_EN = Column(String(128), nullable=False, server_default=text("''"), comment='English title of an educational material category.')
     title_FR = Column(String(128), nullable=False, server_default=text("''"), comment='French title of an educational material category.')
     description_EN = Column(String(512), nullable=False, server_default=text("''"), comment='English description of an educational material category.')
@@ -315,6 +316,7 @@ class EducationalMaterialCategory(Base):
 
 class EducationalMaterialMH(Base):
     __tablename__ = 'EducationalMaterialMH'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True, nullable=False)
     EducationalMaterialRevSerNum = Column(INTEGER(11), primary_key=True, nullable=False, autoincrement=True, index=True)
@@ -329,7 +331,7 @@ class EducationalMaterialMH(Base):
 
 class EducationalMaterialPackageContent(Base):
     __tablename__ = 'EducationalMaterialPackageContent'
-    __table_args__ = {'comment': 'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes.'}
+    __table_args__ = {'comment': 'Directory of each material that is contained in an educational material package. No foreign keys to facilitate order changes. All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialPackageContentSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False, index=True, comment='Material contained in a package.')
@@ -343,6 +345,7 @@ class EducationalMaterialPackageContent(Base):
 
 class EducationalMaterialRating(Base):
     __tablename__ = 'EducationalMaterialRating'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialRatingSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False)
@@ -355,6 +358,8 @@ class EducationalMaterialRating(Base):
 
 class EducationalMaterialTOC(Base):
     __tablename__ = 'EducationalMaterialTOC'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
+
 
     EducationalMaterialTOCSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False, index=True)
@@ -1112,6 +1117,7 @@ class CategoryModule(Base):
 
 class CronControlEducationalMaterial(Base):
     __tablename__ = 'cronControlEducationalMaterial'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlEducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False, index=True, comment='Foreign key with EducMatControlSerNum from EMC. Mandatory.')
@@ -1123,6 +1129,7 @@ class CronControlEducationalMaterial(Base):
 
 class CronControlPatientEducationalMaterial(Base):
     __tablename__ = 'cronControlPatient_EducationalMaterial'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
     cronControlPatientSerNum = Column(INTEGER(11), nullable=False, index=True, comment='Foreign key with PatientSerNum from patient control. Mandatory.')
@@ -1407,11 +1414,12 @@ class Diagnosi(Base):
 
 class EducationalMaterialControl(Base):
     __tablename__ = 'EducationalMaterialControl'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
     EducationalMaterialType_EN = Column(String(100), nullable=False)
     EducationalMaterialType_FR = Column(String(100), nullable=False)
-    EducationalMaterialCategoryId: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table.')
+    EducationalMaterialCategoryId: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table. Category refers to the purpose of the Educational Material.')
     PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     Name_EN = Column(String(200), nullable=False)
     Name_FR = Column(VARCHAR(200), nullable=False)
@@ -1599,7 +1607,7 @@ class DiagnosisTranslation(Base):
 
     DiagnosisTranslationSerNum = Column(INTEGER(11), primary_key=True)
     AliasName = Column(String(100), nullable=False, server_default=text("''"))
-    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True, comment='To be changed to ReferenceMaterialControlSerNum when migrated to Django.')
     Name_EN = Column(String(2056), nullable=False)
     Name_FR = Column(String(2056), nullable=False)
     Description_EN = Column(String(2056), nullable=False)
@@ -1616,6 +1624,7 @@ class DiagnosisTranslation(Base):
 
 class EducationalMaterial(Base):
     __tablename__ = 'EducationalMaterial'
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
 
     EducationalMaterialSerNum = Column(INTEGER(11), primary_key=True)
     CronLogSerNum: Mapped[int] = mapped_column(ForeignKey('CronLog.CronLogSerNum', onupdate='CASCADE'), nullable=True, index=True)
@@ -1798,7 +1807,7 @@ class TestControl(Base):
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
     SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
-    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True, comment='To be changed to ReferenceMaterialControlSerNum when migrated to Django.')
     InterpretationRecommended = Column(Boolean, nullable=False, server_default=text('0'), comment='Clinician interpretation recommended.')
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
@@ -1901,7 +1910,7 @@ class TestResultControl(Base):
     Group_EN = Column(String(200), nullable=False)
     Group_FR = Column(String(200), nullable=False)
     SourceDatabaseSerNum: Mapped[int] = mapped_column(ForeignKey('SourceDatabase.SourceDatabaseSerNum', onupdate='CASCADE'), nullable=False, index=True, server_default=text('1'))
-    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True, comment='To be changed to ReferenceMaterialControlSerNum when migrated to Django.')
     PublishFlag = Column(INTEGER(11), nullable=False)
     DateAdded = Column(DateTime, nullable=False)
     LastPublished = Column(DateTime, nullable=False, server_default=text("'2002-01-01 00:00:00'"))
@@ -1999,7 +2008,7 @@ class Alias(Base):
     AliasName_EN = Column(String(100), nullable=False)
     AliasDescription_FR = Column(Text, nullable=False)
     AliasDescription_EN = Column(Text, nullable=False)
-    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
+    EducationalMaterialControlSerNum: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialControl.EducationalMaterialControlSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True,comment='To be changed to ReferenceMaterialControlSerNum when migrated to Django.')
     HospitalMapSerNum: Mapped[int] = mapped_column(ForeignKey('HospitalMap.HospitalMapSerNum', ondelete='SET NULL', onupdate='CASCADE'), nullable=True, index=True)
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     ColorTag = Column(String(25), nullable=False, server_default=text("'#777777'"))
