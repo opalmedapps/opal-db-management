@@ -104,13 +104,9 @@ You should by now have fully up and running opal databases that can be easily st
 
 ## Alembic Database Revisions Management
 
-Alembic is a database migrations tool written by the author of SQLAlchemy. It provides a system of object-oriented, ordered migration control for relational databases.
+[Alembic](https://alembic.sqlalchemy.org/en/latest/) is a database migrations tool written by the author of SQLAlchemy. It provides a system of object-oriented, ordered migration control for relational databases.
 
-https://alembic.sqlalchemy.org/en/latest/
-
-SQLAlchemy uses an ORM similar to Django to maintain a consistent state between python objects and the sql tables they represent.
-
-https://docs.sqlalchemy.org/en/14/
+[SQLAlchemy](https://docs.sqlalchemy.org/en/latest/) uses an Object-Relational Mapper (ORM) similar to Django to maintain a consistent state between python objects and the SQL tables they represent.
 
 An understanding of both is required to manage database revisions in this repository.
 
@@ -160,21 +156,16 @@ Then call the autogenerate:
 
 Note: Alembic commands must be run from the directory corresponding to the database you want to make changes to
 
-<!-- Docs: https://alembic.sqlalchemy.org/en/latest/branches.html
-
-We make use of the alembic 'branch_labels' feature to separate our development data from the production environment. This works similarly to environment settings in other areas of OHIG development wherein we must specify which environment we want to be working in between 'development' and 'production'. Currently, the development branch contains an extra version file which inserts the test data for development only. Use `alembic history` to see the current list of heads. The `development` and `production` heads share a common down_revision corresponding to the table schema revision. The `production` branch inserts views, functions, events, and procedures only.
-
-To specify a branch, simply prefix the branch label @ head:
-
-Upgrade to development head `alembic upgrade development@head`
-Upgrade to production head `alembic upgrade production@head` -->
-
-<!-- We can also stop at specific points along these branch paths by giving the unique identifier code of the version file you want to stop at, @head. -->
-
 To go to the latest version for the database, simply run `alembic upgrade head`
-
 You can also optionally refer to a specific migration file with a shortened identifier code (as long as it uniquely identifies the file within that folder of versions)
 For example to migrate to version file 'a7b8dd1c55b1_generate_initial_opaldb_structure_ddl_.py': `alembic upgrade d06`
+
+#### Inserting new test data
+
+We keep the insertion of test data separate from the alembic revision control to allow easier switching between development and production environments. All test data is contained within the test-data/sql/ folder and is inserted into the database with the `insertTestData.py` script. The docker container will automatically run this command on startup, but to manually insert test data simply call `python test-data/insertTestData.py`.
+
+To add new test data simply add the SQL to the bottom of the .sql file corresponding to the required database.
+
 
 #### Version controlling triggers, events, functions, procedures
 

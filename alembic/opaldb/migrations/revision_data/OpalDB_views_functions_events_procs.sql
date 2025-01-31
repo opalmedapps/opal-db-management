@@ -4,7 +4,6 @@ SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 
-USE `OpalDB`;
 
 DROP FUNCTION IF EXISTS `getDiagnosisDescription`;
 CREATE FUNCTION `getDiagnosisDescription`(`in_DiagnosisCode` VARCHAR(100),

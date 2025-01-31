@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MYSQL_PWD=$DATABASE_ROOT_PASSWORD mysql -uroot -hlocalhost << EOF
+MYSQL_PWD=$MARIADB_ROOT_PASSWORD mysql -uroot -hlocalhost << EOF
 GRANT ALL PRIVILEGES ON \`OpalDB\`.* TO \`$DATABASE_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`test_OpalDB\`.* TO \`$DATABASE_USER\`@\`%\`;
 GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$DATABASE_USER\`@\`%\`;
