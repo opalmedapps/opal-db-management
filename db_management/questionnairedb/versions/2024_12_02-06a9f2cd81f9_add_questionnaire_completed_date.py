@@ -17,7 +17,7 @@ depends_on = None
 
 
 # Populate the completedDate with our best guess based on the lastUpdated value (which was previously used as the "Date Answered" in the app)
-completed_date_migration_query = """
+COMPLETED_DATE_MIGRATION_QUERY = """
     UPDATE answerQuestionnaire aq
     SET aq.completedDate = aq.lastUpdated
     WHERE aq.`status` = 2
@@ -25,7 +25,7 @@ completed_date_migration_query = """
 """
 
 # Restore the previous lastUpdated values so they aren't modified by this migration
-restore_last_updated = """
+RESTORE_LAST_UPDATED = """
     UPDATE answerQuestionnaire aq
     SET aq.lastUpdated = aq.completedDate
     WHERE aq.`status` = 2
@@ -36,8 +36,8 @@ restore_last_updated = """
 def upgrade() -> None:
     """Add new column completedDate to answerQuestionnaire."""
     op.add_column('answerQuestionnaire', sa.Column('completedDate', sa.DateTime(), nullable=True))
-    op.execute(completed_date_migration_query)
-    op.execute(restore_last_updated)
+    op.execute(COMPLETED_DATE_MIGRATION_QUERY)
+    op.execute(RESTORE_LAST_UPDATED)
 
 
 def downgrade() -> None:
