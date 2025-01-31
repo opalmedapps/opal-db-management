@@ -138,4 +138,7 @@ INSERT INTO `section` VALUES (192, 242, 10757, 10758, 1, 0, '', '2021-08-06 11:3
 INSERT INTO `section` VALUES (193, 243, 10775, 10776, 1, 1, 'FAMA6017', '2021-08-27 12:13:10', 'FAMA6017', '2021-08-27 16:22:54', 'FAMA6017');
 -- databank consent form
 INSERT INTO `section` (`ID`, `questionnaireId`, `title`, `instruction`, `order`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
-(197,	247,	20052,	20053,	1,	0,	'',	'2023-09-22 10:39:05',	'AGKE6000',	'2023-09-22 14:39:18',	'AGKE6000');
+(197,	247,	20052,	20053,	1,	0,	'',	'2023-09-22 10:39:05',	'AGKE6000',	'2023-09-22 14:39:18',	'AGKE6000'),
+-- finalized databank consent form
+(198,	248,	20081,	20082,	1,	0,	'',	'2023-12-20 13:52:15',	'AGKE6000',	'2023-12-20 13:52:16',	'AGKE6000');
+

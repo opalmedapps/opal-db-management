@@ -3788,7 +3788,9 @@ INSERT INTO `radioButton` (`ID`, `questionId`) VALUES
 (780,	1931),
 (781,	1933),
 (782,	1934),
-(783,	1935);
+(783,	1935),
+(784,	1944),
+(785,	1945);
 
 INSERT INTO `radioButtonOption` (`ID`, `parentTableId`, `description`, `order`) VALUES
 (1,	1,	15,	1),
@@ -7543,7 +7545,11 @@ INSERT INTO `radioButtonOption` (`ID`, `parentTableId`, `description`, `order`) 
 (3759,	782,	10653,	3),
 (3760,	782,	10654,	4),
 (3762,	770,	10745,	1),
-(3763,	783,	10746,	1);
+(3763,	783,	10746,	1),
+(3764,	784,	20070,	1),
+(3765,	784,	20071,	2),
+(3766,	785,	20075,	1),
+(3767,	785,	20076,	2);
 
 INSERT INTO `respondent` (`ID`, `title`, `description`) VALUES
 (1,	20001,	20002),
