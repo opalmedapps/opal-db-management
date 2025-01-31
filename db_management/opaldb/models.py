@@ -305,9 +305,9 @@ class DocumentMH(Base):
 
 class EducationalMaterialCategory(Base):
     __tablename__ = 'EducationalMaterialCategory'
-    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.'}
+    __table_args__ = {'comment': 'All Educational names to be changed to ReferenceMaterial when migrated to Django.  Category refers to the purpose of the Educational Material.'}
 
-    ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment.')
+    ID = Column(BIGINT(20), primary_key=True, comment='Primary key. Auto-increment. Purpose of the Educational Material.')
     title_EN = Column(String(128), nullable=False, server_default=text("''"), comment='English title of an educational material category.')
     title_FR = Column(String(128), nullable=False, server_default=text("''"), comment='French title of an educational material category.')
     description_EN = Column(String(512), nullable=False, server_default=text("''"), comment='English description of an educational material category.')
@@ -1419,7 +1419,7 @@ class EducationalMaterialControl(Base):
     EducationalMaterialControlSerNum = Column(INTEGER(11), primary_key=True, index=True)
     EducationalMaterialType_EN = Column(String(100), nullable=False)
     EducationalMaterialType_FR = Column(String(100), nullable=False)
-    EducationalMaterialCategoryId: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table.')
+    EducationalMaterialCategoryId: Mapped[int] = mapped_column(ForeignKey('EducationalMaterialCategory.ID'), nullable=False, index=True, server_default=text('1'), comment='Foreign key with ID in EducationalMaterialCategory table. Category refers to the purpose of the Educational Material.')
     PublishFlag = Column(INTEGER(11), nullable=False, index=True, server_default=text('0'))
     Name_EN = Column(String(200), nullable=False)
     Name_FR = Column(VARCHAR(200), nullable=False)
