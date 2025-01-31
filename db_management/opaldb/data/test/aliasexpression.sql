@@ -65,7 +65,6 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (144, 39, 203, '.EBM-Plan on Machine (testis boost)', '.EBM-Plan on Machine (testis boost)', '2022-01-21 17:58:01', NULL, '2022-01-21 20:45:28', NULL),
 (145, 39, 204, '.EBM-Plan on Machine (virtual)', '.EBM-Plan on Machine (virtual)', '2022-01-21 17:58:01', NULL, '2022-01-21 20:45:28', NULL),
 (146, 44, 210, '.EBM-Waiting Distribution', '.EBM-Waiting Distribution', '2018-08-13 16:36:02', 13, '2022-01-21 20:45:28', 'OdmVpVgjNW'),
-(147, 61, 1347, 'FOLLOW UP IN LESS/30DAYS', 'FOLLOW UP IN LESS/30DAYS', '2022-01-21 17:58:01', 13, '2022-01-21 20:45:32', 'JGjfgEuYTa'),
 (148, 61, 1348, 'FOLLOW UP IN MORE/30DAYS', 'FOLLOW UP IN MORE/30DAYS', '2022-01-21 17:58:01', 13, '2022-01-21 20:45:32', 'JGjfgEuYTa'),
 (153, 61, 1353, 'FOLLOW UP IN PALL LESS/30DAYS', 'FOLLOW UP IN PALL LESS/30DAYS', '2022-01-21 17:58:01', 13, '2022-01-21 20:45:32', 'JGjfgEuYTa'),
 (154, 61, 1354, 'FOLLOW UP IN PALL MORE/30DAYS', 'FOLLOW UP IN PALL MORE/30DAYS', '2022-01-21 17:58:01', 13, '2022-01-21 20:45:32', 'JGjfgEuYTa'),
