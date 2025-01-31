@@ -4,8 +4,11 @@ from typing import Any, Type
 from alembic.operations import MigrateOperation, Operations
 
 
-class ReplaceableObject:  # noqa: WPS306
-    """Generic class for holding textual definitions of replaceable entities."""
+class ReplaceableObject:
+    """Generic class for holding textual definitions of replaceable entities.
+
+    Design copied from Alembic cookbook: https://alembic.sqlalchemy.org/en/latest/cookbook.html#replaceable-objects
+    """
 
     def __init__(self, name: str, sqltext: str) -> None:
         """Initialize with the identifier and textual definition of the entity to be created/replaced/dropped.
