@@ -28,6 +28,16 @@ The Django database is maintained and managed directly in the Django repository,
 
 - Have git installed on your local machine
 
+## Running DBV (legacy)
+
+If you need to run DBV, you can use the last built image that contains the remaining DBV projects:
+
+```shell
+docker run --rm --env-file $PWD/envs/dbv.env --volume $PWD/certs/muhc-trust.crt:/certs/muhc-trust.crt -p 8080:8080 registry.gitlab.com/opalmedapps/db-docker/dbv:latest
+```
+
+You can then access it on the corresponding host on port `8080`.
+
 ## Installation
 
 ### Step 1: Clone the current repository
