@@ -52,11 +52,12 @@ You can also pass argumnents to target specifics branches of the DBVs repository
 docker build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(date +%s) --ssh ssh_key=/Users/localhostuser/.ssh/id_rsa -t opalmedapps/dbv:latest .
 ```
 
-There are 3 possible arguments, all default to `development`
+There are 4 possible arguments, all default to `development`
 
 1. OPALDBV_BRANCH="development"
 2. REGISTERDBV_BRANCH="development"
 3. QUESTIONNAIREDBV_BRANCH="development"
+4. OPAL_REPORT_BRANCH="development"
 
 > For more information about Docker build view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
