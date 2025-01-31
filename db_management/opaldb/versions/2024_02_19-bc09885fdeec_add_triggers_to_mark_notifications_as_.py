@@ -39,15 +39,15 @@ OLD_DOCUMENT_UPDATE_TRIGGER = ReplaceableObject(
 
 def upgrade() -> None:
     """Update `document_insert_trigger` and `document_update_trigger` triggers."""
-    op.drop_trigger(OLD_DOCUMENT_INSERT_TRIGGER)
-    op.drop_trigger(OLD_DOCUMENT_UPDATE_TRIGGER)
-    op.create_trigger(UPDATED_DOCUMENT_INSERT_TRIGGER)
-    op.create_trigger(UPDATED_DOCUMENT_UPDATE_TRIGGER)
+    op.drop_trigger(OLD_DOCUMENT_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(OLD_DOCUMENT_UPDATE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_DOCUMENT_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_DOCUMENT_UPDATE_TRIGGER)  # type: ignore[attr-defined]
 
 
 def downgrade() -> None:
     """Revert `document_insert_trigger` and `document_update_trigger` triggers."""
-    op.drop_trigger(UPDATED_DOCUMENT_INSERT_TRIGGER)
-    op.drop_trigger(UPDATED_DOCUMENT_UPDATE_TRIGGER)
-    op.create_trigger(OLD_DOCUMENT_INSERT_TRIGGER)
-    op.create_trigger(OLD_DOCUMENT_UPDATE_TRIGGER)
+    op.drop_trigger(UPDATED_DOCUMENT_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(UPDATED_DOCUMENT_UPDATE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_DOCUMENT_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_DOCUMENT_UPDATE_TRIGGER)  # type: ignore[attr-defined]

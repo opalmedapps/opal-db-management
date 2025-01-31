@@ -89,21 +89,21 @@ def upgrade() -> None:
     """Update QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
     op.drop_column('HospitalMap', 'QRImageFileName')
     op.drop_column('HospitalMapMH', 'QRImageFileName')
-    op.drop_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)
-    op.drop_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)
-    op.drop_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)
-    op.create_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)
-    op.create_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)
-    op.create_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)
+    op.drop_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
 
 
 def downgrade() -> None:
     """Revert QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
     op.add_column('HospitalMapMH', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
     op.add_column('HospitalMap', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
-    op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)
-    op.drop_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)
-    op.drop_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)
-    op.create_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)
-    op.create_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)
-    op.create_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)
+    op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(UPDATED_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.drop_trigger(UPDATED_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_HOSPITALMAP_DELETE_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_HOSPITALMAP_INSERT_TRIGGER)  # type: ignore[attr-defined]
+    op.create_trigger(OLD_HOSPITALMAP_UPDATE_TRIGGER)  # type: ignore[attr-defined]
