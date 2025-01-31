@@ -28,7 +28,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Set patient.externalId to String.s"""
+    """Set patient.externalId to String."""
     op.alter_column(
         'patient',
         'externalId',
