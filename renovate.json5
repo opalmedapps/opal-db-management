@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":separateMultipleMajorReleases",
     // Allow to receive patch updates for MariaDB while waiting with upgrading to the next minor version
     ":separatePatchReleases",
