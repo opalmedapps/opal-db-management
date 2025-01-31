@@ -2,6 +2,7 @@
 import os
 
 from dotenv import load_dotenv
+from pymysql.constants import CLIENT
 from sqlalchemy import create_engine
 
 load_dotenv()
@@ -23,7 +24,11 @@ OPALDB_ENGINE = create_engine(
         database=DB_NAME_OPAL,
     ),
 )
+# SSL Settings for Deployed Environments
+SSL_CA = os.getenv('SSL_CA')
+USE_SSL = os.getenv('USE_SSL')
 
+# Env validation
 settings_dict = {
     'DB_HOST': DB_HOST,
     'DB_PORT': DB_PORT,
@@ -36,3 +41,28 @@ settings_dict = {
 for label, setting in settings_dict.items():
     if not setting or setting == '':
         raise AttributeError(f'Warning: Environment variable not set {label}')
+
+# SSL Validation
+if USE_SSL == '1':
+    print('LOG: Launching connection with secure transport.')
+else:
+    print('LOG: Launching connection without secure transport configured.')
+
+# PyMySQL connection parameters for SSL and non-SSL (used to insert test data and functions/views/events)
+# test data: alembic/insert_test_data.py
+# views/funcs: alembic/opaldb/migrations/versions/7a189846a0f5_insert_views_functions_events_procs.py
+PYMYSQL_CONNECT_PARAMS = {  # noqa: WPS407
+    'user': DB_USER,
+    'password': str(DB_PASSWORD),
+    'host': DB_HOST,
+    'port': DB_PORT,
+    'database': DB_NAME_OPAL,
+    'client_flag': CLIENT.MULTI_STATEMENTS,
+    'autocommit': True,
+    'ssl_disabled': True,
+}
+if USE_SSL:
+    PYMYSQL_CONNECT_PARAMS.update({
+        'ssl_disabled': False,
+        'ssl_ca': SSL_CA,
+    })

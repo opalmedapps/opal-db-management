@@ -2,8 +2,8 @@
 from logging.config import fileConfig
 from typing import Any
 
+import settings
 from models import Base
-from settings import DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT, DB_USER
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
@@ -13,13 +13,24 @@ from alembic import context
 config = context.config
 
 # Reset sqlalchemy target url using .env vars
-config.set_main_option('sqlalchemy.url', 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'.format(
-    user=DB_USER,
-    password=DB_PASSWORD,
-    host=DB_HOST,
-    port=DB_PORT,
-    database=DB_NAME_OPAL,
-),
+connection_params = {
+    'user': settings.DB_USER,
+    'password': str(settings.DB_PASSWORD),
+    'host': settings.DB_HOST,
+    'port': settings.DB_PORT,
+    'database': settings.DB_NAME_OPAL,
+}
+connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
+# Add ssl settings if using SSL connection to db
+if settings.USE_SSL:
+    connection_params.update({
+        'ssl_ca': settings.SSL_CA,
+    })
+    connection_url += '?ssl_ca={ssl_ca}'  # noqa: WPS336
+
+config.set_main_option(
+    'sqlalchemy.url',
+    connection_url.format(**connection_params),
 )
 
 # Interpret the config file for Python logging.

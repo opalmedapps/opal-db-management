@@ -51,7 +51,7 @@ services:
     ports:
       - ${ADMINER_PORT}:8080
     volumes:
-      - ./certs/ca.pem:/certs/ca.pem
+      - ./certs:/certs
       # uncomment this if requiring SSL in the db, otherwise leave commented out
       # - ./config/adminer-login-ssl.php:/var/www/html/plugins-enabled/adminer-login-ssl.php
     env_file:
@@ -64,6 +64,7 @@ services:
       context: .
       dockerfile: alembic.Dockerfile
     volumes:
+      - ./certs:/certs
       - ./alembic:/app
     depends_on:
       - db
