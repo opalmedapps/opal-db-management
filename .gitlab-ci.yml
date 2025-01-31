@@ -53,11 +53,6 @@ build:
   - sed -i "s/^MARIADB_USER=.*/MARIADB_USER=$MARIADB_USER/" .env
   - sed -i "s/^MARIADB_PORT=.*/MARIADB_PORT=3307/" .env
 
-stages:
-  - Static Analysis
-  - Checks
-  - build
-
 setup:
   stage: .pre
   script:
@@ -85,7 +80,7 @@ setup:
       - .cache/pip
 
 flake8:
-  stage: Static Analysis
+  stage: test
   script:
     - flake8 --version
     # install plugin to produce code climate report
@@ -124,23 +119,23 @@ clone:
     - if: '$CI_COMMIT_TAG || $CI_COMMIT_BRANCH'
 
 
-# ritest:
-#   stage: deploy
-#   tags:
-#     - ri-dev
-#   image: ubuntu:latest
-#   before_script:
-#     - uname -a
-#   script:
-#     - whoami
-#     - apt update && apt install -y openssh-client
-#     # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
-#     - mkdir -p ~/.ssh
-#     - chmod 700 ~/.ssh
-#     - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
-#     - ssh opalsupt@lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
-#   rules:
-#     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+ritest:
+  stage: deploy
+  tags:
+    - ri-dev
+  image: ubuntu:latest
+  before_script:
+    - uname -a
+  script:
+    - whoami
+    - apt update && apt install -y openssh-client
+    # - curl https://lxvmri02.muhcad.muhcfrd.ca/pds?wsdl
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan lxvmri05.muhcad.muhcfrd.ca >> ~/.ssh/known_hosts
+    - ssh opalsupt@lxvmri05.muhcad.muhcfrd.ca "whoami; pwd; ls -la ."
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
 
 include:
   - template: Auto-DevOps.gitlab-ci.yml
