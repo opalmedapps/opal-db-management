@@ -103,3 +103,6 @@ WHERE NotificationControlSerNum=7;
 
 -- Alembic and muhc prod out of sync for PatientDeviceIdentifier.attempt, missing default and non nullable
 ALTER TABLE `PatientDeviceIdentifier` MODIFY COLUMN `Attempt` INT NOT NULL DEFAULT 0;
+
+-- Remove inactive users who no longer work at the MUHC
+UPDATE `OAUser` SET deleted=1 where Username in ('MOLE6002', 'HODA6016');
