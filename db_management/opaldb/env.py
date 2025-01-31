@@ -48,9 +48,7 @@ def include_object(object: Any, name: Any, type_: Any, reflected: Any, compare_t
     Returns:
         boolean include object or not in autogenerate
     """
-    if name in IGNORE_TABLE_NAMES:
-        return False
-    return True
+    return name not in IGNORE_TABLE_NAMES
 
 
 def run_migrations_offline() -> None:
