@@ -2,8 +2,8 @@
 from logging.config import fileConfig
 from typing import Any
 
+import settings
 from models import Base
-from settings import DB_HOST, DB_NAME_OPAL, DB_PASSWORD, DB_PORT, DB_USER, SSL_CA, SSL_CERT, SSL_KEY, USE_SSL
 from sqlalchemy import engine_from_config, pool
 
 from alembic import context
@@ -14,21 +14,21 @@ config = context.config
 
 # Reset sqlalchemy target url using .env vars
 connection_params = {
-    'user': DB_USER,
-    'password': str(DB_PASSWORD),
-    'host': DB_HOST,
-    'port': DB_PORT,
-    'database': DB_NAME_OPAL,
+    'user': settings.DB_USER,
+    'password': str(settings.DB_PASSWORD),
+    'host': settings.DB_HOST,
+    'port': settings.DB_PORT,
+    'database': settings.DB_NAME_OPAL,
 }
 connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
 # Add ssl settings if using SSL connection to db
-if USE_SSL:
+if settings.USE_SSL:
     connection_params.update({
-        'ssl_ca': SSL_CA,
-        'ssl_cert': SSL_CERT,
-        'ssl_key': SSL_KEY,
+        'ssl_ca': settings.SSL_CA,
+        'ssl_cert': settings.SSL_CERT,
+        'ssl_key': settings.SSL_KEY,
     })
-    connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}?ssl_ca={ssl_ca}&ssl_cert={ssl_cert}&ssl_key={ssl_key}'  # noqa: E501
+    connection_url += '?ssl_key={ssl_key}&ssl_cert={ssl_cert}&ssl_ca={ssl_ca}'  # noqa: WPS336
 
 config.set_main_option(
     'sqlalchemy.url',
