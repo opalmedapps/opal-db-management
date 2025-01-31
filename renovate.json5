@@ -3,8 +3,9 @@
   "extends": [
     "config:base",
     ":separateMultipleMajorReleases",
-    // Allow to receive patch updates for PHP and MariaDB while waiting with upgrading to the next minor version
+    // Allow to receive patch updates for MariaDB while waiting with upgrading to the next minor version
     ":separatePatchReleases",
+    "gitlab>opalmedapps/renovate-bot//presets/docker-alpine.json5",
   ],
   "pip_requirements": {
     "fileMatch": ["^requirements/.*\\.txt$"]
