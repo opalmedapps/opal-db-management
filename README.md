@@ -120,7 +120,7 @@ You should by now have fully up and running opal databases that can be easily st
 
 ## Running the databases with encrypted connections
 
-If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To do this, first refer to the [opal docs repository](https://gitlab.com/opalmedapps/docs) for instructions on how to generate self-signed SSL certificates. Place them in the `certs` directory.
+If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To do this, first refer to the [opal docs guide on self signed certificates](https://gitlab.com/opalmedapps/docs/-/blob/main/docs/guides/self_signed_certificates.md) for instructions on how to generate self-signed SSL certificates. Place them in the `certs` directory.
 
 In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file.
 

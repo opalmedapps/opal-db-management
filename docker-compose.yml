@@ -11,7 +11,7 @@ services:
       - ./db-scripts:/docker-entrypoint-initdb.d
       - ./config/mariadb.cnf:/etc/mysql/conf.d/opal.cnf
       # uncomment this to enforce connections over TLS
-      - ./config/ssl.cnf:/etc/mysql/conf.d/ssl.cnf
+      # - ./config/ssl.cnf:/etc/mysql/conf.d/ssl.cnf
     environment:
       - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
       - MARIADB_USER=${DATABASE_USER}
