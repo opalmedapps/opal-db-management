@@ -1579,7 +1579,7 @@ class Module(Base):
     subModuleMenu = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='If the module has submodules, can these being displayed in a navigation menu')
     core = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='An essential module that can never being deactivated')
     active = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module active or not in opalAdmin')
-    categoryModuleId: Mapped[int] = mapped_column(ForeignKey('categoryModule.ID'), nullable=False, index=True, comment='Attach the module to a specific category')
+    categoryModuleId: Mapped[int] = mapped_column(ForeignKey('categoryModule.ID'), nullable=True, index=True, comment='Attach the module to a specific category')
     publication = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module is linked to the publication module')
     customCode = Column(TINYINT(1), nullable=False, server_default=text('0'), comment='Is the module allows custom codes')
     unique = Column(TINYINT(1), nullable=False, server_default=text('1'), comment='To determine if an entry of the specified module can be published multiple times or not')
