@@ -20,9 +20,12 @@ Opal's databases are separated in 3 different repos. The purpose of this project
 ### Step 1
 **Clone the current repository**
 ```
-git clone TBA
+git clone https://gitlab.com/opalmedapps/db-docker.git
 ```
 ### Step 2
+**Create a local `.env` file**
+Create a `.env` file at the root of the project and copy the content of `.env-sample` to it. The file will hold our database credentials and is ignore by GIT. You can add any other variables you want to keep local.
+### Step 3
 **Build the PHP Docker images.**
 We need to build an image of the PHP setup to be able to clone the 3 dbv repos and pass our SSH public key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile run the following command at the root of the repository (due to missing support in `docker-compose` this step is separated currently):
 ```
@@ -38,18 +41,19 @@ There are 3 possible arguments, all default to `development`
 3. QUESTIONNAIREDBV_BRANCH="development"
 > For more information about Docker build view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
-### Step 3
+
+### Step 4
 **Scaffold the project using docker compose**
-The docker compose command uses the directive written in the `docker.compose.yml` file to initiate the required container for a project. In our case, it creates a database using the MariaDB image, a PHP environment using the image built in step 2 of this guide, then finally install `adminer`, a GUI to visualise the databases. Database information (username, password, etc) and port are also set in the `docker.compose.yml` file.
+The docker compose command uses the directive written in the `docker.compose.yml` file to initiate the required container for a project. In our case, it creates a database using the MariaDB image, a PHP environment using the image built in step 2 of this guide, then finally install `adminer`, a GUI to visualise the databases. Database information (username, password, etc) and port are set in the `.env` file.
 
 To scaffold our projet simply run the command:
 ```
-docker compose up --build
+docker compose up
 ```
 If you open docker-desktop, you should see that you have a app called `opal-database` running with 3 container.
 > For more information about Docker compose view the [official Docker documentation](https://docs.docker.com/compose/)
 
-### Step 4
+### Step 5
 **Run the databases revisions**
 
 With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
@@ -57,7 +61,7 @@ With everything install it is now possible to run each DBV scripts to populate t
 2. http://localhost:8000/dbv/dbv_registerdb
 3. http://localhost:8000/dbv/dbv_questionnairedb/
 
-### Step 5
+### Step 6
 **Test your installation**
 
 As mention in step 3, the docker compose command also install adminer. To test your installation in a web browser by visiting:
