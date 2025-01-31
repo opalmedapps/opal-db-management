@@ -5,7 +5,7 @@ echo "Upgrading QuestionnaireDB..."
 alembic --name questionnairedb upgrade head
 echo "Upgrading OpalDB..."
 alembic --name opaldb upgrade head
-echo "Upgrading ormsDB..."
+echo "Upgrading OrmsDatabase..."
 alembic --name ormsdb upgrade head
-echo "Upgrading ormslogDB..."
+echo "Upgrading OrmsLog..."
 alembic --name ormslogdb upgrade head

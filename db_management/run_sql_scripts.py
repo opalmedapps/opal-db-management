@@ -3,7 +3,6 @@ import argparse
 import sys
 from pathlib import Path
 
-from db_management import settings
 from db_management.connection import connection_cursor, sql_connection_parameters
 
 
@@ -94,9 +93,6 @@ def main(argv: list[str]) -> int:
     Args:
         argv: the command-line arguments passed to the script
 
-    Raises:
-        ValueError: If the mapping for the db name cannot be found
-
     Returns:
         the exit code, 0 if no errors occurred
     """
@@ -105,7 +101,7 @@ def main(argv: list[str]) -> int:
         'db_name',
         metavar='db-name',
         help='the name of the database to connect to and run SQL commands for',
-        choices=['OpalDB', 'QuestionnaireDB', 'orms', 'ormsLog'],
+        choices=['OpalDB', 'QuestionnaireDB', 'OrmsDatabase', 'OrmsLog'],
         type=str,
     )
     parser.add_argument(
@@ -118,18 +114,7 @@ def main(argv: list[str]) -> int:
 
     args = parser.parse_args(argv)
 
-    # Map the CLI db argument to the correct Database Name according to .env
-    db_name_mapping = {
-        'OpalDB': settings.DB_NAME_OPAL,
-        'QuestionnaireDB': settings.DB_NAME_QUESTIONNAIRE,
-        'orms': settings.DB_NAME_ORMS,
-        'ormsLog': settings.DB_NAME_ORMS_LOG,
-    }
-    actual_db_name = db_name_mapping.get(args.db_name)
-    if actual_db_name is None:
-        raise ValueError(f'Unmapped database name: {args.db_name}')
-
-    run_sql_scripts(actual_db_name, args.sql_dir, args.disable_foreign_key_checks)
+    run_sql_scripts(args.db_name, args.sql_dir, args.disable_foreign_key_checks)
 
     return 0
 

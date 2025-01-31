@@ -12,8 +12,8 @@ log "Beginning MUHC production data upgrade."
 declare -a commands=(
 "python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/upgrade/"
 "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/upgrade/"
-"python -m db_management.run_sql_scripts orms db_management/ormsdb/data/upgrade/"
-"python -m db_management.run_sql_scripts ormsLog db_management/ormslogdb/data/upgrade/"
+"python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/upgrade/"
+"python -m db_management.run_sql_scripts OrmsLog db_management/ormslogdb/data/upgrade/"
 )
 
 
