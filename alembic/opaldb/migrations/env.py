@@ -13,29 +13,27 @@ from alembic import context
 config = context.config
 
 # Reset sqlalchemy target url using .env vars
+connection_params = {
+    'user': DB_USER,
+    'password': str(DB_PASSWORD),
+    'host': DB_HOST,
+    'port': DB_PORT,
+    'database': DB_NAME_OPAL,
+}
+connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
+# Add ssl settings if using SSL connection to db
 if USE_SSL:
-    config.set_main_option(
-        'sqlalchemy.url',
-        'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}?ssl_ca={ssl_ca}&ssl_cert={ssl_cert}&ssl_key={ssl_key}'.format(  # noqa: E501
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_NAME_OPAL,
-            ssl_ca=SSL_CA,
-            ssl_cert=SSL_CERT,
-            ssl_key=SSL_KEY,
-        ),
-    )
-else:
-    config.set_main_option('sqlalchemy.url', 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'.format(
-        user=DB_USER,
-        password=DB_PASSWORD,
-        host=DB_HOST,
-        port=DB_PORT,
-        database=DB_NAME_OPAL,
-    ),
-    )
+    connection_params.update({
+        'ssl_ca': SSL_CA,
+        'ssl_cert': SSL_CERT,
+        'ssl_key': SSL_KEY,
+    })
+    connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}?ssl_ca={ssl_ca}&ssl_cert={ssl_cert}&ssl_key={ssl_key}'  # noqa: E501
+
+config.set_main_option(
+    'sqlalchemy.url',
+    connection_url.format(**connection_params),
+)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

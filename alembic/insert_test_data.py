@@ -22,31 +22,25 @@ def get_connection_cursor(autocommit: bool) -> Cursor:
     Returns:
         Cursor for the connection.
     """
-    try:  # noqa: WPS229
-        conn = pymysql.connect(
-            user=DB_USER,
-            password=str(DB_PASSWORD),
-            host=DB_HOST,
-            port=DB_PORT,
-            database=DB_NAME_OPAL,
-            client_flag=CLIENT.MULTI_STATEMENTS,
-            autocommit=autocommit,
-            ssl_disabled=True,
-        )
-        if USE_SSL:
-            conn = pymysql.connect(
-                user=DB_USER,
-                password=str(DB_PASSWORD),
-                host=DB_HOST,
-                port=DB_PORT,
-                database=DB_NAME_OPAL,
-                client_flag=CLIENT.MULTI_STATEMENTS,
-                autocommit=autocommit,
-                ssl_ca=SSL_CA,
-                ssl_cert=SSL_CERT,
-                ssl_key=SSL_KEY,
-                ssl_disabled=False,
-            )
+    connection_params = {
+        'user': DB_USER,
+        'password': str(DB_PASSWORD),
+        'host': DB_HOST,
+        'port': DB_PORT,
+        'database': DB_NAME_OPAL,
+        'client_flag': CLIENT.MULTI_STATEMENTS,
+        'autocommit': autocommit,
+        'ssl_disabled': True,
+    }
+    if USE_SSL:
+        connection_params.update({
+            'ssl_disabled': False,
+            'ssl_ca': SSL_CA,
+            'ssl_cert': SSL_CERT,
+            'ssl_key': SSL_KEY,
+        })
+    try:
+        conn = pymysql.connect(**connection_params)  # type: ignore
 
     except pymysql.Error as err:
         sys.exit('Error getting cursor for {OPALDB} {err}'.format(OPALDB=DB_NAME_OPAL, err=err.args[0]))
