@@ -88,3 +88,14 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 59
   AND NotificationControlSerNum = 4
 ;
+UPDATE TxTeamMessage
+SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE PostControlSerNum = 13 and PatientSerNum=59
+;
+UPDATE Notification
+SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE NotificationControlSerNum = 4
+AND RefTableRowSerNum IN (4)  and PatientSerNum=59
+;
