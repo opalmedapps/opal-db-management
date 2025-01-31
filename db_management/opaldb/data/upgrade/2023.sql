@@ -49,3 +49,19 @@ ALTER TABLE CronLog DROP FOREIGN KEY CronLog_ibfk_1;
 ALTER TABLE CronLog DROP CronSerNum;
 
 DROP TABLE IF EXISTS Cron;
+
+INSERT INTO `EducationalMaterialTOC` (`EducationalMaterialControlSerNum`, `OrderNum`, `ParentSerNum`, `DateAdded`) VALUES (404, 1, 643, '2019-06-06 10:44:21');
+
+UPDATE EducationalMaterialControl SET
+URL_EN = 'http://muhcguides.com/module/prostate/en/what-is-the-prostate',
+URL_FR = 'http://muhcguides.com/module/prostate/fr/what-is-the-prostate',
+URLType_EN = 'website',
+URLType_FR = 'website'
+WHERE EducationalMaterialControlSerNum = 643;
+
+UPDATE EducationalMaterialControl SET
+URL_EN = 'https://www.depdocs.com/opal/educational/fertility/Q&A/q17_en.php',
+URL_FR = 'https://www.depdocs.com/opal/educational/fertility/Q&A/q17_fr.php',
+URLType_EN = 'website',
+URLType_FR = 'website'
+WHERE EducationalMaterialControlSerNum = 642;
