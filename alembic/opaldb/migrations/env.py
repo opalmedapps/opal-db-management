@@ -65,6 +65,9 @@ def run_migrations_offline() -> None:
     with context.begin_transaction():
         context.run_migrations()
 
+    # TODO: Investigate transactional migrations:
+    # https://github.com/sqlalchemy/alembic/issues/755#issuecomment-735221194
+
 
 def process_revision_directives(directives: Any) -> None:
     """Don't create a new migration if no changes are detected.
@@ -106,6 +109,8 @@ def run_migrations_online() -> None:
 
         with context.begin_transaction():
             context.run_migrations()
+        # TODO: Investigate transactional migrations:
+        # https://github.com/sqlalchemy/alembic/issues/755#issuecomment-735221194
 
 
 if context.is_offline_mode():

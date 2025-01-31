@@ -346,6 +346,7 @@ class EducationalMaterialRating(Base):
     EducationalMaterialRatingSerNum = Column(INTEGER(11), primary_key=True)
     EducationalMaterialControlSerNum = Column(INTEGER(11), nullable=False)
     PatientSerNum = Column(INTEGER(11), nullable=False)
+    Username = Column(String(255), nullable=False, server_default=text("''"), comment='The username of the person who submitted an educational material rating.')
     RatingValue = Column(TINYINT(6), nullable=False)
     SessionId = Column(Text, nullable=False, server_default=text("''"), comment='Deprecated')
     LastUpdated = Column(TIMESTAMP, nullable=False, server_default=text('current_timestamp() ON UPDATE current_timestamp()'))
@@ -1692,7 +1693,7 @@ class NotificationControl(Base):
 class PatientDeviceIdentifier(Base):
     __tablename__ = 'PatientDeviceIdentifier'
     __table_args__ = (
-        Index('patient_device', 'PatientSerNum', 'DeviceId', unique=True),
+        Index('ix_PatientDeviceIdentifier_Unique_Username_DeviceId', 'Username', 'DeviceId', unique=True),
     )
 
     PatientDeviceIdentifierSerNum = Column(INTEGER(11), primary_key=True)

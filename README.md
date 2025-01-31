@@ -8,8 +8,7 @@ Opal's databases are separated in 4 different repos. The purpose of this project
 
     1. OpalDB: https://gitlab.com/opalmedapps/dbv_opaldb
     2. QuestionnaireDB: https://gitlab.com/opalmedapps/dbv_questionnairedb
-    3. registerdb: https://gitlab.com/opalmedapps/dbv_registerdb
-    4. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
+    3. OpalRPT: https://gitlab.com/opalmedapps/dbv_opalrpt/
 
 - Install docker on your local machine. It is strongly suggested to install [Docker Desktop](https://www.docker.com/products/docker-desktop) as well.
 
@@ -34,7 +33,7 @@ Create a `.env` file at the root of the project and copy the content of `.env-sa
 
 ### Step 3: Build the PHP Docker images
 
-We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.run the following command at the root of the repository (due to missing support in `docker-compose` this step is separated currently):
+We need to build an image of the PHP setup to be able to clone the 4 dbv repos and pass our SSH private key to the Docker build process. The steps of this process can be found in the `Dockerfile` at the root of the repository. To build the image from the Dockerfile via docker-compose, ensure that the `SSH_KEY_PATH` variable is set in `.env`.
 
 ```shell
 docker compose build --build-arg CACHEBUST=$(date +%s)
@@ -63,9 +62,8 @@ docker compose build --build-arg OPALDBV_BRANCH=staging --build-arg CACHEBUST=$(
 There are 4 possible arguments, all default to `development`:
 
 1. OPALDBV_BRANCH="development"
-2. REGISTERDBV_BRANCH="development"
-3. QUESTIONNAIREDBV_BRANCH="development"
-4. OPAL_REPORT_BRANCH="development"
+2. QUESTIONNAIREDBV_BRANCH="development"
+3. OPAL_REPORT_BRANCH="development"
 
 > For more information about `docker build` view the [official Docker documentation](https://docs.docker.com/engine/reference/commandline/build/)
 
@@ -105,8 +103,7 @@ If you open docker-desktop, you should see that you have a app called `opal-data
 
 With everything install it is now possible to run each DBV scripts to populate the 2 databases. In your web browser, go to the 3 following URL and run the scrips according to the on screen instructions.
 
-1. http://localhost:8091/dbv/dbv_registerdb
-2. http://localhost:8091/dbv/dbv_questionnairedb/
+1. http://localhost:8091/dbv/dbv_questionnairedb/
 
 ### Step 6: Test your installation
 
@@ -120,7 +117,11 @@ You should by now have fully up and running opal databases that can be easily st
 
 ## Running the databases with encrypted connections
 
-If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic. To generate the SSL certificates for the database container and the client applications:
+If a dev chooses they can also build the containers in this repo with SSL enabled to encrypt all db connections and traffic.
+
+### Generating Self-signed Certificates
+
+To generate the SSL certificates for the database container and the client applications:
 
 1. Open a bash CLI and navigate to the `certs/` directory of your db-docker. There should be three files there already, an `openssl-ca.cnf`, an `openssl-server.cnf`, and a `v3.ext`. These provide the details for openssl to generate the various certificates required to enable encrypted connections between any client application container and the database container.
 2. Generate the certificate authority (CA) certificate:
@@ -148,9 +149,21 @@ If a dev chooses they can also build the containers in this repo with SSL enable
     openssl verify -CAfile ca.pem ca.pem
     ```
 
-5. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (`/certs/ca.pem`).
+### Configuring the use of SSL/TLS
 
-6. Finally, uncomment two lines in your docker-compose.yml: In the `adminer` section uncomment the `./config/adminer-login-ssl.php` volume specification which will enable adminer to connect over SSL. Also uncomment the `./config/ssl.cnf` volume specification in the `db` section to enable the server-side SSL settings. [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for docker to actually use the configs listed there.
+To enable SSL/TLS in MariaDB and all application containers:
+
+1. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (e.g., `/certs/ca.pem`).
+
+2. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
+
+    ```shell
+    cp docker-compose.ssl.yml docker-compose.override.yml
+    ```
+
+    You can verify that it is applied by running `docker compose config`.
+
+    **Note:** [Windows users may have to re-save the `ssl.cnf` as 'read-only'](https://stackoverflow.com/a/51854668) for Docker to actually use the configs listed there.
 
 ## Alembic Database Revisions Management
 
