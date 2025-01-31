@@ -22,28 +22,46 @@ class ReplaceableObject:
 
 
 class ReversibleOp(MigrateOperation):
+    """
+    Reversible operation for replaceable objects.
+
+    Source: https://alembic.sqlalchemy.org/en/latest/cookbook.html#create-operations-for-the-target-objects
+    """
+
     def __init__(self, target: ReplaceableObject):
+        """
+        Initialize the reversible operation for a replaceable object.
+
+        Args:
+            target: the replaceable object
+        """
         self.target = target
 
     @classmethod
     def invoke_for_target(cls, operations: Operations, target: ReplaceableObject) -> Any:
+        """
+        Invoke the operation for the target replaceable object.
+
+        Args:
+            operations: the operations instance
+            target: the replaceable object
+
+        Returns:
+            the return value of invoking the operation, if any
+        """
         op = cls(target)
         return operations.invoke(op)
 
     def reverse(self) -> MigrateOperation:
+        """
+        Reverses the operation.
+
+        Sub-classes need to implement this method.
+
+        Raises:
+            NotImplementedError: if the sub-class does not implement this method
+        """
         raise NotImplementedError()
-
-    @classmethod
-    def _get_object_from_version(cls, operations: Operations, ident: str) -> Any:
-        version, objname = ident.split('.')
-
-        script = operations.get_context().script
-
-        if script:
-            module = script.get_revision(version).module
-            return getattr(module, objname)
-
-        raise ValueError('script directory not found')
 
     @classmethod
     def replace(
@@ -53,7 +71,23 @@ class ReversibleOp(MigrateOperation):
         replaces: str | None = None,
         replace_with: str | None = None,
     ) -> None:
+        """
+        Replace the existing element with an updated one.
 
+        For example, to update a stored procedure, the existing one needs to be replaced
+        by deleting the current one and creating the new one under the same name.
+
+        Either `replaces` or `replaces_with` needs to be provided.
+
+        Args:
+            operations: the operations instance
+            target: the target replaceable object
+            replaces: a reference to the replaceable object to replace in the form migration_name.attribute
+            replace_with: a reference to the replaceable object to replace with the given one (migration.attribute)
+
+        Raises:
+            TypeError: if neither the replace nor replace_with argument is provided
+        """
         if replaces:
             old_obj = cls._get_object_from_version(operations, replaces)
             drop_old = cls(old_obj).reverse()
@@ -67,6 +101,18 @@ class ReversibleOp(MigrateOperation):
 
         operations.invoke(drop_old)
         operations.invoke(create_new)
+
+    @classmethod
+    def _get_object_from_version(cls, operations: Operations, ident: str) -> Any:
+        version, objname = ident.split('.')
+
+        script = operations.get_context().script
+
+        if script:
+            module = script.get_revision(version).module
+            return getattr(module, objname)
+
+        raise ValueError('script directory not found')
 
 
 @Operations.register_operation('create_trigger')
@@ -166,18 +212,41 @@ def drop_trigger(operations: Operations, operation: CreateTriggerOp) -> None:
 @Operations.register_operation('create_procedure', 'invoke_for_target')
 @Operations.register_operation('replace_procedure', 'replace')
 class CreateProcedureOp(ReversibleOp):
+    """Create stored procedure operation."""
+
     def reverse(self) -> MigrateOperation:
+        """
+        Reverse the create procedure operation by returning an operation that drops the procedure.
+
+        Returns:
+            a drop procedure operation
+        """
         return DropProcedureOp(self.target)
 
 
 @Operations.register_operation('drop_procedure', 'invoke_for_target')
 class DropProcedureOp(ReversibleOp):
+    """Drop stored procedure operation."""
+
     def reverse(self) -> MigrateOperation:
+        """
+        Reverse the drop procedure operation by returning an operation that creates the procedure.
+
+        Returns:
+            a create procedure operation
+        """
         return CreateProcedureOp(self.target)
 
 
 @Operations.implementation_for(CreateProcedureOp)
-def create_procedure(operations: Operations, operation: ReversibleOp) -> None:
+def create_procedure(operations: Operations, operation: CreateProcedureOp) -> None:
+    """
+    Execute the create stored procedure operation.
+
+    Args:
+        operations: the operations instance
+        operation: the create stored procedure operation to execute
+    """
     operations.execute('CREATE FUNCTION {name} {definition}'.format(
         name=operation.target.name,
         definition=operation.target.sql_text,
@@ -185,5 +254,12 @@ def create_procedure(operations: Operations, operation: ReversibleOp) -> None:
 
 
 @Operations.implementation_for(DropProcedureOp)
-def drop_procedure(operations: Operations, operation: ReversibleOp) -> None:
+def drop_procedure(operations: Operations, operation: DropProcedureOp) -> None:
+    """
+    Execute the drop stored procedure operation.
+
+    Args:
+        operations: the operations instance
+        operation: the drop stored procedure operation to execute
+    """
     operations.execute('DROP FUNCTION {0}'.format(operation.target.name))
