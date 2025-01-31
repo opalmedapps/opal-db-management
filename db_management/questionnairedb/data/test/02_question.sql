@@ -575,3 +575,6 @@ INSERT INTO `question` VALUES (1892, 81, 10252, 10253, 10251, 4, 1, -1, 0, 0, 1,
 INSERT INTO `question` VALUES (1893, 81, 10260, 10261, 10259, 4, 1, -1, 0, 0, 1, 0, 0, '', '2021-05-27 08:28:51', 'PAHA6003', '2021-05-27 12:51:33', 'PAHA6003', 1);
 INSERT INTO `question` VALUES (1894, 81, 10268, 10269, 10267, 4, 1, -1, 0, 0, 1, 0, 0, '', '2021-05-27 08:30:15', 'PAHA6003', '2021-05-27 12:51:38', 'PAHA6003', 1);
 INSERT INTO `question` VALUES (1895, 74, 10295, 10296, 10294, 3, 1, -1, 0, 0, 1, 0, 0, '', '2021-06-07 07:44:21', 'CABR6008', '2021-06-07 11:45:34', 'CABR6008', 3);
+INSERT INTO `question` (`ID`, `OAUserId`, `display`, `definition`, `question`, `typeId`, `version`, `parentId`, `polarity`, `private`, `final`, `optionalFeedback`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `legacyTypeId`) VALUES
+(1940,	13,	20043,	20044,	20042,	3,	1,	-1,	0,	0,	1,	0,	0,	'',	'2023-09-22 10:30:43',	'AGKE6000',	'2023-09-22 14:34:29',	'AGKE6000',	3),
+(1941,	13,	20046,	20047,	20045,	3,	1,	-1,	0,	0,	1,	0,	0,	'',	'2023-09-22 10:32:24',	'AGKE6000',	'2023-09-22 14:34:37',	'AGKE6000',	3);
