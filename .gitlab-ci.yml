@@ -37,12 +37,6 @@ before_script:
   - sed -i "s/^MARIADB_USER=.*/MARIADB_USER=$MARIADB_USER/" .env
   - sed -i "s/^MARIADB_PORT=.*/MARIADB_PORT=3307/" .env
 
-
-stages:
-  - Static Analysis
-  - Checks
-  - build
-
 setup:
   stage: .pre
   script:
@@ -70,7 +64,7 @@ setup:
       - .cache/pip
 
 flake8:
-  stage: Static Analysis
+  stage: test
   script:
     - flake8 --version
     # install plugin to produce code climate report
@@ -87,7 +81,7 @@ flake8:
       codequality: gl-code-quality-report.json
 
 mypy:
-  stage: Static Analysis
+  stage: test
   script:
     # install plugin to produce code climate report
     - pip install mypy-gitlab-code-quality
@@ -103,7 +97,7 @@ mypy:
       codequality: codequality.json
 
 markdownlint:
-  stage: Static Analysis
+  stage: test
   image:
     name: davidanson/markdownlint-cli2:next
     # overwrite default entrypoint (which is a call to markdownlint-cli2)
