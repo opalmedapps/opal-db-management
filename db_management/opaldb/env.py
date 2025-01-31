@@ -2,12 +2,11 @@
 from logging.config import fileConfig
 from typing import Any
 
-from alembic import context
 from sqlalchemy import engine_from_config, pool
 
-
-from db_management.opaldb.models import Base
+from alembic import context
 from db_management import connection, settings
+from db_management.opaldb.models import Base
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
