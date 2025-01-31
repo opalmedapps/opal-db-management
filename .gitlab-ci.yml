@@ -25,7 +25,8 @@ stages:
 
 setup:
   stage: .pre
-  extends: .default_before
+  extends:
+    - .default_before
   script:
     - python -m venv .venv
     - source .venv/bin/activate
