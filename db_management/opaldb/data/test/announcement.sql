@@ -44,6 +44,12 @@ INSERT INTO `Announcement` (`AnnouncementSerNum`, `CronLogSerNum`, `PatientSerNu
 (26020, NULL, 92, 1028, '2023-10-20 16:08:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2023-10-20 16:08:02'),
 (30366, NULL, 92, 1077, '2024-03-04 15:31:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2024-03-24 17:20:28'),
 (35014, NULL, 92, 1091, '2024-05-27 12:43:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2024-05-27 12:43:02');
+-- lauries are all read
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
+WHERE PatientSerNum = 92
+AND NotificationControlSerNum = 5;
 
 
 -- Update all Announcement dates and read statuses to make the data more similar to a live environment

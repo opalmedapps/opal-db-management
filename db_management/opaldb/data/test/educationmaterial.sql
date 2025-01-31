@@ -150,3 +150,9 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 (2852, NULL, 866, 92, '2020-08-27 11:21:52', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2020-12-15 01:17:59'),
 (3909, NULL, 871, 92, '2020-09-28 16:55:25', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2020-12-24 14:09:45'),
 (13819, NULL, 2341, 92, '2022-09-09 09:22:05', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2022-12-19 14:59:58');
+-- lauries are all read
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
+WHERE PatientSerNum = 92
+AND NotificationControlSerNum = 7;
