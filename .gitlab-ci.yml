@@ -205,6 +205,8 @@ run migrations:
   extends:
     - .database_service
   script:
+    # see: https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html#reference-tags
+    - !reference [.database_service, script]
     - pytest --version
     - pytest -v --junitxml=report.xml
   artifacts:
