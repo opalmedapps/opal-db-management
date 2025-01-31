@@ -98,7 +98,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Revert QRImageFileName column from hostpitalmap and Triggers to remove QRImageFileName instance"""
+    """Revert QRImageFileName column from hospitalmap and Triggers to remove QRImageFileName instance"""
     op.add_column('HospitalMapMH', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
     op.add_column('HospitalMap', sa.Column('QRImageFileName', mysql.VARCHAR(length=255), nullable=False))
     op.drop_trigger(UPDATED_HOSPITALMAP_DELETE_TRIGGER)
