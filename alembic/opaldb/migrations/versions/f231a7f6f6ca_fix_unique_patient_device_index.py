@@ -32,7 +32,7 @@ def sanitization_query(unique_field_first: str, unique_field_second: str) -> str
         DROP TEMPORARY TABLE IF EXISTS pdi_rows;
 
         -- Label rows in PatientDeviceIdentifier with row numbers for each {field1}, {field2} combination
-        -- The most recently updated row for each {field1} and {field2} combination will be have row number 1
+        -- The most recently updated row for each {field1} and {field2} combination will have row number 1
         CREATE TEMPORARY TABLE pdi_rows
         SELECT
             ROW_NUMBER() OVER (
