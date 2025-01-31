@@ -38,15 +38,15 @@ SET DateAdded = DATE_ADD(now(), INTERVAL -3 DAY),
 WHERE NotificationControlSerNum = 13
 AND RefTableRowSerNum in (1, 2, 3);
 
--- Breast Recon: Preop complete 7 days ago; Postop sent 3 days ago
+-- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
 UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -7 DAY),
-    CompletionDate = DATE_ADD(now(), INTERVAL -6 DAY)
+SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY),
+    CompletionDate = DATE_ADD(now(), INTERVAL -13 DAY)
 WHERE QuestionnaireControlSerNum = 155;
 UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
+SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
 WHERE NotificationControlSerNum = 13
 AND RefTableRowSerNum = 4;
 
