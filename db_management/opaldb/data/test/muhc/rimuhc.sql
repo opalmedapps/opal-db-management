@@ -39,3 +39,11 @@ INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `Sou
 -- Wednesday Pathology
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (16,	NULL,	57,	1,	'56190000000000039165520',	8408,	890,	'2024-02-19 12:35:00',	890,	'2024-02-19 12:35:00',	'',	'Y',	'',	'wednesday_2024Feb19_pathology_rvh.pdf',	'wednesday_2024Feb19_pathology_rvh.pdf',	890,	'2024-02-19 14:35:00',	'T',	'Transfer successful',	'',	'2024-02-19 14:35:00',	0,	'[]',	'2024-02-19 14:35:00');
+
+
+UPDATE `Document`
+SET `CreatedTimeStamp` = DATE_ADD(now(), INTERVAL -4 DAY),
+    `DateAdded` = DATE_ADD(now(), INTERVAL -3 DAY),
+    `LastUpdated` = DATE_ADD(now(), INTERVAL -3 DAY)
+WHERE `PatientSerNum` NOT IN (51,52,53)
+;
