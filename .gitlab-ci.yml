@@ -68,6 +68,8 @@ build dbv image:
     # Use TLS https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled
     DOCKER_HOST: tcp://docker:2376
     DOCKER_TLS_CERTDIR: "/certs"
+    # SSH key mount requires buildkit
+    DOCKER_BUILDKIT: 1
   before_script:
     # login to CI registry: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#option-1-run-docker-login
     - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
