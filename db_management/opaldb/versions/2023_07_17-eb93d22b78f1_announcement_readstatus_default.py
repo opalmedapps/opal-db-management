@@ -5,8 +5,9 @@ Revises: 759547f5ca7d
 Create Date: 2023-07-17 18:22:23.476788
 
 """
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 from sqlalchemy.dialects import mysql
 
 # revision identifiers, used by Alembic.
@@ -17,7 +18,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    # ### Add default value for the field ReadStatus ###
+    """ Add default value for the field ReadStatus """
     op.alter_column(
         'Announcement',
         'ReadStatus',
@@ -26,11 +27,10 @@ def upgrade() -> None:
         existing_comment='Deprecated',
         existing_nullable=False,
     )
-    # ### end Alembic commands ###
 
 
 def downgrade() -> None:
-    # ### Removed the default value for the field ReasStatus ###
+    """ Removed the default value for the field ReasStatus """
     op.alter_column(
         'Announcement',
         'ReadStatus',
@@ -39,4 +39,3 @@ def downgrade() -> None:
         existing_comment='Deprecated',
         existing_nullable=False,
     )
-    # ### end Alembic commands ###
