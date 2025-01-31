@@ -33,8 +33,10 @@ variables:
 
 before_script:
   - uname -a
+  - python --version
+  - which python
   - apt update && apt-get install -y build-essential libmariadb-dev
-  - python -m venv .venv
+
   - source .venv/bin/activate || true
   - cp .env.sample .env
   - sed -i "s/^LEGACY_OPAL_DB_NAME=.*/LEGACY_OPAL_DB_NAME=OpalDB/" .env
