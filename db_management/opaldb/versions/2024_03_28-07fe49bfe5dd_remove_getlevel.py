@@ -16,7 +16,7 @@ branch_labels = None
 depends_on = None
 
 get_level_procedure = ReplaceableObject(
-    'getLevel',
+    'getLevel',  # noqa: WPS462
     """
     (`in_DateTime` datetime, `in_Description` varchar(255), `in_HospitalMap` int) RETURNS int(11)
     DETERMINISTIC
@@ -26,10 +26,12 @@ get_level_procedure = ReplaceableObject(
     By: Yick Mo
     Date: 2018-06-04
 
-    Purpose: This will override the original location of the appointment by figuring out the time of the appointment and where the level where the patient should go depends on what floor the doctor is located during the day.
+    Purpose: This will override the original location of the appointment by figuring out the time of the appointment
+        and where the level where the patient should go depends on what floor the doctor is located during the day.
         The morning shift is AM until 13:00 which is considered PM.
 
-        NOTE: This is temporary for now due to the fact of the hard coding of the database and hospital maps. Need to design this to be more dynamic.
+        NOTE: This is temporary for now due to the fact of the hard coding of the database and hospital maps.
+        Need to design this to be more dynamic.
     Parameters:
         in_DateTime = date and time of the appointment
 
@@ -131,13 +133,15 @@ get_level_procedure = ReplaceableObject(
             set wsReturnHospitalMap = 23; -- Return RC level for blood test
         else
             if ((wsBloodTest = 'No') and (wsDS_Area = 'Yes')) then
-                set wsReturnHospitalMap = 19; -- Return DS Level for only DS location based on the appointment description
+                -- Return DS Level for only DS location based on the appointment description
+                set wsReturnHospitalMap = 19;
             else
-
+                -- If doctor's and appointment location match or if the doctor's location is N/A,
+                -- then return original location.
                 if ( 	((wsReturnLevel = 'S1') and (instr(wsDSLevel, wsCurrentHospitalMap) > 0))  or
                         ((wsReturnLevel = 'RC')  and (instr(wsRCLevel, wsCurrentHospitalMap) > 0)) or
                         ((wsReturnLevel = 'N/A') and (wsCurrentHospitalMap <> '||')) ) then
-                    set wsReturnHospitalMap = in_HospitalMap; -- If doctor's and appointment location match or if the doctor's location is N/A, then return original location.
+                    set wsReturnHospitalMap = in_HospitalMap;
                 else
                     -- If doctor's and appointment location does not match
                     if (wsReturnLevel = 'S1') then
@@ -164,7 +168,10 @@ get_level_procedure = ReplaceableObject(
 
 
 def upgrade() -> None:
-    op.drop_procedure(get_level_procedure)
+    """Upgrade to this migration."""
+    op.drop_procedure(get_level_procedure)  # type: ignore[attr-defined]
+
 
 def downgrade() -> None:
-    op.create_procedure(get_level_procedure)
+    """Downgrade this migration."""
+    op.create_procedure(get_level_procedure)  # type: ignore[attr-defined]
