@@ -253,5 +253,5 @@ include:
 # Dependency Scanning
 # https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-analyzer-behavior
 gemnasium-dependency_scanning:
-  variables:
-    PIP_REQUIREMENTS_FILE: "requirements/development.txt"
+  before_script:
+    - mv requirements/development.txt requirements/requirements.txt
