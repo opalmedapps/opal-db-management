@@ -22,7 +22,7 @@ connection_params = {
 }
 connection_url = 'mysql+mysqldb://{user}:{password}@{host}:{port}/{database}'
 # Add ssl settings if using SSL connection to db
-if settings.USE_SSL:
+if settings.USE_SSL == '1':
     connection_params.update({
         'ssl_ca': settings.SSL_CA,
     })
