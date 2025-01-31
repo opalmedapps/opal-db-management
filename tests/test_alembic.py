@@ -1,5 +1,7 @@
 from pytest_alembic import create_alembic_fixture, tests
 
+# Manually create fixtures for the DBs
+# See: https://github.com/schireson/pytest-alembic/issues/98
 opaldb = create_alembic_fixture({'script_location': 'db_management/opaldb'})
 questionnairedb = create_alembic_fixture({'script_location': 'db_management/questionnairedb'})
 ormsdb = create_alembic_fixture({'script_location': 'db_management/ormsdb'})
