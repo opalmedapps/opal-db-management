@@ -71,4 +71,5 @@ DELETE FROM `NotificationTypes` WHERE NotificationTypeSerNum=13;
 
 -- Update descriptions for the NotificationControl
 UPDATE `NotificationControl` SET Description_EN='$patientName: Successfully checked in for your appointment(s) at $getDateTime. You will receive another notification when you are called in to your appointment(s).', Description_FR='$patientName: Enregistrement réussi à votre/vos rendez-vous de $getDateTime. Vous recevrez une autre notification lorsque vous serez appelé(e) à votre/vos rendez-vous.' WHERE NotificationControlSerNum=12;
+
 UPDATE `NotificationControl` SET Description_EN='$patientName: New questionnaire received. Please complete it before seeing your health care provider.', Description_FR='$patientName: Nouveau questionnaire reçu. Veuillez le compléter avant votre rendez-vous avec votre professionnel de la santé.' WHERE NotificationControlSerNum=13;
