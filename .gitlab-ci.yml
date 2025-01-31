@@ -20,8 +20,8 @@ default:
     - source .venv/bin/activate || true
 
 stages:
-  - Build
-  - Static Analysis
+  - build
+  - static analysis
   - test
 
 setup:
@@ -51,7 +51,7 @@ setup:
       - .cache/pip
 
 build alembic image:
-  stage: Build
+  stage: build
   image: docker:25.0.3
   services:
     - docker:25.0.3-dind
@@ -84,7 +84,7 @@ build alembic image:
       fi
 
 flake8:
-  stage: Static Analysis
+  stage: static analysis
   extends: .default_before
   needs:
     - setup
@@ -104,7 +104,7 @@ flake8:
       codequality: gl-code-quality-report.json
 
 mypy:
-  stage: Static Analysis
+  stage: static analysis
   extends: .default_before
   needs:
     - setup
@@ -123,7 +123,7 @@ mypy:
       codequality: codequality.json
 
 markdownlint:
-  stage: Static Analysis
+  stage: static analysis
   needs:
     - setup
   image:
@@ -215,6 +215,9 @@ include:
   # Container Scanning: https://docs.gitlab.com/ee/user/application_security/container_scanning/
   # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/Container-Scanning.latest.gitlab-ci.yml
   - template: Jobs/Container-Scanning.latest.gitlab-ci.yml
+  # SAST Scanning: https://docs.gitlab.com/ee/user/application_security/sast/
+  # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Jobs/SAST.latest.gitlab-ci.yml
+  - template: Jobs/SAST.latest.gitlab-ci.yml
 
 # Customizations
 #
