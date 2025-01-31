@@ -6,7 +6,7 @@
 
 # Code quality
 #
-ruff==0.9.3  # https://docs.astral.sh/ruff
+ruff==0.9.4  # https://docs.astral.sh/ruff
 
 # Testing
 #
