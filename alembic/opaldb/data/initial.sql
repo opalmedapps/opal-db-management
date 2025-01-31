@@ -24,6 +24,9 @@ INSERT INTO `AllowableExtension` (`Type`, `Name`) VALUES
 ('image',	'jpg'),
 ('image',	'png');
 
+INSERT INTO `BuildType` (`Name`) VALUES
+('Production');
+
 -- categories for modules
 INSERT INTO `categoryModule` (`ID`, `name_EN`, `name_FR`, `order`) VALUES
 (1,	'Publications',	'Publications',	1),
