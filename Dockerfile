@@ -1,17 +1,20 @@
-FROM cgr.dev/chainguard/python:latest-dev as build
+FROM python:3.11.8-slim-bookworm as build
 
-USER root
-
-RUN apk add --no-cache build-base mariadb-dev
-
-USER nonroot
+RUN apt-get update \
+  # dependencies for building Python packages
+  && apt-get install -y build-essential \
+  # mysqlclient dependencies
+  && apt-get install -y default-libmysqlclient-dev pkg-config \
+  # cleaning up unused files
+  && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+  && rm -rf /var/lib/apt/lists/*
 
 # Install pip requirements
 RUN python -m pip install --no-cache-dir --upgrade pip
 COPY ./requirements /tmp/
-# RUN python -m pip install --no-cache-dir -r /tmp/development.txt
+RUN python -m pip install --no-cache-dir -r /tmp/development.txt
 
-FROM cgr.dev/chainguard/python:latest
+FROM python:3.11.8-slim-bookworm
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -20,8 +23,8 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # get Python package lib and bin
-# COPY --from=build /usr/local/bin /usr/local/bin
-# COPY --from=build /usr/local/lib /usr/local/lib
+COPY --from=build /usr/local/bin /usr/local/bin
+COPY --from=build /usr/local/lib /usr/local/lib
 COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
 COPY docker/alembic-upgrade.sh /app/alembic-upgrade.sh
 
