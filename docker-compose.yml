@@ -28,7 +28,7 @@ services:
     depends_on:
       - db
     ports:
-      - ${PHP_PORT}:80
+      - ${PHP_PORT}:8080
     volumes:
       # maintain current revision of DBVs across DBV updates
       - ./revisions/opaldb:/var/www/html/dbv/dbv_opaldb/data/meta
