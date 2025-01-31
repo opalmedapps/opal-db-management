@@ -9,7 +9,7 @@ INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred
 (57,	1,	'2021-09-30 00:56:01',	'2021-09-30 08:56:01',	0);
 
 INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `PatientSerNum`, `Hospital_Identifier_Type_Code`, `MRN`, `Is_Active`) VALUES
-(7, 56, 'RVH',  '9999991',  1),
+(7, 56, 'RVH',  '9999998',  1),
 (9,	57,	'MCH',	'9999999',	1);
 
 INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
