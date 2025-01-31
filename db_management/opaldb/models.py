@@ -765,7 +765,7 @@ class QuestionnaireControlMH(Base):
     SessionId = Column(String(255))
 
 
-class DefinitionTable(Base):
+class QuestionnaireDBDefinitionTable(Base):
     __tablename__ = 'definitionTable'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -773,7 +773,7 @@ class DefinitionTable(Base):
     name = Column(String(255), nullable=False)
 
 
-class Dictionary(Base):
+class QuestionnaireDBDictionary(Base):
     __tablename__ = 'dictionary'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -1501,7 +1501,7 @@ class PatientHospitalIdentifier(Base):
     Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
-class Purpose(Base):
+class QuestionnaireDBPurpose(Base):
     __tablename__ = 'purpose'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
@@ -1513,7 +1513,7 @@ class Purpose(Base):
     dictionary1 = relationship('Dictionary', primaryjoin='Purpose.title == Dictionary.contentId')
 
 
-class Respondent(Base):
+class QuestionnaireDBRespondent(Base):
     __tablename__ = 'respondent'
     __table_args__ = {'schema': 'QuestionnaireDB'}
 
