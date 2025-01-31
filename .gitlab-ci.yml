@@ -33,6 +33,7 @@ setup:
   stage: .pre
   script:
     - apt update && apt-get install -y git
+    - apt-get install -y libmariadb-dev
     - python -m venv .venv
     - source .venv/bin/activate
     - pip install --upgrade pip
