@@ -1875,7 +1875,7 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (4278, 44, 3654, 'Verif Film', 'Verif Film', '2018-08-13 16:36:02', 62, '2022-08-31 10:28:36', 'QvPiN7tY2I'),
 (4279, 44, 3663, 'Voxel-Q', 'Voxel-Q', '2018-08-13 16:36:02', 13, '2022-01-21 20:45:40', 'JGu0lLnQdG'),
 (4280, 44, 3670, 'Weekly Chart Check', 'Weekly Chart Check', '2018-08-13 16:36:02', 13, '2022-01-21 20:45:40', 'JGu0lLnQdG'),
-(4303, 44, 2368, 'MRI Sim (PT NOT CALLED)', 'MRI Sim (PT NOT CALLED)', '2018-08-13 16:36:02', 62, '2022-08-31 10:28:36', 'QvPiN7tY2I'),
+(4303, 44, 2368, 'MRI B and S', 'MRI Brain and Spine', '2018-08-13 16:36:02', 62, '2022-08-31 10:28:36', 'QvPiN7tY2I'),
 (4320, 44, 3666, 'WAITING FOR TESTS', 'WAITING FOR TESTS', '2018-08-13 16:36:02', 14, '2022-01-21 20:45:40', 'KfTEuVZ8RT'),
 (4344, 44, 189, '.EBC-On Hold', '.EBC-On Hold', '2000-01-01 00:00:00', 62, '2022-08-31 10:28:35', 'QvPiN7tY2I'),
 (4526, 44, 2325, 'METS GYN Anesthesia', 'METS GYN Anesthesia', '2000-01-01 00:00:00', 62, '2022-08-31 10:28:36', 'QvPiN7tY2I'),
