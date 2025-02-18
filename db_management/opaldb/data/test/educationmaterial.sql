@@ -188,3 +188,10 @@ SET ReadStatus = 1,
     ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
 WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 7;
+
+
+-- Bobby Jones Foundation
+INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
+(100,	NULL,	1000,	93,	'2025-02-18 00:00:00',	0,	'[]',	'2025-02-18 00:00:00'),
+(101,	NULL,	1001,	93,	'2025-02-18 00:00:00',	0,	'[]',	'2025-02-18 00:00:00'),
+(102,	NULL,	1002,	93,	'2025-02-18 00:00:00',	0,	'[]',	'2025-02-18 00:00:00');
