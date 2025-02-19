@@ -23,7 +23,7 @@ CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -14 YEAR), '%Y'), '-02-23') - INTERV
 (59,	0,	'',	'',	'Rory',	"O\'Brien",	'rory_test',	NULL,	'Other',
 CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -52 YEAR), '%Y'), '-06-11') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '0611') YEAR,	0,	5557654321,	0,	'rory@opalmedapps.ca',	'EN',	'OBRR72061199',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2024-09-09 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
 (92, 43235, '1092300', '5024737', 'Laurie', 'Hendren', 'Pointer Lady', '', 'Female', '1958-12-13 00:00:00', 64, 5144415642, 1, 'laurie@opalmedapps.ca', 'EN', 'HENL58621319', '3', '2018-01-01 00:00:00', '2019-01-01 00:00:00', 0, 'Unlocked by Johns Request', '2019-05-27 00:00:00', '', '2024-04-18 17:59:43', 0, NULL, NULL),
-(93,    0,  '', '', 'Bobby',    'Jones',     'bobby_jones_foundation', NULL, 'Male', '1985-01-01 00:00:00', 40, 0, 0, 'bobbyjones@demo.opalmedapps.ca', 'EN', '', '1', '2025-01-01 00:00:00', '2025-01-01 00:00:00', 0, '', '0000-00-00 00:00:00', '', '2025-02-13 17:59:43', 1, 1,	DATE_ADD(NOW(), INTERVAL -1 YEAR));
+(93,    0,  '', '', 'Bobby',    'Jones',     'bobby_jones_foundation', NULL, 'Male', '1985-01-01 00:00:00', 40, 0, 0, 'bobbyjones@demo.opalmedapps.ca', 'EN', '', '3', '2025-01-01 00:00:00', '2025-01-01 00:00:00', 0, '', '0000-00-00 00:00:00', '', '2025-02-13 17:59:43', 1, 1,	DATE_ADD(NOW(), INTERVAL -1 YEAR));
 
 UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0 where PatientSerNum <> 92;
 
@@ -46,7 +46,8 @@ INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `Pa
 (8,	51,	'LAC',	'0389731',	1),
 (12, 92, 'MGH',	'5024737',	1),
 (13, 92, 'RVH',	'1092300',	1),
-(14, 59, 'RVH',	'9999989',	1);
+(14, 59, 'RVH',	'9999989',	1),
+(15, 93, 'RVH',	'9999994',	1);
 
 INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
 (1,	'Patient',	51,	'QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59'),
