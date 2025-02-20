@@ -35,7 +35,7 @@ def run_sql_scripts(
         try:
             _truncate_safety_check(path, db_name)
         except OSError as err:
-            message = 'Error encountered during execution:'
+            message = f'Error encountered during execution: {err}'
             raise SystemExit(message) from err
         print(f'LOG: Running SQL of file: {path}')
         with Path(path).open(encoding='utf-8') as fd:
