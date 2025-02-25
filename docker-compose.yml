@@ -19,7 +19,7 @@ services:
 
   adminer:
     container_name: adminer
-    image: adminer:4.8.1-standalone
+    image: adminer:4.17.1-standalone
     depends_on:
       - db
     ports:
