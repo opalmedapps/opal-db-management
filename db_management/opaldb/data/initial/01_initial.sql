@@ -144,7 +144,7 @@ INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name
 (18,	'Appointment Reminder',	'Rappel de rendez-vous',	'$patientName ($institution): Reminder for an appointment at the $hospitalEN: $appointmentAliasEN on $appointmentDate at $appointmentTime',	'$patientName ($institution): Rappel pour un rendez-vous au $hospitalFR : $appointmentAliasFR le $appointmentDate à $appointmentTime',	'AppointmentReminder',	19,	'2023-11-27 11:39:14',	NULL,	'0000-00-00 00:00:00',	'2023-11-27 16:39:16',	NULL);
 
 
-INSERT INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
+INSERT IGNORE INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (1,	'System Administrator',	'Administrateur du système',	0,	'',	'2020-06-04 09:08:14',	'BODO6005',	'2020-08-19 16:47:32',	'BODO6005'),
 (4,	'Patient Registration',	'Enregistrement patient',	0,	'',	'2020-06-04 09:08:35',	'BODO6005',	'2020-06-04 17:08:35',	'BODO6005'),
 (5,	'Test Role',	'Test Rôle',	1,	'BODO6005',	'2020-08-10 09:22:33',	'BODO6005',	'2020-08-10 17:58:21',	'BODO6005'),
@@ -161,7 +161,7 @@ INSERT INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creat
 (36,    'ORMS', 'ORMS', 0, '', '2024-03-19 09:22:20', 'AGKE6000', '2024-03-19 09:22:31', 'AGKE6000'),
 (37,	'Medical Records',	'Dossiers médicaux',	0,	'',	'2024-03-19 09:22:20',	'AGKE6000',	'2024-03-19 09:22:20',	'AGKE6000');
 
-INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
+INSERT IGNORE INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (1,	1,	1,	3),
 (2,	2,	1,	3),
 (3,	3,	1,	3),
