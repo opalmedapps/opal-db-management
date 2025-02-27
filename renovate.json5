@@ -12,7 +12,7 @@
     // https://docs.renovatebot.com/modules/manager/pre-commit/
     // https://docs.renovatebot.com/presets-default/#enableprecommit
     ":enablePreCommit",
-    "gitlab>opalmedapps/renovate-bot//presets/docker-alpine.json5",
+    "github>mschoettle/renovate-presets//presets/docker-alpine.json5",
   ],
   "pip_requirements": {
     "fileMatch": ["^requirements/.*\\.txt$"]
