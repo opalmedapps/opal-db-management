@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref == 'refs/heads/main' }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v5.3.1
+        id: setup-uv
+        with:
+          # renovate: datasource=pypi dependency=uv
+          version: "0.6.4"
+          # ubuntu-latest already has Python 3.x installed (pip is needed by the pre-commit action)
+      - name: Print the installed versions
+        run: |
+          uv python install
+          echo "Installed uv version is ${{ steps.setup-uv.outputs.uv-version }}"
+          echo "Installed Python version is $(python --version)"
+          uv python list
+      - uses: mschoettle/pre-commit-action@v4.0.2
+        env:
+          SKIP: ruff,ruff-format,markdownlint-cli2
+      - name: Run ruff check
+        uses: astral-sh/ruff-action@v3.2.1
+        with:
+          version-file: "requirements/development.txt"
+      - name: Run ruff format
+        uses: astral-sh/ruff-action@v3.2.1
+        with:
+          version-file: "requirements/development.txt"
+          args: "format --check"
+
+  markdownlint:
+    permissions:
+      contents: read
+      # required for upload-sarif action
+      # https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github#example-workflow-for-sarif-files-generated-outside-of-a-repository
+      security-events: write
+    uses: opalmedapps/.github/.github/workflows/markdownlint.yaml@main

@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 """
-Change registration date default to current timetstamp.
+Change registration date default to current timestamp.
 
 Revision ID: c3293af1f69e
 Revises: 7714d52efeaf
@@ -20,6 +20,8 @@ revision = 'c3293af1f69e'
 down_revision = '7714d52efeaf'
 branch_labels = None
 depends_on = None
+
+# print(x)
 
 
 def upgrade() -> None:
