@@ -33,14 +33,6 @@ jobs:
           cache-dependency-glob: "requirements/*.txt"
       - run: |
           uv pip install --system  -r requirements/development.txt
-      - name: Print the installed versions
-        run: |
-          uv python install
-          echo "Installed uv version is $(uv --version)"
-          echo "Installed Python version is $(python --version)"
-      - uses: mschoettle/pre-commit-action@v4.0.2
-        env:
-          SKIP: ruff,ruff-format,markdownlint-cli2
       - name: Run ruff check
         uses: astral-sh/ruff-action@v3.2.1
         with:
@@ -50,6 +42,14 @@ jobs:
         with:
           version-file: "requirements/development.txt"
           args: "format --check"
+      - name: Print the installed versions
+        run: |
+          uv python install
+          echo "Installed uv version is $(uv --version)"
+          echo "Installed Python version is $(python --version)"
+      - uses: mschoettle/pre-commit-action@v4.0.2
+        env:
+          SKIP: ruff,ruff-format,markdownlint-cli2
 
   markdownlint:
     permissions:
