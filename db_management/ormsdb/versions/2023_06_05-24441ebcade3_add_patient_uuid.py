@@ -22,7 +22,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    """Add UUID to Patient table to faciliate Backend API calls."""
+    """Add UUID to Patient table to facilitate Backend API calls."""
     # Altering schema with system versioning requires changing the error mode
     # https://mariadb.com/docs/server/ref/mdb/system-variables/system_versioning_alter_history/
     op.execute('SET @@system_versioning_alter_history = 1;')

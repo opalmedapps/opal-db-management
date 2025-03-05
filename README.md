@@ -237,7 +237,7 @@ and any future use of the autogenerate feature would cause Alembic to try to und
 Alembic inserts the version identifier tag of the latest migration file into the `alembic_version` table in the database to keep track of the database state. Be sure not to manually delete or otherwise edit that table.
 Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. For example, `alembic --name opaldb current`.
 
-To go to the latest version for the database, simply run `alembic --name <dbname> </dbname>upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alterantively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
+To go to the latest version for the database, simply run `alembic --name <dbname> </dbname>upgrade head` (prefixing the command with `docker compose run --rm...` as shown above). You can alternatively just pause the existing db-docker containers, then re-run them with the regular command `docker compose up`. Alembic will remember its previous revision number using the `alembic_version` table in OpalDB and it will see that there is a new 'head' revision that needs to be run.
 
 #### Informational only: Inserting new test data
 

@@ -1,0 +1,12 @@
+[default.extend-words]
+muhc = "muhc"
+mch = "mch"
+# alias in SQL queries
+tge = "tge"
+# part of SerNum
+ser = "ser"
+# not worth the cost of fixing
+Aggrement = "Aggrement"
+
+[files]
+extend-exclude = ["db_management/*/data/**/*.sql"]

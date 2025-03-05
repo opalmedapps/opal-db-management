@@ -1434,7 +1434,7 @@ class MasterSourceAlias(Base):
     )
 
 
-class MasterSourceDiagnosi(Base):
+class MasterSourceDiagnosis(Base):
     __tablename__ = 'masterSourceDiagnosis'
     __table_args__ = (
         Index('masterSourceDiagnosisKey', 'externalId', 'code', 'source', unique=True),
@@ -1611,7 +1611,7 @@ class ResourcePendingMH(Base):
 class Termsandagreement(Base):
     __tablename__ = 'termsandagreement'
     __table_args__ = {
-        'comment': 'Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.'
+        'comment': 'Table to store terms and agreement document link(In En & Fr) with version of the document and created and last modified dates.'
     }
 
     Id = Column(BIGINT(20), primary_key=True)
@@ -1716,7 +1716,7 @@ class CronLog(Base):
     Cron = relationship('Cron')
 
 
-class Diagnosi(Base):
+class Diagnosis(Base):
     __tablename__ = 'Diagnosis'
 
     DiagnosisSerNum = Column(INTEGER(11), primary_key=True, index=True)
@@ -2010,7 +2010,7 @@ class Module(Base):
         comment='To determine if an entry of the specified module can be published multiple times or not',
     )
     order = Column(
-        INTEGER(3), nullable=False, server_default=text('999'), comment='Order to display the list of modlues'
+        INTEGER(3), nullable=False, server_default=text('999'), comment='Order to display the list of modules'
     )
     sqlPublicationList = Column(
         LONGTEXT, nullable=False, comment='SQL query to list the publications associated to the module'
@@ -2020,7 +2020,7 @@ class Module(Base):
         LONGTEXT, nullable=False, comment='SQL query to list the chart log publications associated to the module'
     )
     sqlPublicationListLog = Column(
-        LONGTEXT, nullable=False, comment='SQL query to list the detailled logs publications associated to the module'
+        LONGTEXT, nullable=False, comment='SQL query to list the detailed logs publications associated to the module'
     )
     sqlPublicationMultiple = Column(
         LONGTEXT, nullable=False, comment='When publication is not unique. use this field to list available publication'

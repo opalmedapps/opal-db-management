@@ -30,7 +30,7 @@ COPY_DATA_TO_SOURCE_SYSTEM_ID = """
 
 
 def upgrade() -> None:
-    """Update all occurences of AppointmentAriaSer to SourceSystemID and update field type to allow character ids."""
+    """Update all occurrences of AppointmentAriaSer to SourceSystemID and update field type to allow character ids."""
     op.add_column(
         'Appointment',
         sa.Column(

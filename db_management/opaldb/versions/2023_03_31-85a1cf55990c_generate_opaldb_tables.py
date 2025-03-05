@@ -2007,7 +2007,7 @@ def upgrade() -> None:
             nullable=True,
         ),
         sa.PrimaryKeyConstraint('Id'),
-        comment='Table to store terms and agreement docuemnt link(In En & Fr) with version of the document and created and last modified dates.',
+        comment='Table to store terms and agreement document link(In En & Fr) with version of the document and created and last modified dates.',
     )
     op.create_table(
         'AppointmentPending',
@@ -2506,7 +2506,7 @@ def upgrade() -> None:
             mysql.INTEGER(display_width=3),
             server_default=sa.text('999'),
             nullable=False,
-            comment='Order to display the list of modlues',
+            comment='Order to display the list of modules',
         ),
         sa.Column(
             'sqlPublicationList',
@@ -2527,7 +2527,7 @@ def upgrade() -> None:
             'sqlPublicationListLog',
             mysql.LONGTEXT(),
             nullable=False,
-            comment='SQL query to list the detailled logs publications associated to the module',
+            comment='SQL query to list the detailed logs publications associated to the module',
         ),
         sa.Column(
             'sqlPublicationMultiple',

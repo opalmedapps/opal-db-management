@@ -38,7 +38,7 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
-    """Re-enable system verisoning to all tables."""
+    """Re-enable system versioning to all tables."""
     funcs_sql_content = ''
     funcs_file_path = REVISIONS_DIR.joinpath('OrmsDB_enable_system_versioning.sql')
     # Read in SQL content from handle

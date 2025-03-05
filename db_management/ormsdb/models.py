@@ -418,7 +418,7 @@ class MediVisitAppointmentList(Base):
     Patient = relationship('Patient')
 
 
-class PatientDiagnosi(Base):
+class PatientDiagnosis(Base):
     __tablename__ = 'PatientDiagnosis'
 
     PatientDiagnosisId = Column(INTEGER(11), primary_key=True)

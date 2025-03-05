@@ -497,7 +497,7 @@ BEGIN
         end if;
 
         -- 3. verify if the answerSection exist for that answerQuestionnaire_id
-        -- note that the answerSectionId are concatonated due to maybe there is an error in inserts and there are more than one ID matching the conditions
+        -- note that the answerSectionId are concatenated due to maybe there is an error in inserts and there are more than one ID matching the conditions
         select count(*), group_concat(answerSection.ID), max(answerSection.ID) into countAnswerSection, existing_answerSection_id_concated, existing_answerSection_id
         from answerSection
         where answerSection.answerQuestionnaireId = i_answerQuestionnaireId
