@@ -30,6 +30,7 @@ jobs:
         with:
           # renovate: datasource=pypi dependency=uv
           version: "0.6.4"
+          cache-dependency-glob: "requirements/*.txt"
       - name: Print the installed versions
         run: |
           uv python install
@@ -39,9 +40,9 @@ jobs:
           uv venv
           uv pip install -r requirements/development.txt
       - name: Run ruff check
-        run: ruff check --output-format github
+        run: uv run ruff check --output-format github
       - name: Run ruff format
-        run: ruff format --check --output-format github
+        run: uv run ruff format --check --output-format github
       - uses: mschoettle/pre-commit-action@v4.0.2
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
