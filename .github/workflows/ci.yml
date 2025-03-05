@@ -15,6 +15,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref == 'refs/heads/main' }}
 
+permissions:
+  contents: read
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -31,7 +34,7 @@ jobs:
       - name: Print the installed versions
         run: |
           uv python install
-          echo "Installed uv version is ${{ steps.setup-uv.outputs.uv-version }}"
+          echo "Installed uv version is $(uv --version)"
           echo "Installed Python version is $(python --version)"
           uv python list
       - uses: mschoettle/pre-commit-action@v4.0.2
