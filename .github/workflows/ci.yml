@@ -35,7 +35,6 @@ jobs:
           uv python install
           echo "Installed uv version is $(uv --version)"
           echo "Installed Python version is $(python --version)"
-          cache-dependency-glob: "requirements/*.txt"
       - run: |
           uv venv
           uv pip install -r requirements/development.txt
