@@ -5049,5 +5049,3 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (10091, 614, 28039, '.ebc_daily_rx', '.EBC-Daily Rx', '2000-01-01 00:00:00', 22, '2025-03-05 11:09:23', 'GrRGaTVtWm'),
 (10092, 614, 28040, 'intra_treat_out', 'INTRA TREAT OUT', '2000-01-01 00:00:00', 22, '2025-03-05 11:09:24', 'RWuRXxWcQB'),
 (10093, 614, 28041, 'follow_up_in_less_30_days', 'FOLLOW UP IN LESS/30DAYS', '2000-01-01 00:00:00', 22, '2025-03-05 11:09:25', 'FuqEGE2jgY');
-
-
