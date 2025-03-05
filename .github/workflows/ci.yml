@@ -30,24 +30,19 @@ jobs:
         with:
           # renovate: datasource=pypi dependency=uv
           version: "0.6.4"
-          cache-dependency-glob: "requirements/*.txt"
-      - run: |
-          uv venv
-          uv pip install -r requirements/development.txt
-      - name: Run ruff check
-        uses: astral-sh/ruff-action@v3.2.1
-        with:
-          version-file: "requirements/development.txt"
-      - name: Run ruff format
-        uses: astral-sh/ruff-action@v3.2.1
-        with:
-          version-file: "requirements/development.txt"
-          args: "format --check"
       - name: Print the installed versions
         run: |
           uv python install
           echo "Installed uv version is $(uv --version)"
           echo "Installed Python version is $(python --version)"
+          cache-dependency-glob: "requirements/*.txt"
+      - run: |
+          uv venv
+          uv pip install -r requirements/development.txt
+      - name: Run ruff check
+        run: ruff check --output-format github
+      - name: Run ruff format
+        run: ruff format --check --output-format github
       - uses: mschoettle/pre-commit-action@v4.0.2
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
