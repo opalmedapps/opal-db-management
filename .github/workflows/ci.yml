@@ -30,13 +30,14 @@ jobs:
         with:
           # renovate: datasource=pypi dependency=uv
           version: "0.6.4"
-          # ubuntu-latest already has Python 3.x installed (pip is needed by the pre-commit action)
+          cache-dependency-glob: "requirements/*.txt"
+      - run: |
+          uv pip install --system  -r requirements/development.txt
       - name: Print the installed versions
         run: |
           uv python install
           echo "Installed uv version is $(uv --version)"
           echo "Installed Python version is $(python --version)"
-          uv python list
       - uses: mschoettle/pre-commit-action@v4.0.2
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
