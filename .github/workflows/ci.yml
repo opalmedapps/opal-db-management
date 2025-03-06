@@ -46,9 +46,7 @@ jobs:
       - name: Run ruff format
         if: '!cancelled()'
         run: uv run ruff format --check --output-format github
-      - run: uvx mypy --version
-        if: '!cancelled()'
-      - uses: mschoettle/pre-commit-action@v4.0.2
+      - uses: mschoettle/pre-commit-action@v4.1.0
         if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
