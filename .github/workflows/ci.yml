@@ -40,17 +40,18 @@ jobs:
           uv venv
           uv pip install -r requirements/development.txt
       - name: Run ruff check
+        # run all steps to get all linting errors at once, fail at the end if any steps failed
+        if: '!cancelled()'
         run: uv run ruff check --output-format github
-        continue-on-error: true
       - name: Run ruff format
+        if: '!cancelled()'
         run: uv run ruff format --check --output-format github
-        continue-on-error: true
       - uses: mschoettle/pre-commit-action@v4.0.2
-        continue-on-error: true
+        if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
       - name: Check if any steps failed
-        if: ${{ failure() }}
+        if: failure()
         run: exit 1
 
 
