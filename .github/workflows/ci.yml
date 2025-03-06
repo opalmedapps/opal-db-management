@@ -31,7 +31,7 @@ jobs:
           # renovate: datasource=pypi dependency=uv
           version: "0.6.4"
           cache-dependency-glob: "requirements/*.txt"
-      - name: Print the installed versions
+      - name: Install Python
         run: |
           uv python install
           echo "Installed uv version is $(uv --version)"
@@ -39,6 +39,10 @@ jobs:
       - run: |
           uv venv
           uv pip install -r requirements/development.txt
+      - run: |
+          which uv
+          which pre-commit
+        if: '!cancelled()'
       - name: Run ruff check
         # run all steps to get all linting errors at once, fail at the end if any steps failed
         if: '!cancelled()'
