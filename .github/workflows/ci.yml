@@ -41,6 +41,8 @@ jobs:
           uv pip install -r requirements/development.txt
       - run: |
           source .venv/bin/activate
+          uv run mypy
+          which mypy
           which uv
           which pre-commit
         if: '!cancelled()'
