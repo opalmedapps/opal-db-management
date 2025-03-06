@@ -54,6 +54,11 @@ jobs:
         if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
+      - name: Run pytest
+        if: '!cancelled()'
+        run: |
+          uv run pytest --version
+          uv run pytest
       - name: Fail if any previous steps failed
         if: failure()
         run: exit 1
