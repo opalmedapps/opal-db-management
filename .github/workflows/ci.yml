@@ -56,7 +56,7 @@ jobs:
         # https://github.com/astral-sh/ruff/issues/10430
         # https://github.com/astral-sh/ruff-action/pull/26
         run: |
-          echo "::add-matcher::.github/matchers/ruff.json"
+          echo "::add-matcher::.github/matchers/ruff-format.json"
           uv run ruff format --check
       - uses: mschoettle/pre-commit-action@v4.1.2
         if: '!cancelled()'
