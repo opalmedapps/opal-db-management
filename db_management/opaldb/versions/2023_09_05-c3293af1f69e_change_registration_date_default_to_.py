@@ -21,8 +21,6 @@ down_revision = '7714d52efeaf'
 branch_labels = None
 depends_on = None
 
-# print(x)
-
 
 def upgrade() -> None:
     """Change default of RegistrationDate column to current timestamp."""
