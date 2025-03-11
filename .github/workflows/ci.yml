@@ -18,9 +18,16 @@ concurrency:
 permissions:
   contents: read
 
+env:
+  DB_ROOT_PASSWORD: "root-password"
+  DB_PASSWORD: "user-password"
+  DB_USER: citest
+
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      RUFF_OUTPUT_FORMAT: github
     steps:
       - uses: actions/checkout@v4.2.2
         with:
@@ -39,34 +46,59 @@ jobs:
       - run: |
           uv venv
           uv pip install -r requirements/development.txt
-      - run: |
-          source .venv/bin/activate
-          uv run mypy --version
-          which mypy
-          which uv
-          which pre-commit
-        if: '!cancelled()'
       - name: Run ruff check
         # run all steps to get all linting errors at once, fail at the end if any steps failed
         if: '!cancelled()'
-        run: uv run ruff check --output-format github
+        run: uv run ruff check
       - name: Run ruff format
         if: '!cancelled()'
-        env:
-          RUFF_OUTPUT_FORMAT: github
         run: uv run ruff format --check
-      - uses: mschoettle/pre-commit-action@v4.1.0
+      - uses: mschoettle/pre-commit-action@v4.1.2
         if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
-      - name: Run pytest
-        if: '!cancelled()'
-        run: |
-          uv run pytest --version
-          uv run pytest
       - name: Fail if any previous steps failed
         if: failure()
         run: exit 1
+
+  test:
+    runs-on: ubuntu-latest
+    container: python:3.12.8-alpine3.20
+    services:
+      db:
+        image: mariadb:10.11.10-jammy
+        env:
+          MARIADB_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+          # ensure that user has permissions for test DB to be used by pytest
+          MARIADB_DATABASE: OpalDB
+          MARIADB_USER: $DB_USER
+          MARIADB_PASSWORD: $DB_PASSWORD
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install dependencies
+        run: |
+          pip install uv
+          echo "Installed uv version is $(uv --version)"
+          # install dependencies for mysqlclient
+          apk add --no-cache build-base mariadb-dev mariadb-client
+          uv pip install --system -r requirements/development.txt
+      - name: Prepare environment
+        # set up env file for DB service
+        # use sample env file
+        run: |
+          cp .env.sample .env
+          sed -i "s/^DATABASE_ROOT_PASSWORD=.*/DATABASE_ROOT_PASSWORD=$DB_ROOT_PASSWORD/" .env
+          sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$DB_USER/" .env
+          sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DB_PASSWORD/" .env
+          sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=db/" .env
+          cat .env
+          # create additional DBs for legacy DB tests (OpalDB & QuestionnaireDB)
+          MYSQL_PWD=$DB_ROOT_PASSWORD mysql -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$MARIADB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mysql -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$MARIADB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mysql -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$MARIADB_USER\`@\`%\`;"
 
 
   markdownlint:
