@@ -52,7 +52,12 @@ jobs:
         run: uv run ruff check
       - name: Run ruff format
         if: '!cancelled()'
-        run: uv run ruff format --check
+        run: |
+          # register the problem matcher
+          # https://github.com/astral-sh/ruff/issues/10430
+          # https://github.com/astral-sh/ruff-action/pull/26
+          echo "::add-matcher::.github/workflows/matchers/ruff.json"
+          uv run ruff format --check
       - uses: mschoettle/pre-commit-action@v4.1.2
         if: '!cancelled()'
         env:
