@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 """
-Change registration date default to current timetstamp.
+Change registration date default to current timestamp.
 
 Revision ID: c3293af1f69e
 Revises: 7714d52efeaf
