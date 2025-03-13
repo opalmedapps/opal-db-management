@@ -56,8 +56,6 @@ jobs:
       DB_ROOT_PASSWORD: "root-password"
       DB_PASSWORD: "user-password"
       DB_USER: citest
-    needs:
-      - lint
     container: python:3.12.8-alpine3.20
     services:
       db:
