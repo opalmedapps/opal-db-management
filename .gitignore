@@ -8,7 +8,7 @@ certs/*
 !certs/openssl-server.cnf
 !certs/v3.ext
 
-docker-compose.override.yml
+compose.override.yaml
 
 .DS_Store
 .idea/

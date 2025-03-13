@@ -8,6 +8,6 @@
 # shellcheck disable=SC3040
 set -euo pipefail
 
-# Upgrade commands moved to local docker-compose.yaml to avoid auto upgrades in hospital environments
+# Upgrade commands moved to local compose file to avoid auto upgrades in production
 
 exec "$@"

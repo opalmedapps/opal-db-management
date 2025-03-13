@@ -4,7 +4,6 @@
 
 services:
   db:
-    container_name: opal-dbs
     image: mariadb:10.11.10-jammy
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
@@ -18,7 +17,6 @@ services:
       - TZ=EST5EDT
 
   adminer:
-    container_name: adminer
     image: adminer:4.17.1-standalone
     depends_on:
       - db
@@ -27,9 +25,7 @@ services:
     env_file:
       - .env
 
-  alembic:
-    container_name: alembic-app
-    image: opalmedapps/alembic:latest
+  app:
     build:
       context: .
     volumes:
@@ -44,4 +40,5 @@ services:
       #       If the error is encountered, simply re-start the containers a second time and alembic will work.
     env_file:
       - .env
-    command: /app/alembic-upgrade.sh  # Upgrade legacy dbs with alembic
+     # Upgrade legacy dbs with alembic
+    command: /app/alembic-upgrade.sh

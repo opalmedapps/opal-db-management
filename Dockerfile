@@ -3,16 +3,22 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 FROM python:3.12.8-alpine3.20 AS build
+COPY --from=ghcr.io/astral-sh/uv:0.6.6 /uv /uvx /bin/
 
 # dependencies for building Python packages
 RUN apk add --no-cache build-base \
   # mysqlclient dependencies
   && apk add --no-cache mariadb-dev
 
-# Install pip requirements
-RUN python -m pip install --no-cache-dir --upgrade pip
-COPY ./requirements /tmp/
-RUN python -m pip install --no-cache-dir -r /tmp/base.txt
+WORKDIR /app
+COPY pyproject.toml .
+COPY uv.lock .
+
+# Install dependencies
+RUN --mount=type=cache,target=/root/.cache/uv \
+    --mount=type=bind,source=uv.lock,target=uv.lock \
+    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    uv sync --locked --no-editable --no-dev --compile-bytecode
 
 FROM python:3.12.8-alpine3.20
 
@@ -29,13 +35,11 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # get Python packages lib and bin
-COPY --from=build /usr/local/bin /usr/local/bin
-COPY --from=build /usr/local/lib /usr/local/lib
-COPY docker/alembic-docker-entrypoint.sh /docker-entrypoint.sh
+COPY --from=build /app/.venv /app/.venv
+COPY docker/entrypoint.sh /docker-entrypoint.sh
 COPY docker/alembic-upgrade.sh /app/alembic-upgrade.sh
 
 WORKDIR /app/
-
 COPY db_management ./db_management
 COPY alembic.ini .
 
