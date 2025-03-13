@@ -40,9 +40,9 @@ Pay close attention to the following variable:
 
 1. `USE_SSL` - leave this at `0` unless you want to run the database with encrypted connections, which will require the generation of SSL certificates (see section below on [Running the databases with encrypted connections](#running-the-databases-with-encrypted-connections))
 
-### Step 3: Scaffold the project using docker compose
+### Step 3: Scaffold the project using `docker compose`
 
-The docker compose command uses the directive written in the `docker-compose.yml` file to initiate the required container for a project.
+The `docker compose` command uses the directive written in the `compose.yaml` file to initiate the required container for a project.
 In our case, it runs a database service using the MariaDB image, `adminer` as a web GUI to interact with the database, and an `alembic` service to manage database migrations and test data.
 Database information (username, password, etc) and port are set in the `.env` file.
 
@@ -166,7 +166,7 @@ Note that this file needs to be accessible inside the containers (the setup prov
 2. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
 
     ```shell
-    cp docker-compose.ssl.yml docker-compose.override.yml
+    cp compose.ssl.yaml compose.override.yaml
     ```
 
     You can verify that it is applied by running `docker compose config`.
