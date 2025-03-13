@@ -31,26 +31,18 @@ jobs:
         id: setup-uv
         with:
           # renovate: datasource=pypi dependency=uv
-          version: "0.6.4"
+          version: "0.6.6"
       - name: Install dependencies
         run: uv sync
-      - uses: astral-sh/ruff-action@v3.2.1
-      - uses: astral-sh/ruff-action@v3.2.1
+      - name: Run ruff check
+        if: '!cancelled()'
+        uses: astral-sh/ruff-action@v3.2.1
+      - name: Run ruff format
+        if: '!cancelled()'
+        uses: astral-sh/ruff-action@v3.2.1
         with:
           args: "format --check"
-      # - name: Run ruff check
-      #   # run all steps to get all linting errors at once, fail at the end if any steps failed
-      #   if: '!cancelled()'
-      #   run: uv run ruff check
-      # - name: Run ruff format
-      #   if: '!cancelled()'
-      #   # register the problem matcher
-      #   # https://github.com/astral-sh/ruff/issues/10430
-      #   # https://github.com/astral-sh/ruff-action/pull/26
-      #   run: |
-      #     echo "::add-matcher::.github/matchers/ruff-format.json"
-      #     uv run ruff format --check
-      - uses: mschoettle/pre-commit-action@v4.1.2
+      - uses: mschoettle/pre-commit-action@v4.2.1
         if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
@@ -87,7 +79,7 @@ jobs:
           echo "Installed uv version is $(uv --version)"
           # install dependencies for mysqlclient, bash for running SQL scripts later
           apk add --no-cache build-base mariadb-dev mariadb-client bash
-          uv pip install --system -r requirements/development.txt
+          uv sync
       - name: Prepare environment
         # set up env file for DB service
         # use sample env file
