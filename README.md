@@ -43,7 +43,7 @@ Pay close attention to the following variable:
 ### Step 3: Scaffold the project using `docker compose`
 
 The `docker compose` command uses the directive written in the `compose.yaml` file to initiate the required container for a project.
-In our case, it runs a database service using the MariaDB image, `adminer` as a web GUI to interact with the database, and an `alembic` service to manage database migrations and test data.
+In our case, it runs a database service using the MariaDB image, `adminer` as a web GUI to interact with the database, and an `app` service to manage database migrations and test data.
 Database information (username, password, etc) and port are set in the `.env` file.
 
 To scaffold our project simply run the command:
@@ -56,10 +56,10 @@ This starts adminer and the database.
 
 **Hint:** remove `-d` to run in the foreground instead of detached mode.
 
-Once the database server is initialized and all databases created, run `alembic` to migrate the databases:
+Once the database server is initialized and all databases created, run the `app` service to migrate the databases with `alembic`:
 
 ```shell
-docker compose run --rm alembic
+docker compose run --rm app
 ```
 
 See further below for inserting the test data.
@@ -82,7 +82,7 @@ Note that, generally speaking, initial data should be considered the "base" data
 To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
 
 ```shell
-docker compose run --rm alembic db_management/reset_data.sh <institution>
+docker compose run --rm app db_management/reset_data.sh <institution>
 ```
 
 ## Contributing
@@ -212,7 +212,7 @@ With the db container still running, open a separate bash CLI and run the autoge
 Call the autogenerate command:
 
 ```shell
-docker compose run --rm alembic alembic --name opaldb revision --autogenerate -m 'add_last_login_to_patient'
+docker compose run --rm app alembic --name opaldb revision --autogenerate -m 'add_last_login_to_patient'
 ```
 
 Note: When interacting with `alembic` you need to provide the database you want to run commands on using the `--name` argument. In the example above we are specifying that the autogenerate feature should target OpalDB.
@@ -246,27 +246,27 @@ To go to the latest version for the database, simply run `alembic --name <dbname
 Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real Production databases.
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/
+docker compose run --rm app python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/truncate/
+docker compose run --rm app python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/truncate/
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/truncate/
+docker compose run --rm app python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/truncate/
 ```
 
 Insert initial data to OpalDB:
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/initial/
+docker compose run --rm app python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/initial/
 ```
 
 Insert data specific to the institution (patients, hospital sites etc.):
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/omi/
+docker compose run --rm app python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/omi/
 ```
 
 Note: Replace `omi` with `ohigph` to insert data for a general pediatric institute.
@@ -274,26 +274,26 @@ Note: Replace `omi` with `ohigph` to insert data for a general pediatric institu
 Insert test data to OpalDB:
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
+docker compose run --rm app python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/ --disable-foreign-key-checks
 ```
 
 The same commands can be used for inserting data to QuestionnaireDB and the OrmsDatabase databases, just change the database name in the first argument given to the `run_sql_scripts` module, as well as the path to the data.
 So to complete your initial and test data insertions:
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
+docker compose run --rm app python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/
+docker compose run --rm app python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/initial/
+docker compose run --rm app python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/initial/
 ```
 
 ```shell
-docker compose run --rm alembic python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/
+docker compose run --rm app python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/
 ```
 
 Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
@@ -304,13 +304,13 @@ Foreign key checks are disabled by default for QuestionnaireDB due to a circular
 Since the alembic container is set to exit after running, we would need to specify a command to the container to be run after the entrypoint completes.
 
 ```shell
-docker compose run --rm alembic alembic --name <dbname> downgrade -1
+docker compose run --rm app alembic --name <dbname> downgrade -1
 ```
 
 We use the same process for any alembic-related revision work. For example to generate a new revision in OpalDB:
 
 ```shell
-docker compose run --rm alembic alembic --name <dbname> revision --autogenerate -m 'Useful_description_of_change'
+docker compose run --rm app alembic --name <dbname> revision --autogenerate -m 'Useful_description_of_change'
 ```
 
 Note: The `--rm` flag is important as it removes this secondary alembic container generated by the compose command. If you omit the remove flag these alembic containers will pile up in your docker and potentially slow things down.
