@@ -12,6 +12,6 @@ services:
       - ./certs:/certs
       - ./config/adminer-login-ssl.php:/var/www/html/plugins-enabled/adminer-login-ssl.php
 
-  alembic:
+  app:
     volumes:
       - ./certs:/certs
