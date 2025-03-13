@@ -1,0 +1,122 @@
+# SPDX-FileCopyrightText: Copyright (C) 2025 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      RUFF_OUTPUT_FORMAT: github
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@v5.3.1
+        id: setup-uv
+        with:
+          # renovate: datasource=pypi dependency=uv
+          version: "0.6.6"
+      - name: Install dependencies
+        run: uv sync
+      - name: Run ruff check
+        if: '!cancelled()'
+        uses: astral-sh/ruff-action@v3.2.1
+      - name: Run ruff format
+        if: '!cancelled()'
+        uses: astral-sh/ruff-action@v3.2.1
+        with:
+          args: "format --check"
+      - uses: mschoettle/pre-commit-action@v4.2.1
+        if: '!cancelled()'
+        env:
+          SKIP: ruff,ruff-format,markdownlint-cli2
+      - name: Fail if any previous steps failed
+        if: failure()
+        run: exit 1
+
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DB_ROOT_PASSWORD: "root-password"
+      DB_PASSWORD: "user-password"
+      DB_USER: citest
+    container: python:3.12.8-alpine3.20
+    services:
+      db:
+        image: mariadb:10.11.10-jammy
+        env:
+          MARIADB_ROOT_PASSWORD: ${{ env.DB_ROOT_PASSWORD }}
+          # ensure that user has permissions for test DB to be used by pytest
+          MARIADB_DATABASE: OpalDB
+          MARIADB_USER: ${{ env.DB_USER }}
+          MARIADB_PASSWORD: ${{ env.DB_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install dependencies
+        run: |
+          pip install uv
+          echo "Installed uv version is $(uv --version)"
+          # install dependencies for mysqlclient, bash for running SQL scripts later
+          apk add --no-cache build-base mariadb-dev mariadb-client bash
+          uv sync
+      - name: Prepare environment
+        # set up env file for DB service
+        # use sample env file
+        # create additional DBs for legacy DB tests (OpalDB & QuestionnaireDB)
+        run: |
+          cp .env.sample .env
+          sed -i "s/^DATABASE_ROOT_PASSWORD=.*/DATABASE_ROOT_PASSWORD=$DB_ROOT_PASSWORD/" .env
+          sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$DB_USER/" .env
+          sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DB_PASSWORD/" .env
+          sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=db/" .env
+          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$DB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$DB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$DB_USER\`@\`%\`;"
+      - name: Run pytest
+        run: |
+          uv run pytest --version
+          uv run pytest -v --junitxml=test-report.xml --tb=auto
+      # see: https://github.com/dorny/test-reporter/issues/244
+      # - name: Publish Test Results
+      #   uses: dorny/test-reporter@v1.9.1
+      #   if: '!cancelled()'
+      #   with:
+      #     name: Tests
+      #     path: ./test-report.xml
+      #     reporter: java-junit
+      - name: Run SQL scripts
+        run: |
+          source .venv/bin/activate
+          # migrate databases first
+          ./docker/alembic-upgrade.sh
+          # Full refresh for both OMI and OHIGPH datasets to ensure no broken data links/inconsistencies
+          db_management/reset_data.sh OMI
+          db_management/reset_data.sh OHIGPH
+
+
+  markdownlint:
+    permissions:
+      contents: read
+      # required for upload-sarif action
+      # https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github#example-workflow-for-sarif-files-generated-outside-of-a-repository
+      security-events: write
+    uses: opalmedapps/.github/.github/workflows/markdownlint.yaml@main
