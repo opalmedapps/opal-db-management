@@ -32,27 +32,24 @@ jobs:
         with:
           # renovate: datasource=pypi dependency=uv
           version: "0.6.4"
-          cache-dependency-glob: "requirements/*.txt"
-      - name: Install Python
-        run: |
-          uv python install
-          echo "Installed uv version is $(uv --version)"
-          echo "Installed Python version is $(python --version)"
-      - run: |
-          uv venv
-          uv pip install -r requirements/development.txt
-      - name: Run ruff check
-        # run all steps to get all linting errors at once, fail at the end if any steps failed
-        if: '!cancelled()'
-        run: uv run ruff check
-      - name: Run ruff format
-        if: '!cancelled()'
-        # register the problem matcher
-        # https://github.com/astral-sh/ruff/issues/10430
-        # https://github.com/astral-sh/ruff-action/pull/26
-        run: |
-          echo "::add-matcher::.github/matchers/ruff-format.json"
-          uv run ruff format --check
+      - name: Install dependencies
+        run: uv sync
+      - uses: astral-sh/ruff-action@v3.2.1
+      - uses: astral-sh/ruff-action@v3.2.1
+        with:
+          args: "format --check"
+      # - name: Run ruff check
+      #   # run all steps to get all linting errors at once, fail at the end if any steps failed
+      #   if: '!cancelled()'
+      #   run: uv run ruff check
+      # - name: Run ruff format
+      #   if: '!cancelled()'
+      #   # register the problem matcher
+      #   # https://github.com/astral-sh/ruff/issues/10430
+      #   # https://github.com/astral-sh/ruff-action/pull/26
+      #   run: |
+      #     echo "::add-matcher::.github/matchers/ruff-format.json"
+      #     uv run ruff format --check
       - uses: mschoettle/pre-commit-action@v4.1.2
         if: '!cancelled()'
         env:
@@ -67,8 +64,8 @@ jobs:
       DB_ROOT_PASSWORD: "root-password"
       DB_PASSWORD: "user-password"
       DB_USER: citest
-        # needs:
-      # - lint
+    needs:
+      - lint
     container: python:3.12.8-alpine3.20
     services:
       db:
@@ -101,9 +98,9 @@ jobs:
           sed -i "s/^DATABASE_USER=.*/DATABASE_USER=$DB_USER/" .env
           sed -i "s/^DATABASE_PASSWORD=.*/DATABASE_PASSWORD=$DB_PASSWORD/" .env
           sed -i "s/^DATABASE_HOST=.*/DATABASE_HOST=db/" .env
-          MYSQL_PWD=$DB_ROOT_PASSWORD mysql -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$DB_USER\`@\`%\`;"
-          MYSQL_PWD=$DB_ROOT_PASSWORD mysql -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$DB_USER\`@\`%\`;"
-          MYSQL_PWD=$DB_ROOT_PASSWORD mysql -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$DB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$DB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$DB_USER\`@\`%\`;"
+          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$DB_USER\`@\`%\`;"
       - name: Run pytest
         run: |
           pytest --version
@@ -117,7 +114,6 @@ jobs:
       #     path: ./test-report.xml
       #     reporter: java-junit
       - name: Run SQL scripts
-        if: '!cancelled()'
         run: |
           # migrate databases first
           ./docker/alembic-upgrade.sh
