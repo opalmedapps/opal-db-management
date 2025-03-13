@@ -93,8 +93,8 @@ jobs:
           MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$DB_USER\`@\`%\`;"
       - name: Run pytest
         run: |
-          pytest --version
-          pytest -v --junitxml=test-report.xml --tb=auto
+          uv run pytest --version
+          uv run pytest -v --junitxml=test-report.xml --tb=auto
       # see: https://github.com/dorny/test-reporter/issues/244
       # - name: Publish Test Results
       #   uses: dorny/test-reporter@v1.9.1
