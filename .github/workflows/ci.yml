@@ -105,6 +105,7 @@ jobs:
       #     reporter: java-junit
       - name: Run SQL scripts
         run: |
+          source .venv/bin/activate
           # migrate databases first
           ./docker/alembic-upgrade.sh
           # Full refresh for both OMI and OHIGPH datasets to ensure no broken data links/inconsistencies
