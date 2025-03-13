@@ -10,6 +10,7 @@ precedence = "override"
 SPDX-FileCopyrightText = "Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
+# avoid users copying copyright headers when copying the .env.sample to .env
 [[annotations]]
 path = [
     ".env.sample",
@@ -17,3 +18,12 @@ path = [
 precedence = "override"
 SPDX-FileCopyrightText = "Copyright (C) 2021 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# generated files
+[[annotations]]
+path = [
+    "requirements.txt",
+    "uv.lock",
+]
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
