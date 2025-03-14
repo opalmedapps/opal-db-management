@@ -53,6 +53,8 @@ jobs:
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
+          # load image into docker to test it in the next step
+          load: true
           # only push to the registry when it is not a PR (i.e., main branch)
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
