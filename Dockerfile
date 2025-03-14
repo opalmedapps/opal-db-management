@@ -28,6 +28,9 @@ RUN apk upgrade --no-cache \
   # bash for arrays in shell scripts
   && apk add --no-cache bash
 
+# add venv to search path
+ENV PATH=/app/.venv/bin:$PATH
+
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
 
