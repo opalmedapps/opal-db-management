@@ -60,5 +60,8 @@ jobs:
           # https://docs.docker.com/build/ci/github-actions/cache/#github-cache
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Test image
-        run: docker run --rm "$REGISTRY/$IMAGE_NAME" alembic --help
+      - name: Test image  # zizmor: ignore[template-injection]
+        run: |
+          docker image ls -a
+          echo ${{ steps.meta.outputs.tags }}
+          docker run --rm "$REGISTRY/$IMAGE_NAME" alembic --help
