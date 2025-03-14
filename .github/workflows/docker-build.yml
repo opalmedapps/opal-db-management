@@ -66,4 +66,4 @@ jobs:
         env:
           IMAGE_WITH_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
-          docker run --rm "$IMAGE_WITH_TAGS" alembic --help
+          docker run --rm "$DOCKER_METADATA_OUTPUT_TAGS" alembic --help
