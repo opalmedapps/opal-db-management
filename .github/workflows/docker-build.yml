@@ -64,6 +64,6 @@ jobs:
           cache-to: type=gha,mode=max
       - name: Test image
         env:
-          IMAGE_TAGS: ${{ steps.meta.outputs.tags }}
+          IMAGE_WITH_TAGS: ${{ steps.meta.outputs.tags }}
         run: |
-          docker run --rm "$REGISTRY/$IMAGE_NAME:$IMAGE_TAGS" alembic --help
+          docker run --rm "$IMAGE_WITH_TAGS" alembic --help
