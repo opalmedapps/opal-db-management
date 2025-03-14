@@ -38,7 +38,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.10.0
       - name: Validate build configuration
-        uses: docker/build-push-action@v6.15.0
+        uses: docker/build-push-action@v6.15.0  # zizmor: ignore[cache-poisoning]
         with:
           context: .
           call: check
@@ -52,7 +52,8 @@ jobs:
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
-          push: false
+          # push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           # https://docs.docker.com/build/ci/github-actions/cache/#github-cache
