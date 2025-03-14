@@ -53,10 +53,12 @@ jobs:
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
-          # push: ${{ github.event_name != 'pull_request' }}
-          push: true
+          # only push to the registry when it is not a PR (i.e., main branch)
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           # https://docs.docker.com/build/ci/github-actions/cache/#github-cache
           cache-from: type=gha
           cache-to: type=gha,mode=max
+      - name: Test image
+        run: docker run --rm "$REGISTRY/$IMAGE_NAME" alembic --help
