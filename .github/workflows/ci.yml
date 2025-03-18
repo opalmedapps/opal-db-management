@@ -120,3 +120,11 @@ jobs:
       # https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github#example-workflow-for-sarif-files-generated-outside-of-a-repository
       security-events: write
     uses: opalmedapps/.github/.github/workflows/markdownlint.yaml@main
+
+  build-image:
+    permissions:
+      contents: read
+      packages: write
+    uses: opalmedapps/.github/.github/workflows/docker-build.yaml@main
+    with:
+      test-command: alembic --help
