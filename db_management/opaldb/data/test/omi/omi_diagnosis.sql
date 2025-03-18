@@ -13,6 +13,7 @@ INSERT INTO `Diagnosis` (`DiagnosisSerNum`, `PatientSerNum`, `SourceDatabaseSerN
 (12, 59, 7, '4', 'G20.B2', "Parkinson\'s disease with dyskinesia, with fluctuations", '', '', '', '2025-02-27 10:42:45', 'interface-engine', '2025-02-27 10:42:50', 'interface-engine'),
 (13, 93, 7, '5', 'G95.0', 'Syringomyelia and syringobulbia', '', '', '', '2025-02-27 11:12:21', 'interface-engine', '2025-02-27 11:12:26', 'interface-engine'),
 (14, 93, 7, '8', 'C07.', 'Malignant neoplasm of parotid gland', '', '', '', '2025-03-05 09:03:09', 'interface-engine',  '2025-03-05 10:15:08', 'interface-engine');
+
 -- Marge
 UPDATE `Diagnosis`
 SET `CreationDate` = DATE_ADD(now(), INTERVAL -7 DAY),
