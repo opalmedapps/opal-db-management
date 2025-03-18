@@ -1489,5 +1489,5 @@ INSERT INTO `DiagnosisCode` (`DiagnosisCodeSerNum`, `DiagnosisTranslationSerNum`
 (2961,	1129,	-9106,	-1,	'T1c N0 (0/6)M0',	'Ca of breast, unspecified',	'2021-08-27 13:59:13',	NULL,	'2023-01-12 16:39:12',	NULL),
 (2962,	1161,	-11431,	-1,	'R31.9',	'Hematuria, unspecified',	'2024-05-10 13:59:13',	NULL,	'2024-05-10 16:39:12',	0),
 (2964,  1162,   1540,   -1, 'G95.2',    'Cord compression, unspecified', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0),
-(2965,  1162,   1757,    7, 'G95.89',   'Other specified diseases of spinal cord', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0),
-(1966,  1162,   1760,    7, 'G95.0',    'Syringomyelia and syringobulbia', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0);
+(2965,  1162,   1757,    -1, 'G95.89',   'Other specified diseases of spinal cord', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0),
+(1966,  1162,   1760,    -1, 'G95.0',    'Syringomyelia and syringobulbia', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0);
