@@ -69,7 +69,7 @@ repos:
 
 # zizmor detects security vulnerabilities in GitHub Actions workflows.
 - repo: https://github.com/woodruffw/zizmor-pre-commit
-  rev: v1.4.1
+  rev: v1.5.1
   hooks:
     - id: zizmor
 
