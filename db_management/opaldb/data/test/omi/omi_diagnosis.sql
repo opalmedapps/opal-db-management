@@ -8,7 +8,11 @@ INSERT INTO `Diagnosis` (`DiagnosisSerNum`, `PatientSerNum`, `SourceDatabaseSerN
 (3,	53,	1,	'22324',	'C16.9',	'Stomach, NOS',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob'),
 (7,	92,	1,	'22824',	'C50.8',	'Overlapping Ca of  breast',	'',	'IIB',	'T2, pN1a, M0',	'2014-03-12 00:00:00',	'CronJob',	'2018-03-27 12:54:54',	'CronJob'),
 (8,	92,	1,	'33208',	'C79.5',	'Secondary Ca of bone and bone marrow',	'',	NULL,	NULL,	'2016-09-28 00:00:00',	'CronJob',	'2016-01-21 18:59:22',	'CronJob'),
-(9,	59,	1,	'33209',	'C34.10',	'Upper lobe, lung',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob');
+(9,	59,	1,	'33209',	'C34.10',	'Upper lobe, lung',	'',	NULL,	NULL,	'2023-05-12 00:00:00',	'CronJob',	'2023-05-12 16:39:16',	'CronJob'),
+(11, 92, 7, '3', 'C50.112', 'Malignant neoplasm olf central portion of left female breast', '', '', '', '2025-02-27 10:42:32', 'interface-engine', '2025-02-27 10:42:37', 'interface-engine'),
+(12, 59, 7, '4', 'G20.B2', "Parkinson\'s disease with dyskinesia, with fluctuations", '', '', '', '2025-02-27 10:42:45', 'interface-engine', '2025-02-27 10:42:50', 'interface-engine'),
+(13, 93, 7, '5', 'G95.0', 'Syringomyelia and syringobulbia', '', '', '', '2025-02-27 11:12:21', 'interface-engine', '2025-02-27 11:12:26', 'interface-engine'),
+(14, 93, 7, '8', 'C07.', 'Malignant neoplasm of parotid gland', '', '', '', '2025-03-05 09:03:09', 'interface-engine',  '2025-03-05 10:15:08', 'interface-engine');
 
 -- Marge
 UPDATE `Diagnosis`

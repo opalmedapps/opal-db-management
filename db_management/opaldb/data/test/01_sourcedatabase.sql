@@ -3,9 +3,10 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Enabled`) VALUES
-(1,	'Aria',	1),
-(2,	'MediVisit', 1),
+(1,	'Aria',	0),
+(2,	'MediVisit', 0),
 (3,	'Mosaiq',	0),
-(4,	'Oacis',	1),
-(5,	'eRDV',	1),
-(6,	'ORMS',	1);
+(4,	'Oacis',	0),
+(5,	'eRDV',	0),
+(6,	'ORMS',	0),
+(7, 'OpenEMR', 1);

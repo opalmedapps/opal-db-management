@@ -5,11 +5,7 @@
 -- OPAL MEDICAL INSTITUTION
 
 INSERT INTO `Hospital_Identifier_Type` (`Hospital_Identifier_Type_Id`, `Code`, `ADT_Web_Service_Code`, `Description_EN`, `Description_FR`) VALUES
-(1,	'RVH',	'MR_PCS',	'Opal General Hospital 1 (RVH)',	'Hôpital général Opal 1 (HRV)'),
-(2,	'MGH',	'MG_PCS',	'Opal General Hospital 2 (MGH)',	'Hôpital général Opal 2 (HGM)'),
-(3,	'MCH',	'MC_ADT',	"Opal Children\'s Hospital",	"L\'Hôpital Opal pour enfants"),
-(4,	'LAC',	'LC_ADT',	'Opal General Hospital 3 (LAC)',	'Hôpital général Opal 3 (LAC)'),
-(5,	'CRE',	'CR_ADT',	'Opal General Hospital 4 (CRE)',	'Hôpital général Opal 4 (CRE)');
+(1,	'ODH',	'MR_PCS',	'Opal Demo Hospital (ODH)',	"Hôpital démo d\'Opal (HDO)");
 
 -- Some dates are calculated relative to current to maintain constant age
 INSERT INTO `Patient` (`PatientSerNum`, `PatientAriaSer`, `PatientId`, `PatientId2`, `FirstName`, `LastName`, `Alias`, `ProfileImage`, `Sex`, `DateOfBirth`, `Age`, `TelNum`, `EnableSMS`, `Email`, `Language`, `SSN`, `AccessLevel`, `RegistrationDate`, `ConsentFormExpirationDate`, `BlockedStatus`, `StatusReasonTxt`, `DeathDate`, `SessionId`, `LastUpdated`, `TestUser`, `TermsAndAgreementSign`, `TermsAndAgreementSignDateTime`) VALUES
@@ -22,8 +18,8 @@ CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -14 YEAR), '%Y'), '-02-23') - INTERV
 (55,	0,	'',	'',	'Mona',	    'Simpson',	'mona_test',	NULL,	'Female', '1940-03-15 00:00:00',	0,	5144758941,	0,	'mona@opalmedapps.ca',	'EN',	'SIMM40531599',	'1',	DATE_ADD(NOW(), INTERVAL -1 YEAR),	'2019-01-01 00:00:00',	1,	'Deceased',	DATE_ADD(CURRENT_DATE(), INTERVAL -2 YEAR),	'',	'2023-05-25 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 YEAR)),
 (59,	0,	'',	'',	'Rory',	"O\'Brien",	'rory_test',	NULL,	'Other',
 CONCAT(DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -52 YEAR), '%Y'), '-06-11') - INTERVAL (DATE_FORMAT(NOW(), '%m%d') < '0611') YEAR,	0,	5557654321,	0,	'rory@opalmedapps.ca',	'EN',	'OBRR72061199',	'3',	DATE_ADD(NOW(), INTERVAL -1 MONTH),	'2019-01-01 00:00:00',	1,	'',	'0000-00-00 00:00:00',	'',	'2024-09-09 00:00:00',	1,	1,	DATE_ADD(NOW(), INTERVAL -1 MONTH)),
-(92, 43235, '1092300', '5024737', 'Laurie', 'Hendren', 'Pointer Lady', '', 'Female', '1958-12-13 00:00:00', 64, 5144415642, 1, 'laurie@opalmedapps.ca', 'EN', 'HENL58621319', '3', '2018-01-01 00:00:00', '2019-01-01 00:00:00', 0, 'Unlocked by Johns Request', '2019-05-27 00:00:00', '', '2024-04-18 17:59:43', 0, NULL, NULL),
-(93,    0,  '', '', 'Bobby',    'Jones',     'bobby_jones_foundation', NULL, 'Male', '1985-01-01 00:00:00', 40, 0, 0, 'bobbyjones@opalmedapps.ca', 'EN', '', '3', '2025-01-01 00:00:00', '2025-01-01 00:00:00', 0, '', '0000-00-00 00:00:00', '', '2025-02-13 17:59:43', 1, 1,	DATE_ADD(NOW(), INTERVAL -1 YEAR));
+(92, 43235, '1092300', '5024737', 'Laurie', 'Opal', 'Pointer Lady', '', 'Female', '1958-12-13 00:00:00', 64, 5144415642, 1, 'laurie@opalmedapps.ca', 'EN', 'OPAL58621325', '3', '2018-01-01 00:00:00', '2019-01-01 00:00:00', 0, 'Unlocked by Johns Request', '2019-05-27 00:00:00', '', '2024-04-18 17:59:43', 0, NULL, NULL),
+(93,    0,  '', '', 'John',    'Smith',     'bobby_jones_foundation', NULL, 'Male', '1985-01-01 00:00:00', 40, 0, 0, 'john@opalmedapps.ca', 'EN', '', '3', '2025-01-01 00:00:00', '2025-01-01 00:00:00', 0, '', '0000-00-00 00:00:00', '', '2025-02-13 17:59:43', 1, 1,	DATE_ADD(NOW(), INTERVAL -1 YEAR));
 
 UPDATE `Patient` SET `Age` = DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), `DateOfBirth`)), '%Y') + 0 where PatientSerNum <> 92;
 
@@ -37,17 +33,13 @@ INSERT INTO `PatientControl` (`PatientSerNum`, `PatientUpdate`, `LastTransferred
 (93,	1,	'2025-02-13 00:56:01',	'2025-02-13 08:56:01',	0);
 
 INSERT INTO `Patient_Hospital_Identifier` (`Patient_Hospital_Identifier_Id`, `PatientSerNum`, `Hospital_Identifier_Type_Code`, `MRN`, `Is_Active`) VALUES
-(1,	51,	'RVH',	'9999996',	1),
-(2,	52,	'RVH',	'9999997',	1),
-(3,	52,	'MGH',	'9999998',	1),
-(4,	53,	'MCH',	'9999996',	1),
-(6,	55,	'RVH',	'9999993',	1),
-(7,	55,	'MCH',	'5407383',	1),
-(8,	51,	'LAC',	'0389731',	1),
-(12, 92, 'MGH',	'5024737',	1),
-(13, 92, 'RVH',	'1092300',	1),
-(14, 59, 'RVH',	'9999989',	1),
-(15, 93, 'RVH',	'9999994',	1);
+(1,	51,	'ODH',	'9999996',	1),
+(2,	52,	'ODH',	'9999997',	1),
+(4,	53,	'ODH',	'9999995',	1),
+(6,	55,	'ODH',	'9999993',	1),
+(13, 92, 'ODH',	'1092300',	1),
+(14, 59, 'ODH',	'9999989',	1),
+(15, 93, 'ODH',	'9999994',	1);
 
 INSERT INTO `Users` (`UserSerNum`, `UserType`, `UserTypeSerNum`, `Username`, `Password`, `SessionId`, `LastUpdated`) VALUES
 (1,	'Patient',	51,	'QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2',	'c9a29c53a3c5b4339ba51352e16ebbe797aeaa0d574c1724aa1779535ae2ede216328dca4d754c40841b49719a6ff5e1554fa7a14da7567f1a9d7b905bf95aab',	'',	'2021-08-10 16:24:59'),
