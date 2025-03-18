@@ -50,7 +50,7 @@ INSERT INTO `DiagnosisTranslation` (`DiagnosisTranslationSerNum`, `AliasName`, `
 (1159,	'',	NULL,	'Sarcoma - Lower limb',	'Sarcome - membre inférieur',	'<p><span style=\"font-size: 14px;float: none;\">This is a diagnosis of upper limb sarcoma.</span><!--EndFragment--><br/><br/></p>',	'<p>Ceci est un diagnostique de sarcome des membres inférieurs.</p>',	'',	'2020-02-18 19:16:11',	NULL,	'2020-02-19 05:17:36',	'7CigzsWZsM'),
 (1160,	'',	NULL,	'Kaposi\'s sarcoma',	'Maladie de Kaposi',	'<p>This is a diagnosis of Kaposi\'s sarcoma.</p>',	'<p>Ceci est un diagnostic de la maladie de Kaposi.</p>',	'',	'2020-02-18 19:19:41',	NULL,	'2020-02-19 05:19:41',	'7CigzsWZsM'),
 (1161,	'',	NULL,	'Hematuria',	'Hématurie',	'<p>A disorder characterized by laboratory test results that indicate blood in the urine.</p>',	"<p>Trouble caractérisé par des résultats de tests de laboratoire indiquant la présence de sang dans l\'urine.</p>",	'',	'2024-05-10 19:16:11',	NULL,	'2024-05-10 05:17:36',	NULL),
-(1162,  '', NULL,   'Syringomyelia', 'Syringomyelie', '<p>Syringomyelia<br/></p>', '<p>Syringomyelie<br/></p>', '', '2025-02-27 11:14:06', 25, '2025-02-27 11:14:06', '28U2zEskKtB');
+(1162,  '', NULL,   'Syringomyelia', 'Syringomyelie', '<p>Syringomyelia<br/></p>', '<p>Syringomyelie<br/></p>', '', '2025-02-27 11:14:06', NULL, '2025-02-27 11:14:06', '28U2zEskKtB');
 
 INSERT INTO `DiagnosisCode` (`DiagnosisCodeSerNum`, `DiagnosisTranslationSerNum`, `SourceUID`, `Source`, `DiagnosisCode`, `Description`, `DateAdded`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (228,	1131,	-9173,	-1,	'C33',	'Ca of trachea',	'2018-01-12 14:29:58',	NULL,	'2023-01-12 16:39:12',	NULL),
@@ -1488,6 +1488,6 @@ INSERT INTO `DiagnosisCode` (`DiagnosisCodeSerNum`, `DiagnosisTranslationSerNum`
 (2960,	1129,	-11430,	-1,	'inflammatory bre',	'Ca of upper-outer quadrant of breast',	'2021-08-27 13:59:13',	NULL,	'2023-01-12 16:39:12',	NULL),
 (2961,	1129,	-9106,	-1,	'T1c N0 (0/6)M0',	'Ca of breast, unspecified',	'2021-08-27 13:59:13',	NULL,	'2023-01-12 16:39:12',	NULL),
 (2962,	1161,	-11431,	-1,	'R31.9',	'Hematuria, unspecified',	'2024-05-10 13:59:13',	NULL,	'2024-05-10 16:39:12',	0),
-(2964,  1162,   1540,   -1, 'G95.2',    'Cord compression, unspecified', '2025-02-28 09:09:15',	26,	'2025-02-28 09:09:15',	0),
-(2965,  1162,   1757,    7, 'G95.89',   'Other specified diseases of spinal cord', '2025-02-28 09:09:15',	26,	'2025-02-28 09:09:15',	0),
-(1966,  1162,   1760,    7, 'G95.0',    'Syringomyelia and syringobulbia', '2025-02-28 09:09:15',	26,	'2025-02-28 09:09:15',	0);
+(2964,  1162,   1540,   -1, 'G95.2',    'Cord compression, unspecified', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0),
+(2965,  1162,   1757,    -1, 'G95.89',   'Other specified diseases of spinal cord', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0),
+(2966,  1162,   1760,    -1, 'G95.0',    'Syringomyelia and syringobulbia', '2025-02-28 09:09:15',	NULL,	'2025-02-28 09:09:15',	0);
