@@ -28,6 +28,9 @@ RUN apk upgrade --no-cache \
   # bash for arrays in shell scripts
   && apk add --no-cache bash
 
+# add venv to search path
+ENV PATH=/app/.venv/bin:$PATH
+
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
 
@@ -44,6 +47,3 @@ COPY db_management ./db_management
 COPY alembic.ini .
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-# TODO: If we want to make the alembic container stay alive instead of closing, we could add "tail" "-f" "/dev/null"
-#       to the arguments in the ENTRYPOINT commands, but apparently that can cause some issues with Linux users:
-#       https://stackoverflow.com/questions/43843079/using-tail-f-dev-null-to-keep-container-up-fails-unexpectedly
