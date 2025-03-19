@@ -52,9 +52,9 @@
       "matchPackagePatterns": "ruff-pre-commit|ruff$",
       "groupName": "ruff",
     },
-    // Combine uv package and uv image
+    // Combine uv package, uv image, and uv-pre-commit
     {
-      "matchPackagePatterns": "uv$",
+      "matchPackagePatterns": "uv-pre-commit|uv$",
       "groupName": "uv",
     },
   ],
