@@ -4,15 +4,16 @@ SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the 
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-<!-- markdownlint-disable-next-line first-line-heading -->
+<!-- markdownlint-disable first-line-heading -->
+
 **By submitting this merge request, I confirm the following:** _please fill any appropriate checkboxes, e.g: [x]_
 
-* [ ] The merge request title follows the conventional commits convention (see `README.md`)
-* [ ] I have made only one major change in my proposed changes.
-* [ ] I have commented my proposed changes within the code (classes, methods/functions, and wherever additional explanation is necessary).
-* [ ] I have provided an informative name for any new alembic migration files
-* [ ] I have updated the documentation if necessary.
-* [ ] I have tested my changes locally to ensure there are no syntax errors or other bugs.
+- [ ] The merge request title follows the conventional commits convention (see `README.md`)
+- [ ] I have made only one major change in my proposed changes.
+- [ ] I have commented my proposed changes within the code (classes, methods/functions, and wherever additional explanation is necessary).
+- [ ] I have provided an informative name for any new alembic migration files
+- [ ] I have updated the documentation if necessary.
+- [ ] I have tested my changes locally to ensure there are no syntax errors or other bugs.
 
 ## Description
 

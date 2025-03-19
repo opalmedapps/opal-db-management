@@ -11,10 +11,10 @@ Some of these are from legacy systems and over time will continue to have their 
 The databases maintained in this repository include:
 
 1. OpalDB (Legacy)
-2. QuestionnaireDB (Legacy)
-3. OrmsDatabase (Legacy)
-4. OrmsLog (Legacy)
-5. OpalReportDB (Legacy)
+1. QuestionnaireDB (Legacy)
+1. OrmsDatabase (Legacy)
+1. OrmsLog (Legacy)
+1. OpalReportDB (Legacy)
 
 The backend database is maintained and managed directly in the backend repository.
 
@@ -161,9 +161,9 @@ Follow the guide to [generate self-signed certificates](https://opalmedapps.gitl
 To enable TLS in MariaDB and all application containers:
 
 1. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (e.g., `/certs/ca.pem`).
-Note that this file needs to be accessible inside the containers (the setup provides a volume moount from `./certs` to `/certs` already).
+    Note that this file needs to be accessible inside the containers (the setup provides a volume moount from `./certs` to `/certs` already).
 
-2. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
+1. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
 
     ```shell
     cp compose.ssl.yaml compose.override.yaml
