@@ -13,9 +13,9 @@ Note: The list of dependencies does not include transitive dependencies (depende
 
 ## alembic
 
-* Homepage: https://alembic.sqlalchemy.org
-* Repository: https://github.com/sqlalchemy/alembic
-* License: `MIT`
+- Homepage: https://alembic.sqlalchemy.org
+- Repository: https://github.com/sqlalchemy/alembic
+- License: `MIT`
 
 ```text
 Copyright 2009-2024 Michael Bayer.
@@ -41,9 +41,9 @@ SOFTWARE.
 
 ## mysqlclient
 
-* Homepage: https://mysqlclient.readthedocs.io/
-* Repository: https://github.com/PyMySQL/mysqlclient
-* License: `GPL-2.0-or-later`
+- Homepage: https://mysqlclient.readthedocs.io/
+- Repository: https://github.com/PyMySQL/mysqlclient
+- License: `GPL-2.0-or-later`
 
 ```text
                     GNU GENERAL PUBLIC LICENSE
@@ -389,9 +389,9 @@ Public License instead of this License.
 
 ## pymysql
 
-* Homepage: https://pymysql.readthedocs.io/
-* Repository: https://github.com/PyMySQL/PyMySQL
-* License: `MIT`
+- Homepage: https://pymysql.readthedocs.io/
+- Repository: https://github.com/PyMySQL/PyMySQL
+- License: `MIT`
 
 ```text
 Copyright (c) 2010, 2013 PyMySQL contributors
@@ -417,9 +417,9 @@ THE SOFTWARE.
 
 ## python-dotenv
 
-* Homepage: https://github.com/theskumar/python-dotenv
-* Repository: https://github.com/theskumar/python-dotenv
-* License: `BSD-3-Clause`
+- Homepage: https://github.com/theskumar/python-dotenv
+- Repository: https://github.com/theskumar/python-dotenv
+- License: `BSD-3-Clause`
 
 ```text
 Copyright (c) 2014, Saurabh Kumar (python-dotenv), 2013, Ted Tieken (django-dotenv-rw), 2013, Jacob Kaplan-Moss (django-dotenv)
@@ -453,9 +453,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ## sqlalchemy
 
-* Homepage: https://www.sqlalchemy.org
-* Repository: https://github.com/sqlalchemy/sqlalchemy
-* License: `MIT`
+- Homepage: https://www.sqlalchemy.org
+- Repository: https://github.com/sqlalchemy/sqlalchemy
+- License: `MIT`
 
 ```text
 Copyright 2005-2024 SQLAlchemy authors and contributors <see AUTHORS file>.
