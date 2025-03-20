@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 FROM python:3.12.8-alpine3.20 AS build
-COPY --from=ghcr.io/astral-sh/uv:0.6.8 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.6.9 /uv /uvx /bin/
 
 # dependencies for building Python packages
 RUN apk add --no-cache build-base \
