@@ -5,7 +5,6 @@
 """TBD."""
 
 from dataclasses import dataclass
-from typing import Optional
 
 import pymysql
 from pymysql.constants import CLIENT
@@ -22,15 +21,15 @@ class SQLConnectionParameters:
     See: https://pymysql.readthedocs.io/en/latest/modules/connections.html#pymysql.connections.Connection
     """
 
-    user: Optional[str]
-    password: Optional[str]
-    host: Optional[str]
+    user: str | None
+    password: str | None
+    host: str | None
     port: int
-    database: Optional[str]
+    database: str | None
     client_flag: int
     autocommit: bool
     ssl_disabled: bool = True
-    ssl_ca: Optional[str] = None
+    ssl_ca: str | None = None
     ssl_verify_cert: bool = True
     ssl_verify_identity: bool = True
 

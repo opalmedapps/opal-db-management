@@ -5,7 +5,7 @@
 """Global configurations settings such as database connection strings."""
 
 import os
-from typing import Literal, Optional, overload
+from typing import Literal, overload
 
 import dotenv
 
@@ -16,7 +16,7 @@ dotenv.load_dotenv()
 @overload
 def _env(
     key: str,
-    default: Optional[str] = None,
+    default: str | None = None,
     required: Literal[True] = True,
 ) -> str: ...
 
@@ -24,16 +24,16 @@ def _env(
 @overload
 def _env(
     key: str,
-    default: Optional[str] = None,
+    default: str | None = None,
     required: Literal[False] = False,
-) -> Optional[str]: ...
+) -> str | None: ...
 
 
 def _env(
     key: str,
-    default: Optional[str] = None,
+    default: str | None = None,
     required: bool = True,
-) -> Optional[str] | str:
+) -> str | None:
     env_value = os.getenv(key, default=default)
 
     if required and not env_value:
