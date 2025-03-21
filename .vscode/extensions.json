@@ -7,7 +7,7 @@
       "editorconfig.editorconfig",
       "redhat.vscode-yaml",
       "tamasfe.even-better-toml",
-      "eamodio.gitlens",
+      "github.vscode-github-actions",
       "timonwong.shellcheck",
       "davidanson.vscode-markdownlint"
     ]
