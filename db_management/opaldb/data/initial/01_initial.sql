@@ -273,8 +273,3 @@ INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Ena
 -- Insert the initial data required to run the cronjob.
 INSERT INTO `Cron` (`CronSerNum`, `NextCronDate`, `RepeatUnits`, `NextCronTime`, `RepeatInterval`, `LastCron`)  VALUES
 ('1', '2023-06-06', 'Minutes', '11:53:06', '3', '2023-06-06 11:53:25');
-
-INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
-(22, 'interface-engine', '896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f', 29, 2, 'EN', 0, '2016-03-24 16:29:50', '2025-02-26 14:33:57');
-
-

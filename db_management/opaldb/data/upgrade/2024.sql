@@ -104,3 +104,6 @@ WHERE NotificationControlSerNum=7;
 
 -- Alembic and muhc prod out of sync for PatientDeviceIdentifier.attempt, missing default and non nullable
 ALTER TABLE `PatientDeviceIdentifier` MODIFY COLUMN `Attempt` INT NOT NULL DEFAULT 0;
+
+INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
+(22, 'interface-engine', '896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f', 29, 2, 'EN', 0, '2016-03-24 16:29:50', '2025-02-26 14:33:57');
