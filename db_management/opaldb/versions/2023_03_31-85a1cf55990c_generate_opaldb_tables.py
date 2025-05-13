@@ -3261,7 +3261,7 @@ def upgrade() -> None:
             mysql.TINYINT(display_width=4),
             server_default=sa.text('1'),
             nullable=False,
-            comment='This field exist in DEV. Usage is unknow',
+            comment='This field exists in DEV. Usage is unknown',
         ),
         sa.Column('LastTransferred', sa.DateTime(), server_default=sa.text("'2000-01-01 00:00:00'"), nullable=False),
         sa.Column('LastUpdatedBy', mysql.INTEGER(display_width=11), nullable=True),

@@ -2661,7 +2661,7 @@ class Alias(Base):
     SourceDatabaseSerNum = Column(INTEGER(11), nullable=False, index=True, server_default=text('1'))
     ColorTag = Column(String(25), nullable=False, server_default=text("'#777777'"))
     WaitTimeValidity = Column(
-        TINYINT(4), nullable=False, server_default=text('1'), comment='This field exist in DEV. Usage is unknow'
+        TINYINT(4), nullable=False, server_default=text('1'), comment='This field exists in DEV. Usage is unknown'
     )
     LastTransferred = Column(DateTime, nullable=False, server_default=text("'2000-01-01 00:00:00'"))
     LastUpdatedBy: Mapped[int] = mapped_column(
