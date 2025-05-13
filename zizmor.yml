@@ -9,3 +9,4 @@ rules:
         actions/*: ref-pin
         mschoettle/pre-commit-action: ref-pin
         astral-sh/setup-uv: ref-pin
+        astral-sh/ruff-action: ref-pin
