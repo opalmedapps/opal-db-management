@@ -250,6 +250,23 @@ INSERT IGNORE INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUE
 (95,    21, 36, 7),
 (96,    13, 36, 3);
 
+-- disable some security questionnaire to test the following
+-- 1. the app should still select a security questionniare that an end-user have created before the security question was disabled
+-- 2. when a new end-user register for Opal, only active security questions should be available
+INSERT INTO `SecurityQuestion` (`SecurityQuestionSerNum`, `QuestionText_EN`, `QuestionText_FR`, `CreationDate`, `LastUpdated`, `Active`) VALUES
+(1,	'What is the name of your first pet?',	'Quel est le nom de votre premier animal de compagnie?',	'2016-10-18 15:03:56',	'2018-08-01 21:20:57',	1),
+(2,	'What was the name of your favorite superhero as a child?',	'Quel était le nom de votre super-héros préféré durant votre enfance?',	'2016-10-18 15:03:56',	'2020-03-23 22:22:37',	0),
+(3,	'What is your favorite cartoon?',	'Quel est votre programme de bande-dessin préféré?',	'2016-10-18 15:03:56',	'2020-03-23 22:22:37',	0),
+(4,	'What is your favorite musical instrument?',	'Quel est votre instrument de musique préféré?',	'2016-10-18 15:03:56',	'2020-03-23 22:22:37',	0),
+(5,	'What was the color of your first car?',	'Quelle était la couleur de votre première voiture?',	'2016-10-18 15:03:56',	'2020-03-23 22:22:38',	0),
+(6,	'What is the first name of your childhood best friend?',	"Quel est le prénom de votre meilleur ami d'enfance?",	'2016-10-18 15:03:56',	'2019-05-28 18:30:49',	1),
+(7,	'What is the name of your eldest niece?',	"Quel est le prénom de l'aînée de vos nièces?",	'2017-04-03 12:22:06',	'2019-05-28 18:33:40',	1),
+(8,	'What is the name of your eldest nephew?',	"Quel est le prénom de l'aîné de vos neveux?",	'2017-04-03 12:22:06',	'2019-05-28 18:33:34',	1),
+(9,	'What is the maiden name of your maternal grandmother?',	'Quel est le nom de jeune fille de votre grand-mère maternelle?',	'2017-04-03 12:22:32',	'2018-08-01 21:21:14',	1),
+(10,	'What was the destination of your first trip by plane?',	'Quelle était la destination lors de votre premier voyage en avion?',	'2017-04-03 12:22:32',	'2020-03-23 22:22:41',	0),
+(11,	'What was your favorite sport as a child?',	'Quel était votre sportif préféré durant votre enfance?',	'2017-04-03 12:22:49',	'2020-03-23 22:22:41',	0),
+(12,	'Where did you go to on your first vacation?',	'Où êtes-vous allé lors de vos premières vacances?',	'2018-08-01 13:22:57',	'2018-08-01 21:22:57',	1);
+
 INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Enabled`) VALUES
 (-1,	'Local',	1);
 
