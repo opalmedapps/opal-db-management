@@ -82,7 +82,7 @@ dev = [
     { name = "python-dotenv", specifier = "==1.1.0" },
     { name = "ruff", specifier = "==0.11.9" },
     { name = "sqlalchemy", specifier = "==2.0.41" },
-    { name = "types-pymysql", specifier = "==1.1.0.20241103" },
+    { name = "types-pymysql", specifier = "==1.1.0.20250516" },
 ]
 
 [[package]]
@@ -369,11 +369,11 @@ wheels = [
 
 [[package]]
 name = "types-pymysql"
-version = "1.1.0.20241103"
+version = "1.1.0.20250516"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b3/ac/5a23decbcf53893df11636b7d61cc000a97b0ed45e09cee94d6c75f159ec/types-PyMySQL-1.1.0.20241103.tar.gz", hash = "sha256:a7628542919a0ba87625fb79eefb2a2de45fb4ad32afe6e561e8f2f27fb58b8c", size = 14987, upload-time = "2024-11-03T02:49:44.628Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/db/11/cdaa90b82cb25c5e04e75f0b0616872aa5775b001096779375084f8dbbcf/types_pymysql-1.1.0.20250516.tar.gz", hash = "sha256:fea4a9776101cf893dfc868f42ce10d2e46dcc498c792cc7c9c0fe00cb744234", size = 19640, upload-time = "2025-05-16T03:06:54.568Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3e/04/d02323dd4dfd6e0af4ecbb88a00215c37aa79894a2d158390700c84c8597/types_PyMySQL-1.1.0.20241103-py3-none-any.whl", hash = "sha256:1a32efd8a74b5bf74c4de92a86c1cc6edaf3802dcfd5546635ab501eb5e3c096", size = 15610, upload-time = "2024-11-03T02:49:43.399Z" },
+    { url = "https://files.pythonhosted.org/packages/ab/64/129656e04ddda35d69faae914ce67cf60d83407ddd7afdef1e7c50bbb74a/types_pymysql-1.1.0.20250516-py3-none-any.whl", hash = "sha256:41c87a832e3ff503d5120cc6cebd64f6dcb3c407d9580a98b2cb3e3bcd109aa6", size = 20328, upload-time = "2025-05-16T03:06:53.681Z" },
 ]
 
 [[package]]

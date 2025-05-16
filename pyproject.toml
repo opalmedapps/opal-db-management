@@ -28,5 +28,5 @@ dev = [
     "python-dotenv==1.1.0",
     "ruff==0.11.9",
     "sqlalchemy==2.0.41",
-    "types-pymysql==1.1.0.20241103",
+    "types-pymysql==1.1.0.20250516",
 ]
