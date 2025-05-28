@@ -3,96 +3,9 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
--- all get: esas-r
-(1,	1,	42,	51,	'2000-01-01 00:00:00',	184,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(2,	1,	42,	52,	'2000-01-01 00:00:00',	190,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(3,	1,	42,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- marge: breast, preop completed
-(4,	1,	155,	51,	'2000-01-01 00:00:00',	5354,	1,	NULL,	'',	'2000-01-01 00:00:00'),
-(5,	1,	156,	51,	'2000-01-01 00:00:00',	5355,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- homer: QOL head and neck
-(6,	1,	108,	52,	'2000-01-01 00:00:00',	3457,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- all get databank consent questionnaire except lisa
-(8,	1,	157,	51,	'2000-01-01 00:00:00',	5359,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(9,	1,	157,	52,	'2000-01-01 00:00:00',	5360,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(10,	1,	157,	53,	'2000-01-01 00:00:00',	5361,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-
--- rory: esas-r, databank
-(15,	1,	42,	59,	'2000-01-01 00:00:00',	209,	0,	NULL,	'',	'2000-01-01 00:00:00'),
-(16,	1,	157, 59,	'2000-01-01 00:00:00',	5367,	0,	NULL,	'',	'2000-01-01 00:00:00');
-
--- Update all Questionnaire dates to make the data more similar to a live environment
-
--- ESAS-r sent today
-UPDATE Questionnaire
-SET DateAdded = now(),
-    LastUpdated = now()
-WHERE QuestionnaireControlSerNum = 42;
-UPDATE Notification
-SET DateAdded = now(),
-    LastUpdated = now()
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum in (1, 2, 3, 15);
-
--- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
-UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY),
-    CompletionDate = DATE_ADD(now(), INTERVAL -13 DAY)
-WHERE QuestionnaireControlSerNum = 155;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum = 4;
-
-UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -3 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE QuestionnaireControlSerNum = 156;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -3 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum = 5;
-
--- H&N Quality sent yesterday
-UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -1 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -1 DAY)
-WHERE QuestionnaireControlSerNum = 108;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -1 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -1 DAY)
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum = 6;
-
--- Databank Consent sent 2 days ago
-UPDATE Questionnaire
-SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
-WHERE QuestionnaireControlSerNum = 157;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
-WHERE NotificationControlSerNum = 13
-AND RefTableRowSerNum IN (8, 9, 10, 16);
-
--- Set Marge's preop notification to `Read` following the insert operation trigger
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE
-    PatientSerNum = 51
-AND NotificationControlSerNum = 13
-AND RefTableRowSerNum = 4;
-
-
--- laurie data
-INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
+-- Demo Test Data
+(15, 1, 42, 59, '2025-02-21 14:40:13', 209, 0, NULL, '', '2025-02-21 14:40:13'),
+(16, 1, 157, 59, '2025-02-19 14:40:14', 5367, 0, NULL, '', '2025-02-19 14:40:14'),
 (33, NULL, 3, 92, '2017-10-13 11:23:46', 218, 1, '2017-10-21 13:46:54', '', '2017-10-21 13:46:56'),
 (64, NULL, 6, 92, '2018-02-20 15:29:23', 225, 1, '2018-02-24 20:37:17', '', '2018-02-24 20:36:30'),
 (67, NULL, 3, 92, '2018-02-21 09:25:48', 234, 1, '2018-03-16 17:10:02', '', '2018-03-16 17:08:45'),
@@ -118,10 +31,54 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 (739, NULL, 6, 92, '2019-05-22 00:00:00', 842, 1, '2019-10-31 14:52:15', '', '2019-10-31 14:52:16'),
 (743, NULL, 12, 92, '2019-05-22 13:27:15', 846, 1, '2019-11-06 08:22:12', '', '2019-11-06 08:22:12'),
 (1299, NULL, 26, 92, '2019-10-04 08:47:52', 909, 1, '2019-12-04 14:40:40', '', '2019-12-04 14:40:40'),
-(2003, NULL, 24, 92, '2019-11-26 09:41:33', 908, 1, '2019-12-04 14:35:56', '', '2019-12-04 14:39:26');
+(2003, NULL, 24, 92, '2019-11-26 09:41:33', 908, 1, '2019-12-04 14:35:56', '', '2019-12-04 14:39:26'),
+(2005, NULL, 279, 93, '2025-03-05 23:46:00', 5369, 0, NULL, '[]', '2025-03-06 10:52:11'),
+(2006, NULL, 281, 93, '2025-03-05 23:54:00', 5370, 0, NULL, '[]', '2025-03-06 10:52:11'),
+(2007, NULL, 157, 93, '2025-03-05 23:58:00', 5371, 0, NULL, '[]', '2025-03-06 10:52:11'),
+(2008, NULL, 280, 93, '2025-03-06 00:10:00', 5372, 1, '2025-03-11 08:09:54', '[]', '2025-03-11 08:09:54'),
+(2009, NULL, 279, 94, '2025-03-07 10:06:00', 5375, 0, NULL, '[]', '2025-03-07 10:06:11'),
+(2010, NULL, 157, 96, '2025-03-12 12:18:00', 5376, 0, NULL, '[]', '2025-03-12 12:18:11'),
+(2012, NULL, 282, 93, '2025-03-18 11:36:00', 5378, 0, NULL, '[]', '2025-03-18 11:36:11'),
+(2013, NULL, 280, 99, '2025-02-03 10:35:12', 5379, 1, '2025-02-03 11:45:01', '[]', '2025-05-01 14:56:45'),
+(2014, NULL, 284, 99, '2019-01-10 10:35:15', 5380, 1, '2019-01-10 11:41:12', '[]', '2025-05-01 14:55:33'),
+(2015, NULL, 285, 99, '2025-02-03 10:35:16', 5381, 1, '2025-02-03 11:39:11', '[]', '2025-05-01 14:57:00'),
+(2016, NULL, 286, 99, '2019-01-17 14:30:00', 5382, 1, '2019-01-17 14:40:32', '[]', '2025-05-01 14:55:51'),
+(2017, NULL, 287, 99, '2025-02-03 14:32:00', 5383, 1, '2025-02-03 14:37:44', '[]', '2025-05-01 14:57:12'),
+(2018, NULL, 280, 92, '2025-05-02 11:14:00', 5384, 1, '2025-05-02 11:21:48', '[]', '2025-05-02 11:21:48'),
+(2019, NULL, 157, 99, '2025-05-05 11:50:00', 5385, 0, NULL, '[]', '2025-05-05 11:50:11'),
+(2020, NULL, 157, 100, '2025-05-05 11:50:02', 5386, 0, NULL, '[]', '2025-05-05 11:50:11'),
+(2021, NULL, 157, 101, '2025-05-05 11:50:03', 5387, 0, NULL, '[]', '2025-05-05 11:50:11'),
+(2022, NULL, 284, 100, '2025-02-15 15:38:00', 5388, 1, '2025-02-15 15:38:00', '[]', '2025-02-15 15:38:00'),
+(2023, NULL, 284, 101, '2025-04-25 15:38:07', 5389, 1, '2025-04-25 15:38:07', '[]', '2025-04-25 15:38:07'),
+(2024, NULL, 285, 100, '2025-05-07 11:42:00', 5391, 0, NULL, '[]', '2025-05-07 19:51:04'),
+(2025, NULL, 285, 101, '2025-05-06 11:42:02', 5392, 1, '2025-05-06 09:08:30', '[]', '2025-05-06 19:49:51'),
+(2026, NULL, 280, 100, '2025-05-07 11:44:00', 5394, 1, '2025-05-07 09:01:46', '[]', '2025-05-07 19:51:16'),
+(2027, NULL, 280, 101, '2025-05-06 11:44:01', 5395, 1, '2025-05-06 09:09:39', '[]', '2025-05-06 19:49:54'),
+(2029, NULL, 157, 103, '2025-03-07 13:54:00', 5398, 1, '2025-03-07 13:54:00', '[]', '2025-05-22 08:18:41'),
+(2030, NULL, 157, 102, '2025-03-14 14:06:00', 5399, 1, '2025-03-14 14:06:00', '[]', '2025-03-14 14:06:00'),
+(2034, NULL, 280, 103, '2025-05-01 10:10:06', 5404, 1, '2025-05-01 10:10:06', '[]', '2025-05-22 08:17:29');
+
+-- Update all Questionnaire dates to make the data more similar to a live environment
+-- Databank Consent sent 2 days ago
+UPDATE Questionnaire
+SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
+WHERE QuestionnaireControlSerNum = 157;
+UPDATE Notification
+SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
+WHERE NotificationControlSerNum = 13
+AND RefTableRowSerNum IN (16);
+
 -- lauries are all read
 UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
 WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 13;
+
+-- Set all other questionnaires sent in 2 weeks ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE `EducationalMaterialControlSerNum` NOT IN (157);

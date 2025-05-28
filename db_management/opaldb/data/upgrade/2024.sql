@@ -71,12 +71,6 @@ UPDATE `NotificationControl` SET Description_EN='$patientName: Successfully chec
 
 UPDATE `NotificationControl` SET Description_EN='$patientName: New questionnaire received. Please complete it before seeing your health care provider.', Description_FR='$patientName: Nouveau questionnaire reçu. Veuillez le compléter avant votre rendez-vous avec votre professionnel de la santé.' WHERE NotificationControlSerNum=13;
 
--- Add generic appointment aliases
-INSERT INTO `Alias` (`AliasType`, `AliasUpdate`, `AliasName_EN`, `AliasName_FR`, `AliasDescription_EN`, `AliasDescription_FR`, `EducationalMaterialControlSerNum`, `HospitalMapSerNum`, `SourceDatabaseSerNum`, `ColorTag`, `WaitTimeValidity`) VALUES
-('Appointment', 1, 'RVH Appointment', 'Appointment HRV', '<p>TBD</p>', '<p>ADT</p>', NULL, 28, 1, '#757575', 1),
-('Appointment', 1, 'MGH Appointment', 'Appointment HGM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1),
-('Appointment', 1, 'MCH Appointment', 'Appointment HEM', '<p>TBD</p>', '<p>ADT</p>', NULL, NULL, 1, '#757575', 1);
-
 -- Add ORMS role with read on Clinician Dashboard
 INSERT INTO `oaRole` (`name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 ('ORMS', 'ORMS', 0, '', '2024-03-19 09:22:20', 'SCMA6024', '2024-03-19 09:22:31', 'SCMA6024');
@@ -107,6 +101,3 @@ WHERE NotificationControlSerNum=7;
 
 -- Alembic and muhc prod out of sync for PatientDeviceIdentifier.attempt, missing default and non nullable
 ALTER TABLE `PatientDeviceIdentifier` MODIFY COLUMN `Attempt` INT NOT NULL DEFAULT 0;
-
--- Remove inactive users who no longer work at the MUHC
-UPDATE `OAUser` SET deleted=1 where Username in ('MOLE6002', 'HODA6016');

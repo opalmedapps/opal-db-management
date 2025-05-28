@@ -3,64 +3,12 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
--- all get: treatment guidelines,
-(1,	NULL,	105,	51,	'2023-02-05 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-(2,	NULL,	105,	52,	'2023-03-14 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-(3,	NULL,	105,	53,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-
--- marge: intro to breast cancer, covid care guide,fertility preservation for women
-(4,	NULL,	960,	51,	'2023-02-15 16:31:26',	0,	'[]',	'2023-01-12 16:39:17'),
-(5,	NULL,	849,	51,	'2023-02-21 14:57:18',	0,	'[]',	'2023-01-12 16:39:17'),
-(6,	NULL,	643,	51,	'2023-03-30 10:20:11',	0,	'[]',	'2023-01-12 16:39:17'),
-
--- homer: covid care guide, fertility preservation for men
-(7,	NULL,	849,	52,	'2023-03-14 14:57:18',	0,	'[]',	'2023-01-12 16:39:17'),
-(8,	NULL,	642,	52,	'2023-04-05 10:11:54',	0,	'[]',	'2023-01-12 16:39:17'),
-
--- fred: fertility preservation for men
-(9,	NULL,	642,	56,	'2023-10-05 10:11:54',	0,	'[]',	'2023-01-12 16:39:17'),
-
--- pebbles: treatment guidelines
-(10,	NULL,	105,	57,	'2023-10-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-
--- all get Databank Information and Consent Factsheet
-(11,	NULL,	979,	51,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-(12,	NULL,	979,	52,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-(13,	NULL,	979,	53,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-(14,	NULL,	979,	55,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-(15,	NULL,	979,	56,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-(16,	NULL,	979,	57,	'2024-01-05 08:00:55',	0,	'[]',	'2024-01-05 08:00:55'),
-
 -- rory: treatment guidelines, databank info, lung guidelines
 (17,	NULL,	105,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
 (18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
 (19,	NULL,	480,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
 
-
 -- Treatment guidelines sent 1 day after diagnosis for all
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -6 DAY)
-WHERE PatientSerNum = 51
-AND `EducationalMaterialControlSerNum` = 105;
-
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -11 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -11 DAY)
-WHERE PatientSerNum = 52
-AND `EducationalMaterialControlSerNum` = 105;
-
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -2 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -2 DAY)
-WHERE PatientSerNum = 53
-AND `EducationalMaterialControlSerNum` = 105;
-
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -6 DAY)
-WHERE PatientSerNum = 57
-AND `EducationalMaterialControlSerNum` = 105;
 
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -13 DAY),
@@ -68,92 +16,14 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -13 DAY),
 WHERE PatientSerNum = 59
 AND `EducationalMaterialControlSerNum` = 105;
 
--- Marge's extra materials sent last week
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -6 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -6 DAY)
-WHERE PatientSerNum = 51
-AND `EducationalMaterialSerNum` IN (4, 5, 6);
-
--- Homers extra materials all sent 10 days ago
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -10 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -10 DAY)
-WHERE PatientSerNum = 52
-AND `EducationalMaterialSerNum` IN (7, 8);
-
--- Fred's fertility preservation material sent 5 days ago
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -5 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE PatientSerNum IN (56)
-AND `EducationalMaterialSerNum` IN (9);
-
 -- Rory's lung guidelines sent 14 days ago
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
 WHERE PatientSerNum IN (59)
-AND `EducationalMaterialSerNum` IN (19);
+AND `EducationalMaterialSerNum` = 19;
 
--- DatabankConsent study sent to all 1 day ago
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -1 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -1 DAY)
-WHERE `EducationalMaterialControlSerNum` = 979;
-
-
--- Remove some notifications
--- Marge read all her own materials
-UPDATE  `EducationalMaterial`
-SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE `EducationalMaterialSerNum` IN (1, 4, 5, 6, 11);
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (1, 4, 5, 6, 11);
--- Homer and Marge read homer's materials
-UPDATE  `EducationalMaterial`
-SET ReadStatus = 1,
-    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE `EducationalMaterialSerNum` IN (2, 7, 8, 12);
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (2, 7, 8, 12);
--- Bart and Marge read his materials
-UPDATE  `EducationalMaterial`
-SET ReadStatus = 1,
-    ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE `EducationalMaterialSerNum` IN (3, 13);
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["SipDLZCcOyTYj7O3C8HnWLalb4G3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (3, 13);
--- Fred's data read by Fred
-UPDATE  `EducationalMaterial`
-SET ReadStatus = 1,
-    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
-WHERE `EducationalMaterialSerNum` IN (9, 15);
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
-WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (9, 15);
--- Pebbles' data read by Fred
-UPDATE  `EducationalMaterial`
-SET ReadStatus = 1,
-    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
-WHERE `EducationalMaterialSerNum` IN (10, 16);
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["ZYHAjhNy6hhr4tOW8nFaVEeKngt1"]'
-WHERE NotificationControlSerNum = 7
-AND RefTableRowSerNum in (10, 16);
+-- Remove some notifications\
 -- Rory has read all their own data
 UPDATE `EducationalMaterial`
 SET ReadStatus = 1,
@@ -164,7 +34,6 @@ SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59
 AND NotificationControlSerNum = 7;
-
 
 -- laurie data
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
@@ -189,9 +58,47 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 7;
 
-
 -- Bobby Jones Foundation
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (100,	NULL,	1000,	93,	'2025-02-18 00:00:00',	0,	'[]',	'2025-02-18 00:00:00'),
 (101,	NULL,	1001,	93,	'2025-02-18 00:00:00',	0,	'[]',	'2025-02-18 00:00:00'),
 (102,	NULL,	1002,	93,	'2025-02-18 00:00:00',	0,	'[]',	'2025-02-18 00:00:00');
+
+-- Demo Test Data
+INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
+(13822, NULL, 8, 93, '2025-03-05 23:46:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-06 12:56:16'),
+(13823, NULL, 979, 93, '2025-03-05 23:58:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-11 08:10:09'),
+(13825, NULL, 2349, 94, '2025-03-07 09:50:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-12 13:34:34'),
+(13826, NULL, 2350, 94, '2025-03-07 09:50:04', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-12 13:34:32'),
+(13827, NULL, 2351, 94, '2025-03-07 09:50:07', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-11 08:08:11'),
+(13832, NULL, 979, 96, '2025-03-12 12:16:01', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-05 11:05:46'),
+(13833, NULL, 960, 96, '2025-03-12 12:28:00', 1, '["dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "mouj1pqpXrYCl994oSm5wtJT3In2", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-05 11:05:54'),
+(13834, NULL, 105, 96, '2025-03-12 12:42:01', 1, '["dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "mouj1pqpXrYCl994oSm5wtJT3In2", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-05 11:06:05'),
+(13835, NULL, 849, 96, '2025-03-12 12:44:00', 1, '["dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "mouj1pqpXrYCl994oSm5wtJT3In2", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-05 11:06:10'),
+(13836, NULL, 643, 96, '2025-03-12 12:46:00', 1, '["dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "mouj1pqpXrYCl994oSm5wtJT3In2", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-05 11:06:13'),
+(13842, NULL, 979, 99, '2025-05-05 11:50:00', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2025-05-06 08:27:38'),
+(13843, NULL, 979, 100, '2025-05-05 11:50:02', 0, '[]', '2025-05-05 11:50:02'),
+(13844, NULL, 979, 101, '2025-05-05 11:50:03', 1, '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-08 10:28:38'),
+(13845, NULL, 2370, 99, '2025-05-07 12:50:00', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2025-05-07 13:09:24'),
+(13846, NULL, 2371, 99, '2025-05-07 12:50:02', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2025-05-07 13:09:22'),
+(13847, NULL, 2379, 99, '2025-05-07 12:50:04', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2025-05-07 13:09:20'),
+(13848, NULL, 2370, 101, '2025-05-07 12:50:05', 1, '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-07 13:05:49'),
+(13849, NULL, 2387, 100, '2025-05-08 16:32:00', 1, '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]', '2025-05-09 08:58:37'),
+(13850, NULL, 105, 103, '2025-05-21 13:58:01', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:31'),
+(13852, NULL, 979, 103, '2025-05-21 13:58:02', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:39'),
+(13853, NULL, 979, 102, '2025-05-21 14:06:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:25'),
+(13854, NULL, 105, 102, '2025-05-21 14:08:01', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:21'),
+(13855, NULL, 960, 102, '2025-05-21 14:08:01', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:23'),
+(13856, NULL, 849, 102, '2025-05-21 14:10:01', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:13:22');
+
+-- DatabankConsent study sent to all 1 day ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -1 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -1 DAY)
+WHERE `EducationalMaterialControlSerNum` = 979;
+
+-- Set all other educational material sent in 2 weeks ago
+UPDATE `EducationalMaterial`
+SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
+`LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE `EducationalMaterialControlSerNum` NOT IN (979, 105, 480);

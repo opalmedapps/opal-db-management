@@ -3,13 +3,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `Announcement` (`AnnouncementSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(1,	NULL,	51,	16,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
-(2,	NULL,	51,	20,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
-(3,	NULL,	51,	17,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
-(4,	NULL,	52,	16,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
-(5,	NULL,	52,	20,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
-(6,	NULL,	52,	17,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
-(7,	NULL,	52,	23,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (11,	NULL,	59,	16,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (12,	NULL,	59,	23,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 -- Add all of Laurie's data, all set to read
@@ -49,7 +42,20 @@ INSERT INTO `Announcement` (`AnnouncementSerNum`, `CronLogSerNum`, `PatientSerNu
 (23760, NULL, 92, 863, '2022-08-15 12:30:04', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2023-03-14 12:17:39'),
 (26020, NULL, 92, 1028, '2023-10-20 16:08:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2023-10-20 16:08:02'),
 (30366, NULL, 92, 1077, '2024-03-04 15:31:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2024-03-24 17:20:28'),
-(35014, NULL, 92, 1091, '2024-05-27 12:43:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2024-05-27 12:43:02');
+(35014, NULL, 92, 1091, '2024-05-27 12:43:02', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2024-05-27 12:43:02'),
+(35023, NULL, 92, 1096, '2025-05-08 11:35:07', 0, '[]', '2025-05-08 11:35:07'),
+(35024, NULL, 93, 1096, '2025-05-08 11:35:08', 0, '[]', '2025-05-08 11:35:08'),
+(35025, NULL, 94, 1096, '2025-05-08 11:35:08', 0, '[]', '2025-05-08 11:35:08'),
+(35026, NULL, 95, 1096, '2025-05-08 11:35:09', 0, '[]', '2025-05-08 11:35:09'),
+(35027, NULL, 96, 1096, '2025-05-08 11:35:09', 0, '[]', '2025-05-08 11:35:09'),
+(35028, NULL, 97, 1096, '2025-05-08 11:35:14', 0, '[]', '2025-05-08 11:35:14'),
+(35029, NULL, 98, 1096, '2025-05-08 11:35:14', 0, '[]', '2025-05-08 11:35:14'),
+(35030, NULL, 99, 1096, '2025-05-08 11:35:14', 0, '[]', '2025-05-08 11:35:14'),
+(35031, NULL, 100, 1096, '2025-05-08 11:35:15', 1, '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]', '2025-05-09 09:02:19'),
+(35032, NULL, 101, 1096, '2025-05-08 11:35:16', 0, '[]', '2025-05-08 11:35:16'),
+(35034, NULL, 102, 1096, '2025-05-21 14:10:01', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:02'),
+(35033, NULL, 103, 1096, '2025-05-21 14:00:01', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:38');
+
 -- lauries are all read
 UPDATE Notification
 SET ReadStatus = 1,
@@ -57,36 +63,7 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 5;
 
-
 -- Update all Announcement dates and read statuses to make the data more similar to a live environment
-
--- All Announcements and their Notifications marked as read
--- Marge's data read by Marge
-UPDATE Announcement
-SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE PatientSerNum = 51
-;
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE PatientSerNum = 51
-  AND NotificationControlSerNum = 5
-;
-
--- Homer's data read by Homer and Marge
-UPDATE Announcement
-SET ReadStatus = 1,
-    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE PatientSerNum = 52
-;
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["PyKlcbRpMLVm8lVnuopFnFOHO4B3", "QXmz5ANVN3Qp9ktMlqm2tJ2YYBz2"]'
-WHERE PatientSerNum = 52
-  AND NotificationControlSerNum = 5
-;
-
 -- Rorys data read by rory
 UPDATE Announcement
 SET ReadStatus = 1,
@@ -98,35 +75,6 @@ SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59
   AND NotificationControlSerNum = 5
-;
--- "No radiotherapy treatments" sent 1 week ago
-UPDATE Announcement
-SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
-WHERE PostControlSerNum = 16
-AND PatientSerNum <> 92
-;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -7 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
-WHERE NotificationControlSerNum = 5
-AND RefTableRowSerNum IN (1, 9)
-AND PatientSerNum <> 92
-;
-
--- "International Day of Medical Physics" sent 5 days ago
-UPDATE Announcement
-SET DateAdded = DATE_ADD(now(), INTERVAL -5 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE PostControlSerNum = 20
-AND PatientSerNum <> 92
-;
-UPDATE Notification
-SET DateAdded = DATE_ADD(now(), INTERVAL -5 DAY),
-    LastUpdated = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE NotificationControlSerNum = 5
-AND RefTableRowSerNum IN (2, 10)
-AND PatientSerNum <> 92
 ;
 
 -- "Radiation Oncology will be Closed" sent 2 weeks ago
@@ -140,7 +88,7 @@ UPDATE Notification
 SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
     LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
 WHERE NotificationControlSerNum = 5
-AND RefTableRowSerNum IN (3, 11)
+AND RefTableRowSerNum = 11
 AND PatientSerNum <> 92
 ;
 
@@ -157,4 +105,16 @@ SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
 WHERE NotificationControlSerNum = 5
 AND RefTableRowSerNum = 12
 AND PatientSerNum <> 92
+;
+
+UPDATE Announcement
+SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
+WHERE PostControlSerNum = 1096
+;
+UPDATE Notification
+SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
+WHERE NotificationControlSerNum = 5
+AND RefTableRowSerNum <= 35033 and RefTableRowSerNum >=35014
 ;
