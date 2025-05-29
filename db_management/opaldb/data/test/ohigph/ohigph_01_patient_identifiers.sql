@@ -4,6 +4,8 @@
 
 -- OHIG PEDIATRIC INSTITUTION
 
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `Hospital_Identifier_Type` (`Hospital_Identifier_Type_Id`, `Code`, `ADT_Web_Service_Code`, `Description_EN`, `Description_FR`) VALUES
 (1,	'CHUSJ',	'CHUSJ',	'OHIG Pediatric Hospital',	'Hôpital Pédiatrique OHIG');
 

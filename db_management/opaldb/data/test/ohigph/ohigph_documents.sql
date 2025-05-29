@@ -5,6 +5,8 @@
 -- We add those records here to manually insert `Clinical Notes` documents  for hospital-specific `chusj` demo purposes
 -- ReadBy field can be added to the list separated by comma e.g. [\"1zdi45eWjPhc0lHRyjMtVV9gGhH3\"]
 -- Bart
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `Document` (`DocumentSerNum`, `CronLogSerNum`, `PatientSerNum`, `SourceDatabaseSerNum`, `DocumentId`, `AliasExpressionSerNum`, `ApprovedBySerNum`, `ApprovedTimeStamp`, `AuthoredBySerNum`, `DateOfService`, `Revised`, `ValidEntry`, `ErrorReasonText`, `OriginalFileName`, `FinalFileName`, `CreatedBySerNum`, `CreatedTimeStamp`, `TransferStatus`, `TransferLog`, `SessionId`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (5,	NULL,	53,	1,	'56190000000000039165511',	99,	894,	'2023-06-01 12:36:00',	894,	'2023-06-08 12:35:00',	'',	'Y',	'',	'bart_2009Feb23_note_chusj.pdf',	'bart_2009Feb23_note_chusj.pdf',	894,	'2023-06-08 12:36:00',	'T',	'Transfer successful',	'',	'2023-06-09 16:38:26',	0,	'[]',	'2023-01-12 16:39:17');
 UPDATE `Document`
