@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
 -- Demo Test Data
 (15, 1, 42, 59, '2025-02-21 14:40:13', 209, 0, NULL, '', '2025-02-21 14:40:13'),

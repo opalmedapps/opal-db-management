@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `FrequencyEvents` (`ControlTable`, `ControlTableSerNum`, `MetaKey`, `MetaValue`, `CustomFlag`, `DateAdded`, `LastUpdated`) VALUES
 ('LegacyQuestionnaireControl',	3,	'repeat_day|lqc_3',	'1',	1,	'2020-02-27 10:28:28',	'2020-02-27 20:28:28'),
 ('LegacyQuestionnaireControl',	3,	'repeat_end',	'1582779600',	0,	'2020-02-27 10:28:28',	'2020-02-27 20:28:28'),

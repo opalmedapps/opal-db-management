@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `PatientActionLog` (`PatientActionLogSerNum`, `PatientSerNum`, `Action`, `RefTable`, `RefTableSerNum`, `ActionTime`) VALUES
 (14, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2019-02-07 15:28:53'),
 (25, 92, 'CLICKED_BACK', 'EducationalMaterialControl', 8, '2019-02-07 15:29:27'),
@@ -770,4 +772,4 @@ INSERT INTO `PatientActionLog` (`PatientActionLogSerNum`, `PatientSerNum`, `Acti
 (441721, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2023-08-17 14:57:01'),
 (441778, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2023-08-17 14:57:24'),
 (460591, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2023-10-20 12:11:10'),
-(474699, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2023-12-04 15:19:15'),
+(474699, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2023-12-04 15:19:15');

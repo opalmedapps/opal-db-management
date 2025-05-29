@@ -3,6 +3,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `EducationalMaterialControl` (`EducationalMaterialControlSerNum`, `EducationalMaterialType_EN`, `EducationalMaterialType_FR`, `EducationalMaterialCategoryId`, `PublishFlag`, `Name_EN`, `Name_FR`, `URL_EN`, `URL_FR`, `URLType_EN`, `URLType_FR`, `ShareURL_EN`, `ShareURL_FR`, `PhaseInTreatmentSerNum`, `ParentFlag`, `DateAdded`, `LastUpdatedBy`, `LastPublished`, `LastUpdated`, `deleted`, `SessionId`) VALUES
 (8,	'Booklet',	'Brochure',	1,	0,	'Radiotherapy at the Cedars Cancer Center',	'Radiothérapie au Centre du Cancer des Cèdres',	'',	'',	'',	'',	'https://www.depdocs.com/opal/educational/pathway/EN_Radiotherapy/radiotherapy_journey.pdf',	'https://www.depdocs.com/opal/educational/pathway/FR_Radiotherapie/la_radiotherapie.pdf',	1,	1,	'2016-03-31 16:32:24',	3,	'2021-09-30 00:56:01',	'2023-06-27 13:25:31',	0,	'MhoSnSRCD5'),
 (12,	'Video',	'Vidéo',	1,	0,	'Planning for your radiotherapy',	'La planification de votre radiothérapie',	'https://www.youtube.com/embed/c8nHbGPs5SE',	'https://www.youtube.com/embed/2dPfuxb1H8E',	'website',	'website',	'https://www.youtube.com/embed/c8nHbGPs5SE',	'https://www.youtube.com/embed/2dPfuxb1H8E',	1,	1,	'2016-03-21 16:18:33',	20,	'2021-09-30 00:56:01',	'2023-06-27 13:25:31',	0,	'kvH3rTGxvI'),

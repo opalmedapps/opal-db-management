@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `TxTeamMessage` (`TxTeamMessageSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (4,	NULL,	59,	13,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (7, NULL, 92, 13, '2016-12-29 12:15:33', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2016-12-29 12:18:18'),

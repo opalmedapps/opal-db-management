@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+SET FOREIGN_KEY_CHECKS=0;
+
 INSERT INTO `masterSourceAlias` (`ID`, `externalId`, `code`, `description`, `type`, `source`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (28008, '2', 'Lab Report', 'Lab Report', 3, 7, 0, '', '2025-02-26 14:53:15', 'OpenEMR', '2025-02-26 14:53:15', 'OpenEMR'),
 (28009, '3', 'Medical Record', 'Medical Record', 3, 7, 0, '', '2025-02-26 14:53:15', 'OpenEMR', '2025-02-26 14:53:15', 'OpenEMR'),
