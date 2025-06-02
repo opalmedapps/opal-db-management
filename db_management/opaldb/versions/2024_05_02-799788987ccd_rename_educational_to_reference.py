@@ -80,7 +80,7 @@ def upgrade() -> None:
         comment='Foreign key with ID in EducationalMaterialCategory table. Category refers to the purpose of the Educational Material.',
         existing_comment='Foreign key with ID in EducationalMaterialCategory table.',
         existing_nullable=False,
-        existing_server_default=sa.text('1'),  # type: ignore[arg-type]
+        existing_server_default=sa.text('1'),
     )
     op.create_table_comment(
         'EducationalMaterialControl',
@@ -201,7 +201,7 @@ def downgrade() -> None:
         comment='Foreign key with ID in EducationalMaterialCategory table.',
         existing_comment='Foreign key with ID in EducationalMaterialCategory table. Category refers to the purpose of the Educational Material.',
         existing_nullable=False,
-        existing_server_default=sa.text('1'),  # type: ignore[arg-type]
+        existing_server_default=sa.text('1'),
     )
     op.drop_table_comment(
         'EducationalMaterialCategory',
