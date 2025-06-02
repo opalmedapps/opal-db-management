@@ -15,9 +15,6 @@
     "github>mschoettle/renovate-presets//presets/docker-alpine.json5",
     "github>mschoettle/renovate-presets//presets/actions-dependency-version.json5",
   ],
-  "pip_requirements": {
-    "managerFilePatterns": ["^requirements/.*\\.txt$"]
-  },
   "assignees": ["mschoettle"],
   "labels": ["dependencies"],
   // Only rebase existing MRs when the branch is conflicted
@@ -44,7 +41,7 @@
     },
     // Combine uv package, uv image, and uv-pre-commit
     {
-      "matchPackageNames": "/uv-pre-commit|uv$/",
+      "matchPackageNames": ["/uv-pre-commit|uv$/"],
       "groupName": "uv",
     },
   ],
