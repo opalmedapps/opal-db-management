@@ -9,7 +9,7 @@ description = "DB Management for Opal's legacy databases"
 readme = "README.md"
 requires-python = "==3.12.10"
 dependencies = [
-    "alembic==1.15.1",
+    "alembic==1.16.1",
     "mysqlclient==2.2.7",
     "pymysql==1.1.1",
     "python-dotenv==1.1.0",
@@ -18,7 +18,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "alembic==1.15.1",
+    "alembic==1.16.1",
     "mypy==1.16.0",
     "mysqlclient==2.2.7",
     "pre-commit==4.2.0",

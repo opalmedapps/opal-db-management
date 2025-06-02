@@ -4,16 +4,16 @@ requires-python = "==3.12.10"
 
 [[package]]
 name = "alembic"
-version = "1.15.1"
+version = "1.16.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "mako" },
     { name = "sqlalchemy" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/ed/901044acb892caa5604bf818d2da9ab0df94ef606c6059fdf367894ebf60/alembic-1.15.1.tar.gz", hash = "sha256:e1a1c738577bca1f27e68728c910cd389b9a92152ff91d902da649c192e30c49", size = 1924789, upload-time = "2025-03-04T22:02:38.583Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/20/89/bfb4fe86e3fc3972d35431af7bedbc60fa606e8b17196704a1747f7aa4c3/alembic-1.16.1.tar.gz", hash = "sha256:43d37ba24b3d17bc1eb1024fe0f51cd1dc95aeb5464594a02c6bb9ca9864bfa4", size = 1955006, upload-time = "2025-05-21T23:11:05.991Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/99/f7/d398fae160568472ddce0b3fde9c4581afc593019a6adc91006a66406991/alembic-1.15.1-py3-none-any.whl", hash = "sha256:197de710da4b3e91cf66a826a5b31b5d59a127ab41bd0fc42863e2902ce2bbbe", size = 231753, upload-time = "2025-03-04T22:02:41.673Z" },
+    { url = "https://files.pythonhosted.org/packages/31/59/565286efff3692c5716c212202af61466480f6357c4ae3089d4453bff1f3/alembic-1.16.1-py3-none-any.whl", hash = "sha256:0cdd48acada30d93aa1035767d67dff25702f8de74d7c3919f2e8492c8db2e67", size = 242488, upload-time = "2025-05-21T23:11:07.783Z" },
 ]
 
 [[package]]
@@ -63,7 +63,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "alembic", specifier = "==1.15.1" },
+    { name = "alembic", specifier = "==1.16.1" },
     { name = "mysqlclient", specifier = "==2.2.7" },
     { name = "pymysql", specifier = "==1.1.1" },
     { name = "python-dotenv", specifier = "==1.1.0" },
@@ -72,7 +72,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "alembic", specifier = "==1.15.1" },
+    { name = "alembic", specifier = "==1.16.1" },
     { name = "mypy", specifier = "==1.16.0" },
     { name = "mysqlclient", specifier = "==2.2.7" },
     { name = "pre-commit", specifier = "==4.2.0" },
