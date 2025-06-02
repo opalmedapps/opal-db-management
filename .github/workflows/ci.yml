@@ -44,9 +44,6 @@ jobs:
         if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
-      - name: Fail if any previous steps failed
-        if: failure()
-        run: exit 1
 
   test:
     runs-on: ubuntu-latest
