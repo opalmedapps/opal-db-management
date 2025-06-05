@@ -4,11 +4,6 @@
 
 -- Fake patients used for testing the SQL scripts to avoid violating foreign key constraints
 
-WITH RECURSIVE numbers AS (
-    SELECT 1 as n
-    UNION ALL
-    SELECT n + 1 FROM numbers WHERE n < 200
-)
 INSERT INTO `Patient` (
     `PatientSerNum`,
     `FirstName`,
@@ -20,6 +15,11 @@ INSERT INTO `Patient` (
     `SSN`,
     `TestUser`
 )
+WITH RECURSIVE numbers AS (
+    SELECT 1 as n
+    UNION ALL
+    SELECT n + 1 FROM numbers WHERE n < 200
+)
 SELECT
     n,
     'First Name',
@@ -28,6 +28,6 @@ SELECT
     NOW(),
     CONCAT('email', n, '@test.com'),
     'EN',
-    'SSN',
+    CONCAT('SSN', n),
     1
 FROM numbers;
