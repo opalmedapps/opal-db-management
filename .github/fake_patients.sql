@@ -4,6 +4,8 @@
 
 -- Fake patients used for testing the SQL scripts to avoid violating foreign key constraints
 
+USE OpalDB;
+
 INSERT INTO `Patient` (
     `PatientSerNum`,
     `FirstName`,
