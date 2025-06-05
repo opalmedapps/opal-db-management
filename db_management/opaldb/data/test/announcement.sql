@@ -2,8 +2,6 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
 INSERT INTO `Announcement` (`AnnouncementSerNum`, `CronLogSerNum`, `PatientSerNum`, `PostControlSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 (11,	NULL,	59,	16,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
 (12,	NULL,	59,	23,	'2000-01-01 00:00:00',	0,	'[]',	'2000-01-01 00:00:00'),
@@ -109,6 +107,7 @@ AND RefTableRowSerNum = 12
 AND PatientSerNum <> 92
 ;
 
+-- "Road closure notice" sent 2 days ago
 UPDATE Announcement
 SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
     LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
@@ -118,5 +117,5 @@ UPDATE Notification
 SET DateAdded = DATE_ADD(now(), INTERVAL -2 DAY),
     LastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
 WHERE NotificationControlSerNum = 5
-AND RefTableRowSerNum <= 35033 and RefTableRowSerNum >=35014
+AND RefTableRowSerNum <= 35033 and RefTableRowSerNum >= 35014
 ;

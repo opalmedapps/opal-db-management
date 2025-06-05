@@ -2,8 +2,6 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
 INSERT INTO `EducationalMaterialTOC` (`EducationalMaterialTOCSerNum`, `EducationalMaterialControlSerNum`, `OrderNum`, `ParentSerNum`, `DateAdded`, `LastUpdated`) VALUES
 (368,	398,	1,	105,	'2018-01-15 16:36:38',	'2018-01-16 02:36:38'),
 (369,	399,	2,	105,	'2018-01-15 16:36:38',	'2018-01-16 02:36:38'),

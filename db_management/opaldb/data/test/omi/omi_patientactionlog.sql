@@ -2,8 +2,7 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
+-- Laurie's action log
 INSERT INTO `PatientActionLog` (`PatientActionLogSerNum`, `PatientSerNum`, `Action`, `RefTable`, `RefTableSerNum`, `ActionTime`) VALUES
 (14, 92, 'CLICKED', 'EducationalMaterialControl', 8, '2019-02-07 15:28:53'),
 (25, 92, 'CLICKED_BACK', 'EducationalMaterialControl', 8, '2019-02-07 15:29:27'),

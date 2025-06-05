@@ -2,7 +2,5 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
 INSERT INTO `study` (`ID`, `consentQuestionnaireId`, `code`, `title_EN`, `title_FR`, `description_EN`, `description_FR`, `investigator`, `email`, `phone`, `phoneExt`, `startDate`, `endDate`, `deleted`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (9,	248,	'qscc-databank',	'QSCC Databank Information and Consent Form',	'Formulaire d\'information et de consentement pour la banque de données du CQSI',	'<p>I have reviewed the information and consent factsheet in Opal. My questions, if any, were answered, and I was given sufficient time to make a decision. After reflection, I consent for my health information to be banked in the Quebec SmartCare Consortium Databank in accordance with the conditions stated in the factsheet. <br/><br/></p>',	'<p>J\'ai examiné la fiche d\'information et de consentement d\'Opal. On a répondu à mes questions, le cas échéant, et on m\'a donné suffisamment de temps pour prendre une décision. Après réflexion, je consens à ce que mes renseignements médicaux soient versés dans la banque de données du Consortium SmartCare du Québec, conformément aux conditions énoncées dans la fiche d\'information.<br/><br/></p>',	'John Kildea',	'john.kildea@mcgill.ca',	'15144758943',	NULL,	NULL,	NULL,	0,	'2023-12-20 13:56:45',	'AGKE6000',	'2023-12-20 13:56:46',	'AGKE6000');

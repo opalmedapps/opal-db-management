@@ -2,8 +2,6 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
 INSERT INTO `AppointmentCheckin` (`AliasSerNum`, `CheckinPossible`, `CheckinInstruction_EN`, `CheckinInstruction_FR`, `DateAdded`, `LastUpdatedBy`, `SessionId`, `LastUpdated`) VALUES
 (614, 1, 'EN Text to be determined', 'FR Text to be determined', now(), NULL, NULL, now()),
 (619, 0, '<p>N/A</p>', '<p>N/A</p>', '2025-03-05 15:52:53', NULL, 'rNyqrgCOuq', '2025-03-05 15:52:53'),

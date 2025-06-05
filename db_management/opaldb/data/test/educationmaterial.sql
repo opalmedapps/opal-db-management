@@ -2,8 +2,6 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 -- rory: treatment guidelines, databank info, lung guidelines
 (17,	NULL,	105,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
@@ -25,7 +23,7 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
 WHERE PatientSerNum IN (59)
 AND `EducationalMaterialSerNum` = 19;
 
--- Remove some notifications\
+-- Remove some notifications
 -- Rory has read all their own data
 UPDATE `EducationalMaterial`
 SET ReadStatus = 1,
@@ -99,7 +97,7 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -1 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -1 DAY)
 WHERE `EducationalMaterialControlSerNum` = 979;
 
--- Set all other educational material sent in 2 weeks ago
+-- Set all other educational material sent 2 weeks ago
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)

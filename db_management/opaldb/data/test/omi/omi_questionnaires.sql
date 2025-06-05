@@ -2,8 +2,6 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
-SET FOREIGN_KEY_CHECKS=0;
-
 INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
 -- Demo Test Data
 (15, 1, 42, 59, '2025-02-21 14:40:13', 209, 0, NULL, '', '2025-02-21 14:40:13'),
@@ -79,7 +77,7 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 13;
 
--- Set all other questionnaires sent in 2 weeks ago
+-- Set all other questionnaires sent 2 weeks ago
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
