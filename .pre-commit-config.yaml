@@ -37,10 +37,10 @@ repos:
     - id: mdformat
       language: python
       additional_dependencies:
-        - mdformat-mkdocs==4.1.2
+        - mdformat-mkdocs==4.3.0
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.7.6
+  rev: 0.7.10
   hooks:
     - id: uv-lock
 
@@ -56,7 +56,7 @@ repos:
 
 # https://docs.astral.sh/ruff/integrations/#pre-commit
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.11.10
+  rev: v0.11.12
   hooks:
     # Run the linter with fixes
     - id: ruff
@@ -76,13 +76,13 @@ repos:
       types: [python]
 
 - repo: https://github.com/crate-ci/typos
-  rev: v1.32.0
+  rev: v1.33.1
   hooks:
     - id: typos
 
 # zizmor detects security vulnerabilities in GitHub Actions workflows.
 - repo: https://github.com/woodruffw/zizmor-pre-commit
-  rev: v1.8.0
+  rev: v1.9.0
   hooks:
     - id: zizmor
 

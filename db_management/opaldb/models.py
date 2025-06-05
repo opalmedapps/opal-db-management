@@ -554,6 +554,7 @@ class HospitalMapMH(Base):
 
 class HospitalIdentifierType(Base):
     __tablename__ = 'Hospital_Identifier_Type'
+    __table_args__ = {'comment': 'Deprecated. Superseded by Site model in new admin'}
 
     Hospital_Identifier_Type_Id = Column(INTEGER(11), primary_key=True)
     Code = Column(String(20), nullable=False, unique=True)
@@ -1876,13 +1877,10 @@ class PatientHospitalIdentifier(Base):
 
     Patient_Hospital_Identifier_Id = Column(INTEGER(11), primary_key=True)
     PatientSerNum: Mapped[int] = mapped_column(ForeignKey('Patient.PatientSerNum'), nullable=False, index=True)
-    Hospital_Identifier_Type_Code: Mapped[int] = mapped_column(
-        ForeignKey('Hospital_Identifier_Type.Code'), nullable=False, index=True
-    )
+    Hospital_Identifier_Type_Code = Column(String(20), nullable=False, index=True)
     MRN = Column(String(20), nullable=False, index=True)
     Is_Active = Column(TINYINT(1), nullable=False, server_default=text('1'))
 
-    Hospital_Identifier_Type = relationship('HospitalIdentifierType')
     Patient = relationship('Patient')
 
 

@@ -15,9 +15,6 @@
     "github>mschoettle/renovate-presets//presets/docker-alpine.json5",
     "github>mschoettle/renovate-presets//presets/actions-dependency-version.json5",
   ],
-  "pip_requirements": {
-    "fileMatch": ["^requirements/.*\\.txt$"]
-  },
   "assignees": ["mschoettle"],
   "labels": ["dependencies"],
   // Only rebase existing MRs when the branch is conflicted
@@ -26,11 +23,6 @@
   //
   // https://docs.renovatebot.com/configuration-options/#rebasewhen
   "rebaseWhen": "conflicted",
-  // enable updates for pre-commit
-  // see: https://docs.renovatebot.com/modules/manager/pre-commit/
-  "pre-commit": {
-    "enabled": true
-  },
   "packageRules": [
     // Change commit type to build for Docker-related updates
     {
@@ -39,22 +31,17 @@
     },
     // Group all mypy stub updates together
     {
-      "matchPackagePatterns": ["-stubs$", "^types-"],
+      "matchPackageNames": ["/-stubs$/", "/^types-/"],
       "groupName": "mypy type stubs"
-    },
-    // Allow to receive patch updates while waiting with upgrading to the next minor version
-    {
-      "matchPackagePatterns": ["python", "mariadb"],
-      "separateMinorPatch": true
     },
     // Combine ruff and ruff-pre-commit
     {
-      "matchPackagePatterns": "ruff-pre-commit|ruff$",
+      "matchPackageNames": ["/ruff-pre-commit|ruff$/"],
       "groupName": "ruff",
     },
     // Combine uv package, uv image, and uv-pre-commit
     {
-      "matchPackagePatterns": "uv-pre-commit|uv$",
+      "matchPackageNames": ["/uv-pre-commit|uv$/"],
       "groupName": "uv",
     },
   ],
