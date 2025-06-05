@@ -86,6 +86,8 @@ jobs:
           MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db --skip-ssl -e "CREATE DATABASE IF NOT EXISTS \`QuestionnaireDB\` /*!40100 DEFAULT CHARACTER SET utf8 */; GRANT ALL PRIVILEGES ON \`QuestionnaireDB\`.* TO \`$DB_USER\`@\`%\`;"
           MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db --skip-ssl -e "CREATE DATABASE IF NOT EXISTS \`OrmsDatabase\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsDatabase\`.* TO \`$DB_USER\`@\`%\`;"
           MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db --skip-ssl -e "CREATE DATABASE IF NOT EXISTS \`OrmsLog\` /*!40100 DEFAULT CHARACTER SET latin1 */; GRANT ALL PRIVILEGES ON \`OrmsLog\`.* TO \`$DB_USER\`@\`%\`;"
+          ls -la .
+          ls -la .github
           MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db --skip-ssl < ./github/fake_patients.sql
       - name: Run pytest
         run: |
