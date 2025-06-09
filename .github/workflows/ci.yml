@@ -103,8 +103,6 @@ jobs:
           source .venv/bin/activate
           # migrate databases first
           ./docker/alembic-upgrade.sh
-          # create fake patients to satisfy foreign key constraints when inserting patient data
-          MYSQL_PWD=$DB_ROOT_PASSWORD mariadb -u root -h db --skip-ssl < ./.github/fake_patients.sql
           # Full refresh for both OMI and OHIGPH datasets to ensure no broken data links/inconsistencies
           db_management/reset_data.sh OMI
           db_management/reset_data.sh OHIGPH
