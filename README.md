@@ -296,7 +296,6 @@ docker compose run --rm app python -m db_management.run_sql_scripts OrmsDatabase
 docker compose run --rm app python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/
 ```
 
-Note the `--disable-foreign-key-checks` flag is required for OpalDB test data because currently our test data has incorrect foreign key relationships expressed in the data which have not all been fixed.
 Foreign key checks are disabled by default for QuestionnaireDB due to a circular foreign key dependency between `language` and `dictionary`.
 
 ### Interacting with the Alembic container
