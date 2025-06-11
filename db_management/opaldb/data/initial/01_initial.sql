@@ -254,8 +254,8 @@ INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Ena
 INSERT INTO `Cron` (`CronSerNum`, `NextCronDate`, `RepeatUnits`, `NextCronTime`, `RepeatInterval`, `LastCron`)  VALUES
 ('1', '2023-06-06', 'Minutes', '11:53:06', '3', '2023-06-06 11:53:25');
 -- The Cronjob user is required to run the resource-pending and appointment-pending scripts in admin-legacy
-INSERT INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
+INSERT IGNORE INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
 (23,	'CronJob',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2024-02-16 16:29:50',	'2024-02-16 16:29:50');
 
-INSERT INTO `OAUserRole` (`OAUserSerNum`, `RoleSerNum`, `LastUpdated`) VALUES
+INSERT IGNORE INTO `OAUserRole` (`OAUserSerNum`, `RoleSerNum`, `LastUpdated`) VALUES
 (23,	29,	'2017-02-11 01:43:16');
