@@ -159,7 +159,7 @@ INSERT IGNORE INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`,
 (36,    'ORMS', 'ORMS', 0, '', '2024-03-19 09:22:20', 'AGKE6000', '2024-03-19 09:22:31', 'AGKE6000'),
 (37,	'Medical Records',	'Dossiers médicaux',	0,	'',	'2024-03-19 09:22:20',	'AGKE6000',	'2024-03-19 09:22:20',	'AGKE6000');
 
-INSERT INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
+INSERT IGNORE INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUES
 (1,	1,	1,	3),
 (2,	2,	1,	3),
 (3,	3,	1,	3),
