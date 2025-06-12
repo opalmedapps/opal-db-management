@@ -148,15 +148,12 @@ INSERT INTO `NotificationControl` (`NotificationControlSerNum`, `Name_EN`, `Name
 INSERT IGNORE INTO `oaRole` (`ID`, `name_EN`, `name_FR`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (1,	'System Administrator',	'Administrateur du système',	0,	'',	'2020-06-04 09:08:14',	'BODO6005',	'2020-08-19 16:47:32',	'BODO6005'),
 (4,	'Patient Registration',	'Enregistrement patient',	0,	'',	'2020-06-04 09:08:35',	'BODO6005',	'2020-06-04 17:08:35',	'BODO6005'),
-(5,	'Test Role',	'Test Rôle',	1,	'BODO6005',	'2020-08-10 09:22:33',	'BODO6005',	'2020-08-10 17:58:21',	'BODO6005'),
 (6,	'Publication',	'Publication',	0,	'',	'2020-08-10 09:59:18',	'BODO6005',	'2020-08-10 21:10:32',	'BODO6005'),
 (7,	'Content Creation',	'Création de contenu',	0,	'',	'2020-08-10 10:00:07',	'BODO6005',	'2021-09-08 17:06:19',	'CABR6008'),
 (8,	'Patient Support',	'Soutien aux patients',	0,	'',	'2020-08-10 10:00:45',	'BODO6005',	'2020-08-10 18:00:45',	'BODO6005'),
-(9,	'External System',	'Système externe',	1,	'BODO6005',	'2020-09-01 12:42:01',	'BODO6005',	'2020-12-08 00:09:13',	'BODO6005'),
 (29,	'External System',	'Système externe',	0,	'',	'2020-09-01 12:42:01',	'BODO6005',	'2020-09-29 16:44:27',	'BODO6005'),
 (30,	'Patients and Diagnoses',	'Patients et diagnostics',	0,	'',	'2020-11-18 14:32:54',	'BODO6005',	'2020-11-19 00:32:54',	'BODO6005'),
 (32,	'Listener',	'Listener',	0,	'',	'2021-03-26 10:52:35',	'BODO6005',	'2021-03-26 18:59:26',	'MOYI6000'),
-(33,	'Superuser',	'Superutilisateur',	1,	'CABR6008',	'2021-08-25 10:11:59',	'CABR6008',	'2021-08-25 18:13:18',	'CABR6008'),
 (34,	'Superuser',	'Superutilisateur',	0,	'',	'2021-08-25 10:14:37',	'CABR6008',	'2021-08-25 18:53:22',	'CABR6008'),
 (35,	'Lab Results',	'Résultats de laboratoire',	0,	'',	'2021-09-21 08:47:42',	'CABR6008',	'2021-09-21 16:47:42',	'CABR6008'),
 (36,    'ORMS', 'ORMS', 0, '', '2024-03-19 09:22:20', 'AGKE6000', '2024-03-19 09:22:31', 'AGKE6000'),
@@ -176,11 +173,6 @@ INSERT IGNORE INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUE
 (12,	12,	1,	3),
 (14,	16,	1,	3),
 (15,	11,	4,	3),
-(16,	1,	5,	7),
-(17,	2,	5,	3),
-(18,	3,	5,	1),
-(19,	11,	5,	1),
-(20,	12,	5,	1),
 (25,	8,	6,	3),
 (26,	2,	7,	3),
 (27,	3,	7,	3),
@@ -190,9 +182,6 @@ INSERT IGNORE INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUE
 (31,	13,	1,	3),
 (32,	17,	1,	3),
 (33,	18,	1,	1),
-(34,	7,	9,	3),
-(35,	19,	9,	3),
-(36,	9,	9,	3),
 (37,	7,	29,	3),
 (38,	19,	29,	3),
 (39,	9,	29,	3),
@@ -208,17 +197,6 @@ INSERT IGNORE INTO `oaRoleModule` (`ID`, `moduleId`, `oaRoleId`, `access`) VALUE
 (52,	11,	32,	1),
 (53,	17,	32,	1),
 (54,	19,	32,	1),
-(55,	1,	33,	3),
-(56,	2,	33,	3),
-(57,	3,	33,	3),
-(58,	4,	33,	3),
-(59,	5,	33,	3),
-(60,	6,	33,	1),
-(61,	7,	33,	3),
-(62,	8,	33,	3),
-(63,	9,	33,	1),
-(64,	11,	33,	1),
-(65,	12,	33,	3),
 (66,	1,	34,	3),
 (67,	2,	34,	3),
 (68,	3,	34,	3),
@@ -256,3 +234,9 @@ INSERT INTO `SourceDatabase` (`SourceDatabaseSerNum`, `SourceDatabaseName`, `Ena
 -- Insert the initial data required to run the cronjob.
 INSERT INTO `Cron` (`CronSerNum`, `NextCronDate`, `RepeatUnits`, `NextCronTime`, `RepeatInterval`, `LastCron`)  VALUES
 ('1', '2023-06-06', 'Minutes', '11:53:06', '3', '2023-06-06 11:53:25');
+-- The Cronjob user is required to run the resource-pending and appointment-pending scripts in admin-legacy
+INSERT IGNORE INTO `OAUser` (`OAUserSerNum`, `Username`, `Password`, `oaRoleId`, `type`, `Language`, `deleted`, `DateAdded`, `LastUpdated`) VALUES
+(23,	'CronJob',	'896034843f4794ac98a1e2d7849bd3bee8120e5d32a930388c4df998ee4b200f',	29,	2,	'EN',	0,	'2024-02-16 16:29:50',	'2024-02-16 16:29:50');
+
+INSERT IGNORE INTO `OAUserRole` (`OAUserSerNum`, `RoleSerNum`, `LastUpdated`) VALUES
+(23,	29,	'2017-02-11 01:43:16');
