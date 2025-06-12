@@ -20,7 +20,7 @@ INSERT INTO `Patient` (
 WITH RECURSIVE numbers AS (
     SELECT 1 as n
     UNION ALL
-    SELECT n + 1 FROM numbers WHERE n < 200
+    SELECT n + 1 FROM numbers WHERE n NOT IN (95, 97, 98) AND n < 200
 )
 SELECT
     n,
