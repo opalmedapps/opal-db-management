@@ -90,6 +90,7 @@ docker compose run --rm app db_management/reset_data_part_1.sh <institution>
 ```
 
 Then, where `app` points to the opal-admin app container:
+
 ```shell
 docker compose exec app python manage.py insert_test_data <institution>
 ```
