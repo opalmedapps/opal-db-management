@@ -4,7 +4,9 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Description: This script resets the test data insertions for OpalDB, QuestionnaireDB, and orms.
+# Description: This is part 1 of a script that resets the test data insertions for OpalDB, QuestionnaireDB, and OrmsDatabase.
+#              This part handles data truncation, and inserting fake patients if running as part of a CI workflow.
+#              Execution of this script should be followed by executing insert_test_data in the opal-admin container.
 # Args:
 #      Institution: omi or ohigph
 
@@ -47,19 +49,6 @@ if [[ -n "${CI:-}" ]]; then
     commands+=("python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/patients/")
 fi
 
-commands+=(
-    # QuestionnaireDB needs to come first due to references from OpalDB to QuestionnaireDB
-    "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/"
-    "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/$institution/"
-    "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/"
-    "python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/initial/"
-    "python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/"
-    "python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/$institution/"
-    "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/initial/"
-    "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/"
-    "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/$institution/"
-)
-
 # Execute each command
 for cmd in "${commands[@]}"; do
     log "Executing: $cmd"
@@ -72,4 +61,4 @@ for cmd in "${commands[@]}"; do
     echo "------------------------------------------------------------"
 done
 
-log "Test data successfully reset."
+log "Test data successfully truncated; now run insert_test_data in the opal-admin container, and then run reset_data_part_2.sh"

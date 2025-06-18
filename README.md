@@ -79,10 +79,23 @@ In order to facilitate deployments to new institutions and development, we have 
 These two sets of data can be inserted separately from the CLI.
 Note that, generally speaking, initial data should be considered the "base" dataset upon which test data can optionally be added.
 
-To facilitate rapid resetting of all data, the following script can be called which will truncate all databases, insert all initial data, insert all test data, and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
+To facilitate rapid resetting of all data, the following scripts can be called which will truncate all databases, insert all initial data, insert all test data,
+and insert Opal general institution test data according to the required command line institution argument (`omi` for `Opal Medical Institution` or `ohigph` for `OHIG Pediatric Hospital`).
+
+Note that this process has been split into two parts to allow test patients to be inserted by opal-admin after data truncation, but before the rest of the data inserts.
+Failing to add patients at this point in the process causes issues with foreign keys to the `Patient` table in the rest of the data.
 
 ```shell
-docker compose run --rm app db_management/reset_data.sh <institution>
+docker compose run --rm app db_management/reset_data_part_1.sh <institution>
+```
+
+Then, where `app` points to the opal-admin app container:
+```shell
+docker compose exec app python manage.py insert_test_data <institution>
+```
+
+```shell
+docker compose run --rm app db_management/reset_data_part_2.sh <institution>
 ```
 
 ## Contributing
@@ -241,7 +254,7 @@ To go to the latest version for the database, simply run `alembic --name <dbname
 
 #### Informational only: Inserting new test data
 
-**Note:** The description of the ten commands below is left for informational purposes, but these are not required to be run if the `reset_data` script is called first (see the [inserting test data](#step-5-insert-test-data) section).
+**Note:** The description of the ten commands below is left for informational purposes, but these are not required to be run if the `reset_data` scripts are called first (see the [inserting test data](#step-5-insert-test-data) section).
 
 Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real Production databases.
 
