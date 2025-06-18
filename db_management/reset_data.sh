@@ -40,7 +40,7 @@ declare -a commands=(
     "python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/"
     "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/truncate/"
     "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/truncate/"
-    "test/patients/"
+    "python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/patients/"
     # QuestionnaireDB needs to come first due to references from OpalDB to QuestionnaireDB
     "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/initial/"
     "python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/$institution/"
