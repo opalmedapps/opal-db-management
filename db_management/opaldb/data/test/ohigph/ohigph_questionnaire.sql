@@ -4,7 +4,7 @@
 
 INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `QuestionnaireControlSerNum`, `PatientSerNum`, `DateAdded`, `PatientQuestionnaireDBSerNum`, `CompletedFlag`, `CompletionDate`, `SessionId`, `LastUpdated`) VALUES
 -- all get: esas-r
-(3,	1,	42,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
+-- (3,	1,	42,	53,	'2000-01-01 00:00:00',	207,	0,	NULL,	'',	'2000-01-01 00:00:00'),
 (15, 1,	42,	54,	'2000-01-01 00:00:00',	208,	0,	NULL,	'',	'2000-01-01 00:00:00');
 
 -- Update all Questionnaire dates to make the data more similar to a live environment
