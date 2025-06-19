@@ -66,7 +66,6 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 
 -- Demo Test Data
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
-(13822, NULL, 8, 93, '2025-03-05 23:46:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-06 12:56:16'),
 (13823, NULL, 979, 93, '2025-03-05 23:58:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-11 08:10:09'),
 (13825, NULL, 2349, 94, '2025-03-07 09:50:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-12 13:34:34'),
 (13826, NULL, 2350, 94, '2025-03-07 09:50:04', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-12 13:34:32'),
