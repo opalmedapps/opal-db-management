@@ -2,6 +2,7 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+-- TODO clean up data for deleted patientIds (see db_management/questionnairedb/data/test/omi/patients.sql)
 INSERT INTO `answer` (`ID`, `questionnaireId`, `sectionId`, `questionId`, `typeId`, `answerSectionId`, `languageId`, `patientId`, `answered`, `skipped`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (281, 11, 11, 823, 2, 55, -1, 1, 1, 0, 0, '', '2016-11-25 18:18:38', 'QUESTIONNAIRE_MIGRATION_2019', '2023-06-02 14:25:14', 'QUESTIONNAIRE_MIGRATION_2019'),
 (282, 11, 11, 824, 2, 55, -1, 1, 1, 0, 0, '', '2016-11-25 18:18:38', 'QUESTIONNAIRE_MIGRATION_2019', '2023-06-02 14:25:14', 'QUESTIONNAIRE_MIGRATION_2019'),
@@ -2797,6 +2798,7 @@ SET creationDate = DATE_ADD(now(), INTERVAL -13 DAY),
 WHERE questionnaireId=204
 and sectionId=154;
 
+-- TODO clean up data for deleted patientIds (see db_management/questionnairedb/data/test/omi/patients.sql)
 INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `respondentUsername`, `respondentDisplayName`) VALUES
 -- esas-r answer instances for bart homer and marge and lisa and rory
 (184, 136, 1, 0, 0, '', '2000-01-01 00:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2000-01-01 00:00:00', '3_APP_100.100.100', '', ''),
