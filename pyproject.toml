@@ -7,26 +7,26 @@ name = "db-management"
 version = "0"
 description = "DB Management for Opal's legacy databases"
 readme = "README.md"
-requires-python = "==3.13.4"
+requires-python = "==3.13.5"
 dependencies = [
-    "alembic==1.16.1",
+    "alembic==1.16.2",
     "mysqlclient==2.2.7",
     "pymysql==1.1.1",
-    "python-dotenv==1.1.0",
+    "python-dotenv==1.1.1",
     "sqlalchemy==2.0.41",
 ]
 
 [dependency-groups]
 dev = [
-    "alembic==1.16.1",
-    "mypy==1.16.0",
+    "alembic==1.16.2",
+    "mypy==1.16.1",
     "mysqlclient==2.2.7",
     "pre-commit==4.2.0",
     "pymysql==1.1.1",
-    "pytest==8.4.0",
+    "pytest==8.4.1",
     "pytest-alembic==0.12.1",
-    "python-dotenv==1.1.0",
-    "ruff==0.11.13",
+    "python-dotenv==1.1.1",
+    "ruff==0.12.1",
     "sqlalchemy==2.0.41",
     "types-pymysql==1.1.0.20250516",
 ]

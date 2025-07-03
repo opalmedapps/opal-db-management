@@ -25,11 +25,11 @@ jobs:
       - uses: actions/checkout@v4.2.2
         with:
           persist-credentials: false
-      - uses: astral-sh/setup-uv@v6.1.0
+      - uses: astral-sh/setup-uv@v6.3.1
         id: setup-uv
         with:
           # renovate: datasource=pypi dependency=uv
-          version: "0.7.12"
+          version: "0.7.19"
       - name: Install dependencies
         run: uv sync --locked
       - name: Run ruff check
@@ -51,7 +51,7 @@ jobs:
       DB_ROOT_PASSWORD: "root-password"
       DB_PASSWORD: "user-password"
       DB_USER: citest
-    container: python:3.13.4-alpine3.21
+    container: python:3.13.5-alpine3.21
     services:
       db:
         image: mariadb:10.11.13-jammy
