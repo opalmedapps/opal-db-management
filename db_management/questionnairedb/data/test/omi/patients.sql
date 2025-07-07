@@ -13,14 +13,19 @@ REPLACE INTO `patient` (`ID`, `hospitalId`, `externalId`, `deleted`, `deletedBy`
 (7, -1, 57, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_PEBBLES_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
 (8, -1, 58, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_WEDNESDAY_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
 
--- Laurie and Rory's patient rows are in reverse order in this database, as opposed to OpalDB.Patient
 (9, -1, 92, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_LAURIE', '2025-01-01 00:00:00', 'TEST_DATA'),
-(10, -1, 59, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_RORY', '2025-01-01 00:00:00', 'TEST_DATA');
+(10, -1, 59, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_RORY', '2025-01-01 00:00:00', 'TEST_DATA'),
+(11, -1, 93, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_JOHN', '2025-01-01 00:00:00', 'TEST_DATA'),
+(12, -1, 94, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_RICHARD', '2025-01-01 00:00:00', 'TEST_DATA'),
+(13, -1, 96, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_CARA', '2025-01-01 00:00:00', 'TEST_DATA'),
+(14, -1, 99, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_VALERIE', '2025-01-01 00:00:00', 'TEST_DATA'),
+(15, -1, 100, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_PETE', '2025-01-01 00:00:00', 'TEST_DATA'),
+(16, -1, 101, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_MARTIN', '2025-01-01 00:00:00', 'TEST_DATA'),
+(17, -1, 102, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_KATHY', '2025-01-01 00:00:00', 'TEST_DATA'),
+(18, -1, 103, 0, '', '2025-01-01 00:00:00', ',TEST_DATA_MIKE', '2025-01-01 00:00:00', 'TEST_DATA');
 
 -- Update all timestamps to the current time
 UPDATE `patient`
 SET
 `creationDate` = now(),
 `lastUpdated` = now();
-
--- All remaining patients are synced in order, automatically, via the DB event SyncPublishQuestionnaire that runs periodically
