@@ -5,7 +5,7 @@
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 -- rory: treatment guidelines, databank info
 (17,	NULL,	105,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
+(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
 
 -- Treatment guidelines sent 1 day after diagnosis for all
 
