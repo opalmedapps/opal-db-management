@@ -62,18 +62,6 @@ WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 5;
 
 -- Update all Announcement dates and read statuses to make the data more similar to a live environment
--- Rorys data read by rory
-UPDATE Announcement
-SET ReadStatus = 1,
-    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
-WHERE PatientSerNum = 59
-;
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
-WHERE PatientSerNum = 59
-  AND NotificationControlSerNum = 5
-;
 
 -- "Radiation Oncology will be Closed" sent 2 weeks ago
 UPDATE Announcement
