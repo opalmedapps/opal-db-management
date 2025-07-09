@@ -16,11 +16,6 @@ SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59
 ;
-UPDATE Questionnaire
-SET ReadStatus = 1,
-    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
-WHERE PatientSerNum = 59
-;
 UPDATE TxTeamMessage
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
@@ -39,11 +34,6 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 96
 ;
 UPDATE EducationalMaterial
-SET ReadStatus = 1,
-    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
-WHERE PatientSerNum = 96
-;
-UPDATE Questionnaire
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
 WHERE PatientSerNum = 96
@@ -70,11 +60,6 @@ SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
 WHERE PatientSerNum = 93
 ;
-UPDATE Questionnaire
-SET ReadStatus = 1,
-    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
-WHERE PatientSerNum = 93
-;
 UPDATE TxTeamMessage
 SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
@@ -93,11 +78,6 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 94
 ;
 UPDATE EducationalMaterial
-SET ReadStatus = 1,
-    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
-WHERE PatientSerNum = 94
-;
-UPDATE Questionnaire
 SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
 WHERE PatientSerNum = 94
@@ -124,11 +104,6 @@ SET ReadStatus = 1,
     ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
 WHERE PatientSerNum = 99
 ;
-UPDATE Questionnaire
-SET ReadStatus = 1,
-    ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
-WHERE PatientSerNum = 99
-;
 UPDATE TxTeamMessage
 SET ReadStatus = 1,
     ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
@@ -147,11 +122,6 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 100
 ;
 UPDATE EducationalMaterial
-SET ReadStatus = 1,
-    ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
-WHERE PatientSerNum = 100
-;
-UPDATE Questionnaire
 SET ReadStatus = 1,
     ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
 WHERE PatientSerNum = 100
@@ -178,11 +148,6 @@ SET ReadStatus = 1,
     ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
 WHERE PatientSerNum = 101
 ;
-UPDATE Questionnaire
-SET ReadStatus = 1,
-    ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
-WHERE PatientSerNum = 101
-;
 UPDATE TxTeamMessage
 SET ReadStatus = 1,
     ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
@@ -205,11 +170,6 @@ SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
 WHERE PatientSerNum = 103
 ;
-UPDATE Questionnaire
-SET ReadStatus = 1,
-    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
-WHERE PatientSerNum = 103
-;
 UPDATE TxTeamMessage
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
@@ -227,11 +187,6 @@ SET ReadStatus = 1,
 WHERE PatientSerNum = 102
 ;
 UPDATE EducationalMaterial
-SET ReadStatus = 1,
-    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
-WHERE PatientSerNum = 102
-;
-UPDATE Questionnaire
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
 WHERE PatientSerNum = 102
