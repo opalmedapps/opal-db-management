@@ -77,7 +77,7 @@ WHERE PatientSerNum = 92
 AND NotificationControlSerNum = 13;
 
 -- Set all other questionnaires sent 2 weeks ago
-UPDATE `EducationalMaterial`
+UPDATE `Questionnaire`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
-WHERE `EducationalMaterialControlSerNum` NOT IN (157);
+WHERE `QuestionnaireControlSerNum` NOT IN (157);

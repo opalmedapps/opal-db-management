@@ -3,10 +3,9 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
--- rory: treatment guidelines, databank info, lung guidelines
+-- rory: treatment guidelines, databank info
 (17,	NULL,	105,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17'),
-(19,	NULL,	480,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
+(18,	NULL,	979,	59,	'2023-05-15 08:00:55',	0,	'[]',	'2023-01-12 16:39:17');
 
 -- Treatment guidelines sent 1 day after diagnosis for all
 
@@ -16,24 +15,7 @@ SET `DateAdded` = DATE_ADD(now(), INTERVAL -13 DAY),
 WHERE PatientSerNum = 59
 AND `EducationalMaterialControlSerNum` = 105;
 
--- Rory's lung guidelines sent 14 days ago
-UPDATE `EducationalMaterial`
-SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
-`LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
-WHERE PatientSerNum IN (59)
-AND `EducationalMaterialSerNum` = 19;
-
 -- Remove some notifications
--- Rory has read all their own data
-UPDATE `EducationalMaterial`
-SET ReadStatus = 1,
-    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
-WHERE PatientSerNum = 59;
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
-WHERE PatientSerNum = 59
-AND NotificationControlSerNum = 7;
 
 -- laurie data
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
@@ -101,4 +83,4 @@ WHERE `EducationalMaterialControlSerNum` = 979;
 UPDATE `EducationalMaterial`
 SET `DateAdded` = DATE_ADD(now(), INTERVAL -14 DAY),
 `LastUpdated` = DATE_ADD(now(), INTERVAL -14 DAY)
-WHERE `EducationalMaterialControlSerNum` NOT IN (979, 105, 480);
+WHERE `EducationalMaterialControlSerNum` NOT IN (979);
