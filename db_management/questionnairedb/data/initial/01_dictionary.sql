@@ -5,12 +5,14 @@ SET FOREIGN_KEY_CHECKS=0;
 
 -- Insert the initial translations required to start a project.
 INSERT INTO `language` (`ID`, `isoLang`, `name`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
+(-1, 'na',	-1,	0,	'',	'2019-11-05 19:04:13',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-06 05:04:13',	'QUESTIONNAIRE_MIGRATION_2019'),
 (1,	'fr',	1,	0,	'',	'2019-11-05 19:04:13',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-06 05:04:13',	'QUESTIONNAIRE_MIGRATION_2019'),
 (2,	'en',	2,	0,	'',	'2019-11-05 19:04:13',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-06 05:04:13',	'QUESTIONNAIRE_MIGRATION_2019');
 
 SET FOREIGN_KEY_CHECKS=1;
 
 INSERT INTO `definitionTable` (`ID`, `name`) VALUES
+(-1, 'None'),
 (1,	'answer'),
 (2,	'answerCheckbox'),
 (3,	'answerDate'),
@@ -67,6 +69,7 @@ INSERT INTO `definitionTable` (`ID`, `name`) VALUES
 (54,	'respondent');
 
 INSERT INTO `dictionary` (`ID`, `tableId`, `languageId`, `contentId`, `content`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
+(-1, 15, 2, -1, 'None', 0, '', '2019-11-05 19:04:13', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-06 05:04:13', 'QUESTIONNAIRE_MIGRATION_2019'),
 (1, 15, 1, 1, 'Français', 0, '', '2019-11-05 19:04:13', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-06 05:04:13', 'QUESTIONNAIRE_MIGRATION_2019'),
 (2, 15, 2, 1, 'French', 0, '', '2019-11-05 19:04:13', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-06 05:04:13', 'QUESTIONNAIRE_MIGRATION_2019'),
 (3, 15, 1, 2, 'Anglais', 0, '', '2019-11-05 19:04:13', 'QUESTIONNAIRE_MIGRATION_2019', '2019-11-06 05:04:13', 'QUESTIONNAIRE_MIGRATION_2019'),
@@ -677,7 +680,7 @@ INSERT INTO `dictionary` (`ID`, `tableId`, `languageId`, `contentId`, `content`,
 (4346, 44, 2, 2172, 'I have no pain or discomfort', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-05-05 00:02:36', 'MACFARIA'),
 (4347, 44, 1, 2173, 'J’ai des douleurs ou un inconfort léger(ères)', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-05-05 00:02:36', 'MACFARIA'),
 (4348, 44, 2, 2173, 'I have slight pain or discomfort', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-05-05 00:02:36', 'MACFARIA'),
-(4351, 44, 1, 2174, 'J'ai une douleur ou un inconfort modéré', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-08-16 10:34:01', 'MACFARIA'),
+(4351, 44, 1, 2174, 'J’ai une douleur ou un inconfort modéré', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-08-16 10:34:01', 'MACFARIA'),
 (4352, 44, 2, 2174, 'I have moderate pain or discomfort', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-08-16 10:34:01', 'MACFARIA'),
 (4353, 44, 1, 2175, 'J’ai des douleurs ou un inconfort sévère(s)', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-05-05 00:02:36', 'MACFARIA'),
 (4354, 44, 2, 2175, 'I have severe pain or discomfort', 0, '', '2020-05-04 16:02:36', 'MACFARIA', '2020-05-05 00:02:36', 'MACFARIA'),
