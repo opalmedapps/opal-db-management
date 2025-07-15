@@ -1,11 +1,14 @@
 -- SPDX-FileCopyrightText: Copyright (C) 2023 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
+SET FOREIGN_KEY_CHECKS=0;
 
 -- Insert the initial translations required to start a project.
 INSERT INTO `language` (`ID`, `isoLang`, `name`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
 (1,	'fr',	1,	0,	'',	'2019-11-05 19:04:13',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-06 05:04:13',	'QUESTIONNAIRE_MIGRATION_2019'),
 (2,	'en',	2,	0,	'',	'2019-11-05 19:04:13',	'QUESTIONNAIRE_MIGRATION_2019',	'2019-11-06 05:04:13',	'QUESTIONNAIRE_MIGRATION_2019');
+
+SET FOREIGN_KEY_CHECKS=1;
 
 INSERT INTO `definitionTable` (`ID`, `name`) VALUES
 (1,	'answer'),
