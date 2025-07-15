@@ -5,14 +5,6 @@
 -- Legacy (deleted) test patients are kept until all their remaining data in QuestionnaireDB is cleaned up
 -- Otherwise, data linked to certain patientIds will be orphaned
 REPLACE INTO `patient` (`ID`, `hospitalId`, `externalId`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`) VALUES
-(1, -1, 51, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_MARGE_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-(2, -1, 52, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_HOMER_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-(3, -1, 53, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_BART_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-(5, -1, 55, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_MONA_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-(6, -1, 56, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_FRED_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-(7, -1, 57, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_PEBBLES_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-(8, -1, 58, 1, '', '2025-01-01 00:00:00', 'TEST_DATA_WEDNESDAY_DELETED', '2025-01-01 00:00:00', 'TEST_DATA'),
-
 (9, -1, 92, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_LAURIE', '2025-01-01 00:00:00', 'TEST_DATA'),
 (10, -1, 59, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_RORY', '2025-01-01 00:00:00', 'TEST_DATA'),
 (11, -1, 93, 0, '', '2025-01-01 00:00:00', 'TEST_DATA_JOHN', '2025-01-01 00:00:00', 'TEST_DATA'),
