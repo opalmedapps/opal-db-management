@@ -12,15 +12,15 @@ INSERT INTO `TxTeamMessage` (`TxTeamMessageSerNum`, `CronLogSerNum`, `PatientSer
 (645, NULL, 92, 201, '2020-04-15 18:22:43', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2020-05-02 16:59:56'),
 (1773, NULL, 92, 210, '2020-06-30 14:38:46', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2020-07-02 10:04:21'),
 (7205, NULL, 92, 850, '2022-06-20 16:24:05', 1, '["a51fba18-3810-4808-9238-4d0e487785c8"]', '2024-03-24 17:19:54'),
-(7206, NULL, 93, 1092, '2025-03-07 09:56:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-07 10:45:55'),
-(7207, NULL, 94, 1092, '2025-03-07 09:56:02', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-03-11 08:07:58'),
-(7209, NULL, 96, 1092, '2025-03-12 12:14:01', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-05 11:05:43'),
-(7210, NULL, 59, 1092, '2025-03-12 12:48:00', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-03-12 12:51:31'),
-(7211, NULL, 99, 1092, '2025-05-05 11:52:00', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2025-05-06 08:27:35'),
-(7212, NULL, 100, 1092, '2025-05-05 11:52:02', 1, '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]', '2025-05-06 11:39:13'),
-(7213, NULL, 101, 1092, '2025-05-05 11:52:02', 1, '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-05-06 11:42:42'),
-(7214, NULL, 103, 1092, '2025-05-21 14:00:01', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:28'),
-(7215, NULL, 102, 1092, '2025-05-21 14:10:01', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-05-21 15:12:06');
+(7206, NULL, 93, 1092, '2025-04-17 13:50:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-04-17 13:50:00'),
+(7207, NULL, 94, 1092, '2025-05-14 13:50:00', 1, '["hIMnEXkedPMxYnXeqNXzphklu4V2"]', '2025-05-14 13:50:00'),
+(7209, NULL, 96, 1092, '2025-04-11 12:16:01', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-04-11 12:16:01'),
+(7210, NULL, 59, 1092, '2025-04-02 14:40:13', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-04-02 14:40:13'),
+(7211, NULL, 99, 1092, '2019-01-10 12:50:00', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2019-01-10 12:50:00'),
+(7212, NULL, 100, 1092, '2025-02-15 15:38:00', 1, '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]', '2025-02-15 15:38:00'),
+(7213, NULL, 101, 1092, '2025-04-25 15:38:07', 1, '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-04-25 15:38:07'),
+(7214, NULL, 103, 1092, '2025-04-02 13:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-02 13:00:00'),
+(7215, NULL, 102, 1092, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00');
 
 -- Update all TxTeamMessage dates and read statuses to make the data more similar to a live environment
 
