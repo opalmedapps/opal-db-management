@@ -207,16 +207,4 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
 WHERE PatientSerNum = 92
-AND NotificationControlSerNum = 7;
-
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
-WHERE PatientSerNum = 92
-AND NotificationControlSerNum = 4;
-
-UPDATE Notification
-SET ReadStatus = 1,
-    ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
-WHERE PatientSerNum = 92
-AND NotificationControlSerNum = 13;
+;
