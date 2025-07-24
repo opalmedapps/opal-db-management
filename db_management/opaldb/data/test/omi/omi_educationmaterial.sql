@@ -5,8 +5,7 @@
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 -- rory: treatment guidelines, databank info
 (17, NULL, 105, 59, '2025-05-23 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-05-23 14:40:13'),
-(18, NULL, 979, 59, '2025-04-02 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-04-02 14:40:13'),
-(19, NULL, 480, 59, '2025-04-02 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-04-02 14:40:13');
+(18, NULL, 979, 59, '2025-04-02 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-04-02 14:40:13');
 
 -- laurie data
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
