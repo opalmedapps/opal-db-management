@@ -42,3 +42,10 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 (2030, NULL, 157, 102, '2025-04-11 12:00:00', 5388, 0, NULL, '[]', '2025-04-11 12:00:00'),
 (2034, NULL, 280, 103, '2025-04-11 12:00:00', 5390, 1, '2025-06-19 15:48:34', '[]', '2025-06-19 15:48:34'),
 (2035, NULL, 157, 94, '2025-05-14 13:50:00', 5399, 0, NULL, '[]', '2025-05-14 13:50:00');
+
+-- lauries are all read
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
+WHERE PatientSerNum = 92
+AND NotificationControlSerNum = 13;
