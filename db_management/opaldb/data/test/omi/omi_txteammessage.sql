@@ -22,4 +22,28 @@ INSERT INTO `TxTeamMessage` (`TxTeamMessageSerNum`, `CronLogSerNum`, `PatientSer
 (7214, NULL, 103, 1092, '2025-04-02 13:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-02 13:00:00'),
 (7215, NULL, 102, 1092, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00');
 
--- Update all TxTeamMessage dates and read statuses to make the data more similar to a live environment
+-- Update all TxTeamMessage added dates to make the data more similar to a live environment
+UPDATE `EducationalMaterial`
+SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY),
+    LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY);
+
+-- lauries are all read
+UPDATE Notification
+SET ReadStatus = 1,
+    ReadBy = '["a51fba18-3810-4808-9238-4d0e487785c8"]'
+WHERE PatientSerNum = 92
+AND NotificationControlSerNum = 4;
+
+UPDATE Notification
+SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE NotificationControlSerNum = 4
+AND RefTableRowSerNum IN (4)  and PatientSerNum=59
+;
+
+UPDATE Notification
+SET DateAdded = DATE_ADD(now(), INTERVAL -14 DAY),
+    LastUpdated = DATE_ADD(now(), INTERVAL -14 DAY)
+WHERE NotificationControlSerNum = 4
+AND RefTableRowSerNum >= 7205 and RefTableRowSerNum <= 7215
+;

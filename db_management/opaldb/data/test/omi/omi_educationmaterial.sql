@@ -4,7 +4,7 @@
 
 INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`, `EducationalMaterialControlSerNum`, `PatientSerNum`, `DateAdded`, `ReadStatus`, `ReadBy`, `LastUpdated`) VALUES
 -- rory: treatment guidelines, databank info
-(17, NULL, 105, 59, '2025-05-23 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-05-23 14:40:13'),
+(17, NULL, 105, 59, '2025-05-08 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-05-08 14:40:13'),
 (18, NULL, 979, 59, '2025-04-02 14:40:13', 0, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-04-02 14:40:13');
 
 -- laurie data
@@ -49,9 +49,14 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 (13847, NULL, 2379, 99, '2019-02-03 12:50:00', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2019-02-03 12:50:00'),
 (13848, NULL, 2370, 101, '2025-04-25 15:38:07', 1, '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-04-25 15:38:07'),
 (13849, NULL, 2387, 100, '2025-03-02 13:00:00', 1, '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]', '2025-03-02 13:00:00'),
-(13850, NULL, 105, 103, '2025-04-02 13:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-02 13:00:00'),
-(13852, NULL, 979, 103, '2025-04-03 10:10:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-03 10:10:00'),
+(13850, NULL, 105, 103, '2025-04-03 00:10:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-03 00:10:00'),
+(13852, NULL, 979, 103, '2025-04-02 13:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-02 13:00:00'),
 (13853, NULL, 979, 102, '2025-04-11 12:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
 (13854, NULL, 105, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
 (13855, NULL, 960, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
 (13856, NULL, 849, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00');
+
+-- Update all EducationalMaterial added dates  to make the data more similar to a live environment.
+UPDATE `EducationalMaterial`
+SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY),
+    LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY);

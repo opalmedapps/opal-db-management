@@ -5,7 +5,7 @@
 
 INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status`, `deleted`, `deletedBy`, `creationDate`, `createdBy`, `lastUpdated`, `updatedBy`, `respondentUsername`, `respondentDisplayName`, `completedDate`) VALUES
 -- esas-r for rory
-(209, 188, 10, 2, 0, '', '2000-01-01 00:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-07 14:00:21', '10_APP_2.2.6', 'mouj1pqpXrYCl994oSm5wtJT3In2', "Rory O'Brien", '2025-07-07 14:00:21'),
+(209, 188, 10, 2, 0, '', '2025-04-09 14:40:13', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-09 14:40:13', '10_APP_2.2.6', 'mouj1pqpXrYCl994oSm5wtJT3In2', "Rory O'Brien", '2025-04-09 14:40:13'),
 (225, 18, 9, 2, 0, '', '2018-02-24 20:36:29', 'QUESTIONNAIRE_MIGRATION_2019', '2025-07-07 12:39:02', 'QUESTIONNAIRE_MIGRATION_2019', 'a51fba18-3810-4808-9238-4d0e487785c8', 'Laurie Opal', '2018-02-24 20:36:29'),
 (297, 18, 9, 2, 0, '', '2018-05-10 13:40:10', 'QUESTIONNAIRE_MIGRATION_2019', '2025-07-07 12:39:02', 'QUESTIONNAIRE_MIGRATION_2019', 'a51fba18-3810-4808-9238-4d0e487785c8', 'Laurie Opal', '2018-05-10 13:40:10'),
 (301, 12, 9, 2, 0, '', '2018-05-16 14:26:47', 'QUESTIONNAIRE_MIGRATION_2019', '2025-07-07 12:39:02', 'QUESTIONNAIRE_MIGRATION_2019', 'a51fba18-3810-4808-9238-4d0e487785c8', 'Laurie Opal', '2018-05-16 14:26:47'),
@@ -18,30 +18,30 @@ INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status
 (842, 18, 9, 2, 0, '', '2019-10-31 14:52:16', 'QUESTIONNAIRE_MIGRATION_2019', '2025-07-07 12:39:02', 'QUESTIONNAIRE_MIGRATION_2019', 'a51fba18-3810-4808-9238-4d0e487785c8', 'Laurie Opal', '2019-10-31 14:52:16'),
 (846, 26, 9, 2, 0, '', '2019-11-06 08:22:12', '9_APP_1.8.10', '2025-07-07 12:39:02', '9_APP_1.8.10', 'a51fba18-3810-4808-9238-4d0e487785c8', 'Laurie Opal', '2019-11-06 08:22:12'),
 (973, 18, 9, 2, 0, '', '2020-01-16 13:30:23', '9_APP_1.8.10', '2025-07-07 12:39:02', '9_APP_1.8.10', 'a51fba18-3810-4808-9238-4d0e487785c8', 'Laurie Opal', '2020-01-16 13:30:23'),
-(5367, 248, 10, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5369, 188, 11, 2, 0, '', '2025-03-05 23:46:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 20:17:59', '11_APP_2.2.6', 'hIMnEXkedPMxYnXeqNXzphklu4V2', 'John Smith', '2025-06-19 20:17:59'),
-(5370, 248, 11, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5371, 111, 11, 2, 0, '', '2025-06-30 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-30 12:23:27', '11_APP_2.2.6', 'hIMnEXkedPMxYnXeqNXzphklu4V2', 'John Smith', '2025-06-30 12:23:27'),
-(5372, 188, 12, 2, 0, '', '2025-03-07 10:06:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 20:19:39', '12_APP_2.2.6', '2WhxeTpYF8aHlfSQX8oGeq4LFhw2', 'Richard Smith', '2025-06-19 20:19:39'),
-(5373, 248, 13, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5374, 111, 14, 2, 0, '', '2025-06-30 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-30 12:23:27', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-06-30 12:23:27'),
-(5375, 188, 14, 2, 0, '', '2019-01-10 10:35:15', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 18:21:30', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-06-19 18:21:30'),
-(5376, 139, 14, 2, 0, '', '2025-02-03 10:35:16', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 18:32:53', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-06-19 18:32:53'),
-(5377, 188, 14, 2, 0, '', '2019-01-17 14:30:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 18:22:31', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-06-19 18:22:31'),
-(5378, 188, 14, 2, 0, '', '2025-02-03 14:32:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 18:23:00', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-06-19 18:23:00'),
-(5379, 248, 14, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5380, 248, 15, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5381, 188, 15, 2, 0, '', '2025-02-15 15:38:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 19:02:42', '15_APP_2.2.6', '9kmS7qYQX8arnFFs4ZYJk1tqLFw1', 'Pete Boyd', '2025-06-19 19:02:42'),
-(5382, 139, 15, 2, 0, '', '2025-05-07 11:42:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 19:01:34', '15_APP_2.2.6', '9kmS7qYQX8arnFFs4ZYJk1tqLFw1', 'Pete Boyd', '2025-06-19 19:01:34'),
-(5383, 111, 15, 2, 0, '', '2025-06-30 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-30 12:23:27', '15_APP_2.2.6', '9kmS7qYQX8arnFFs4ZYJk1tqLFw1', 'Pete Boyd', '2025-06-30 12:23:27'),
-(5384, 248, 16, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5385, 188, 16, 2, 0, '', '2025-04-25 15:38:07', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 18:48:15', '16_APP_2.2.6', '2grqcCoyPlVucfAPD4NM1SuCk3i1', 'Martin Curley', '2025-06-19 18:48:15'),
-(5386, 139, 16, 2, 0, '', '2025-05-06 11:42:02', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-19 18:57:06', '16_APP_2.2.6', '2grqcCoyPlVucfAPD4NM1SuCk3i1', 'Martin Curley', '2025-06-19 18:57:06'),
-(5387, 111, 16, 2, 0, '', '2025-06-30 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-30 12:23:27', '16_APP_2.2.6', '2grqcCoyPlVucfAPD4NM1SuCk3i1', 'Martin Curley', '2025-06-30 12:23:27'),
-(5388, 248, 17, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5389, 248, 18, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
-(5390, 111, 18, 2, 0, '', '2025-06-30 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-06-30 12:23:27', '18_APP_2.2.6', 'hSJdAae7xWNwnemd2YypQSVfoOb2', 'Mike Brown', '2025-06-30 12:23:27'),
-(5399, 248, 12, 0, 0, '', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-07-05 12:23:27', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL);
+(5367, 248, 10, 0, 0, '', '2025-04-02 14:40:13', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-02 14:40:13', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5369, 188, 11, 2, 0, '', '2025-05-15 23:46:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-05-15 23:46:00', '11_APP_2.2.6', 'hIMnEXkedPMxYnXeqNXzphklu4V2', 'John Smith', '2025-05-15 23:46:00'),
+(5370, 248, 11, 0, 0, '', '2025-04-17 12:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-17 12:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5371, 111, 11, 2, 0, '', '2025-04-17 12:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-17 12:00:00', '11_APP_2.2.6', 'hIMnEXkedPMxYnXeqNXzphklu4V2', 'John Smith', '2025-04-17 12:00:00'),
+(5372, 188, 12, 2, 0, '', '2025-05-14 13:50:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-05-14 13:50:00', '12_APP_2.2.6', '2WhxeTpYF8aHlfSQX8oGeq4LFhw2', 'Richard Smith', '2025-05-14 13:50:00'),
+(5373, 248, 13, 0, 0, '', '2025-04-11 12:16:01', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-11 12:16:01', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5374, 111, 14, 2, 0, '', '2025-02-03 10:35:12', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-02-03 10:35:12', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-02-03 10:35:12'),
+(5375, 188, 14, 2, 0, '', '2019-01-10 10:35:15', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2019-01-10 10:35:15', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2019-01-10 10:35:15'),
+(5376, 139, 14, 2, 0, '', '2025-02-03 10:35:16', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-02-03 10:35:16', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2025-02-03 10:35:16'),
+(5377, 188, 14, 2, 0, '', '2019-01-24 14:30:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2019-01-24 14:30:00', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2019-01-24 14:30:00'),
+(5378, 188, 14, 2, 0, '', '2019-02-07 14:30:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2019-02-07 14:30:00', '14_APP_2.2.6', 'dcBSK5qdoiOM2L9cEdShkqOadkG3', 'Valerie Solanas', '2019-02-07 14:30:00'),
+(5379, 248, 14, 0, 0, '', '2019-01-10 12:50:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2019-01-10 12:50:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5380, 248, 15, 0, 0, '', '2025-02-15 15:38:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-02-15 15:38:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5381, 188, 15, 2, 0, '', '2025-02-15 15:38:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-02-15 15:38:00', '15_APP_2.2.6', '9kmS7qYQX8arnFFs4ZYJk1tqLFw1', 'Pete Boyd', '2025-02-15 15:38:00'),
+(5382, 139, 15, 2, 0, '', '2025-03-02 13:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-03-02 13:00:00', '15_APP_2.2.6', '9kmS7qYQX8arnFFs4ZYJk1tqLFw1', 'Pete Boyd', '2025-03-02 13:00:00'),
+(5383, 111, 15, 2, 0, '', '2025-02-22 11:50:02', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-02-22 11:50:02', '15_APP_2.2.6', '9kmS7qYQX8arnFFs4ZYJk1tqLFw1', 'Pete Boyd', '2025-02-22 11:50:02'),
+(5384, 248, 16, 0, 0, '', '2025-04-25 15:38:07', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-25 15:38:07', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5385, 188, 16, 2, 0, '', '2025-04-26 15:38:07', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-26 15:38:07', '16_APP_2.2.6', '2grqcCoyPlVucfAPD4NM1SuCk3i1', 'Martin Curley', '2025-04-26 15:38:07'),
+(5386, 139, 16, 2, 0, '', '2025-05-05 11:42:02', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-05-05 11:42:02', '16_APP_2.2.6', '2grqcCoyPlVucfAPD4NM1SuCk3i1', 'Martin Curley', '2025-05-05 11:42:02'),
+(5387, 111, 16, 2, 0, '', '2025-05-12 11:44:01', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-05-12 11:44:01', '16_APP_2.2.6', '2grqcCoyPlVucfAPD4NM1SuCk3i1', 'Martin Curley', '2025-05-12 11:44:01'),
+(5388, 248, 17, 0, 0, '', '2025-04-11 12:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-11 12:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5389, 248, 18, 0, 0, '', '2025-04-02 13:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-02 13:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL),
+(5390, 111, 18, 2, 0, '', '2025-04-11 12:00:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-04-11 12:00:00', '18_APP_2.2.6', 'hSJdAae7xWNwnemd2YypQSVfoOb2', 'Mike Brown', '2025-04-11 12:00:00'),
+(5399, 248, 12, 0, 0, '', '2025-05-14 13:50:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-05-14 13:50:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL);
 
 INSERT INTO `answerSection` (`ID`, `answerQuestionnaireId`, `sectionId`) VALUES
 (193, 225, 18),
@@ -344,50 +344,14 @@ WHERE questionnaireId=204
 and sectionId=154;
 
 -- Update all Questionnaire dates to make the data more similar to a live environment
--- ESAS-r sent 3 days ago
-UPDATE answerQuestionnaire
-SET creationDate = now(),
-    lastUpdated = now()
-WHERE questionnaireId=136;
--- Breast Recon: Preop complete 2 weeks ago; Postop sent 3 days ago
-UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -14 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -13 DAY)
-WHERE questionnaireId=204;
-UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -3 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -3 DAY)
-WHERE questionnaireId=205;
--- H&N Quality sent yesterday
-UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -1 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -1 DAY)
-WHERE questionnaireId=163;
--- Bowel function sent 5 days ago
-UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -5 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -5 DAY)
-WHERE questionnaireId=46;
--- Databank Consent sent 2 days ago
-UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -2 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -2 DAY)
-WHERE questionnaireId=248;
--- GAD7 sent 7 days ago
-UPDATE answerQuestionnaire
-SET creationDate = DATE_ADD(now(), INTERVAL -7 DAY),
-    lastUpdated = DATE_ADD(now(), INTERVAL -7 DAY)
-WHERE questionnaireId=111;
+UPDATE `answerQuestionnaire`
+SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY),
+    lastUpdated = DATE_ADD(lastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY);
 
--- For completed questionnaires, set the completed date to the same value at their lastUpdated date (and make sure lastUpdated isn't affected)
-UPDATE answerQuestionnaire aq
-SET aq.completedDate = aq.lastUpdated
-WHERE aq.`status` = 2
-;
-UPDATE answerQuestionnaire aq
-SET aq.lastUpdated = aq.completedDate
-WHERE aq.`status` = 2
-;
+UPDATE `answerQuestionnaire`
+    completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY),
+    lastUpdated = DATE_ADD(lastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY)
+WHERE `status` = 2;
 
 INSERT INTO `answerRadioButton` (`ID`, `answerId`, `value`) VALUES
 (1, 5333, 169),
