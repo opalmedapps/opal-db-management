@@ -45,10 +45,10 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 
 -- Update all EducationalMaterial added dates and completion date to make the data more similar to a live environment.
 UPDATE `Questionnaire`
-SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY),
-    LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY);
+SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-25')-1) * 7) DAY),
+    LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-25')-1) * 7) DAY);
 
 UPDATE `Questionnaire`
-    CompletionDate = DATE_ADD(CompletionDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY),
-    LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-15')-1) * 7) DAY)
+    CompletionDate = DATE_ADD(CompletionDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-25')-1) * 7) DAY),
+    LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-05-25')-1) * 7) DAY)
 WHERE CompletedFlag = 1;
