@@ -49,6 +49,6 @@ SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-0
     LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY);
 
 UPDATE `Questionnaire`
-    CompletionDate = DATE_ADD(CompletionDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
+SET CompletionDate = DATE_ADD(CompletionDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
     LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY)
 WHERE CompletedFlag = 1;
