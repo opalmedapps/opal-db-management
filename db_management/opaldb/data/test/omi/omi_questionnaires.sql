@@ -43,7 +43,7 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 (2034, NULL, 280, 103, '2025-04-11 12:00:00', 5390, 1, '2025-04-11 12:00:00', '[]', '2025-04-11 12:00:00'),
 (2035, NULL, 157, 94, '2025-05-14 13:50:00', 5399, 0, NULL, '[]', '2025-05-14 13:50:00');
 
--- Update all EducationalMaterial added dates and completion date to make the data more similar to a live environment.
+-- Update all Questionnaire added dates and completion dates to make the data more similar to a live environment.
 UPDATE `Questionnaire`
 SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
     LastUpdated = DATE_ADD(LastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY);
