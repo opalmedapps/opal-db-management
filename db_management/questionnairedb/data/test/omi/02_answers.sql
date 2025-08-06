@@ -349,9 +349,9 @@ SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('202
     lastUpdated = DATE_ADD(lastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY);
 
 UPDATE `answerQuestionnaire`
-    completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
+SET completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
     lastUpdated = DATE_ADD(lastUpdated, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY)
-WHERE `status` = 2;
+WHERE `status`=2;
 
 INSERT INTO `answerRadioButton` (`ID`, `answerId`, `value`) VALUES
 (1, 5333, 169),
