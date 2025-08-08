@@ -345,11 +345,11 @@ and sectionId=154;
 
 -- Update all Questionnaire dates to make the data more similar to a live environment
 UPDATE `answerQuestionnaire`
-SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
+SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
     lastUpdated = creationDate;
 
 UPDATE `answerQuestionnaire`
-SET completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
+SET completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
     lastUpdated = completedDate
 WHERE `status`=2;
 

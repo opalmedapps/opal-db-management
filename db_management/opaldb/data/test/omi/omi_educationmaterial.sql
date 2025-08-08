@@ -58,5 +58,5 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 
 -- Update all EducationalMaterial added dates to make the data more similar to a live environment.
 UPDATE `EducationalMaterial`
-SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
+SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
     LastUpdated = DateAdded;
