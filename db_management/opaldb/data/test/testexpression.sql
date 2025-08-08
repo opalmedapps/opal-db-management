@@ -14,4 +14,5 @@ INSERT INTO `TestExpression` (`TestExpressionSerNum`, `TestControlSerNum`, `Test
 (86, 33, 'K', 'POTASSIUM', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 7, '2023-01-12 16:39:14', 'fMXeUDEQrI', '-1', 0, '', 'cronjob', 'cronjob'),
 (145, 31, 'MEOS', 'Eosinophil Manual', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 7, '2023-01-12 16:39:14', 'V4DNwi6oHj', '-1', 0, '', 'cronjob', 'cronjob'),
 (233, 52, 'COV9', 'Coronavirus (SARS-CoV-2) (TAAN)', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 7, '2023-01-12 16:39:14', 'K4ZGVx2GcI', '-1', 0, '', 'cronjob', 'cronjob'),
-(301, 36, 'NCA', 'Ca Ionized Normalized', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 7, '2023-01-12 16:39:14', '5Xe8UyUn9O', '-1', 0, '', 'cronjob', 'cronjob');
+(301, 36, 'NCA', 'Ca Ionized Normalized', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 7, '2023-01-12 16:39:14', '5Xe8UyUn9O', '-1', 0, '', 'cronjob', 'cronjob'),
+(302, 27, 'RBC', 'Red Blood Cell', '0000-00-00 00:00:00', '2000-01-01 00:00:00', NULL, 7, '2023-01-12 16:39:14', '5Xe8UyUn9O', '-1', 0, '', 'cronjob', 'cronjob');

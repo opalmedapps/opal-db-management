@@ -23,9 +23,9 @@ INSERT INTO `TxTeamMessage` (`TxTeamMessageSerNum`, `CronLogSerNum`, `PatientSer
 (7215, NULL, 102, 1092, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00');
 
 -- Update all TxTeamMessage added dates to make the data more similar to a live environment
-UPDATE `EducationalMaterial`
+UPDATE `TxTeamMessage`
 SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
-    LastUpdated = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY);
+    LastUpdated = DateAdded;
 
 -- lauries are all read
 UPDATE Notification

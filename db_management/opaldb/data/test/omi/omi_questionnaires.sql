@@ -46,9 +46,9 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 -- Update all Questionnaire added dates and completion dates to make the data more similar to a live environment.
 UPDATE `Questionnaire`
 SET DateAdded = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
-    LastUpdated = DATE_ADD(DateAdded, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY);
+    LastUpdated = DateAdded;
 
 UPDATE `Questionnaire`
 SET CompletionDate = DATE_ADD(CompletionDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY),
-    LastUpdated = DATE_ADD(CompletionDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')-1) * 7) DAY)
+    LastUpdated = CompletionDate
 WHERE CompletedFlag = 1;
