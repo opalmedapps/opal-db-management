@@ -11,7 +11,7 @@ requires-python = "==3.13.7"
 dependencies = [
     "alembic==1.16.4",
     "mysqlclient==2.2.7",
-    "pymysql==1.1.1",
+    "pymysql==1.1.2",
     "python-dotenv==1.1.1",
     "sqlalchemy==2.0.43",
 ]
@@ -22,7 +22,7 @@ dev = [
     "mypy==1.17.1",
     "mysqlclient==2.2.7",
     "pre-commit==4.2.0",
-    "pymysql==1.1.1",
+    "pymysql==1.1.2",
     "pytest==8.4.1",
     "pytest-alembic==0.12.1",
     "python-dotenv==1.1.1",
