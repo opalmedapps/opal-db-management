@@ -161,7 +161,7 @@ Follow the guide to [generate self-signed certificates](https://opalmedapps.gitl
 To enable TLS in MariaDB and all application containers:
 
 1. In the `.env` file, set `USE_SSL=1` and fill in the `SSL_CA` variable with the path to the public key of the certificate authority file (e.g., `/certs/ca.pem`).
-    Note that this file needs to be accessible inside the containers (the setup provides a volume moount from `./certs` to `/certs` already).
+    Note that this file needs to be accessible inside the containers (the setup provides a volume mount from `./certs` to `/certs` already).
 
 1. Finally, copy the docker compose SSL override file so that it automatically applies when running compose commands:
 

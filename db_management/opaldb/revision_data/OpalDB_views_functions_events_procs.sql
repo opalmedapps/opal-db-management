@@ -731,7 +731,7 @@ CLOSE CUR_SESVAR;
 
 Set wsLOG_TIME = (select UNIX_TIMESTAMP());
 
-#Summerizing:
+# Summarizing:
 select "Log Time" as "Parameter", from_unixtime(wsLOG_TIME) as "Value" union
 select "Global Buffers",CONCAT(GLOBAL_SUM/(1024*1024),' M') union
 select "Per Thread",CONCAT(PER_THREAD_SUM/(1024*1024),' M')  union
