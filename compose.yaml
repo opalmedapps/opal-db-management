@@ -4,7 +4,7 @@
 
 services:
   db:
-    image: mariadb:10.11.14-jammy
+    image: mariadb:10.11.15-jammy
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
