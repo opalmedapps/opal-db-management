@@ -9,12 +9,9 @@
     ":separateMultipleMajorReleases",
     // Allow to receive patch updates for MariaDB while waiting with upgrading to the next minor version
     ":separatePatchReleases",
-    // https://docs.renovatebot.com/modules/manager/pre-commit/
-    // https://docs.renovatebot.com/presets-default/#enableprecommit
-    ":enablePreCommit",
     "github>mschoettle/renovate-presets//presets/docker-alpine.json5",
     "github>mschoettle/renovate-presets//presets/actions-dependency-version.json5",
-    "github>mschoettle/renovate-presets//presets/packages/typos.json5",
+    "github>mschoettle/renovate-presets//presets/pre-commit-hooks.json5",
   ],
   "assignees": ["mschoettle"],
   "labels": ["dependencies"],
