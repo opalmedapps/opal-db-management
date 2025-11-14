@@ -1,17 +1,15 @@
-; SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
-;
-; SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-FileCopyrightText: Copyright (C) 2024 Opal Health Informatics Group at the Research Institute of the McGill University Health Centre <john.kildea@mcgill.ca>
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 # see: https://docs.pytest.org/en/stable/reference/reference.html#ini-options-ref
-[pytest]
-console_output_style = times
-python_files = tests.py test_*.py
+console_output_style = "times"
 # treat warnings as errors to fail tests early
 # modify here to exclude certain warnings if necessary
 # see: https://til.simonwillison.net/pytest/treat-warnings-as-errors
-filterwarnings =
-    error
+filterwarnings = [
+    "error",
     # ignore foreign key cycles
     # sqlalchemy.exc.SAWarning: Cannot correctly sort tables; there are unresolvable cycles between tables "QuestionnaireDB.dictionary, QuestionnaireDB.language", which is usually caused by mutually dependent foreign key constraints.  Foreign key constraints involving these tables will not be considered; this warning may raise an error in a future release.
     # sqlalchemy.exc.SAWarning: Cannot correctly sort tables; there are unresolvable cycles between tables "dictionary, language", which is usually caused by mutually dependent foreign key constraints.  Foreign key constraints involving these tables will not be considered; this warning may raise an error in a future release.
-    ignore:Cannot correctly sort tables.*unresolvable cycles.*dictionary.*language:sqlalchemy.exc.SAWarning
+    "ignore:Cannot correctly sort tables.*unresolvable cycles.*dictionary.*language:sqlalchemy.exc.SAWarning",
+]
