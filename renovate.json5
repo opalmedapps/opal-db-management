@@ -7,8 +7,6 @@
   "extends": [
     "config:recommended",
     ":separateMultipleMajorReleases",
-    // Allow to receive patch updates for MariaDB while waiting with upgrading to the next minor version
-    ":separatePatchReleases",
     // Keep uv lockfile updated regularly
     // https://docs.renovatebot.com/configuration-options/#lockfilemaintenance
     // https://docs.renovatebot.com/presets-default/#maintainlockfilesweekly
@@ -26,6 +24,16 @@
   // https://docs.renovatebot.com/configuration-options/#rebasewhen
   "rebaseWhen": "conflicted",
   "packageRules": [
+    // Allow to receive patch updates for MariaDB and Python while waiting with upgrading to the next minor version
+    {
+      "matchPackageNames": [
+        "python",
+        "mariadb",
+      ],
+      "extends": [
+        ":separatePatchReleases",
+      ],
+    },
     // Change commit type to build for Docker-related updates
     {
       "matchDatasources": ["docker", "docker-compose"],
@@ -35,19 +43,6 @@
     {
       "matchPackageNames": ["/-stubs$/", "/^types-/"],
       "groupName": "mypy type stubs"
-    },
-    // Group all version updates of pre-commit hooks
-    {
-      "matchManagers": [
-        "pre-commit",
-      ],
-      "separateMinorPatch": false,
-      // Keep uv and ruff pre-commit hooks grouped with their respective group defined below
-      // Required due to the change of separateMinorPatch
-      "matchPackageNames": [
-        "!/ruff-pre-commit/",
-        "!/uv-pre-commit/",
-      ],
     },
     // Combine ruff and ruff-pre-commit
     {
