@@ -67,5 +67,5 @@ WHERE PostControlSerNum = 1096;
 
 SET lc_time_names = 'fr_CA';
 UPDATE PostControl
-SET Body_FR = REPLACE(Body_FR, '9 mai au 12 mai', CONCAT(DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 5 DAY), '%b %D'), ' au ', DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 8 DAY), '%b %D')))
+SET Body_FR = REPLACE(Body_FR, '9 mai au 12 mai', CONCAT(DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 5 DAY), '%e %b'), ' au ', DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 8 DAY), '%e %b')))
 WHERE PostControlSerNum = 1096;
