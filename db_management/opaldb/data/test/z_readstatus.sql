@@ -11,7 +11,23 @@ SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE PatientSerNum = 59
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59
@@ -25,6 +41,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
 WHERE PatientSerNum = 59
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 59
 ;
 
 -- Caras data read by rory and cara
@@ -33,7 +58,23 @@ SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
 WHERE PatientSerNum = 96
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
+WHERE PatientSerNum = 96
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
+WHERE PatientSerNum = 96
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
+WHERE PatientSerNum = 96
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
 WHERE PatientSerNum = 96
@@ -47,6 +88,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
 WHERE PatientSerNum = 96
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 96
 ;
 
 -- Johns data read by John
@@ -55,7 +105,23 @@ SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
 WHERE PatientSerNum = 93
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
+WHERE PatientSerNum = 93
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
+WHERE PatientSerNum = 93
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
+WHERE PatientSerNum = 93
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
 WHERE PatientSerNum = 93
@@ -69,6 +135,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
 WHERE PatientSerNum = 93
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 93
 ;
 
 -- Richards data read by John and Richard
@@ -77,7 +152,23 @@ SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
 WHERE PatientSerNum = 94
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
+WHERE PatientSerNum = 94
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
+WHERE PatientSerNum = 94
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
+WHERE PatientSerNum = 94
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
 WHERE PatientSerNum = 94
@@ -91,6 +182,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
 WHERE PatientSerNum = 94
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["hIMnEXkedPMxYnXeqNXzphklu4V2", "2WhxeTpYF8aHlfSQX8oGeq4LFhw2"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 94
 ;
 
 -- Valeries data read by Valerie
@@ -99,7 +199,23 @@ SET ReadStatus = 1,
     ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
 WHERE PatientSerNum = 99
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
+WHERE PatientSerNum = 99
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
+WHERE PatientSerNum = 99
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
+WHERE PatientSerNum = 99
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
 WHERE PatientSerNum = 99
@@ -113,6 +229,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
 WHERE PatientSerNum = 99
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 99
 ;
 
 -- Petes data read by Pete
@@ -121,7 +246,23 @@ SET ReadStatus = 1,
     ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
 WHERE PatientSerNum = 100
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
+WHERE PatientSerNum = 100
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
+WHERE PatientSerNum = 100
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
+WHERE PatientSerNum = 100
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
 WHERE PatientSerNum = 100
@@ -135,6 +276,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
 WHERE PatientSerNum = 100
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 100
 ;
 
 -- Martins data read by Martin
@@ -143,7 +293,23 @@ SET ReadStatus = 1,
     ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
 WHERE PatientSerNum = 101
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
+WHERE PatientSerNum = 101
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
+WHERE PatientSerNum = 101
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
+WHERE PatientSerNum = 101
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
 WHERE PatientSerNum = 101
@@ -157,6 +323,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
 WHERE PatientSerNum = 101
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 101
 ;
 
 -- Mikes data read by Mike
@@ -165,7 +340,23 @@ SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
 WHERE PatientSerNum = 103
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
+WHERE PatientSerNum = 103
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
+WHERE PatientSerNum = 103
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
+WHERE PatientSerNum = 103
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
 WHERE PatientSerNum = 103
@@ -179,14 +370,40 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
 WHERE PatientSerNum = 103
+AND NotificationControlSerNum IN (4, 5, 7, 15)
 ;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 103
+;
+
 -- Kathys data read by Mike and Kathy
 UPDATE Announcement
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
 WHERE PatientSerNum = 102
 ;
+UPDATE Appointment
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
+WHERE PatientSerNum = 102
+  AND ScheduledStartTime < NOW()
+;
+UPDATE Document
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
+WHERE PatientSerNum = 102
+;
 UPDATE EducationalMaterial
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
+WHERE PatientSerNum = 102
+;
+UPDATE PatientTestResult
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
 WHERE PatientSerNum = 102
@@ -200,6 +417,15 @@ UPDATE Notification
 SET ReadStatus = 1,
     ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
 WHERE PatientSerNum = 102
+AND NotificationControlSerNum IN (4, 5, 7, 15)
+;
+UPDATE Notification
+INNER JOIN Questionnaire ON Questionnaire.QuestionnaireSerNum = Notification.RefTableRowSerNum
+SET ReadStatus = 1,
+    ReadBy = '["hSJdAae7xWNwnemd2YypQSVfoOb2", "OPWj4Cj5iRfgva4b3HGtVGjvuk13"]'
+WHERE Notification.NotificationControlSerNum = 13
+  AND Questionnaire.CompletionDate IS NOT NULL
+  AND Notification.PatientSerNum = 102
 ;
 
 -- lauries data are all read
