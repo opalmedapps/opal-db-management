@@ -47,4 +47,5 @@ INSERT INTO `masterSourceAlias` (`ID`, `externalId`, `code`, `description`, `typ
 (28049, '35', 'Medical Record | Imaging Report', 'Medical Record | Imaging Report', 3, 7, 0, '', '2025-03-12 12:24:23', 'OpenEMR', '2025-03-12 12:24:23', 'OpenEMR'),
 (28050, '36', 'Medical Record | Clinical Notes', 'Medical Record | Clinical Notes', 3, 7, 0, '', '2025-03-12 12:24:23', 'OpenEMR', '2025-03-12 12:24:23', 'OpenEMR'),
 (28051, 'OpenEMR', 'Consult_In_Patient', 'CON-IP', 2, 7, 0, '', '2025-03-17 13:42:40', 'interface-engine', '2025-03-17 09:42:40', 'interface-engine'),
-(28052, 'OpenEMR', 'new_patient', 'New Patient', 2, 7, 0, '', '2025-04-24 15:04:09', 'interface-engine', '2025-04-24 11:04:09', 'interface-engine');
+(28052, 'OpenEMR', 'new_patient', 'New Patient', 2, 7, 0, '', '2025-04-24 15:04:09', 'interface-engine', '2025-04-24 11:04:09', 'interface-engine'),
+(28053, 'OpenEMR', 'Colonoscopy', 'CLNSPY', 2, 7, 0, '', '2025-11-24 19:49:41', 'interface-engine', '2025-11-24 14:49:41', 'interface-engine');
