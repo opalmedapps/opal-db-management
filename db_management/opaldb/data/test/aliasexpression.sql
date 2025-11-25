@@ -47,4 +47,6 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (10101, 631, 28049, 'Medical Record | Imaging Report', 'Medical Record | Imaging Report', '2019-01-01 00:00:00', NULL, '2025-05-08 10:47:18', 'KwXMpyGQAJ'),
 (10102, 617, 28050, 'Medical Record | Clinical Notes', 'Medical Record | Clinical Notes', '2000-01-01 00:00:00', NULL, '2025-03-12 12:36:44', 'TQxyQgXjEh'),
 (10103, 632, 28051, 'Consult_In_Patient', 'CON-IP', '2000-01-01 00:00:00', NULL, '2025-05-07 15:01:05', 'ImQ3TMH2nP'),
-(10104, 632, 28052, 'new_patient', 'New Patient', '2000-01-01 00:00:00', NULL, '2025-05-07 15:01:05', 'ImQ3TMH2nP');
+(10104, 632, 28052, 'new_patient', 'New Patient', '2000-01-01 00:00:00', NULL, '2025-05-07 15:01:05', 'ImQ3TMH2nP'),
+(10105, 633, 28053, 'Colonoscopy', 'CLNSPY', '2000-01-01 00:00:00', NULL, '2025-11-25 15:13:44', 'TwLbefPXg8');
+;
