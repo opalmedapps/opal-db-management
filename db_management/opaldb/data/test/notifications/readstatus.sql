@@ -3,7 +3,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 -- Update all read statuses to mimic a live environment and assume that everyone read their data
--- This is done at the end of inserting all data
+-- This should be done at the end of inserting all data
 
 -- Rorys data read by rory
 UPDATE Announcement
