@@ -7,6 +7,9 @@
   "extends": [
     "config:recommended",
     ":separateMultipleMajorReleases",
+    // set timezone to local one to ensure schedules are run
+    // https://docs.renovatebot.com/configuration-options/#timezone
+    ":timezone(America/Toronto)",
     // Keep uv lockfile updated regularly
     // https://docs.renovatebot.com/configuration-options/#lockfilemaintenance
     // https://docs.renovatebot.com/presets-default/#maintainlockfilesweekly
