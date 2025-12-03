@@ -22,7 +22,7 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v6.0.1
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v7.1.4
@@ -63,7 +63,7 @@ jobs:
           MARIADB_PASSWORD: ${{ env.DB_PASSWORD }}
 
     steps:
-      - uses: actions/checkout@v6.0.0
+      - uses: actions/checkout@v6.0.1
         with:
           persist-credentials: false
       - name: Install dependencies
