@@ -3,7 +3,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
 INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) VALUES
-(1,	'RVH',	'Opal General Hospital 1 (RVH)',	'^[0-9]{7}$'),
+(1,	'ODH',	'Opal Demo Hospital 1 (ODH)',	'^[0-9]{7}$'),
 (2,	'MGH',	'Opal General Hospital 2 (MGH)',	'^[0-9]{7}$'),
 (3,	'MCH',	'Opal Children\'s Hospital',	'^[0-9]{7}$'),
 (4,	'LAC', 'Opal General Hospital 3 (LAC)', '^[0-9]{7}$'),
