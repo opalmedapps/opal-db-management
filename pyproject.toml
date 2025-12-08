@@ -26,7 +26,7 @@ dev = [
     "pytest==9.0.1",
     "pytest-alembic==0.12.1",
     "python-dotenv==1.2.1",
-    "ruff==0.14.7",
+    "ruff==0.14.8",
     "sqlalchemy==2.0.44",
     "types-pymysql==1.1.0.20250916",
 ]
