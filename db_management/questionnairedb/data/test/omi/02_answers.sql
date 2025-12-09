@@ -106,7 +106,7 @@ INSERT INTO `answerSection` (`ID`, `answerQuestionnaireId`, `sectionId`) VALUES
 (3995, 5400, 61),
 (3996, 5401, 89),
 (3997, 5402, 89),
-(3998, 5403, 61);
+(3998, 5403, 61)
 ;
 
 -- TODO clean up data for deleted patientIds (see db_management/questionnairedb/data/test/omi/patients.sql)
