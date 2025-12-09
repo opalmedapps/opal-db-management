@@ -50,5 +50,5 @@ INSERT INTO `DiagnosisCode` (`DiagnosisCodeSerNum`, `DiagnosisTranslationSerNum`
 (2978, 1168, 1771, -1, 'I10.', 'Essential (primary) hypertension', '2025-05-05 11:13:40', NULL, '2025-05-05 11:13:40', NULL),
 (2979, 1169, 1770, -1, 'I82.512', 'Chronic embolism and thrombosis of left femoral vein', '2025-05-05 11:18:10', NULL, '2025-05-05 11:18:10', NULL),
 (2982, 1170, 1763, -1, 'C70.1', 'Malignant neoplasm of spinal meninges', '2025-11-25 16:00:14', NULL, '2025-11-25 16:00:14', NULL),
-(2983, 1171, 1772, 7, 'K56.3', 'Gallstone ileus', '2025-12-09 11:18:32', NULL, '2025-12-09 11:18:32', NULL)
+(2983, 1171, 1772, -1, 'K56.3', 'Gallstone ileus', '2025-12-09 11:18:32', NULL, '2025-12-09 11:18:32', NULL)
 ;
