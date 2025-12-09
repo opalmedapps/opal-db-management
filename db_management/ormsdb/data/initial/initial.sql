@@ -8,7 +8,7 @@ INSERT INTO `Hospital` (`HospitalId`, `HospitalCode`, `HospitalName`, `Format`) 
 ;
 
 REPLACE INTO `SpecialityGroup` (`SpecialityGroupId`, `HospitalId`, `SpecialityGroupCode`, `SpecialityGroupName`, `LastUpdated`) VALUES
--- (1, 1, 'General', 'Opal Demo Hospital', '2022-01-22 02:34:21')
+(1, 1, 'General', 'Opal Demo Hospital', '2022-01-22 02:34:21')
 ;
 
 INSERT INTO `ClinicHub` (`ClinicHubId`, `SpecialityGroupId`, `ClinicHubName`, `LastUpdated`) VALUES
