@@ -9,7 +9,7 @@ INSERT INTO `Patient` (`PatientSerNum`, `LastName`, `FirstName`, `DateOfBirth`, 
 
 INSERT INTO `PatientHospitalIdentifier` (`PatientHospitalIdentifierId`, `PatientId`, `HospitalId`, `MedicalRecordNumber`, `Active`, `DateAdded`, `LastModified`) VALUES
 (1,	1,	1,	'9999996',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
-(4,	3,	1,	'9999996',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
+(4,	3,	1,	'9999997',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
 (5,	4,	1,	'9999993',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58'),
 (11, 1,	1,	'0389731',	1,	'2022-05-11 01:46:58',	'2022-05-11 01:46:58');
 
