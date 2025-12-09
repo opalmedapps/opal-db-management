@@ -67,12 +67,12 @@ WHERE `ID` IN (5402, 5403);
 UPDATE `answerQuestionnaire`
 SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
     lastUpdated = creationDate
-WHERE ID NOT IN (5400, 5401, 5402, 5403);
+WHERE ID NOT IN (5400, 5401, 5402, 5403, 5404);
 
 UPDATE `answerQuestionnaire`
 SET completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
     lastUpdated = completedDate
-WHERE `status`=2 AND ID NOT IN (5400, 5401, 5402, 5403);
+WHERE `status` = 2 AND ID NOT IN (5400, 5401, 5402, 5403, 5404);
 
 INSERT INTO `answerSection` (`ID`, `answerQuestionnaireId`, `sectionId`) VALUES
 (193, 225, 18),
