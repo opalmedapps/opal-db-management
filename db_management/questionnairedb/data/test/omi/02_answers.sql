@@ -52,14 +52,14 @@ INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status
 -- Kathy's questionnaires at chemo apt #1
 UPDATE `answerQuestionnaire`
     SET
-        `completedDate` = DATE_ADD(`completedData`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 4) WEEK),
+        `completedDate` = DATE_ADD(`completedDate`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 4) WEEK),
         `creationDate` = DATE_ADD(`creationDate`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 4) WEEK)
 WHERE `ID` IN (5400, 5401);
 
 -- Kathy's questionnaires at chemo apt #2
 UPDATE `answerQuestionnaire`
     SET
-        `completedDate` = DATE_ADD(`completedData`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 2) WEEK),
+        `completedDate` = DATE_ADD(`completedDate`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 2) WEEK),
         `creationDate` = DATE_ADD(`creationDate`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 2) WEEK)
 WHERE `ID` IN (5402, 5403);
 
