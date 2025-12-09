@@ -26,13 +26,5 @@ REPLACE INTO `Profile` (`ProfileSer`, `ProfileId`, `Category`, `SpecialityGroupI
 (28, 'Cyberknife', 'Treatment Machine', 1, '2020-07-17 02:20:04'),
 (29, 'CT/MR Sim', 'Treatment Machine', 1, '2020-07-18 04:04:05'),
 (30, 'Brachy', 'Treatment Machine', 1, '2020-07-18 04:05:12'),
-(31, 'Test Centre', 'PAB', 1, '2020-08-04 16:04:10'),
-(32, 'Surgery Receptionist', 'PAB', 3, '2021-04-28 21:35:48'),
-(33, 'Surgery Physician', 'Physician', 3, '2021-05-04 21:17:32'),
-(34, 'Medicine Receptionist', 'PAB', 2, '2021-05-07 19:03:59'),
-(35, 'Medicine Physician', 'Physician', 2, '2021-05-07 19:06:04'),
-(36, 'Receptionist (IBD clinic)', 'PAB', 4, '2022-01-24 15:43:39'),
-(37, 'IBD Physician', 'Physician', 4, '2022-01-24 15:46:49'),
-(39, 'Research Nursing (IBD Clinic)', 'Nurse', 4, '2022-01-24 16:00:29'),
-(40, 'Clinical Nursing (IBD Clinic)', 'Nurse', 4, '2022-02-18 19:26:25'),
-(41, 'IBD Psychologist', 'Physician', 4, '2022-12-14 16:12:14');
+(31, 'Test Centre', 'PAB', 1, '2020-08-04 16:04:10')
+;
