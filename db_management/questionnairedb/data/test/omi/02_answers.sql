@@ -49,6 +49,31 @@ INSERT INTO `answerQuestionnaire` (`ID`, `questionnaireId`, `patientId`, `status
 (5407, 111, 17, 0, 0, '', '2025-12-09 12:12:00', 'QUESTIONNAIRE_V2_AUTO_SYNC', '2025-12-09 12:12:11', 'QUESTIONNAIRE_V2_AUTO_SYNC', '', '', NULL)
 ;
 
+-- Kathy's questionnaires at chemo apt #1
+UPDATE `answerQuestionnaire`
+    SET
+        `completedDate` = DATE_ADD(`completedData`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 4) WEEK),
+        `creationDate` = DATE_ADD(`creationDate`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 4) WEEK)
+WHERE `ID` IN (5400, 5401);
+
+-- Kathy's questionnaires at chemo apt #2
+UPDATE `answerQuestionnaire`
+    SET
+        `completedDate` = DATE_ADD(`completedData`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 2) WEEK),
+        `creationDate` = DATE_ADD(`creationDate`, INTERVAL - (FLOOR(DATEDIFF(NOW(), '2025-12-07') / 7) + 2) WEEK)
+WHERE `ID` IN (5402, 5403);
+
+-- Update all Questionnaire dates to make the data more similar to a live environment
+UPDATE `answerQuestionnaire`
+SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
+    lastUpdated = creationDate
+WHERE ID NOT IN (5400, 5401, 5402, 5403);
+
+UPDATE `answerQuestionnaire`
+SET completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
+    lastUpdated = completedDate
+WHERE `status`=2 AND ID NOT IN (5400, 5401, 5402, 5403);
+
 INSERT INTO `answerSection` (`ID`, `answerQuestionnaireId`, `sectionId`) VALUES
 (193, 225, 18),
 (197, 297, 18),
@@ -388,16 +413,6 @@ SET creationDate = DATE_ADD(now(), INTERVAL -13 DAY),
     lastUpdated = DATE_ADD(now(), INTERVAL -13 DAY)
 WHERE questionnaireId=204
 and sectionId=154;
-
--- Update all Questionnaire dates to make the data more similar to a live environment
-UPDATE `answerQuestionnaire`
-SET creationDate = DATE_ADD(creationDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
-    lastUpdated = creationDate;
-
-UPDATE `answerQuestionnaire`
-SET completedDate = DATE_ADD(completedDate, INTERVAL ((WEEK(CURDATE()) - WEEK('2025-06-08')) * 7) DAY),
-    lastUpdated = completedDate
-WHERE `status`=2;
 
 INSERT INTO `answerRadioButton` (`ID`, `answerId`, `value`) VALUES
 (1, 5333, 169),
