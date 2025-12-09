@@ -24,6 +24,10 @@ INSERT INTO `PatientHospitalIdentifier` (`PatientHospitalIdentifierId`, `Patient
 (8, 41050, 1, '1092300', 1, '2022-01-21 21:13:32', '2022-01-21 21:13:32')
 ;
 
+INSERT INTO `PatientInsuranceIdentifier` (`PatientInsuranceIdentifierId`, `PatientId`, `InsuranceId`, `InsuranceNumber`, `ExpirationDate`, `Active`, `DateAdded`, `LastModified`) VALUES
+(1, 11, 11, 'ABCD99988877', '2026-12-08 00:00:00', 1, '2025-12-08 16:23:14', '2025-12-08 16:23:14'),
+(2, 12, 11, 'SMIR05054616', '2026-12-08 00:00:00', 1, '2025-12-08 21:52:43', '2025-12-08 21:52:43');
+
 
 -- Note that for every entry in the MediVisitAppointmentList there must be a corresponding entry in SmsAppointments with a matching ClinicResourcesSerNum
 --   This is needed for sms functionality in ORMs, and might cause errors with Opal checkins if not added

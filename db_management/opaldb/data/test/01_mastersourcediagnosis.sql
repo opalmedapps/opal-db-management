@@ -17,5 +17,6 @@ INSERT INTO `masterSourceDiagnosis` (`ID`, `externalId`, `code`, `description`, 
 (1768, 'I80.202', 'I80.202', 'Phlebitis and thrombophlebitis of unspecified deep vessels of left lower extremity', 7, 0, '', '2025-07-21 10:30:00', 'interface-engine', '2025-11-24 14:49:07', 'interface-engine'),
 (1769, 'B20.', 'B20.', 'Human immunodeficiency virus [HIV] disease', 7, 0, '', '2025-07-21 10:04:00', 'interface-engine', '2025-11-24 16:18:50', 'interface-engine'),
 (1770, 'I82.512', 'I82.512', 'Chronic embolism and thrombosis of left femoral vein', 7, 0, '', '2025-10-10 11:54:00', 'interface-engine', '2025-11-24 14:49:11', 'interface-engine'),
-(1771, 'I10.', 'I10.', 'Essential (primary) hypertension', 7, 0, '', '2025-08-17 14:00:00', 'interface-engine', '2025-11-24 16:18:35', 'interface-engine')
+(1771, 'I10.', 'I10.', 'Essential (primary) hypertension', 7, 0, '', '2025-08-17 14:00:00', 'interface-engine', '2025-11-24 16:18:35', 'interface-engine'),
+(1772, 'K56.3', 'K56.3', 'Gallstone ileus', 7, 0, '', '2025-12-08 12:12:25', 'interface-engine', '2025-12-08 12:27:31', 'interface-engine');
 ;
