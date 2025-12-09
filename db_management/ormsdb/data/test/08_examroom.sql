@@ -74,4 +74,5 @@ REPLACE INTO `ExamRoom` (`AriaVenueId`, `ClinicHubId`, `ScreenDisplayName`, `Ven
 ('Treat Chair - B3', 1, '', '', '', 69, NULL, NULL),
 ('Treat Chair - B4', 1, '', '', '', 70, NULL, NULL),
 ('Treat Chair - B5', 1, '', '', '', 71, NULL, NULL),
-('Treat Chair - B6', 1, '', '', '', 72, NULL, NULL),
+('Treat Chair - B6', 1, '', '', '', 72, NULL, NULL)
+;
