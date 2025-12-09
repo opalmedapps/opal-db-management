@@ -46,7 +46,7 @@ INSERT INTO `Questionnaire` (`QuestionnaireSerNum`, `CronLogSerNum`, `Questionna
 (2037, NULL, 285, 102, '2025-12-09 11:12:01', 5401, 1, '2025-12-09 12:04:43', '[]', '2025-12-09 12:04:43'),
 (2038, NULL, 288, 102, '2025-12-09 11:44:03', 5402, 1, '2025-12-09 12:09:21', '[]', '2025-12-09 12:09:21'),
 (2039, NULL, 289, 102, '2025-12-09 11:54:02', 5403, 1, '2025-12-09 12:10:15', '[]', '2025-12-09 12:10:15'),
-(2040, NULL, 289, 102, '2025-12-09 12:12:00', 5407, 0, NULL, '[]', '2025-12-09 12:12:11')
+(2040, NULL, 289, 102, NOW(), 5407, 0, NULL, '[]', '2025-12-09 12:12:11')
 ;
 
 -- Update all Questionnaire added dates and completion dates to make the data more similar to a live environment.
