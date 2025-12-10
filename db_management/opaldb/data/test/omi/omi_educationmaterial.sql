@@ -54,7 +54,12 @@ INSERT INTO `EducationalMaterial` (`EducationalMaterialSerNum`, `CronLogSerNum`,
 (13853, NULL, 979, 102, '2025-04-11 12:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
 (13854, NULL, 105, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
 (13855, NULL, 960, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
-(13856, NULL, 849, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00');
+(13856, NULL, 849, 102, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00'),
+(13858, NULL, 208, 102, '2025-11-27 13:08:02', 1, '[\"OPWj4Cj5iRfgva4b3HGtVGjvuk13\", \"OPWj4Cj5iRfgva4b3HGtVGjvuk13\"]', '2025-12-04 15:19:17'),
+(13860, NULL, 12, 102, '2025-11-27 15:48:01', 1, '[\"OPWj4Cj5iRfgva4b3HGtVGjvuk13\", \"OPWj4Cj5iRfgva4b3HGtVGjvuk13\"]', '2025-12-04 15:19:12'),
+(13862, NULL, 13, 102, '2025-11-27 16:18:01', 1, '[\"OPWj4Cj5iRfgva4b3HGtVGjvuk13\", \"OPWj4Cj5iRfgva4b3HGtVGjvuk13\"]', '2025-12-04 15:19:08'),
+(13864, NULL, 8, 102, '2025-11-27 18:26:01', 1, '[\"OPWj4Cj5iRfgva4b3HGtVGjvuk13\", \"OPWj4Cj5iRfgva4b3HGtVGjvuk13\"]', '2025-12-04 15:19:04'),
+(13866, NULL, 10, 102, '2025-11-27 19:38:02', 1, '[\"OPWj4Cj5iRfgva4b3HGtVGjvuk13\", \"OPWj4Cj5iRfgva4b3HGtVGjvuk13\"]', '2025-12-04 15:18:57');
 
 -- Update all EducationalMaterial added dates to make the data more similar to a live environment.
 UPDATE `EducationalMaterial`
