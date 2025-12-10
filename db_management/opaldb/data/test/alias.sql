@@ -2,6 +2,8 @@
 --
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 
+-- IMPORTANT: Ensure that Appointment aliases also have a corresponding entry in the AppointmentCheckIn table.
+
 INSERT INTO `Alias` (`AliasSerNum`, `AliasType`, `AliasUpdate`, `AliasName_FR`, `AliasName_EN`, `AliasDescription_FR`, `AliasDescription_EN`, `EducationalMaterialControlSerNum`, `HospitalMapSerNum`, `SourceDatabaseSerNum`, `ColorTag`, `WaitTimeValidity`, `LastTransferred`, `LastUpdatedBy`, `LastUpdated`, `SessionId`) VALUES
 (614, 'Appointment', 1, 'Appointment ODH', 'ODH Appointment', '<p>FR Text to be determined</p>', '<p>EN Text to be determined</p>', NULL, 48, 7, '#757575', 1, '2024-05-16 10:22:02', NULL, '2025-03-05 11:12:58', 'n8rBO3AEyX'),
 (617, 'Document', 1, 'Note/Dossier clinique OpenEMR', 'OpenEMR Clinical Note/Record', '<p>Note/Dossier clinique OpenEMR<br/></p>', '<p>OpenEMR Clinical Note/Record<br/></p>', NULL, NULL, 7, '#C5E1A5', 1, '2019-01-01 00:00:00', NULL, '2025-02-27 12:21:43', 'Eoxp64i29S'),

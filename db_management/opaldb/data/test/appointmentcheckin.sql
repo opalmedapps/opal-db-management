@@ -16,5 +16,6 @@ INSERT INTO `AppointmentCheckin` (`AliasSerNum`, `CheckinPossible`, `CheckinInst
 (628, 1, '<p>Ultrasound Guided Biopsy<br/></p><p>Check-in instructions created in OpalAdmin</p><p><br/></p>', '<p>Biopsie guidée par échographie<br/><br/>Instructions d\'enregistrement créées dans OpalAdmin<br/></p>', '2025-03-12 08:57:40', NULL, 'qxhICBe1tC', '2025-03-12 08:57:40'),
 (629, 1, '<p>Instructions for check-in for a mammography as entered in opalAdmin.</p>', '<p>Instructions pour l\'enregistrement d\'une mammographie, telles qu\'elles ont été saisies dans OpalAdmin.<br/></p>', '2025-03-12 09:26:52', NULL, 'zIhlcJqoKR', '2025-03-12 09:26:52'),
 (632, 0, '<p>Check-in via Opal is not possible for this appointment. <br/></p>', '<p>L\'enregistrement pour ce rendez-vous n\'est pas possible via Opal.<br/></p>', '2025-05-07 15:32:02', NULL, 'ImQ3TMH2nP', '2025-05-07 15:32:02'),
-(633, 1, '<p>English check-in instructions</p><p><br/></p>', '<p>French check-in instructions</p>', '2025-11-25 15:13:44', NULL, 'TwLbefPXg8', '2025-11-25 15:13:44')
+(633, 1, '<p>English check-in instructions</p><p><br/></p>', '<p>French check-in instructions</p>', '2025-11-25 15:13:44', NULL, 'TwLbefPXg8', '2025-11-25 15:13:44'),
+(634, 1, '<p>Instructions for checkin found here.</p>', '<p>Les instructions pour l\'enregistrement se trouvent ici.<br/></p>', '2025-12-04 12:51:51', NULL, '4OE2t30Rv5', '2025-12-04 12:51:51');
 ;
