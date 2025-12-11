@@ -17,8 +17,6 @@ INSERT INTO `TxTeamMessage` (`TxTeamMessageSerNum`, `CronLogSerNum`, `PatientSer
 (7209, NULL, 96, 1092, '2025-04-11 12:16:01', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2", "dR2Cb1Yf0vQb4ywvMoAXw1SxbY93", "2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-04-11 12:16:01'),
 (7210, NULL, 59, 1092, '2025-04-02 14:40:13', 1, '["mouj1pqpXrYCl994oSm5wtJT3In2"]', '2025-04-02 14:40:13'),
 (7211, NULL, 99, 1092, '2019-01-10 12:50:00', 1, '["dcBSK5qdoiOM2L9cEdShkqOadkG3"]', '2019-01-10 12:50:00'),
-(7212, NULL, 100, 1092, '2025-02-15 15:38:00', 1, '["9kmS7qYQX8arnFFs4ZYJk1tqLFw1"]', '2025-02-15 15:38:00'),
-(7213, NULL, 101, 1092, '2025-04-25 15:38:07', 1, '["2grqcCoyPlVucfAPD4NM1SuCk3i1"]', '2025-04-25 15:38:07'),
 (7214, NULL, 103, 1092, '2025-04-02 13:00:00', 1, '["hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-02 13:00:00'),
 (7215, NULL, 102, 1092, '2025-04-11 12:00:00', 1, '["OPWj4Cj5iRfgva4b3HGtVGjvuk13", "hSJdAae7xWNwnemd2YypQSVfoOb2"]', '2025-04-11 12:00:00');
 
