@@ -86,8 +86,8 @@ select = [
     # https://docs.astral.sh/ruff/rules/#flake8-tidy-imports-tid
     "TID",
     # flake8-type-checking
-    # https://docs.astral.sh/ruff/rules/#flake8-type-checking-tch
-    "TCH",
+    # https://docs.astral.sh/ruff/rules/#flake8-type-checking-tc
+    "TC",
     # flake8-unused-arguments (ARG)
     # https://docs.astral.sh/ruff/rules/#flake8-unused-arguments-arg
     "ARG",
