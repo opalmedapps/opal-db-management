@@ -4,17 +4,20 @@
 
 """Alembic configurations and environment settings; load ORM metadata from model(s)."""
 
-from collections.abc import Iterable
 from logging.config import fileConfig
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from alembic import context
-from alembic.environment import MigrationContext
-from alembic.operations import MigrationScript
 from sqlalchemy import engine_from_config, pool
 
 from db_management import connection, settings
 from db_management.opaldb import models
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
+
+    from alembic.environment import MigrationContext
+    from alembic.operations import MigrationScript
 
 IGNORE_TABLE_NAMES = (
     models.QuestionnaireDBDefinitionTable.__tablename__,
