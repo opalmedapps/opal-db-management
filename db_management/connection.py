@@ -5,12 +5,15 @@
 """TBD."""
 
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 import pymysql
 from pymysql.constants import CLIENT
-from pymysql.cursors import Cursor
 
 from db_management import settings
+
+if TYPE_CHECKING:
+    from pymysql.cursors import Cursor
 
 
 @dataclass(frozen=True)
