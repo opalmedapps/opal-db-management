@@ -102,10 +102,16 @@ jobs:
         run: |
           source .venv/bin/activate
           # migrate databases first
+          ::group::Upgrade DBs
           ./docker/alembic-upgrade.sh
+          ::endgroup::
           # Full refresh for both OMI and OHIGPH datasets to ensure no broken data links/inconsistencies
+          ::group::Refreshing with OMI
           db_management/reset_data.sh OMI
+          ::endgroup::
+          ::group::Refreshing a second time with OHIGPH
           db_management/reset_data.sh OHIGPH
+          ::endgroup::
 
 
   markdownlint:
