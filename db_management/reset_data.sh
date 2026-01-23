@@ -51,6 +51,8 @@ declare -a commands=(
     "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/initial/"
     "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/"
     "python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/$institution/"
+    # re-enable test mode after truncating
+    "db_management/enable_test_mode.sh"
 )
 
 # Execute each command
