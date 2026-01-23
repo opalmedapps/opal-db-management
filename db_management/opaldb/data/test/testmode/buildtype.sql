@@ -4,4 +4,4 @@
 
 UPDATE `BuildType` SET
 `Name` = 'Development'
-WHERE `Name` = 'Production'
+WHERE `Name` = 'Production';

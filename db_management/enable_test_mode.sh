@@ -17,7 +17,7 @@ log "Enabling test mode..."
 
 
 python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/test/testmode/
-python -m db_management.run_sql_scripts OpalDB db_management/questionnairedb/data/test/testmode/
-python -m db_management.run_sql_scripts OpalDB db_management/ormsdb/data/test/testmode/
+python -m db_management.run_sql_scripts QuestionnaireDB db_management/questionnairedb/data/test/testmode/
+python -m db_management.run_sql_scripts OrmsDatabase db_management/ormsdb/data/test/testmode/
 
 log "Test mode enabled."
