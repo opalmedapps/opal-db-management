@@ -243,7 +243,7 @@ To go to the latest version for the database, simply run `alembic --name <dbname
 
 **Note:** The description of the ten commands below is left for informational purposes, but these are not required to be run if the `reset_data` script is called first (see the [inserting test data](#step-5-insert-test-data) section).
 
-Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real Production databases.
+Optional: To remove data in all tables with the exception of the `alembic_version` run the following commands, noting that these sweeping truncates can only be run if the database's `BuildType` table is set to `Development`. This check is implemented to prevent accidentally truncating real production databases.
 
 ```shell
 docker compose run --rm app python -m db_management.run_sql_scripts OpalDB db_management/opaldb/data/truncate/
