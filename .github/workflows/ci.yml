@@ -40,7 +40,7 @@ jobs:
         uses: astral-sh/ruff-action@v3.6.1
         with:
           args: "format --check"
-      - uses: mschoettle/pre-commit-action@v4.2.3
+      - uses: opalmedapps/actions/.github/workflows/prek.yaml@main
         if: '!cancelled()'
         env:
           SKIP: ruff,ruff-format,markdownlint-cli2
