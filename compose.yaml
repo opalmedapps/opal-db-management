@@ -4,7 +4,7 @@
 
 services:
   db:
-    image: mariadb:10.11.15-jammy
+    image: mariadb:10.11.16-jammy
     ports:
       - ${MARIADB_EXTERNAL_PORT}:3306
     volumes:
@@ -17,7 +17,7 @@ services:
       - TZ=EST5EDT
 
   adminer:
-    image: adminer:5.4.1-standalone
+    image: adminer:5.4.2-standalone
     depends_on:
       - db
     ports:
