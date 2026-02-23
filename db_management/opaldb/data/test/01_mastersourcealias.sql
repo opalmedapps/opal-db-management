@@ -49,5 +49,9 @@ INSERT INTO `masterSourceAlias` (`ID`, `externalId`, `code`, `description`, `typ
 (28051, 'OpenEMR', 'Consult_In_Patient', 'CON-IP', 2, 4, 0, '', '2025-03-17 13:42:40', 'interface-engine', '2025-03-17 09:42:40', 'interface-engine'),
 (28052, 'OpenEMR', 'new_patient', 'New Patient', 2, 4, 0, '', '2025-04-24 15:04:09', 'interface-engine', '2025-04-24 11:04:09', 'interface-engine'),
 (28053, 'OpenEMR', 'Colonoscopy', 'CLNSPY', 2, 4, 0, '', '2025-11-24 19:49:41', 'interface-engine', '2025-11-24 14:49:41', 'interface-engine'),
-(28054, '15', 'Chemo-AC', 'Chemo-AC', 2, 4, 0, '', '2025-12-04 16:50:34', 'interface-engine', '2025-12-04 11:50:34', 'interface-engine')
+(28054, '15', 'Chemo-AC', 'Chemo-AC', 2, 4, 0, '', '2025-12-04 16:50:34', 'interface-engine', '2025-12-04 11:50:34', 'interface-engine'),
+(28055, '37', 'Questionnaire', 'Questionnaire', 3, 4, 0, '', '2026-02-23 10:56:00', 'OpenEMR', '2026-02-23 10:56:00', 'OpenEMR'),
+(28056, '38', 'Eye Module | AntSeg Laser - Eye', 'Eye Module | AntSeg Laser - Eye', 3, 4, 0, '', '2026-02-23 10:56:00', 'OpenEMR', '2026-02-23 10:56:00', 'OpenEMR'),
+(28057, '39', 'Eye Module | Retina Laser - Eye', 'Eye Module | Retina Laser - Eye', 3, 4, 0, '', '2026-02-23 10:56:00', 'OpenEMR', '2026-02-23 10:56:00', 'OpenEMR'),
+(28058, '40', 'Eye Module | Injections - Eye', 'Eye Module | Injections - Eye', 3, 4, 0, '', '2026-02-23 10:56:00', 'OpenEMR', '2026-02-23 10:56:00', 'OpenEMR')
 ;
