@@ -49,5 +49,9 @@ INSERT INTO `AliasExpression` (`AliasExpressionSerNum`, `AliasSerNum`, `masterSo
 (10103, 632, 28051, 'Consult_In_Patient', 'CON-IP', '2000-01-01 00:00:00', NULL, '2025-05-07 15:01:05', 'ImQ3TMH2nP'),
 (10104, 632, 28052, 'new_patient', 'New Patient', '2000-01-01 00:00:00', NULL, '2025-05-07 15:01:05', 'ImQ3TMH2nP'),
 (10105, 633, 28053, 'Colonoscopy', 'CLNSPY', '2000-01-01 00:00:00', NULL, '2025-11-25 15:13:44', 'TwLbefPXg8'),
-(10106, 634, 28054, 'Chemo-AC', 'Chemo-AC', '2000-01-01 00:00:00', NULL, '2025-12-04 12:44:36', '4OE2t30Rv5')
+(10106, 634, 28054, 'Chemo-AC', 'Chemo-AC', '2000-01-01 00:00:00', NULL, '2025-12-04 12:44:36', '4OE2t30Rv5'),
+(10107, 618, 28055, 'Questionnaire', 'Questionnaire', '2000-01-01 00:00:00', NULL, '2026-02-24 11:14:00', 'HzpBg86nWK'),
+(10108, 618, 28056, 'Eye Module | AntSeg Laser - EyeC', 'Eye Module | AntSeg Laser - Eye', '2000-01-01 00:00:00', NULL, '2026-02-24 11:15:00', 'q3Q2AdD5nD'),
+(10109, 618, 28057, 'Eye Module | Retina Laser - Eye', 'Eye Module | Retina Laser - Eye', '2000-01-01 00:00:00', NULL, '2026-02-24 11:16:00', '7Hug7LI3UE'),
+(10110, 618, 28058, 'Eye Module | Injections - Eye', 'Eye Module | Injections - Eye', '2000-01-01 00:00:00', NULL, '2026-02-24 11:17:00', 'ECKiyAMl8X')
 ;
