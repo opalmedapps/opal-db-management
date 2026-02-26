@@ -7,6 +7,6 @@ rules:
     config:
       policies:
         actions/*: ref-pin
-        mschoettle/pre-commit-action: ref-pin
-        astral-sh/setup-uv: ref-pin
         astral-sh/ruff-action: ref-pin
+        astral-sh/setup-uv: ref-pin
+        opalmedapps/*: ref-pin
