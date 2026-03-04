@@ -40,7 +40,7 @@ repos:
         - mdformat-mkdocs==5.1.4
 
 - repo: https://github.com/astral-sh/uv-pre-commit
-  rev: 0.10.7
+  rev: 0.10.8
   hooks:
     - id: uv-lock
 
