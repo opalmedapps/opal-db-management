@@ -204,7 +204,7 @@ class Patient(Base):
     ...
     ...
     ...
-    LastLoginDate = Column("last_login_date", DateTime)
+    LastLoginDate = Column('last_login_date', DateTime)
 ```
 
 With the db container still running, open a separate bash CLI and run the autogenerate feature of alembic from a new alembic container. You will need to specify the name of the database in which you want to generate the migration, for example for OpalDB:
@@ -223,8 +223,10 @@ This will result in a migration file containing `upgrade` and `downgrade` functi
 from alembic import op
 import sqlalchemy as sa
 
+
 def upgrade():
     op.add_column('Patient', sa.Column('last_login_date', sa.DateTime))
+
 
 def downgrade():
     op.drop_column('Patient', 'last_login_date')
