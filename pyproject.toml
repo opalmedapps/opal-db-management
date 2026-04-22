@@ -13,7 +13,7 @@ dependencies = [
     "mysqlclient==2.2.8",
     "pymysql==1.1.2",
     "python-dotenv==1.2.2",
-    "sqlalchemy==2.0.48",
+    "sqlalchemy==2.0.49",
 ]
 
 [dependency-groups]
@@ -27,6 +27,6 @@ dev = [
     "pytest-alembic==0.12.1",
     "python-dotenv==1.2.2",
     "ruff==0.15.7",
-    "sqlalchemy==2.0.48",
+    "sqlalchemy==2.0.49",
     "types-pymysql==1.1.0.20251220",
 ]
